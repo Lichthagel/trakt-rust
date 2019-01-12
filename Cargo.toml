@@ -5,3 +5,4 @@ authors = ["Jens Gatzweiler <lichthagel@tuta.io>"]
 edition = "2018"
 
 [dependencies]
+reqwest = "0.9.8"
