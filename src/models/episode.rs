@@ -1,9 +1,9 @@
 use crate::models::ids::Ids;
 
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 pub struct Episode {
     season: u32,
     number: u32,
-    title: String,
+    title: Option<String>,
     ids: Ids
 }

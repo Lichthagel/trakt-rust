@@ -1,8 +1,9 @@
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 pub struct Ids {
     trakt: Option<u64>,
     slug: Option<String>,
     tvdb: Option<u64>,
     imdb: Option<String>,
-    tmdb: Option<u64>
+    tmdb: Option<u64>,
+    tvrage: Option<u64>
 }

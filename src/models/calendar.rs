@@ -8,7 +8,7 @@ use crate::models::{
     movie::Movie,
 };
 
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 pub struct CalendarShow {
     first_aired: DateTime<Utc>,
     episode: Episode,

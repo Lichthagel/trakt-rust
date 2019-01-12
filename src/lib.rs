@@ -13,8 +13,11 @@ use crate::{
 };
 use chrono::{
     DateTime,
-    Utc
+    Utc,
+    Date
 };
+use reqwest::Error;
+use reqwest::Response;
 
 #[derive(Debug)]
 pub struct TraktApi {
@@ -32,16 +35,19 @@ impl TraktApi {
         }
     }
 
-    pub fn all_shows(&self, timespan: Option<(DateTime<Utc>, u32)>) -> CalendarShow {
+    pub fn all_shows(&self, start_date: Date<Utc>, days: u32) -> Result<(Response, Option<Vec<CalendarShow>>), Error> {
         self.client
-            .get(format!("{}/calendars/all/shows", API_URL).as_str())
+            .get(format!("{}/calendars/all/shows/{}/{}", API_URL, start_date.format("%Y-%m-%d"), days).as_str())
             .send()
             .map(|mut res| {
+                println!("{:?}", res);
                 if res.status().is_success() {
                     let text = res.text().unwrap();
+                    (res, Some(serde_json::from_str(text.as_str()).unwrap()))
+                } else {
+                    (res, None)
                 }
-            });
-        unimplemented!()
+            })
     }
 
 }
