@@ -1,5 +1,5 @@
 [package]
-name = "trakt"
+name = "trakt-rust"
 version = "0.1.0"
 authors = ["Jens Gatzweiler <lichthagel@tuta.io>"]
 edition = "2018"
