@@ -1,3 +1,5 @@
+const API_URL: &'static str = "https://api.trakt.tv";
+
 #[derive(Debug)]
 pub struct TraktApi {
     client: reqwest::Client,
@@ -13,6 +15,7 @@ impl TraktApi {
             client_secret
         }
     }
+
 }
 
 impl PartialEq for TraktApi {
