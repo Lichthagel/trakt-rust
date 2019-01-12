@@ -9,6 +9,7 @@ use crate::models::{
     movie::Movie,
 };
 
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Rating {
     rated_at: DateTime<Utc>,
     rating: u8,

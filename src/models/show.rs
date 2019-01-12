@@ -1,6 +1,6 @@
 use crate::models::ids::Ids;
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Show {
     title: String,
     year: Option<u16>,

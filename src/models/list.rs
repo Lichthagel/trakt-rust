@@ -10,6 +10,7 @@ use crate::models::{
     show::Show,
 };
 
+#[derive(Debug, Serialize, Deserialize)]
 pub struct ListEntry {
     rank: u32,
     listed_at: DateTime<Utc>,

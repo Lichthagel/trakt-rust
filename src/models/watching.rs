@@ -9,6 +9,7 @@ use crate::models::{
     movie::Movie,
 };
 
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Watching {
     expires_at: DateTime<Utc>,
     started_at: DateTime<Utc>,

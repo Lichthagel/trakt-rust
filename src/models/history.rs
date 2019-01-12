@@ -8,6 +8,7 @@ use crate::models::{
     episode::Episode,
 };
 
+#[derive(Debug, Serialize, Deserialize)]
 pub struct HistoryItem {
     id: u64,
     watched_at: DateTime<Utc>,

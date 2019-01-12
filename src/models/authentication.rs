@@ -1,3 +1,4 @@
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Authentication {
     code: String,
     client_id: String,

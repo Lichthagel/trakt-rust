@@ -1,4 +1,4 @@
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Ids {
     trakt: Option<u64>,
     slug: Option<String>,

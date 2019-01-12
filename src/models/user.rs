@@ -1,5 +1,6 @@
 use crate::models::ids::Ids;
 
+#[derive(Debug, Serialize, Deserialize)]
 pub struct User {
     username: String,
     private: bool,

@@ -4,6 +4,7 @@ use chrono::{
 };
 use crate::models::user::User;
 
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Comment {
     id: u64,
     parent_id: u64,
