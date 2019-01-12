@@ -4,23 +4,18 @@ extern crate chrono;
 extern crate serde;
 extern crate serde_json;
 
-mod models;
+mod macros;
 mod constants;
+mod models;
 
-use crate::{
-    models::calendar::CalendarShow,
-    constants::API_URL
-};
-use chrono::{
-    DateTime,
-    Utc
-};
+use crate::{constants::API_URL, models::calendar::CalendarShow};
+use chrono::{DateTime, Utc};
 
 #[derive(Debug)]
 pub struct TraktApi {
     client: reqwest::Client,
     client_id: String,
-    client_secret: String
+    client_secret: String,
 }
 
 impl TraktApi {
@@ -28,7 +23,7 @@ impl TraktApi {
         TraktApi {
             client: reqwest::Client::new(),
             client_id,
-            client_secret
+            client_secret,
         }
     }
 
@@ -43,7 +38,6 @@ impl TraktApi {
             });
         unimplemented!()
     }
-
 }
 
 impl PartialEq for TraktApi {
@@ -52,7 +46,7 @@ impl PartialEq for TraktApi {
     }
 
     fn ne(&self, other: &TraktApi) -> bool {
-        self.client_id != other.client_id ||self.client_secret != other.client_secret
+        self.client_id != other.client_id || self.client_secret != other.client_secret
     }
 }
 
