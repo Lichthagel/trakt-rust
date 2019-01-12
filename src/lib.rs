@@ -4,21 +4,14 @@ extern crate chrono;
 extern crate serde;
 extern crate serde_json;
 
-mod macros;
 mod constants;
+#[macro_use]
+mod macros;
 mod models;
 
-use crate::{
-    models::calendar::CalendarShow,
-    constants::API_URL
-};
-use chrono::{
-    Utc,
-    Date
-};
-use reqwest::Error;
-use reqwest::Response;
-use crate::models::calendar::CalendarMovie;
+use crate::models::calendar::{CalendarMovie, CalendarShow};
+use chrono::{Date, Utc};
+use reqwest::{Error, Response};
 
 #[derive(Debug)]
 pub struct TraktApi {
@@ -36,89 +29,72 @@ impl TraktApi {
         }
     }
 
-    pub fn calendar_all_shows(&self, start_date: Date<Utc>, days: u32) -> Result<(Response, Option<Vec<CalendarShow>>), Error> {
-        self.client
-            .get(format!("{}/calendars/all/shows/{}/{}", API_URL, start_date.format("%Y-%m-%d"), days).as_str())
-            .header("Content-Type", "application/json")
-            .header("trakt-api-version", "2")
-            .header("trakt-api-key", self.client_id.as_str())
-            .send()
-            .map(|mut res| {
-                if res.status().is_success() {
-                    let text = res.text().unwrap();
-                    (res, Some(serde_json::from_str(text.as_str()).unwrap()))
-                } else {
-                    (res, None)
-                }
-            })
+    pub fn calendar_all_shows(
+        &self,
+        start_date: Date<Utc>,
+        days: u32,
+    ) -> Result<(Response, Option<Vec<CalendarShow>>), Error> {
+        api_request!(
+            self.client,
+            self.client_id.as_str(),
+            api_route!("calendars/all/shows", start_date.format("%Y-%m-%d"), days)
+        )
     }
 
-    pub fn calendar_all_new_shows(&self, start_date: Date<Utc>, days: u32) -> Result<(Response, Option<Vec<CalendarShow>>), Error> {
-        self.client
-            .get(format!("{}/calendars/all/shows/new/{}/{}", API_URL, start_date.format("%Y-%m-%d"), days).as_str())
-            .header("Content-Type", "application/json")
-            .header("trakt-api-version", "2")
-            .header("trakt-api-key", self.client_id.as_str())
-            .send()
-            .map(|mut res| {
-                if res.status().is_success() {
-                    let text = res.text().unwrap();
-                    (res, Some(serde_json::from_str(text.as_str()).unwrap()))
-                } else {
-                    (res, None)
-                }
-            })
+    pub fn calendar_all_new_shows(
+        &self,
+        start_date: Date<Utc>,
+        days: u32,
+    ) -> Result<(Response, Option<Vec<CalendarShow>>), Error> {
+        api_request!(
+            self.client,
+            self.client_id.as_str(),
+            api_route!(
+                "calendars/all/shows/new",
+                start_date.format("%Y-%m-%d"),
+                days
+            )
+        )
     }
 
-    pub fn calendar_all_season_premieres(&self, start_date: Date<Utc>, days: u32) -> Result<(Response, Option<Vec<CalendarShow>>), Error> {
-        self.client
-            .get(format!("{}/calendars/all/shows/premieres/{}/{}", API_URL, start_date.format("%Y-%m-%d"), days).as_str())
-            .header("Content-Type", "application/json")
-            .header("trakt-api-version", "2")
-            .header("trakt-api-key", self.client_id.as_str())
-            .send()
-            .map(|mut res| {
-                if res.status().is_success() {
-                    let text = res.text().unwrap();
-                    (res, Some(serde_json::from_str(text.as_str()).unwrap()))
-                } else {
-                    (res, None)
-                }
-            })
+    pub fn calendar_all_season_premieres(
+        &self,
+        start_date: Date<Utc>,
+        days: u32,
+    ) -> Result<(Response, Option<Vec<CalendarShow>>), Error> {
+        api_request!(
+            self.client,
+            self.client_id.as_str(),
+            api_route!(
+                "calendars/all/shows/premieres",
+                start_date.format("%Y-%m-%d"),
+                days
+            )
+        )
     }
 
-    pub fn calendar_all_movies(&self, start_date: Date<Utc>, days: u32) -> Result<(Response, Option<Vec<CalendarMovie>>), Error> {
-        self.client
-            .get(format!("{}/calendars/all/movies/{}/{}", API_URL, start_date.format("%Y-%m-%d"), days).as_str())
-            .header("Content-Type", "application/json")
-            .header("trakt-api-version", "2")
-            .header("trakt-api-key", self.client_id.as_str())
-            .send()
-            .map(|mut res| {
-                if res.status().is_success() {
-                    let text = res.text().unwrap();
-                    (res, Some(serde_json::from_str(text.as_str()).unwrap()))
-                } else {
-                    (res, None)
-                }
-            })
+    pub fn calendar_all_movies(
+        &self,
+        start_date: Date<Utc>,
+        days: u32,
+    ) -> Result<(Response, Option<Vec<CalendarMovie>>), Error> {
+        api_request!(
+            self.client,
+            self.client_id.as_str(),
+            api_route!("calendars/all/movies", start_date.format("%Y-%m-%d"), days)
+        )
     }
 
-    pub fn calendar_all_dvd(&self, start_date: Date<Utc>, days: u32) -> Result<(Response, Option<Vec<CalendarMovie>>), Error> {
-        self.client
-            .get(format!("{}/calendars/all/dvd/{}/{}", API_URL, start_date.format("%Y-%m-%d"), days).as_str())
-            .header("Content-Type", "application/json")
-            .header("trakt-api-version", "2")
-            .header("trakt-api-key", self.client_id.as_str())
-            .send()
-            .map(|mut res| {
-                if res.status().is_success() {
-                    let text = res.text().unwrap();
-                    (res, Some(serde_json::from_str(text.as_str()).unwrap()))
-                } else {
-                    (res, None)
-                }
-            })
+    pub fn calendar_all_dvd(
+        &self,
+        start_date: Date<Utc>,
+        days: u32,
+    ) -> Result<(Response, Option<Vec<CalendarMovie>>), Error> {
+        api_request!(
+            self.client,
+            self.client_id.as_str(),
+            api_route!("calendars/all/dvd", start_date.format("%Y-%m-%d"), days)
+        )
     }
 }
 
