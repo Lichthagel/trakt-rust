@@ -1,3 +1,19 @@
+#[macro_use]
+extern crate serde_derive;
+extern crate chrono;
+
+mod models;
+mod constants;
+
+use crate::{
+    models::calendar::CalendarShow,
+    constants::API_URL
+};
+use chrono::{
+    DateTime,
+    Utc
+};
+
 #[derive(Debug)]
 pub struct TraktApi {
     client: reqwest::Client,
@@ -12,6 +28,18 @@ impl TraktApi {
             client_id,
             client_secret
         }
+    }
+
+    pub fn all_shows(&self, timespan: Option<(DateTime<Utc>, u32)>) -> CalendarShow {
+        self.client
+            .get(format!("{}/calendars/all/shows", API_URL).as_str())
+            .send()
+            .map(|mut res| {
+                if res.status().is_success() {
+                    let text = res.text().unwrap();
+                }
+            });
+        unimplemented!()
     }
 
 }

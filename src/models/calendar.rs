@@ -1,10 +1,21 @@
+use chrono::{
+    DateTime,
+    Utc,
+};
+use crate::models::{
+    episode::Episode,
+    show::Show,
+    movie::Movie,
+};
+
+#[derive(Deserialize)]
 pub struct CalendarShow {
-    first_aired: DateTime,
+    first_aired: DateTime<Utc>,
     episode: Episode,
-    show: Show
+    show: Show,
 }
 
 pub struct CalendarMovie {
-    released: DateTime,
-    movie: Movie
+    released: DateTime<Utc>,
+    movie: Movie,
 }

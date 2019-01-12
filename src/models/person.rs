@@ -1,3 +1,5 @@
+use crate::models::ids::Ids;
+
 pub struct Person {
     username: String,
     private: bool,
