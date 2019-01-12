@@ -8,10 +8,17 @@ mod macros;
 mod constants;
 mod models;
 
-use crate::{constants::API_URL, models::calendar::CalendarShow};
-use chrono::{DateTime, Utc, Date};
+use crate::{
+    models::calendar::CalendarShow,
+    constants::API_URL
+};
+use chrono::{
+    Utc,
+    Date
+};
 use reqwest::Error;
 use reqwest::Response;
+use crate::models::calendar::CalendarMovie;
 
 #[derive(Debug)]
 pub struct TraktApi {
@@ -29,12 +36,82 @@ impl TraktApi {
         }
     }
 
-    pub fn all_shows(&self, start_date: Date<Utc>, days: u32) -> Result<(Response, Option<Vec<CalendarShow>>), Error> {
+    pub fn calendar_all_shows(&self, start_date: Date<Utc>, days: u32) -> Result<(Response, Option<Vec<CalendarShow>>), Error> {
         self.client
             .get(format!("{}/calendars/all/shows/{}/{}", API_URL, start_date.format("%Y-%m-%d"), days).as_str())
+            .header("Content-Type", "application/json")
+            .header("trakt-api-version", "2")
+            .header("trakt-api-key", self.client_id.as_str())
             .send()
             .map(|mut res| {
-                println!("{:?}", res);
+                if res.status().is_success() {
+                    let text = res.text().unwrap();
+                    (res, Some(serde_json::from_str(text.as_str()).unwrap()))
+                } else {
+                    (res, None)
+                }
+            })
+    }
+
+    pub fn calendar_all_new_shows(&self, start_date: Date<Utc>, days: u32) -> Result<(Response, Option<Vec<CalendarShow>>), Error> {
+        self.client
+            .get(format!("{}/calendars/all/shows/new/{}/{}", API_URL, start_date.format("%Y-%m-%d"), days).as_str())
+            .header("Content-Type", "application/json")
+            .header("trakt-api-version", "2")
+            .header("trakt-api-key", self.client_id.as_str())
+            .send()
+            .map(|mut res| {
+                if res.status().is_success() {
+                    let text = res.text().unwrap();
+                    (res, Some(serde_json::from_str(text.as_str()).unwrap()))
+                } else {
+                    (res, None)
+                }
+            })
+    }
+
+    pub fn calendar_all_season_premieres(&self, start_date: Date<Utc>, days: u32) -> Result<(Response, Option<Vec<CalendarShow>>), Error> {
+        self.client
+            .get(format!("{}/calendars/all/shows/premieres/{}/{}", API_URL, start_date.format("%Y-%m-%d"), days).as_str())
+            .header("Content-Type", "application/json")
+            .header("trakt-api-version", "2")
+            .header("trakt-api-key", self.client_id.as_str())
+            .send()
+            .map(|mut res| {
+                if res.status().is_success() {
+                    let text = res.text().unwrap();
+                    (res, Some(serde_json::from_str(text.as_str()).unwrap()))
+                } else {
+                    (res, None)
+                }
+            })
+    }
+
+    pub fn calendar_all_movies(&self, start_date: Date<Utc>, days: u32) -> Result<(Response, Option<Vec<CalendarMovie>>), Error> {
+        self.client
+            .get(format!("{}/calendars/all/movies/{}/{}", API_URL, start_date.format("%Y-%m-%d"), days).as_str())
+            .header("Content-Type", "application/json")
+            .header("trakt-api-version", "2")
+            .header("trakt-api-key", self.client_id.as_str())
+            .send()
+            .map(|mut res| {
+                if res.status().is_success() {
+                    let text = res.text().unwrap();
+                    (res, Some(serde_json::from_str(text.as_str()).unwrap()))
+                } else {
+                    (res, None)
+                }
+            })
+    }
+
+    pub fn calendar_all_dvd(&self, start_date: Date<Utc>, days: u32) -> Result<(Response, Option<Vec<CalendarMovie>>), Error> {
+        self.client
+            .get(format!("{}/calendars/all/dvd/{}/{}", API_URL, start_date.format("%Y-%m-%d"), days).as_str())
+            .header("Content-Type", "application/json")
+            .header("trakt-api-version", "2")
+            .header("trakt-api-key", self.client_id.as_str())
+            .send()
+            .map(|mut res| {
                 if res.status().is_success() {
                     let text = res.text().unwrap();
                     (res, Some(serde_json::from_str(text.as_str()).unwrap()))
