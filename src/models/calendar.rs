@@ -1,6 +1,7 @@
 use chrono::{
     DateTime,
     Utc,
+    Date
 };
 use crate::models::{
     episode::Episode,
@@ -17,6 +18,6 @@ pub struct CalendarShow {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CalendarMovie {
-    released: DateTime<Utc>,
+    released: Date<Utc>,
     movie: Movie,
 }
