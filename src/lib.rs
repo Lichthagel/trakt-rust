@@ -13,6 +13,7 @@ use crate::models::{
     CalendarShow,
     Certifications,
     CertificationsType,
+    Comment,
 };
 use chrono::{Date, Utc};
 use reqwest::{Error, Response};
@@ -109,6 +110,17 @@ impl TraktApi {
             self.client,
             self.client_id.as_str(),
             api_route!("calendars/all/dvd", start_date.format("%Y-%m-%d"), days)
+        )
+    }
+
+    pub fn comments(
+        &self,
+        id: u32,
+    ) -> Result<(Response, Option<Comment>), Error> {
+        api_request!(
+            self.client,
+            self.client_id.as_str(),
+            api_route!("comments", id)
         )
     }
 }
