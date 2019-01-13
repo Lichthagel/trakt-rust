@@ -123,6 +123,23 @@ impl TraktApi {
             api_route!("comments", id)
         )
     }
+
+    pub fn replies(
+        &self,
+        comment_id: u32,
+        page: u32,
+        limit: u32,
+    ) -> Result<(Response, Option<Vec<Comment>>), Error> {
+        api_request!(
+            self.client,
+            self.client_id.as_str(),
+            api_pagination!(
+                api_route!("comments", comment_id, "replies"),
+                page,
+                limit
+            )
+        )
+    }
 }
 
 impl PartialEq for TraktApi {
