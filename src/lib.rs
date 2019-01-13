@@ -8,13 +8,10 @@ extern crate serde_json;
 mod macros;
 pub mod models;
 
-use crate::models::comment::CommentItem;
 use crate::models::{
     AuthenticationDeviceGetToken, AuthenticationDeviceGetTokenResponse, AuthenticationDeviceId,
     AuthenticationDevices, CalendarMovie, CalendarShow, Certifications, CertificationsType,
-    Comment,
-    CommentItem,
-    Like
+    Comment, CommentItem, Like,
 };
 use chrono::{Date, Utc};
 use reqwest::{Error, Response};
@@ -203,11 +200,7 @@ impl TraktApi {
         api_request!(
             self.client,
             self.client_id.as_str(),
-            api_pagination!(
-                api_route!("comments", comment_id, "likes"),
-                page,
-                limit
-            )
+            api_pagination!(api_route!("comments", comment_id, "likes"), page, limit)
         )
     }
 }
