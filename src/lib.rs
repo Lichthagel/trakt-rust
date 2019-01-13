@@ -13,6 +13,8 @@ use crate::models::{
     AuthenticationDeviceGetToken, AuthenticationDeviceGetTokenResponse, AuthenticationDeviceId,
     AuthenticationDevices, CalendarMovie, CalendarShow, Certifications, CertificationsType,
     Comment,
+    CommentItem,
+    Like
 };
 use chrono::{Date, Utc};
 use reqwest::{Error, Response};
@@ -189,6 +191,23 @@ impl TraktApi {
             self.client,
             self.client_id.as_str(),
             api_route!("comments", comment_id, "item")
+        )
+    }
+
+    pub fn comment_likes(
+        &self,
+        comment_id: u32,
+        page: u32,
+        limit: u32,
+    ) -> Result<(Response, Option<Vec<Like>>), Error> {
+        api_request!(
+            self.client,
+            self.client_id.as_str(),
+            api_pagination!(
+                api_route!("comments", comment_id, "likes"),
+                page,
+                limit
+            )
         )
     }
 }

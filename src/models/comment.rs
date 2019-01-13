@@ -11,9 +11,6 @@ use crate::models::{
     List,
     CommentableItemType
 };
-use serde::Deserialize;
-use serde::Deserializer;
-use serde::de::Visitor;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Comment {

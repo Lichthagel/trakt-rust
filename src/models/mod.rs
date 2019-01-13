@@ -7,6 +7,7 @@ pub mod genre;
 pub mod history;
 pub mod ids;
 pub mod item_types;
+pub mod like;
 pub mod list;
 pub mod movie;
 pub mod person;
@@ -31,6 +32,7 @@ pub use crate::models::{
     history::HistoryItem,
     ids::Ids,
     item_types::{CommentableItemType, ListItemType, MediaType, WatchableType},
+    like::Like,
     list::{List, ListItem},
     movie::Movie,
     person::Person,
