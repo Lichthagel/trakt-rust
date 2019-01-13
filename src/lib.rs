@@ -4,12 +4,16 @@ extern crate chrono;
 extern crate serde;
 extern crate serde_json;
 
-mod constants;
 #[macro_use]
 mod macros;
-mod models;
+pub mod models;
 
-use crate::models::calendar::{CalendarMovie, CalendarShow};
+use crate::models::{
+    CalendarMovie,
+    CalendarShow,
+    Certifications,
+    CertificationsType,
+};
 use chrono::{Date, Utc};
 use reqwest::{Error, Response};
 
@@ -27,6 +31,17 @@ impl TraktApi {
             client_id,
             client_secret,
         }
+    }
+
+    pub fn certifications(
+        &self,
+        ct: CertificationsType,
+    ) -> Result<(Response, Option<Certifications>), Error> {
+        api_request!(
+        self.client,
+        self.client_id.as_str(),
+        api_route!("certifications", ct.to_string())
+        )
     }
 
     pub fn calendar_all_shows(
@@ -118,7 +133,7 @@ mod tests {
             TraktApi {
                 client: reqwest::Client::new(),
                 client_id: String::from("abc"),
-                client_secret: String::from("def")
+                client_secret: String::from("def"),
             },
             TraktApi::new(String::from("abc"), String::from("def"))
         );
