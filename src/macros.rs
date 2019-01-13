@@ -11,6 +11,12 @@ macro_rules! api_route {
     }};
 }
 
+macro_rules! api_pagination {
+    ($url:expr, $page:expr, $limit:expr) => {
+        format!("{}?page={}&limit={}", $url, $page, $limit)
+    };
+}
+
 /// This macro creates requests for the Trakt API
 macro_rules! api_request {
     ($client:expr, $client_id:expr, $route:expr) => {{
