@@ -2,7 +2,18 @@ use chrono::{
     DateTime,
     Utc
 };
-use crate::models::user::User;
+use crate::models::{
+    user::User,
+    Show,
+    Movie,
+    Episode,
+    Season,
+    List,
+    CommentableItemType
+};
+use serde::Deserialize;
+use serde::Deserializer;
+use serde::de::Visitor;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Comment {
@@ -17,4 +28,15 @@ pub struct Comment {
     likes: u64,
     user_rating: u8,
     user: User
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CommentItem {
+    #[serde(rename = "type")]
+    item_type: CommentableItemType,
+    show: Option<Show>,
+    movie: Option<Movie>,
+    season: Option<Season>,
+    episode: Option<Episode>,
+    list: Option<List>
 }

@@ -1,4 +1,4 @@
-use crate::models::{episode::Episode, movie::Movie, show::Show};
+use crate::models::{Episode, Movie, Show};
 use chrono::{DateTime, NaiveDate, Utc};
 
 #[derive(Debug, Serialize, Deserialize)]

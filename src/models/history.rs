@@ -3,9 +3,9 @@ use chrono::{
     Utc
 };
 use crate::models::{
-    movie::Movie,
-    item_type::ItemType,
-    episode::Episode,
+    Movie,
+    Episode,
+    WatchableType
 };
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -13,7 +13,8 @@ pub struct HistoryItem {
     id: u64,
     watched_at: DateTime<Utc>,
     action: String,
-    content_type: ItemType,
+    #[serde(rename = "type")]
+    item_type: WatchableType,
     movie: Option<Movie>,
     episode: Option<Episode>,
 }

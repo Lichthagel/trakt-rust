@@ -6,7 +6,7 @@ pub mod episode;
 pub mod genre;
 pub mod history;
 pub mod ids;
-pub mod item_type;
+pub mod item_types;
 pub mod list;
 pub mod movie;
 pub mod person;
@@ -29,13 +29,24 @@ pub use crate::models::{
         Certification,
         Certifications,
     },
-    comment::Comment,
+    comment::{
+        Comment,
+        CommentItem
+    },
     episode::Episode,
     genre::Genre,
     history::HistoryItem,
     ids::Ids,
-    item_type::ItemType,
-    list::ListEntry,
+    item_types::{
+        ListItemType,
+        CommentableItemType,
+        MediaType,
+        WatchableType
+    },
+    list::{
+        List,
+        ListItem
+    },
     movie::Movie,
     person::Person,
     rating::Rating,

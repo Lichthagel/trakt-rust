@@ -10,8 +10,11 @@ pub struct Certification {
     description: String
 }
 
+#[derive(Debug, Serialize, Deserialize)]
 pub enum CertificationsType {
+    #[serde(rename = "movies")]
     MOVIES,
+    #[serde(rename = "shows")]
     SHOWS
 }
 

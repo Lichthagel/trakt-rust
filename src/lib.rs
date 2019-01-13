@@ -17,6 +17,7 @@ use crate::models::{
 };
 use chrono::{Date, Utc};
 use reqwest::{Error, Response};
+use crate::models::comment::CommentItem;
 
 #[derive(Debug)]
 pub struct TraktApi {
@@ -138,6 +139,17 @@ impl TraktApi {
                 page,
                 limit
             )
+        )
+    }
+
+    pub fn comment_item(
+        &self,
+        comment_id: u32
+    ) -> Result<(Response, Option<CommentItem>), Error> {
+        api_request!(
+            self.client,
+            self.client_id.as_str(),
+            api_route!("comments", comment_id, "item")
         )
     }
 }

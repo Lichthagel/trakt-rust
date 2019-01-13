@@ -3,14 +3,15 @@ use chrono::{
     Utc
 };
 use crate::models::{
-    movie::Movie,
-    show::Show,
+    Movie,
+    Show,
 };
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct WatchedEntry {
     plays: u32,
     last_watched_at: DateTime<Utc>,
+    last_updated_at: Option<DateTime<Utc>>,
     movie: Option<Movie>,
     show: Option<Show>,
     seasons: Option<Vec<WatchedSeason>>,
