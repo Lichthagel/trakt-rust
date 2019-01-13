@@ -19,53 +19,26 @@ pub mod watched;
 pub mod watching;
 
 pub use crate::models::{
-    authentication::Authentication,
-    calendar::{
-        CalendarShow,
-        CalendarMovie,
+    authentication::{
+        Authentication, AuthenticationDeviceGetToken, AuthenticationDeviceGetTokenResponse,
+        AuthenticationDeviceId, AuthenticationDevices,
     },
-    certifications::{
-        CertificationsType,
-        Certification,
-        Certifications,
-    },
-    comment::{
-        Comment,
-        CommentItem
-    },
+    calendar::{CalendarMovie, CalendarShow},
+    certifications::{Certification, Certifications, CertificationsType},
+    comment::{Comment, CommentItem},
     episode::Episode,
     genre::Genre,
     history::HistoryItem,
     ids::Ids,
-    item_types::{
-        ListItemType,
-        CommentableItemType,
-        MediaType,
-        WatchableType
-    },
-    list::{
-        List,
-        ListItem
-    },
+    item_types::{CommentableItemType, ListItemType, MediaType, WatchableType},
+    list::{List, ListItem},
     movie::Movie,
     person::Person,
     rating::Rating,
     season::Season,
     show::Show,
-    stats::{
-        Stats,
-        RatingStats,
-        SeasonStats,
-        ShowStats,
-        NetworkStats,
-        MovieStats,
-        EpisodeStats,
-    },
+    stats::{EpisodeStats, MovieStats, NetworkStats, RatingStats, SeasonStats, ShowStats, Stats},
     user::User,
-    watched::{
-        WatchedEpisode,
-        WatchedEntry,
-        WatchedSeason,
-    },
+    watched::{WatchedEntry, WatchedEpisode, WatchedSeason},
     watching::Watching,
 };

@@ -8,16 +8,14 @@ extern crate serde_json;
 mod macros;
 pub mod models;
 
+use crate::models::comment::CommentItem;
 use crate::models::{
-    CalendarMovie,
-    CalendarShow,
-    Certifications,
-    CertificationsType,
+    AuthenticationDeviceGetToken, AuthenticationDeviceGetTokenResponse, AuthenticationDeviceId,
+    AuthenticationDevices, CalendarMovie, CalendarShow, Certifications, CertificationsType,
     Comment,
 };
 use chrono::{Date, Utc};
 use reqwest::{Error, Response};
-use crate::models::comment::CommentItem;
 
 #[derive(Debug)]
 pub struct TraktApi {
@@ -35,14 +33,65 @@ impl TraktApi {
         }
     }
 
+    pub fn authenticate_devices(&self) -> Result<(Response, Option<AuthenticationDevices>), Error> {
+        self.client
+            .post(&api_route!("oauth/device/code"))
+            .header("Content-Type", "application/json")
+            .header("trakt-api-version", "2")
+            .header("trakt-api-key", self.client_id.as_str())
+            .body(
+                serde_json::to_string(&AuthenticationDeviceId {
+                    client_id: self.client_id.clone(),
+                })
+                .unwrap(),
+            )
+            .send()
+            .map(|mut res| {
+                if res.status().is_success() {
+                    let text = res.text().unwrap();
+                    (res, Some(serde_json::from_str(text.as_str()).unwrap()))
+                } else {
+                    (res, None)
+                }
+            })
+    }
+
+    pub fn get_token(
+        &self,
+        code: String,
+    ) -> Result<(Response, Option<AuthenticationDeviceGetTokenResponse>), Error> {
+        self.client
+            .post(&api_route!("oauth/device/token"))
+            .header("Content-Type", "application/json")
+            .header("trakt-api-version", "2")
+            .header("trakt-api-key", self.client_id.as_str())
+            .body(
+                serde_json::to_string(&AuthenticationDeviceGetToken {
+                    code,
+                    client_id: self.client_id.clone(),
+                    client_secret: self.client_secret.clone(),
+                })
+                .unwrap(),
+            )
+            .send()
+            .map(|mut res| {
+                if res.status().is_success() {
+                    let text = res.text().unwrap();
+                    (res, Some(serde_json::from_str(text.as_str()).unwrap()))
+                } else {
+                    (res, None)
+                }
+            })
+    }
+
     pub fn certifications(
         &self,
         ct: CertificationsType,
     ) -> Result<(Response, Option<Certifications>), Error> {
         api_request!(
-        self.client,
-        self.client_id.as_str(),
-        api_route!("certifications", ct.to_string())
+            self.client,
+            self.client_id.as_str(),
+            api_route!("certifications", ct.to_string())
         )
     }
 
@@ -114,10 +163,7 @@ impl TraktApi {
         )
     }
 
-    pub fn comments(
-        &self,
-        id: u32,
-    ) -> Result<(Response, Option<Comment>), Error> {
+    pub fn comments(&self, id: u32) -> Result<(Response, Option<Comment>), Error> {
         api_request!(
             self.client,
             self.client_id.as_str(),
@@ -134,18 +180,11 @@ impl TraktApi {
         api_request!(
             self.client,
             self.client_id.as_str(),
-            api_pagination!(
-                api_route!("comments", comment_id, "replies"),
-                page,
-                limit
-            )
+            api_pagination!(api_route!("comments", comment_id, "replies"), page, limit)
         )
     }
 
-    pub fn comment_item(
-        &self,
-        comment_id: u32
-    ) -> Result<(Response, Option<CommentItem>), Error> {
+    pub fn comment_item(&self, comment_id: u32) -> Result<(Response, Option<CommentItem>), Error> {
         api_request!(
             self.client,
             self.client_id.as_str(),
