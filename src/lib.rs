@@ -7,6 +7,7 @@ extern crate serde_json;
 #[macro_use]
 mod macros;
 pub mod models;
+pub mod error;
 
 use crate::models::comment::CommentItem;
 use crate::models::{
@@ -17,7 +18,10 @@ use crate::models::{
     Like
 };
 use chrono::{Date, Utc};
-use reqwest::{Error, Response};
+use reqwest::{Error as ReqError, Response};
+use std::option::Option::Some;
+use std::option::Option::None;
+use crate::error::Error;
 
 #[derive(Debug)]
 pub struct TraktApi {
@@ -35,7 +39,7 @@ impl TraktApi {
         }
     }
 
-    pub fn authenticate_devices(&self) -> Result<(Response, Option<AuthenticationDevices>), Error> {
+    pub fn authenticate_devices(&self) -> Result<(Response, Option<AuthenticationDevices>), ReqError> {
         self.client
             .post(&api_route!("oauth/device/code"))
             .header("Content-Type", "application/json")
@@ -45,7 +49,7 @@ impl TraktApi {
                 serde_json::to_string(&AuthenticationDeviceId {
                     client_id: self.client_id.clone(),
                 })
-                .unwrap(),
+                    .unwrap(),
             )
             .send()
             .map(|mut res| {
@@ -61,7 +65,7 @@ impl TraktApi {
     pub fn get_token(
         &self,
         code: String,
-    ) -> Result<(Response, Option<AuthenticationDeviceGetTokenResponse>), Error> {
+    ) -> Result<(Response, Option<AuthenticationDeviceGetTokenResponse>), ReqError> {
         self.client
             .post(&api_route!("oauth/device/token"))
             .header("Content-Type", "application/json")
@@ -73,7 +77,7 @@ impl TraktApi {
                     client_id: self.client_id.clone(),
                     client_secret: self.client_secret.clone(),
                 })
-                .unwrap(),
+                    .unwrap(),
             )
             .send()
             .map(|mut res| {
@@ -89,7 +93,7 @@ impl TraktApi {
     pub fn certifications(
         &self,
         ct: CertificationsType,
-    ) -> Result<(Response, Option<Certifications>), Error> {
+    ) -> Result<Certifications, Error> {
         api_request!(
             self.client,
             self.client_id.as_str(),
@@ -101,7 +105,7 @@ impl TraktApi {
         &self,
         start_date: Date<Utc>,
         days: u32,
-    ) -> Result<(Response, Option<Vec<CalendarShow>>), Error> {
+    ) -> Result<Vec<CalendarShow>, Error> {
         api_request!(
             self.client,
             self.client_id.as_str(),
@@ -113,7 +117,7 @@ impl TraktApi {
         &self,
         start_date: Date<Utc>,
         days: u32,
-    ) -> Result<(Response, Option<Vec<CalendarShow>>), Error> {
+    ) -> Result<Vec<CalendarShow>, Error> {
         api_request!(
             self.client,
             self.client_id.as_str(),
@@ -129,7 +133,7 @@ impl TraktApi {
         &self,
         start_date: Date<Utc>,
         days: u32,
-    ) -> Result<(Response, Option<Vec<CalendarShow>>), Error> {
+    ) -> Result<Vec<CalendarShow>, Error> {
         api_request!(
             self.client,
             self.client_id.as_str(),
@@ -145,7 +149,7 @@ impl TraktApi {
         &self,
         start_date: Date<Utc>,
         days: u32,
-    ) -> Result<(Response, Option<Vec<CalendarMovie>>), Error> {
+    ) -> Result<Vec<CalendarMovie>, Error> {
         api_request!(
             self.client,
             self.client_id.as_str(),
@@ -157,7 +161,7 @@ impl TraktApi {
         &self,
         start_date: Date<Utc>,
         days: u32,
-    ) -> Result<(Response, Option<Vec<CalendarMovie>>), Error> {
+    ) -> Result<Vec<CalendarMovie>, Error> {
         api_request!(
             self.client,
             self.client_id.as_str(),
@@ -165,7 +169,7 @@ impl TraktApi {
         )
     }
 
-    pub fn comments(&self, id: u32) -> Result<(Response, Option<Comment>), Error> {
+    pub fn comments(&self, id: u32) -> Result<Comment, Error> {
         api_request!(
             self.client,
             self.client_id.as_str(),
@@ -178,7 +182,7 @@ impl TraktApi {
         comment_id: u32,
         page: u32,
         limit: u32,
-    ) -> Result<(Response, Option<Vec<Comment>>), Error> {
+    ) -> Result<Vec<Comment>, Error> {
         api_request!(
             self.client,
             self.client_id.as_str(),
@@ -186,7 +190,7 @@ impl TraktApi {
         )
     }
 
-    pub fn comment_item(&self, comment_id: u32) -> Result<(Response, Option<CommentItem>), Error> {
+    pub fn comment_item(&self, comment_id: u32) -> Result<CommentItem, Error> {
         api_request!(
             self.client,
             self.client_id.as_str(),
@@ -199,7 +203,7 @@ impl TraktApi {
         comment_id: u32,
         page: u32,
         limit: u32,
-    ) -> Result<(Response, Option<Vec<Like>>), Error> {
+    ) -> Result<Vec<Like>, Error> {
         api_request!(
             self.client,
             self.client_id.as_str(),

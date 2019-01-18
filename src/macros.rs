@@ -20,20 +20,23 @@ macro_rules! api_pagination {
 /// This macro creates requests for the Trakt API
 macro_rules! api_request {
     ($client:expr, $client_id:expr, $route:expr) => {{
-        $client
+        match $client
             .get(&$route)
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", $client_id)
-            .send()
-            .map(|mut res| {
+            .send() {
+            Ok(mut res) => {
+
                 if res.status().is_success() {
                     let text = res.text().unwrap();
-                    (res, Some(serde_json::from_str(text.as_str()).unwrap()))
+                    Ok(serde_json::from_str(text.as_str()).unwrap())
                 } else {
-                    (res, None)
+                    Err(Error::RESPONSE(res))
                 }
-            })
+            },
+            Err(e) => Err(Error::CONNECTION(e))
+        }
     }};
 }
 
