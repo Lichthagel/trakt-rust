@@ -16,6 +16,7 @@ pub mod network;
 pub mod people;
 pub mod person;
 pub mod rating;
+pub mod search;
 pub mod season;
 pub mod show;
 pub mod stats;
@@ -34,10 +35,10 @@ pub use crate::models::{
     episode::{Episode, OptionEpisode},
     genre::Genre,
     history::HistoryItem,
-    ids::Ids,
+    ids::{IdType, Ids},
     item_types::{
-        AllCommentableItemType, CommentableItemType, ItemType, ListItemType, MediaType, TimePeriod,
-        WatchableType,
+        AllCommentableItemType, CommentableItemType, ItemType, ListItemType, MediaType,
+        SearchItemType, TimePeriod, WatchableType,
     },
     like::Like,
     list::{List, ListInfo, ListItem, ListSort, ListType},
@@ -49,6 +50,7 @@ pub use crate::models::{
     people::{CastPerson, Character, Credits, Crew, CrewMember, CrewPerson, MoviePeople},
     person::Person,
     rating::{Rating, RatingDistribution, Ratings},
+    search::{SearchResult, SearchType},
     season::{OptionSeason, Season},
     show::{OptionShow, Show},
     stats::{

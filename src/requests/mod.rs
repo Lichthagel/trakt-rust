@@ -6,3 +6,4 @@ mod lists;
 mod movies;
 mod people;
 mod recommendations;
+mod search;

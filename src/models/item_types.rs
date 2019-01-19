@@ -1,3 +1,6 @@
+use std::fmt;
+use std::fmt::Display;
+
 #[derive(Debug, Serialize, Deserialize)]
 pub enum ListItemType {
     #[serde(rename = "movie")]
@@ -108,6 +111,28 @@ impl ToString for TimePeriod {
             TimePeriod::Monthly => "monthly",
             TimePeriod::Yearly => "yearly",
             _ => "all",
+        })
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum SearchItemType {
+    Movie,
+    Show,
+    Episode,
+    Person,
+    List,
+}
+
+impl Display for SearchItemType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(match self {
+            SearchItemType::Movie => "movie",
+            SearchItemType::Show => "show",
+            SearchItemType::Episode => "episode",
+            SearchItemType::Person => "person",
+            SearchItemType::List => "list",
         })
     }
 }
