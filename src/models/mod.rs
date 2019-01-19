@@ -29,8 +29,8 @@ pub use crate::models::{
     certifications::{Certification, Certifications, CertificationsType},
     checkin::{Checkin, CheckinResponse, CheckinSharing},
     comment::{
-        Comment, CommentAndItem, CommentItem, CommentPost, CommentSharing, CommentType,
-        CommentUpdate,
+        Comment, CommentAndItem, CommentItem, CommentNew, CommentSharing, CommentType,
+        CommentPost,
     },
     credits::{Character, Credits, Crew, CrewMember},
     episode::{Episode, OptionEpisode},

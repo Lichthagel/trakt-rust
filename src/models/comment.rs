@@ -63,7 +63,7 @@ impl ToString for CommentType {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct CommentPost {
+pub struct CommentNew {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub movie: Option<OptionMovie>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -79,7 +79,7 @@ pub struct CommentPost {
     pub sharing: CommentSharing,
 }
 
-impl CommentPost {
+impl CommentNew {
     pub fn to_json_string(&self) -> Result<String, serde_json::Error> {
         serde_json::to_string(self)
     }
@@ -105,12 +105,12 @@ impl CommentSharing {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct CommentUpdate {
+pub struct CommentPost {
     comment: String,
     spoiler: bool,
 }
 
-impl CommentUpdate {
+impl CommentPost {
     pub fn new(comment: String, spoiler: bool) -> Self {
         Self { comment, spoiler }
     }

@@ -1,14 +1,14 @@
 use crate::{
     error::Result,
     models::{
-        AllCommentableItemType, Comment, CommentAndItem, CommentItem, CommentPost, CommentType,
-        CommentUpdate, Like,
+        AllCommentableItemType, Comment, CommentAndItem, CommentItem, CommentNew, CommentType,
+        CommentPost, Like,
     },
     TraktApi,
 };
 
 impl TraktApi {
-    pub fn comment_post(&self, comment: CommentPost, access_token: String) -> Result<Comment> {
+    pub fn comment_post(&self, comment: CommentNew, access_token: String) -> Result<Comment> {
         self.auth_post(
             api_url!(("comments")),
             comment.to_json_string()?,
@@ -23,7 +23,7 @@ impl TraktApi {
     pub fn comment_update(
         &self,
         comment_id: u32,
-        comment_update: CommentUpdate,
+        comment_update: CommentPost,
         access_token: String,
     ) -> Result<Comment> {
         self.auth_put(
@@ -50,6 +50,19 @@ impl TraktApi {
             ("page", page),
             ("limit", limit)
         ))
+    }
+
+    pub fn replies_post(
+        &self,
+        comment_id: u32,
+        comment: CommentPost,
+        access_token: String
+    ) -> Result<Comment> {
+        self.auth_post(
+            api_url!(("comments", comment_id, "replies")),
+            comment.to_json_string()?,
+            access_token
+        )
     }
 
     pub fn comment_item(&self, comment_id: u32) -> Result<CommentItem> {
