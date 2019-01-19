@@ -8,7 +8,7 @@ use crate::{
 };
 
 impl TraktApi {
-    pub fn comment(&self, comment: CommentPost, access_token: String) -> Result<Comment> {
+    pub fn post_comment(&self, comment: CommentPost, access_token: String) -> Result<Comment> {
         self.auth_post(
             api_url!(("comments")),
             comment.to_json_string()?,
@@ -16,7 +16,7 @@ impl TraktApi {
         )
     }
 
-    pub fn comments(&self, id: u32) -> Result<Comment> {
+    pub fn comment(&self, id: u32) -> Result<Comment> {
         self.get(api_url!(("comments", id)))
     }
 
