@@ -2,7 +2,7 @@ use crate::models::ids::Ids;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Show {
-    title: String,
-    year: Option<u16>,
-    ids: Ids,
+    pub title: String,
+    pub year: Option<u16>,
+    pub ids: Ids,
 }

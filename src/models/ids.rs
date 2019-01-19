@@ -1,9 +1,9 @@
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Ids {
-    trakt: Option<u64>,
-    slug: Option<String>,
-    tvdb: Option<u64>,
-    imdb: Option<String>,
-    tmdb: Option<u64>,
-    tvrage: Option<u64>,
+    pub trakt: Option<u64>,
+    pub slug: Option<String>,
+    pub tvdb: Option<u64>,
+    pub imdb: Option<String>,
+    pub tmdb: Option<u64>,
+    pub tvrage: Option<u64>,
 }

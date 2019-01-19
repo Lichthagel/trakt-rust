@@ -2,6 +2,7 @@
 pub enum Error {
     Response(reqwest::Response),
     Connection(reqwest::Error),
+    Serde(serde_json::Error),
     ClientSecretNeeded,
 }
 
@@ -14,5 +15,11 @@ impl From<reqwest::Error> for Error {
 impl From<reqwest::Response> for Error {
     fn from(res: reqwest::Response) -> Self {
         Error::Response(res)
+    }
+}
+
+impl From<serde_json::Error> for Error {
+    fn from(e: serde_json::Error) -> Self {
+        Error::Serde(e)
     }
 }

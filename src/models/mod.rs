@@ -1,6 +1,7 @@
 pub mod authentication;
 pub mod calendar;
 pub mod certifications;
+pub mod checkin;
 pub mod comment;
 pub mod episode;
 pub mod genre;
@@ -25,6 +26,9 @@ pub use crate::models::{
     authentication::{Authentication, AuthenticationDevices, AuthenticationTokenResponse},
     calendar::{CalendarMovie, CalendarShow},
     certifications::{Certification, Certifications, CertificationsType},
+    checkin::{
+        Checkin, CheckinEpisode, CheckinMovie, CheckinResponse, CheckinSharing, CheckinShow,
+    },
     comment::{Comment, CommentAndItem, CommentItem, CommentType},
     episode::Episode,
     genre::Genre,
@@ -37,8 +41,8 @@ pub use crate::models::{
     like::Like,
     list::{List, ListInfo, ListItem, ListSort, ListType},
     localization::{Alias, Country, Language, Translation},
-    network::Network,
     movie::{AnticipatedMovie, Movie, MovieInfo, MovieStats, UpdatedMovie, WatchedMovie},
+    network::Network,
     person::Person,
     rating::{Rating, RatingDistribution, Ratings},
     season::Season,

@@ -3,9 +3,9 @@ use chrono::{DateTime, Utc};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Movie {
-    title: String,
-    year: Option<u16>,
-    ids: Ids,
+    pub title: String,
+    pub year: Option<u16>,
+    pub ids: Ids,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
