@@ -34,7 +34,8 @@ use crate::{
         MovieInfo,
         Movie,
         WatchedMovie,
-        TimePeriod
+        TimePeriod,
+        AnticipatedMovie
     },
     error::Error,
 };
@@ -386,6 +387,18 @@ impl TraktApi {
     ) -> Result<Vec<WatchedMovie>, Error> {
         self.get(api_parameter!(
             api_route!("movies", "collected", period.to_string()),
+            ("page", page),
+            ("limit", limit)
+        ))
+    }
+
+    pub fn movies_anticipated(
+        &self,
+        page: u32,
+        limit: u32
+    ) -> Result<Vec<AnticipatedMovie>, Error> {
+        self.get(api_parameter!(
+            api_route!("movies", "anticipated"),
             ("page", page),
             ("limit", limit)
         ))

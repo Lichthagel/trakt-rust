@@ -20,3 +20,9 @@ pub struct WatchedMovie {
     collected_count: u64,
     movie: Movie
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct AnticipatedMovie {
+    list_count: u64,
+    movie: Movie
+}

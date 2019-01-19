@@ -35,7 +35,7 @@ pub use crate::models::{
     language::Language,
     like::Like,
     list::{List, ListItem, ListInfo},
-    movie::{Movie, MovieInfo, WatchedMovie},
+    movie::{Movie, MovieInfo, WatchedMovie, AnticipatedMovie},
     person::Person,
     rating::Rating,
     season::Season,
