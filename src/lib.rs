@@ -9,17 +9,28 @@ mod macros;
 pub mod models;
 pub mod error;
 
-use crate::models::{
-    AuthenticationDeviceGetToken, AuthenticationDeviceGetTokenResponse, AuthenticationDeviceId,
-    AuthenticationDevices, CalendarMovie, CalendarShow, Certifications, CertificationsType,
-    Comment, CommentItem, Like,
-};
 use chrono::{Date, Utc};
 use reqwest::{Error as ReqError, Response};
-use std::option::Option::Some;
-use std::option::Option::None;
-use crate::error::Error;
 use serde::de::DeserializeOwned;
+use crate::{
+    models::{
+        CommentType,
+        AuthenticationDeviceGetToken,
+        AuthenticationDeviceGetTokenResponse,
+        AuthenticationDeviceId,
+        AuthenticationDevices,
+        CalendarMovie,
+        CalendarShow,
+        Certifications,
+        CertificationsType,
+        Comment,
+        CommentItem,
+        Like,
+        AllCommentableItemType,
+        CommentAndItem
+    },
+    error::Error,
+};
 
 #[derive(Debug)]
 pub struct TraktApi {
@@ -49,10 +60,10 @@ impl TraktApi {
                 if res.status().is_success() {
                     Ok(serde_json::from_reader(res).unwrap())
                 } else {
-                    Err(Error::RESPONSE(res))
+                    Err(Error::Response(res))
                 }
             },
-            Err(e) => Err(Error::CONNECTION(e))
+            Err(e) => Err(Error::Connection(e))
         }
     }
 
@@ -186,6 +197,21 @@ impl TraktApi {
             page,
             limit
         ))
+    }
+
+    pub fn comments_trending(
+        &self,
+        comment_type: CommentType,
+        item_type: AllCommentableItemType,
+        include_replies: bool,
+        page: u32,
+        limit: u32
+    ) -> Result<Vec<CommentAndItem>, Error> {
+        self.get(format!("{}&include_replies={}", api_pagination!(
+            api_route!("comments", "trending", comment_type.to_string(), item_type.to_string()),
+            page,
+            limit
+        ), include_replies))
     }
 }
 

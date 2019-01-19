@@ -23,7 +23,7 @@ pub struct Comment {
     review: bool,
     replies: u64,
     likes: u64,
-    user_rating: u8,
+    user_rating: Option<u8>,
     user: User
 }
 
@@ -36,4 +36,36 @@ pub struct CommentItem {
     season: Option<Season>,
     episode: Option<Episode>,
     list: Option<List>
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CommentAndItem {
+    #[serde(rename = "type")]
+    item_type: CommentableItemType,
+    show: Option<Show>,
+    movie: Option<Movie>,
+    season: Option<Season>,
+    episode: Option<Episode>,
+    list: Option<List>,
+    comment: Comment
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub enum CommentType {
+    #[serde(rename = "reviews")]
+    REVIEWS,
+    #[serde(rename = "shouts")]
+    SHOUTS,
+    #[serde(rename = "all")]
+    ALL
+}
+
+impl ToString for CommentType {
+    fn to_string(&self) -> String {
+        String::from(match self {
+            CommentType::REVIEWS => "reviews",
+            CommentType::SHOUTS => "shouts",
+            _ => "all"
+        })
+    }
 }
