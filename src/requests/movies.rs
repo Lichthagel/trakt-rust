@@ -7,6 +7,9 @@ use crate::{
     TraktApi,
 };
 use std::fmt::Display;
+use crate::models::ListType;
+use crate::models::ListSort;
+use crate::models::List;
 
 impl TraktApi {
     pub fn movies_trending(&self, page: u32, limit: u32) -> Result<Vec<MovieInfo>, Error> {
@@ -108,6 +111,21 @@ impl TraktApi {
     ) -> Result<Vec<Comment>, Error> {
         self.get(api_url!(
             ("movies", id, "comments"),
+            ("page", page),
+            ("limit", limit)
+        ))
+    }
+
+    pub fn movie_lists(
+        &self,
+        id: impl Display,
+        list_type: ListType,
+        list_sorting: ListSort,
+        page: u32,
+        limit: u32
+    ) -> Result<Vec<List>, Error> {
+        self.get(api_url!(
+            ("movies", id, "lists", list_type, list_sorting),
             ("page", page),
             ("limit", limit)
         ))

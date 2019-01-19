@@ -34,7 +34,7 @@ pub use crate::models::{
         WatchableType,
     },
     like::Like,
-    list::{List, ListInfo, ListItem},
+    list::{List, ListInfo, ListItem, ListSort, ListType},
     localization::{Alias, Country, Language, Translation},
     movie::{AnticipatedMovie, Movie, MovieInfo, UpdatedMovie, WatchedMovie},
     person::Person,
