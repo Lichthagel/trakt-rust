@@ -9,17 +9,30 @@ mod macros;
 pub mod error;
 pub mod models;
 
-use crate::{
-    error::Error,
-    models::{
-        AllCommentableItemType, AuthenticationDevices, AuthenticationTokenResponse, CalendarMovie,
-        CalendarShow, Certifications, CertificationsType, Comment, CommentAndItem, CommentItem,
-        CommentType, Like,
-    },
-};
 use chrono::{Date, Utc};
 use serde::de::DeserializeOwned;
 use serde_json::json;
+use crate::{
+    models::{
+        Genre,
+        Country,
+        AllCommentableItemType,
+        AuthenticationDevices,
+        AuthenticationTokenResponse,
+        CalendarMovie,
+        CalendarShow,
+        Certifications,
+        CertificationsType,
+        Comment,
+        CommentAndItem,
+        CommentItem,
+        CommentType,
+        Like,
+        MediaType,
+        Language
+    },
+    error::Error,
+};
 
 #[derive(Debug)]
 pub struct TraktApi {
@@ -272,6 +285,27 @@ impl TraktApi {
             ),
             include_replies
         ))
+    }
+
+    pub fn countries(
+        &self,
+        media_type: MediaType
+    ) -> Result<Vec<Country>, Error> {
+        self.get(api_route!("countries", media_type.to_string()))
+    }
+
+    pub fn genres(
+        &self,
+        media_type: MediaType
+    ) -> Result<Vec<Genre>, Error> {
+        self.get(api_route!("genres", media_type.to_string()))
+    }
+
+    pub fn languages(
+        &self,
+        media_type: MediaType
+    ) -> Result<Vec<Language>, Error> {
+        self.get(api_route!("languages", media_type.to_string()))
     }
 }
 

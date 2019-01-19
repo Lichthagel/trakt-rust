@@ -58,7 +58,7 @@ impl ToString for AllCommentableItemType {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub enum MediaType {
+pub enum ItemType {
     #[serde(rename = "movie")]
     MOVIE,
     #[serde(rename = "show")]
@@ -75,4 +75,24 @@ pub enum WatchableType {
     MOVIE,
     #[serde(rename = "episode")]
     EPISODE
+}
+
+
+#[derive(Debug, Serialize, Deserialize)]
+pub enum MediaType {
+    #[serde(rename = "movies")]
+    Movies,
+    #[serde(rename = "shows")]
+    Shows,
+}
+
+impl ToString for MediaType {
+    fn to_string(&self) -> String {
+        String::from(
+            match self {
+                MediaType::Movies => "movies",
+                MediaType::Shows => "shows",
+            }
+        )
+    }
 }
