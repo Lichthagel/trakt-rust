@@ -31,7 +31,8 @@ use crate::{
         MediaType,
         Language,
         ListInfo,
-        MovieInfo
+        MovieInfo,
+        Movie
     },
     error::Error,
 };
@@ -332,6 +333,18 @@ impl TraktApi {
     ) -> Result<Vec<MovieInfo>, Error> {
         self.get(api_parameter!(
             api_route!("movies", "trending"),
+            ("page", page),
+            ("limit", limit)
+        ))
+    }
+
+    pub fn movies_popular(
+        &self,
+        page: u32,
+        limit: u32
+    ) -> Result<Vec<Movie>, Error> {
+        self.get(api_parameter!(
+            api_route!("movies", "popular"),
             ("page", page),
             ("limit", limit)
         ))
