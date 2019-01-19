@@ -20,6 +20,7 @@ pub mod stats;
 pub mod user;
 pub mod watched;
 pub mod watching;
+pub mod credits;
 
 pub use crate::models::{
     authentication::{Authentication, AuthenticationDevices, AuthenticationTokenResponse},
@@ -47,4 +48,5 @@ pub use crate::models::{
     user::User,
     watched::{WatchedEntry, WatchedEpisode, WatchedSeason},
     watching::Watching,
+    credits::{Credits, Crew, CrewMember, Character}
 };
