@@ -17,29 +17,6 @@ macro_rules! api_pagination {
     };
 }
 
-/// This macro creates requests for the Trakt API
-macro_rules! api_request {
-    ($client:expr, $client_id:expr, $route:expr) => {{
-        match $client
-            .get(&$route)
-            .header("Content-Type", "application/json")
-            .header("trakt-api-version", "2")
-            .header("trakt-api-key", $client_id)
-            .send() {
-            Ok(mut res) => {
-
-                if res.status().is_success() {
-                    let text = res.text().unwrap();
-                    Ok(serde_json::from_str(text.as_str()).unwrap())
-                } else {
-                    Err(Error::RESPONSE(res))
-                }
-            },
-            Err(e) => Err(Error::CONNECTION(e))
-        }
-    }};
-}
-
 #[cfg(test)]
 mod tests {
     #[test]

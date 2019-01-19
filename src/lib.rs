@@ -19,6 +19,7 @@ use reqwest::{Error as ReqError, Response};
 use std::option::Option::Some;
 use std::option::Option::None;
 use crate::error::Error;
+use serde::de::DeserializeOwned;
 
 #[derive(Debug)]
 pub struct TraktApi {
@@ -33,6 +34,25 @@ impl TraktApi {
             client: reqwest::Client::new(),
             client_id,
             client_secret,
+        }
+    }
+
+    fn get<T: DeserializeOwned>(&self, url: String) -> Result<T, Error>
+    {
+        match self.client
+            .get(&url)
+            .header("Content-Type", "application/json")
+            .header("trakt-api-version", "2")
+            .header("trakt-api-key", self.client_id.as_str())
+            .send() {
+            Ok(res) => {
+                if res.status().is_success() {
+                    Ok(serde_json::from_reader(res).unwrap())
+                } else {
+                    Err(Error::RESPONSE(res))
+                }
+            },
+            Err(e) => Err(Error::CONNECTION(e))
         }
     }
 
@@ -91,11 +111,7 @@ impl TraktApi {
         &self,
         ct: CertificationsType,
     ) -> Result<Certifications, Error> {
-        api_request!(
-            self.client,
-            self.client_id.as_str(),
-            api_route!("certifications", ct.to_string())
-        )
+        self.get(api_route!("certifications", ct.to_string()))
     }
 
     pub fn calendar_all_shows(
@@ -103,11 +119,7 @@ impl TraktApi {
         start_date: Date<Utc>,
         days: u32,
     ) -> Result<Vec<CalendarShow>, Error> {
-        api_request!(
-            self.client,
-            self.client_id.as_str(),
-            api_route!("calendars/all/shows", start_date.format("%Y-%m-%d"), days)
-        )
+        self.get(api_route!("calendars", "all", "shows", start_date.format("%Y-%m-%d"), days))
     }
 
     pub fn calendar_all_new_shows(
@@ -115,15 +127,7 @@ impl TraktApi {
         start_date: Date<Utc>,
         days: u32,
     ) -> Result<Vec<CalendarShow>, Error> {
-        api_request!(
-            self.client,
-            self.client_id.as_str(),
-            api_route!(
-                "calendars/all/shows/new",
-                start_date.format("%Y-%m-%d"),
-                days
-            )
-        )
+        self.get(api_route!("calendars", "all", "shows", "new", start_date.format("%Y-%m-%d"), days))
     }
 
     pub fn calendar_all_season_premieres(
@@ -131,15 +135,7 @@ impl TraktApi {
         start_date: Date<Utc>,
         days: u32,
     ) -> Result<Vec<CalendarShow>, Error> {
-        api_request!(
-            self.client,
-            self.client_id.as_str(),
-            api_route!(
-                "calendars/all/shows/premieres",
-                start_date.format("%Y-%m-%d"),
-                days
-            )
-        )
+        self.get(api_route!("calendars", "all", "shows", "premieres", start_date.format("%Y-%m-%d"), days))
     }
 
     pub fn calendar_all_movies(
@@ -147,11 +143,7 @@ impl TraktApi {
         start_date: Date<Utc>,
         days: u32,
     ) -> Result<Vec<CalendarMovie>, Error> {
-        api_request!(
-            self.client,
-            self.client_id.as_str(),
-            api_route!("calendars/all/movies", start_date.format("%Y-%m-%d"), days)
-        )
+        self.get(api_route!("calendars", "all", "movies", start_date.format("%Y-%m-%d"), days))
     }
 
     pub fn calendar_all_dvd(
@@ -159,19 +151,11 @@ impl TraktApi {
         start_date: Date<Utc>,
         days: u32,
     ) -> Result<Vec<CalendarMovie>, Error> {
-        api_request!(
-            self.client,
-            self.client_id.as_str(),
-            api_route!("calendars/all/dvd", start_date.format("%Y-%m-%d"), days)
-        )
+        self.get(api_route!("calendars", "all", "dvd", start_date.format("%Y-%m-%d"), days))
     }
 
     pub fn comments(&self, id: u32) -> Result<Comment, Error> {
-        api_request!(
-            self.client,
-            self.client_id.as_str(),
-            api_route!("comments", id)
-        )
+        self.get(api_route!("comments", id))
     }
 
     pub fn replies(
@@ -180,19 +164,15 @@ impl TraktApi {
         page: u32,
         limit: u32,
     ) -> Result<Vec<Comment>, Error> {
-        api_request!(
-            self.client,
-            self.client_id.as_str(),
-            api_pagination!(api_route!("comments", comment_id, "replies"), page, limit)
-        )
+        self.get(api_pagination!(
+            api_route!("comments", comment_id, "replies"),
+            page,
+            limit
+        ))
     }
 
     pub fn comment_item(&self, comment_id: u32) -> Result<CommentItem, Error> {
-        api_request!(
-            self.client,
-            self.client_id.as_str(),
-            api_route!("comments", comment_id, "item")
-        )
+        self.get(api_route!("comments", comment_id, "item"))
     }
 
     pub fn comment_likes(
@@ -201,11 +181,11 @@ impl TraktApi {
         page: u32,
         limit: u32,
     ) -> Result<Vec<Like>, Error> {
-        api_request!(
-            self.client,
-            self.client_id.as_str(),
-            api_pagination!(api_route!("comments", comment_id, "likes"), page, limit)
-        )
+        self.get(api_pagination!(
+            api_route!("comments", comment_id, "likes"),
+            page,
+            limit
+        ))
     }
 }
 
