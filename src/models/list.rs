@@ -1,5 +1,7 @@
 use crate::models::{Episode, Ids, ListItemType, Movie, Person, Season, Show, User};
 use chrono::{DateTime, Utc};
+use std::fmt;
+use std::fmt::Display;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct List {
@@ -37,4 +39,48 @@ pub struct ListItem {
     season: Option<Season>,
     show: Option<Show>,
     person: Option<Person>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum ListType {
+    Personal,
+    Official,
+    Watchlists,
+    All,
+}
+
+impl Display for ListType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(match self {
+            ListType::Personal => "personal",
+            ListType::Official => "official",
+            ListType::Watchlists => "watchlists",
+            _ => "all",
+        })
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum ListSort {
+    Popular,
+    Likes,
+    Comments,
+    Items,
+    Added,
+    Updated,
+}
+
+impl Display for ListSort {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(match self {
+            ListSort::Popular => "popular",
+            ListSort::Likes => "likes",
+            ListSort::Comments => "comments",
+            ListSort::Items => "items",
+            ListSort::Added => "added",
+            ListSort::Updated => "updated",
+        })
+    }
 }

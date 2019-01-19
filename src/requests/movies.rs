@@ -1,9 +1,15 @@
 use crate::{
     error::Error,
-    models::{Alias, AnticipatedMovie, Movie, MovieInfo, TimePeriod, UpdatedMovie, WatchedMovie},
+    models::{
+        Alias, AnticipatedMovie, Comment, Movie, MovieInfo, TimePeriod, Translation, UpdatedMovie,
+        WatchedMovie,
+    },
     TraktApi,
 };
 use std::fmt::Display;
+use crate::models::ListType;
+use crate::models::ListSort;
+use crate::models::List;
 
 impl TraktApi {
     pub fn movies_trending(&self, page: u32, limit: u32) -> Result<Vec<MovieInfo>, Error> {
@@ -87,5 +93,41 @@ impl TraktApi {
 
     pub fn movie_aliases(&self, id: impl Display) -> Result<Vec<Alias>, Error> {
         self.get(api_url!(("movies", id, "aliases")))
+    }
+
+    pub fn movie_translations(
+        &self,
+        id: impl Display,
+        language: impl Display,
+    ) -> Result<Vec<Translation>, Error> {
+        self.get(api_url!(("movies", id, "translations", language)))
+    }
+
+    pub fn movie_comments(
+        &self,
+        id: impl Display,
+        page: u32,
+        limit: u32,
+    ) -> Result<Vec<Comment>, Error> {
+        self.get(api_url!(
+            ("movies", id, "comments"),
+            ("page", page),
+            ("limit", limit)
+        ))
+    }
+
+    pub fn movie_lists(
+        &self,
+        id: impl Display,
+        list_type: ListType,
+        list_sorting: ListSort,
+        page: u32,
+        limit: u32
+    ) -> Result<Vec<List>, Error> {
+        self.get(api_url!(
+            ("movies", id, "lists", list_type, list_sorting),
+            ("page", page),
+            ("limit", limit)
+        ))
     }
 }

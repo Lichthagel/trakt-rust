@@ -15,3 +15,11 @@ pub struct Country {
     name: String,
     code: String,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Translation {
+    title: String,
+    overview: String,
+    tagline: Option<String>,
+    language: String,
+}
