@@ -364,6 +364,19 @@ impl TraktApi {
             ("limit", limit)
         ))
     }
+
+    pub fn movies_watched(
+        &self,
+        page: u32,
+        limit: u32,
+        period: TimePeriod
+    ) -> Result<Vec<WatchedMovie>, Error> {
+        self.get(api_parameter!(
+            api_route!("movies", "watched", period.to_string()),
+            ("page", page),
+            ("limit", limit)
+        ))
+    }
 }
 
 impl PartialEq for TraktApi {
