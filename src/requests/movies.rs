@@ -1,6 +1,9 @@
 use crate::{
     error::Error,
-    models::{Alias, AnticipatedMovie, Movie, MovieInfo, TimePeriod, UpdatedMovie, WatchedMovie},
+    models::{
+        Alias, AnticipatedMovie, Movie, MovieInfo, TimePeriod, Translation, UpdatedMovie,
+        WatchedMovie,
+    },
     TraktApi,
 };
 use std::fmt::Display;
@@ -87,5 +90,13 @@ impl TraktApi {
 
     pub fn movie_aliases(&self, id: impl Display) -> Result<Vec<Alias>, Error> {
         self.get(api_url!(("movies", id, "aliases")))
+    }
+
+    pub fn movie_translations(
+        &self,
+        id: impl Display,
+        language: impl Display,
+    ) -> Result<Vec<Translation>, Error> {
+        self.get(api_url!(("movies", id, "translations", language)))
     }
 }

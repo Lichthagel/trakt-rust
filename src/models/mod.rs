@@ -35,7 +35,7 @@ pub use crate::models::{
     },
     like::Like,
     list::{List, ListInfo, ListItem},
-    localization::{Alias, Country, Language},
+    localization::{Alias, Country, Language, Translation},
     movie::{AnticipatedMovie, Movie, MovieInfo, UpdatedMovie, WatchedMovie},
     person::Person,
     rating::Rating,
