@@ -1,10 +1,21 @@
 use crate::{
-    error::{Error, Result},
-    models::{AllCommentableItemType, Comment, CommentAndItem, CommentItem, CommentType, Like},
+    error::Result,
+    models::{
+        AllCommentableItemType, Comment, CommentAndItem, CommentItem, CommentPost, CommentType,
+        Like,
+    },
     TraktApi,
 };
 
 impl TraktApi {
+    pub fn comment(&self, comment: CommentPost, access_token: String) -> Result<Comment> {
+        self.auth_post(
+            api_url!(("comments")),
+            comment.to_json_string()?,
+            access_token,
+        )
+    }
+
     pub fn comments(&self, id: u32) -> Result<Comment> {
         self.get(api_url!(("comments", id)))
     }

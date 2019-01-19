@@ -1,5 +1,5 @@
 use crate::{
-    error::{Error, Result},
+    error::Result,
     models::{
         Alias, AnticipatedMovie, Comment, List, ListSort, ListType, Movie, MovieInfo, MovieStats,
         Ratings, TimePeriod, Translation, UpdatedMovie, User, WatchedMovie,

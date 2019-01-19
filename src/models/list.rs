@@ -22,6 +22,73 @@ pub struct List {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+pub struct OptionList {
+    pub name: Option<String>,
+    pub description: Option<String>,
+    pub privacy: Option<String>,
+    pub display_numbers: Option<bool>,
+    pub allow_comments: Option<bool>,
+    pub sort_by: Option<String>,
+    pub sort_how: Option<String>,
+    pub created_at: Option<DateTime<Utc>>,
+    pub updated_at: Option<DateTime<Utc>>,
+    pub item_count: Option<u64>,
+    pub comment_count: Option<u64>,
+    pub likes: Option<u64>,
+    pub ids: Option<Ids>,
+    pub user: Option<User>,
+}
+
+impl OptionList {
+    pub fn new(trakt_id: u64) -> Self {
+        Self {
+            name: None,
+            description: None,
+            privacy: None,
+            display_numbers: None,
+            allow_comments: None,
+            sort_by: None,
+            sort_how: None,
+            created_at: None,
+            updated_at: None,
+            item_count: None,
+            comment_count: None,
+            likes: None,
+            ids: Some(Ids {
+                trakt: Some(trakt_id),
+                slug: None,
+                tvdb: None,
+                imdb: None,
+                tmdb: None,
+                tvrage: None,
+            }),
+            user: None,
+        }
+    }
+}
+
+impl From<List> for OptionList {
+    fn from(list: List) -> Self {
+        Self {
+            name: Some(list.name),
+            description: list.description,
+            privacy: Some(list.privacy),
+            display_numbers: Some(list.display_numbers),
+            allow_comments: Some(list.allow_comments),
+            sort_by: Some(list.sort_by),
+            sort_how: Some(list.sort_how),
+            created_at: Some(list.created_at),
+            updated_at: list.updated_at,
+            item_count: Some(list.item_count),
+            comment_count: Some(list.comment_count),
+            likes: Some(list.likes),
+            ids: Some(list.ids),
+            user: Some(list.user),
+        }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct ListInfo {
     like_count: u32,
     comment_count: u32,

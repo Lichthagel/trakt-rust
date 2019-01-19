@@ -1,4 +1,7 @@
-use crate::models::{user::User, CommentableItemType, Episode, List, Movie, Season, Show};
+use crate::models::{
+    list::OptionList, user::User, CommentableItemType, Episode, List, Movie, OptionEpisode,
+    OptionMovie, OptionSeason, OptionShow, Season, Show,
+};
 use chrono::{DateTime, Utc};
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -56,5 +59,47 @@ impl ToString for CommentType {
             CommentType::SHOUTS => "shouts",
             _ => "all",
         })
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CommentPost {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub movie: Option<OptionMovie>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub show: Option<OptionShow>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub season: Option<OptionSeason>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub episode: Option<OptionEpisode>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub list: Option<OptionList>,
+    pub comment: String,
+    pub spoiler: bool,
+    pub sharing: CommentSharing,
+}
+
+impl CommentPost {
+    pub fn to_json_string(&self) -> Result<String, serde_json::Error>{
+        serde_json::to_string(self)
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CommentSharing {
+    twitter: bool,
+    facebook: bool,
+    tumblr: bool,
+    medium: bool
+}
+
+impl CommentSharing {
+    pub fn new(twitter: bool, facebook: bool, tumblr: bool, medium: bool) -> Self {
+        Self {
+            twitter,
+            facebook,
+            tumblr,
+            medium
+        }
     }
 }

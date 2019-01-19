@@ -1,5 +1,5 @@
 use crate::{
-    error::{Error, Result},
+    error::Result,
     models::{Credits, List, Person},
     TraktApi,
 };

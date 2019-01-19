@@ -43,3 +43,37 @@ pub struct MovieStats {
     lists: u64,
     votes: u64,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct OptionMovie {
+    title: Option<String>,
+    year: Option<u16>,
+    ids: Option<Ids>,
+}
+
+impl OptionMovie {
+    pub fn new(trakt_slug: String) -> Self {
+        Self {
+            title: None,
+            year: None,
+            ids: Some(Ids {
+                trakt: None,
+                slug: Some(trakt_slug),
+                tvdb: None,
+                imdb: None,
+                tmdb: None,
+                tvrage: None,
+            }),
+        }
+    }
+}
+
+impl From<Movie> for OptionMovie {
+    fn from(movie: Movie) -> Self {
+        Self {
+            title: Some(movie.title),
+            year: movie.year,
+            ids: Some(movie.ids),
+        }
+    }
+}

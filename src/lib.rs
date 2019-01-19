@@ -111,7 +111,6 @@ impl TraktApi {
             .send()
         {
             Ok(res) => {
-                dbg!(&res);
                 if res.status().is_success() {
                     Ok(serde_json::from_reader(res).unwrap())
                 } else {
