@@ -8,11 +8,11 @@ macro_rules! api_url {
             string.push_str(&format!("{}", $y));
         )+
 
-        let mut first: bool = true;
+        let mut _first: bool = true;
 
         $(
-            if first {
-                first = false;
+            if _first {
+                _first = false;
                 string.push_str(&format!("?{}={}", $a, $b));
             } else {
                 string.push_str(&format!("&{}={}", $a, $b));
