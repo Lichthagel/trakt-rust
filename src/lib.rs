@@ -9,10 +9,13 @@ mod macros;
 pub mod error;
 pub mod models;
 
-use crate::error::Error;
-use crate::models::{
-    AuthenticationDevices, AuthenticationTokenResponse, CalendarMovie, CalendarShow,
-    Certifications, CertificationsType, Comment, CommentItem, Like,
+use crate::{
+    error::Error,
+    models::{
+        AllCommentableItemType, AuthenticationDevices, AuthenticationTokenResponse, CalendarMovie,
+        CalendarShow, Certifications, CertificationsType, Comment, CommentAndItem, CommentItem,
+        CommentType, Like,
+    },
 };
 use chrono::{Date, Utc};
 use serde::de::DeserializeOwned;
@@ -47,10 +50,10 @@ impl TraktApi {
                 if res.status().is_success() {
                     Ok(serde_json::from_reader(res).unwrap())
                 } else {
-                    Err(Error::RESPONSE(res))
+                    Err(Error::Response(res))
                 }
             }
-            Err(e) => Err(Error::CONNECTION(e)),
+            Err(e) => Err(Error::Connection(e)),
         }
     }
 
@@ -68,10 +71,10 @@ impl TraktApi {
                 if res.status().is_success() {
                     Ok(serde_json::from_reader(res).unwrap())
                 } else {
-                    Err(Error::RESPONSE(res))
+                    Err(Error::Response(res))
                 }
             }
-            Err(e) => Err(Error::CONNECTION(e)),
+            Err(e) => Err(Error::Connection(e)),
         }
     }
 
@@ -196,6 +199,30 @@ impl TraktApi {
             api_route!("comments", comment_id, "likes"),
             page,
             limit
+        ))
+    }
+
+    pub fn comments_trending(
+        &self,
+        comment_type: CommentType,
+        item_type: AllCommentableItemType,
+        include_replies: bool,
+        page: u32,
+        limit: u32,
+    ) -> Result<Vec<CommentAndItem>, Error> {
+        self.get(format!(
+            "{}&include_replies={}",
+            api_pagination!(
+                api_route!(
+                    "comments",
+                    "trending",
+                    comment_type.to_string(),
+                    item_type.to_string()
+                ),
+                page,
+                limit
+            ),
+            include_replies
         ))
     }
 }
