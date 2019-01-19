@@ -3,3 +3,4 @@ mod calendar;
 mod comments;
 mod lists;
 mod movies;
+mod people;
