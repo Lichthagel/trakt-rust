@@ -1,22 +1,24 @@
 // A simple macro that creates the URL routes used to send requests
 // TODO this needs to be improved
-macro_rules! api_route {
-    ($($r:expr),+) => {{
-        let mut string = String::from("https://api.trakt.tv");
+macro_rules! api_url {
+    (($($y:expr),+) $(,($a:expr, $b:expr))*) => {{
+        let mut string: String = String::from("https://api.trakt.tv");
         $(
             string.push_str("/");
-            string.push_str(&format!("{}", $r));
+            string.push_str(&format!("{}", $y));
         )+
-        string
-    }};
-}
 
-macro_rules! api_pagination {
-    ($url:expr, $(($a:expr, $b:expr)),+) => {{
-        let mut string: String = $url;
+        let mut first: bool = true;
+
         $(
-            string.push_str(&format!("?{}={}", $a, $b));
-        )+
+            if first {
+                first = false;
+                string.push_str(&format!("?{}={}", $a, $b));
+            } else {
+                string.push_str(&format!("&{}={}", $a, $b));
+            }
+
+        )*
         string
     }};
 }
@@ -24,24 +26,18 @@ macro_rules! api_pagination {
 #[cfg(test)]
 mod tests {
     #[test]
-    fn api_route_test() {
+    fn combined_force_test() {
         assert_eq!(
-            "https://api.trakt.tv/calendars/all/shows",
-            api_route!("calendars/all/shows")
+            "https://api.trakt.tv/test/1/2/3?test=1&test1=2",
+            api_url!(("test", "1", "2", "3"), ("test", "1"), ("test1", "2"))
         )
     }
+
     #[test]
-    fn multi_parameter_route_test() {
+    fn combined_force_test2() {
         assert_eq!(
-            "https://api.trakt.tv/calendars/all/shows",
-            api_route!("calendars", "all", "shows")
-        )
-    }
-    #[test]
-    fn api_pagination_test() {
-        assert_eq!(
-            "https://api.trakt.tv/example?test=1",
-            api_pagination!(String::from("https://api.trakt.tv/example"), ("test", "1"))
+            "https://api.trakt.tv/test/1/2/3",
+            api_url!(("test", "1", "2", "3"))
         )
     }
 }
