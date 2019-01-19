@@ -9,7 +9,8 @@ use crate::models::{
     Show,
     Ids,
     Person,
-    ListItemType
+    ListItemType,
+    User
 };
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -27,6 +28,14 @@ pub struct List {
     comment_count: u64,
     likes: u64,
     ids: Ids
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct ListInfo {
+    like_count: u32,
+    comment_count: u32,
+    list: List,
+    user: User
 }
 
 #[derive(Debug, Serialize, Deserialize)]
