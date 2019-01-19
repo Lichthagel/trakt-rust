@@ -12,9 +12,13 @@ macro_rules! api_route {
 }
 
 macro_rules! api_pagination {
-    ($url:expr, $page:expr, $limit:expr) => {
-        format!("{}?page={}&limit={}", $url, $page, $limit)
-    };
+    ($url:expr, $(($a:expr, $b:expr)),+) => {{
+        let mut string: String = $url;
+        $(
+            string.push_str(&format!("?{}={}", $a, $b));
+        )+
+        string
+    }};
 }
 
 #[cfg(test)]
@@ -31,6 +35,13 @@ mod tests {
         assert_eq!(
             "https://api.trakt.tv/calendars/all/shows",
             api_route!("calendars", "all", "shows")
+        )
+    }
+    #[test]
+    fn api_pagination_test() {
+        assert_eq!(
+            "https://api.trakt.tv/example?test=1",
+            api_pagination!(String::from("https://api.trakt.tv/example"), ("test", "1"))
         )
     }
 }
