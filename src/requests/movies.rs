@@ -1,15 +1,12 @@
 use crate::{
     error::Error,
     models::{
-        Alias, AnticipatedMovie, Comment, Movie, MovieInfo, TimePeriod, Translation, UpdatedMovie,
-        WatchedMovie,
+        Alias, AnticipatedMovie, Comment, List, ListSort, ListType, Movie, MovieInfo, MovieStats,
+        Ratings, TimePeriod, Translation, UpdatedMovie, User, WatchedMovie,
     },
     TraktApi,
 };
 use std::fmt::Display;
-use crate::models::ListType;
-use crate::models::ListSort;
-use crate::models::List;
 
 impl TraktApi {
     pub fn movies_trending(&self, page: u32, limit: u32) -> Result<Vec<MovieInfo>, Error> {
@@ -122,12 +119,41 @@ impl TraktApi {
         list_type: ListType,
         list_sorting: ListSort,
         page: u32,
-        limit: u32
+        limit: u32,
     ) -> Result<Vec<List>, Error> {
         self.get(api_url!(
             ("movies", id, "lists", list_type, list_sorting),
             ("page", page),
             ("limit", limit)
         ))
+    }
+
+    pub fn movie_people(&self, _id: impl Display) -> Result<Vec<()>, Error> {
+        unimplemented!() // TODO
+    }
+
+    pub fn movie_ratings(&self, id: impl Display) -> Result<Ratings, Error> {
+        self.get(api_url!(("movies", id, "ratings")))
+    }
+
+    pub fn movie_related(
+        &self,
+        id: impl Display,
+        page: u32,
+        limit: u32,
+    ) -> Result<Vec<Movie>, Error> {
+        self.get(api_url!(
+            ("movies", id, "related"),
+            ("page", page),
+            ("limit", limit)
+        ))
+    }
+
+    pub fn movie_stats(&self, id: impl Display) -> Result<MovieStats, Error> {
+        self.get(api_url!(("movies", id, "stats")))
+    }
+
+    pub fn movie_watching(&self, id: impl Display) -> Result<Vec<User>, Error> {
+        self.get(api_url!(("movies", id, "watching")))
     }
 }
