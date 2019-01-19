@@ -20,10 +20,7 @@ pub mod watched;
 pub mod watching;
 
 pub use crate::models::{
-    authentication::{
-        Authentication, AuthenticationDeviceGetToken, AuthenticationDeviceGetTokenResponse,
-        AuthenticationDeviceId, AuthenticationDevices,
-    },
+    authentication::{Authentication, AuthenticationDevices, AuthenticationTokenResponse},
     calendar::{CalendarMovie, CalendarShow},
     certifications::{Certification, Certifications, CertificationsType},
     comment::{Comment, CommentItem},

@@ -17,23 +17,11 @@ pub struct AuthenticationDevices {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct AuthenticationDeviceId {
-    pub client_id: String,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct AuthenticationDeviceGetToken {
-    pub code: String,
-    pub client_id: String,
-    pub client_secret: String,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct AuthenticationDeviceGetTokenResponse {
+pub struct AuthenticationTokenResponse {
     pub access_token: String,
     pub token_type: String,
-    pub expires_in: String,
+    pub expires_in: u32,
     pub refresh_token: String,
     pub scope: String,
-    pub created_at: String,
+    pub created_at: u64,
 }

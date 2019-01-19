@@ -6,20 +6,17 @@ extern crate serde_json;
 
 #[macro_use]
 mod macros;
-pub mod models;
 pub mod error;
+pub mod models;
 
+use crate::error::Error;
 use crate::models::{
-    AuthenticationDeviceGetToken, AuthenticationDeviceGetTokenResponse, AuthenticationDeviceId,
-    AuthenticationDevices, CalendarMovie, CalendarShow, Certifications, CertificationsType,
-    Comment, CommentItem, Like,
+    AuthenticationDevices, AuthenticationTokenResponse, CalendarMovie, CalendarShow,
+    Certifications, CertificationsType, Comment, CommentItem, Like,
 };
 use chrono::{Date, Utc};
-use reqwest::{Error as ReqError, Response};
-use std::option::Option::Some;
-use std::option::Option::None;
-use crate::error::Error;
 use serde::de::DeserializeOwned;
+use serde_json::json;
 
 #[derive(Debug)]
 pub struct TraktApi {
@@ -37,80 +34,67 @@ impl TraktApi {
         }
     }
 
-    fn get<T: DeserializeOwned>(&self, url: String) -> Result<T, Error>
-    {
-        match self.client
+    fn get<T: DeserializeOwned>(&self, url: String) -> Result<T, Error> {
+        match self
+            .client
             .get(&url)
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
-            .send() {
+            .send()
+        {
             Ok(res) => {
                 if res.status().is_success() {
                     Ok(serde_json::from_reader(res).unwrap())
                 } else {
                     Err(Error::RESPONSE(res))
                 }
-            },
-            Err(e) => Err(Error::CONNECTION(e))
+            }
+            Err(e) => Err(Error::CONNECTION(e)),
         }
     }
 
-    pub fn authenticate_devices(&self) -> Result<(Response, Option<AuthenticationDevices>), ReqError> {
-        self.client
-            .post(&api_route!("oauth/device/code"))
+    fn post<T: DeserializeOwned>(&self, url: String, body: String) -> Result<T, Error> {
+        match self
+            .client
+            .post(&url)
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
-            .body(
-                serde_json::to_string(&AuthenticationDeviceId {
-                    client_id: self.client_id.clone(),
-                })
-                    .unwrap(),
-            )
+            .body(body)
             .send()
-            .map(|mut res| {
+        {
+            Ok(res) => {
                 if res.status().is_success() {
-                    let text = res.text().unwrap();
-                    (res, Some(serde_json::from_str(text.as_str()).unwrap()))
+                    Ok(serde_json::from_reader(res).unwrap())
                 } else {
-                    (res, None)
+                    Err(Error::RESPONSE(res))
                 }
-            })
+            }
+            Err(e) => Err(Error::CONNECTION(e)),
+        }
     }
 
-    pub fn get_token(
-        &self,
-        code: String,
-    ) -> Result<(Response, Option<AuthenticationDeviceGetTokenResponse>), ReqError> {
-        self.client
-            .post(&api_route!("oauth/device/token"))
-            .header("Content-Type", "application/json")
-            .header("trakt-api-version", "2")
-            .header("trakt-api-key", self.client_id.as_str())
-            .body(
-                serde_json::to_string(&AuthenticationDeviceGetToken {
-                    code,
-                    client_id: self.client_id.clone(),
-                    client_secret: self.client_secret.clone(),
-                })
-                    .unwrap(),
-            )
-            .send()
-            .map(|mut res| {
-                if res.status().is_success() {
-                    let text = res.text().unwrap();
-                    (res, Some(serde_json::from_str(text.as_str()).unwrap()))
-                } else {
-                    (res, None)
-                }
-            })
+    pub fn authenticate_devices(&self) -> Result<AuthenticationDevices, Error> {
+        self.post(
+            api_route!("oauth/device/code"),
+            json!({"client_id": self.client_id}).to_string(),
+        )
     }
 
-    pub fn certifications(
-        &self,
-        ct: CertificationsType,
-    ) -> Result<Certifications, Error> {
+    pub fn get_token(&self, device_code: String) -> Result<AuthenticationTokenResponse, Error> {
+        self.post(
+            api_route!("oauth/device/token"),
+            json!({
+                "code": device_code,
+                "client_id": self.client_id,
+                "client_secret": self.client_secret
+            })
+            .to_string(),
+        )
+    }
+
+    pub fn certifications(&self, ct: CertificationsType) -> Result<Certifications, Error> {
         self.get(api_route!("certifications", ct.to_string()))
     }
 
@@ -119,7 +103,13 @@ impl TraktApi {
         start_date: Date<Utc>,
         days: u32,
     ) -> Result<Vec<CalendarShow>, Error> {
-        self.get(api_route!("calendars", "all", "shows", start_date.format("%Y-%m-%d"), days))
+        self.get(api_route!(
+            "calendars",
+            "all",
+            "shows",
+            start_date.format("%Y-%m-%d"),
+            days
+        ))
     }
 
     pub fn calendar_all_new_shows(
@@ -127,7 +117,14 @@ impl TraktApi {
         start_date: Date<Utc>,
         days: u32,
     ) -> Result<Vec<CalendarShow>, Error> {
-        self.get(api_route!("calendars", "all", "shows", "new", start_date.format("%Y-%m-%d"), days))
+        self.get(api_route!(
+            "calendars",
+            "all",
+            "shows",
+            "new",
+            start_date.format("%Y-%m-%d"),
+            days
+        ))
     }
 
     pub fn calendar_all_season_premieres(
@@ -135,7 +132,14 @@ impl TraktApi {
         start_date: Date<Utc>,
         days: u32,
     ) -> Result<Vec<CalendarShow>, Error> {
-        self.get(api_route!("calendars", "all", "shows", "premieres", start_date.format("%Y-%m-%d"), days))
+        self.get(api_route!(
+            "calendars",
+            "all",
+            "shows",
+            "premieres",
+            start_date.format("%Y-%m-%d"),
+            days
+        ))
     }
 
     pub fn calendar_all_movies(
@@ -143,7 +147,13 @@ impl TraktApi {
         start_date: Date<Utc>,
         days: u32,
     ) -> Result<Vec<CalendarMovie>, Error> {
-        self.get(api_route!("calendars", "all", "movies", start_date.format("%Y-%m-%d"), days))
+        self.get(api_route!(
+            "calendars",
+            "all",
+            "movies",
+            start_date.format("%Y-%m-%d"),
+            days
+        ))
     }
 
     pub fn calendar_all_dvd(
@@ -151,19 +161,20 @@ impl TraktApi {
         start_date: Date<Utc>,
         days: u32,
     ) -> Result<Vec<CalendarMovie>, Error> {
-        self.get(api_route!("calendars", "all", "dvd", start_date.format("%Y-%m-%d"), days))
+        self.get(api_route!(
+            "calendars",
+            "all",
+            "dvd",
+            start_date.format("%Y-%m-%d"),
+            days
+        ))
     }
 
     pub fn comments(&self, id: u32) -> Result<Comment, Error> {
         self.get(api_route!("comments", id))
     }
 
-    pub fn replies(
-        &self,
-        comment_id: u32,
-        page: u32,
-        limit: u32,
-    ) -> Result<Vec<Comment>, Error> {
+    pub fn replies(&self, comment_id: u32, page: u32, limit: u32) -> Result<Vec<Comment>, Error> {
         self.get(api_pagination!(
             api_route!("comments", comment_id, "replies"),
             page,
