@@ -1,8 +1,9 @@
 use crate::{
     error::Error,
-    models::{AnticipatedMovie, Movie, MovieInfo, TimePeriod, UpdatedMovie, WatchedMovie},
+    models::{Alias, AnticipatedMovie, Movie, MovieInfo, TimePeriod, UpdatedMovie, WatchedMovie},
     TraktApi,
 };
+use std::fmt::Display;
 
 impl TraktApi {
     pub fn movies_trending(&self, page: u32, limit: u32) -> Result<Vec<MovieInfo>, Error> {
@@ -78,5 +79,13 @@ impl TraktApi {
             ("page", page),
             ("limit", limit)
         ))
+    }
+
+    pub fn movie(&self, id: impl Display) -> Result<Movie, Error> {
+        self.get(api_url!(("movies", id)))
+    }
+
+    pub fn movie_aliases(&self, id: impl Display) -> Result<Vec<Alias>, Error> {
+        self.get(api_url!(("movies", id, "aliases")))
     }
 }
