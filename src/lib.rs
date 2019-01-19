@@ -12,7 +12,7 @@ mod requests;
 
 use crate::{
     error::Error,
-    models::{Certifications, CertificationsType, Country, Genre, Language, MediaType},
+    models::{Certifications, CertificationsType, Country, Genre, Language, MediaType, Network},
 };
 use serde::de::DeserializeOwned;
 
@@ -87,6 +87,10 @@ impl TraktApi {
 
     pub fn languages(&self, media_type: MediaType) -> Result<Vec<Language>, Error> {
         self.get(api_url!(("languages", media_type.to_string())))
+    }
+
+    pub fn networks(&self) -> Result<Vec<Network>, Error> {
+        self.get(api_url!(("networks")))
     }
 }
 

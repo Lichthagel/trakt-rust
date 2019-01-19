@@ -11,6 +11,7 @@ pub mod like;
 pub mod list;
 pub mod localization;
 pub mod movie;
+pub mod network;
 pub mod person;
 pub mod rating;
 pub mod season;
@@ -36,6 +37,7 @@ pub use crate::models::{
     like::Like,
     list::{List, ListInfo, ListItem, ListSort, ListType},
     localization::{Alias, Country, Language, Translation},
+    network::Network,
     movie::{AnticipatedMovie, Movie, MovieInfo, MovieStats, UpdatedMovie, WatchedMovie},
     person::Person,
     rating::{Rating, RatingDistribution, Ratings},
