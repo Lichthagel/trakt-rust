@@ -311,6 +311,18 @@ impl TraktApi {
             ("limit", limit)
         ))
     }
+
+    pub fn lists_popular(
+        &self,
+        page: u32,
+        limit: u32
+    ) -> Result<Vec<ListInfo>, Error> {
+        self.get(api_parameter!(
+            api_route!("lists", "popular"),
+            ("page", page),
+            ("limit", limit)
+        ))
+    }
 }
 
 impl PartialEq for TraktApi {
