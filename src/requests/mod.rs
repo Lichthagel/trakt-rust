@@ -4,3 +4,4 @@ mod checkin;
 mod comments;
 mod lists;
 mod movies;
+mod people;
