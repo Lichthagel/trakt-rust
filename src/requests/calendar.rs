@@ -1,5 +1,5 @@
 use crate::{
-    error::Error,
+    error::{Error, Result},
     models::{CalendarMovie, CalendarShow},
     TraktApi,
 };
@@ -10,7 +10,7 @@ impl TraktApi {
         &self,
         start_date: Date<Utc>,
         days: u32,
-    ) -> Result<Vec<CalendarShow>, Error> {
+    ) -> Result<Vec<CalendarShow>> {
         self.get(api_url!((
             "calendars",
             "all",
@@ -24,22 +24,25 @@ impl TraktApi {
         &self,
         start_date: Date<Utc>,
         days: u32,
-        access_token: String
-    ) -> Result<Vec<CalendarShow>, Error> {
-        self.auth_get(api_url!((
-            "calendars",
-            "my",
-            "shows",
-            start_date.format("%Y-%m-%d"),
-            days
-        )), access_token)
+        access_token: String,
+    ) -> Result<Vec<CalendarShow>> {
+        self.auth_get(
+            api_url!((
+                "calendars",
+                "my",
+                "shows",
+                start_date.format("%Y-%m-%d"),
+                days
+            )),
+            access_token,
+        )
     }
 
     pub fn calendar_all_new_shows(
         &self,
         start_date: Date<Utc>,
         days: u32,
-    ) -> Result<Vec<CalendarShow>, Error> {
+    ) -> Result<Vec<CalendarShow>> {
         self.get(api_url!((
             "calendars",
             "all",
@@ -54,23 +57,26 @@ impl TraktApi {
         &self,
         start_date: Date<Utc>,
         days: u32,
-        access_token: String
-    ) -> Result<Vec<CalendarShow>, Error> {
-        self.auth_get(api_url!((
-            "calendars",
-            "my",
-            "shows",
-            "new",
-            start_date.format("%Y-%m-%d"),
-            days
-        )), access_token)
+        access_token: String,
+    ) -> Result<Vec<CalendarShow>> {
+        self.auth_get(
+            api_url!((
+                "calendars",
+                "my",
+                "shows",
+                "new",
+                start_date.format("%Y-%m-%d"),
+                days
+            )),
+            access_token,
+        )
     }
 
     pub fn calendar_all_season_premieres(
         &self,
         start_date: Date<Utc>,
         days: u32,
-    ) -> Result<Vec<CalendarShow>, Error> {
+    ) -> Result<Vec<CalendarShow>> {
         self.get(api_url!((
             "calendars",
             "all",
@@ -86,22 +92,25 @@ impl TraktApi {
         start_date: Date<Utc>,
         days: u32,
         access_token: String,
-    ) -> Result<Vec<CalendarShow>, Error> {
-        self.auth_get(api_url!((
-            "calendars",
-            "my",
-            "shows",
-            "premieres",
-            start_date.format("%Y-%m-%d"),
-            days
-        )), access_token)
+    ) -> Result<Vec<CalendarShow>> {
+        self.auth_get(
+            api_url!((
+                "calendars",
+                "my",
+                "shows",
+                "premieres",
+                start_date.format("%Y-%m-%d"),
+                days
+            )),
+            access_token,
+        )
     }
 
     pub fn calendar_all_movies(
         &self,
         start_date: Date<Utc>,
         days: u32,
-    ) -> Result<Vec<CalendarMovie>, Error> {
+    ) -> Result<Vec<CalendarMovie>> {
         self.get(api_url!((
             "calendars",
             "all",
@@ -115,22 +124,21 @@ impl TraktApi {
         &self,
         start_date: Date<Utc>,
         days: u32,
-        access_token: String
-    ) -> Result<Vec<CalendarMovie>, Error> {
-        self.auth_get(api_url!((
-            "calendars",
-            "my",
-            "movies",
-            start_date.format("%Y-%m-%d"),
-            days
-        )), access_token)
+        access_token: String,
+    ) -> Result<Vec<CalendarMovie>> {
+        self.auth_get(
+            api_url!((
+                "calendars",
+                "my",
+                "movies",
+                start_date.format("%Y-%m-%d"),
+                days
+            )),
+            access_token,
+        )
     }
 
-    pub fn calendar_all_dvd(
-        &self,
-        start_date: Date<Utc>,
-        days: u32,
-    ) -> Result<Vec<CalendarMovie>, Error> {
+    pub fn calendar_all_dvd(&self, start_date: Date<Utc>, days: u32) -> Result<Vec<CalendarMovie>> {
         self.get(api_url!((
             "calendars",
             "all",
@@ -145,13 +153,16 @@ impl TraktApi {
         start_date: Date<Utc>,
         days: u32,
         access_token: String,
-    ) -> Result<Vec<CalendarMovie>, Error> {
-        self.auth_get(api_url!((
-            "calendars",
-            "my",
-            "dvd",
-            start_date.format("%Y-%m-%d"),
-            days
-        )), access_token)
+    ) -> Result<Vec<CalendarMovie>> {
+        self.auth_get(
+            api_url!((
+                "calendars",
+                "my",
+                "dvd",
+                start_date.format("%Y-%m-%d"),
+                days
+            )),
+            access_token,
+        )
     }
 }

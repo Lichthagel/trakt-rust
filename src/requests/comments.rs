@@ -1,15 +1,15 @@
 use crate::{
-    error::Error,
+    error::{Error, Result},
     models::{AllCommentableItemType, Comment, CommentAndItem, CommentItem, CommentType, Like},
     TraktApi,
 };
 
 impl TraktApi {
-    pub fn comments(&self, id: u32) -> Result<Comment, Error> {
+    pub fn comments(&self, id: u32) -> Result<Comment> {
         self.get(api_url!(("comments", id)))
     }
 
-    pub fn replies(&self, comment_id: u32, page: u32, limit: u32) -> Result<Vec<Comment>, Error> {
+    pub fn replies(&self, comment_id: u32, page: u32, limit: u32) -> Result<Vec<Comment>> {
         self.get(api_url!(
             ("comments", comment_id, "replies"),
             ("page", page),
@@ -17,16 +17,11 @@ impl TraktApi {
         ))
     }
 
-    pub fn comment_item(&self, comment_id: u32) -> Result<CommentItem, Error> {
+    pub fn comment_item(&self, comment_id: u32) -> Result<CommentItem> {
         self.get(api_url!(("comments", comment_id, "item")))
     }
 
-    pub fn comment_likes(
-        &self,
-        comment_id: u32,
-        page: u32,
-        limit: u32,
-    ) -> Result<Vec<Like>, Error> {
+    pub fn comment_likes(&self, comment_id: u32, page: u32, limit: u32) -> Result<Vec<Like>> {
         self.get(api_url!(
             ("comments", comment_id, "likes"),
             ("page", page),
@@ -41,7 +36,7 @@ impl TraktApi {
         include_replies: bool,
         page: u32,
         limit: u32,
-    ) -> Result<Vec<CommentAndItem>, Error> {
+    ) -> Result<Vec<CommentAndItem>> {
         self.get(api_url!(
             (
                 "comments",
@@ -62,7 +57,7 @@ impl TraktApi {
         include_replies: bool,
         page: u32,
         limit: u32,
-    ) -> Result<Vec<CommentAndItem>, Error> {
+    ) -> Result<Vec<CommentAndItem>> {
         self.get(api_url!(
             (
                 "comments",
@@ -83,7 +78,7 @@ impl TraktApi {
         include_replies: bool,
         page: u32,
         limit: u32,
-    ) -> Result<Vec<CommentAndItem>, Error> {
+    ) -> Result<Vec<CommentAndItem>> {
         self.get(api_url!(
             (
                 "comments",

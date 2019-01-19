@@ -1,5 +1,5 @@
 use crate::{
-    error::Error,
+    error::{Error, Result},
     models::{
         Alias, AnticipatedMovie, Comment, List, ListSort, ListType, Movie, MovieInfo, MovieStats,
         Ratings, TimePeriod, Translation, UpdatedMovie, User, WatchedMovie,
@@ -9,7 +9,7 @@ use crate::{
 use std::fmt::Display;
 
 impl TraktApi {
-    pub fn movies_trending(&self, page: u32, limit: u32) -> Result<Vec<MovieInfo>, Error> {
+    pub fn movies_trending(&self, page: u32, limit: u32) -> Result<Vec<MovieInfo>> {
         self.get(api_url!(
             ("movies", "trending"),
             ("page", page),
@@ -17,7 +17,7 @@ impl TraktApi {
         ))
     }
 
-    pub fn movies_popular(&self, page: u32, limit: u32) -> Result<Vec<Movie>, Error> {
+    pub fn movies_popular(&self, page: u32, limit: u32) -> Result<Vec<Movie>> {
         self.get(api_url!(
             ("movies", "popular"),
             ("page", page),
@@ -30,7 +30,7 @@ impl TraktApi {
         page: u32,
         limit: u32,
         period: TimePeriod,
-    ) -> Result<Vec<WatchedMovie>, Error> {
+    ) -> Result<Vec<WatchedMovie>> {
         self.get(api_url!(
             ("movies", "played", period.to_string()),
             ("page", page),
@@ -43,7 +43,7 @@ impl TraktApi {
         page: u32,
         limit: u32,
         period: TimePeriod,
-    ) -> Result<Vec<WatchedMovie>, Error> {
+    ) -> Result<Vec<WatchedMovie>> {
         self.get(api_url!(
             ("movies", "watched", period.to_string()),
             ("page", page),
@@ -56,7 +56,7 @@ impl TraktApi {
         page: u32,
         limit: u32,
         period: TimePeriod,
-    ) -> Result<Vec<WatchedMovie>, Error> {
+    ) -> Result<Vec<WatchedMovie>> {
         self.get(api_url!(
             ("movies", "collected", period.to_string()),
             ("page", page),
@@ -64,11 +64,7 @@ impl TraktApi {
         ))
     }
 
-    pub fn movies_anticipated(
-        &self,
-        page: u32,
-        limit: u32,
-    ) -> Result<Vec<AnticipatedMovie>, Error> {
+    pub fn movies_anticipated(&self, page: u32, limit: u32) -> Result<Vec<AnticipatedMovie>> {
         self.get(api_url!(
             ("movies", "anticipated"),
             ("page", page),
@@ -76,7 +72,7 @@ impl TraktApi {
         ))
     }
 
-    pub fn movies_updates(&self, page: u32, limit: u32) -> Result<Vec<UpdatedMovie>, Error> {
+    pub fn movies_updates(&self, page: u32, limit: u32) -> Result<Vec<UpdatedMovie>> {
         self.get(api_url!(
             ("movies", "updates"),
             ("page", page),
@@ -84,11 +80,11 @@ impl TraktApi {
         ))
     }
 
-    pub fn movie(&self, id: impl Display) -> Result<Movie, Error> {
+    pub fn movie(&self, id: impl Display) -> Result<Movie> {
         self.get(api_url!(("movies", id)))
     }
 
-    pub fn movie_aliases(&self, id: impl Display) -> Result<Vec<Alias>, Error> {
+    pub fn movie_aliases(&self, id: impl Display) -> Result<Vec<Alias>> {
         self.get(api_url!(("movies", id, "aliases")))
     }
 
@@ -96,16 +92,11 @@ impl TraktApi {
         &self,
         id: impl Display,
         language: impl Display,
-    ) -> Result<Vec<Translation>, Error> {
+    ) -> Result<Vec<Translation>> {
         self.get(api_url!(("movies", id, "translations", language)))
     }
 
-    pub fn movie_comments(
-        &self,
-        id: impl Display,
-        page: u32,
-        limit: u32,
-    ) -> Result<Vec<Comment>, Error> {
+    pub fn movie_comments(&self, id: impl Display, page: u32, limit: u32) -> Result<Vec<Comment>> {
         self.get(api_url!(
             ("movies", id, "comments"),
             ("page", page),
@@ -120,7 +111,7 @@ impl TraktApi {
         list_sorting: ListSort,
         page: u32,
         limit: u32,
-    ) -> Result<Vec<List>, Error> {
+    ) -> Result<Vec<List>> {
         self.get(api_url!(
             ("movies", id, "lists", list_type, list_sorting),
             ("page", page),
@@ -128,20 +119,15 @@ impl TraktApi {
         ))
     }
 
-    pub fn movie_people(&self, _id: impl Display) -> Result<Vec<()>, Error> {
+    pub fn movie_people(&self, _id: impl Display) -> Result<Vec<()>> {
         unimplemented!() // TODO
     }
 
-    pub fn movie_ratings(&self, id: impl Display) -> Result<Ratings, Error> {
+    pub fn movie_ratings(&self, id: impl Display) -> Result<Ratings> {
         self.get(api_url!(("movies", id, "ratings")))
     }
 
-    pub fn movie_related(
-        &self,
-        id: impl Display,
-        page: u32,
-        limit: u32,
-    ) -> Result<Vec<Movie>, Error> {
+    pub fn movie_related(&self, id: impl Display, page: u32, limit: u32) -> Result<Vec<Movie>> {
         self.get(api_url!(
             ("movies", id, "related"),
             ("page", page),
@@ -149,11 +135,11 @@ impl TraktApi {
         ))
     }
 
-    pub fn movie_stats(&self, id: impl Display) -> Result<MovieStats, Error> {
+    pub fn movie_stats(&self, id: impl Display) -> Result<MovieStats> {
         self.get(api_url!(("movies", id, "stats")))
     }
 
-    pub fn movie_watching(&self, id: impl Display) -> Result<Vec<User>, Error> {
+    pub fn movie_watching(&self, id: impl Display) -> Result<Vec<User>> {
         self.get(api_url!(("movies", id, "watching")))
     }
 }

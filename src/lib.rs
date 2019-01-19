@@ -11,7 +11,7 @@ pub mod models;
 mod requests;
 
 use crate::{
-    error::Error,
+    error::{Error, Result},
     models::{Certifications, CertificationsType, Country, Genre, Language, MediaType, Network},
 };
 use serde::de::DeserializeOwned;
@@ -32,7 +32,7 @@ impl TraktApi {
         }
     }
 
-    fn get<T: DeserializeOwned>(&self, url: String) -> Result<T, Error> {
+    fn get<T: DeserializeOwned>(&self, url: String) -> Result<T> {
         match self
             .client
             .get(&url)
@@ -52,7 +52,7 @@ impl TraktApi {
         }
     }
 
-    fn auth_get<T: DeserializeOwned>(&self, url: String, access_token: String) -> Result<T, Error> {
+    fn auth_get<T: DeserializeOwned>(&self, url: String, access_token: String) -> Result<T> {
         match self
             .client
             .get(&url)
@@ -73,7 +73,7 @@ impl TraktApi {
         }
     }
 
-    fn post<T: DeserializeOwned>(&self, url: String, body: String) -> Result<T, Error> {
+    fn post<T: DeserializeOwned>(&self, url: String, body: String) -> Result<T> {
         match self
             .client
             .post(&url)
@@ -99,7 +99,7 @@ impl TraktApi {
         url: String,
         body: String,
         access_token: String,
-    ) -> Result<T, Error> {
+    ) -> Result<T> {
         match self
             .client
             .post(&url)
@@ -122,23 +122,23 @@ impl TraktApi {
         }
     }
 
-    pub fn certifications(&self, ct: CertificationsType) -> Result<Certifications, Error> {
+    pub fn certifications(&self, ct: CertificationsType) -> Result<Certifications> {
         self.get(api_url!(("certifications", ct.to_string())))
     }
 
-    pub fn countries(&self, media_type: MediaType) -> Result<Vec<Country>, Error> {
+    pub fn countries(&self, media_type: MediaType) -> Result<Vec<Country>> {
         self.get(api_url!(("countries", media_type.to_string())))
     }
 
-    pub fn genres(&self, media_type: MediaType) -> Result<Vec<Genre>, Error> {
+    pub fn genres(&self, media_type: MediaType) -> Result<Vec<Genre>> {
         self.get(api_url!(("genres", media_type.to_string())))
     }
 
-    pub fn languages(&self, media_type: MediaType) -> Result<Vec<Language>, Error> {
+    pub fn languages(&self, media_type: MediaType) -> Result<Vec<Language>> {
         self.get(api_url!(("languages", media_type.to_string())))
     }
 
-    pub fn networks(&self) -> Result<Vec<Network>, Error> {
+    pub fn networks(&self) -> Result<Vec<Network>> {
         self.get(api_url!(("networks")))
     }
 }

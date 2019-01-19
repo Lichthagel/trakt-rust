@@ -3,6 +3,7 @@ pub mod calendar;
 pub mod certifications;
 pub mod checkin;
 pub mod comment;
+pub mod credits;
 pub mod episode;
 pub mod genre;
 pub mod history;
@@ -21,7 +22,6 @@ pub mod stats;
 pub mod user;
 pub mod watched;
 pub mod watching;
-pub mod credits;
 
 pub use crate::models::{
     authentication::{Authentication, AuthenticationDevices, AuthenticationTokenResponse},
@@ -31,6 +31,7 @@ pub use crate::models::{
         Checkin, CheckinEpisode, CheckinMovie, CheckinResponse, CheckinSharing, CheckinShow,
     },
     comment::{Comment, CommentAndItem, CommentItem, CommentType},
+    credits::{Character, Credits, Crew, CrewMember},
     episode::Episode,
     genre::Genre,
     history::HistoryItem,
@@ -55,5 +56,4 @@ pub use crate::models::{
     user::User,
     watched::{WatchedEntry, WatchedEpisode, WatchedSeason},
     watching::Watching,
-    credits::{Credits, Crew, CrewMember, Character}
 };

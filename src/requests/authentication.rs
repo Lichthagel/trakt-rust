@@ -1,5 +1,5 @@
 use crate::{
-    error::Error,
+    error::{Error, Result},
     models::{AuthenticationDevices, AuthenticationTokenResponse},
     TraktApi,
 };
@@ -11,7 +11,7 @@ impl TraktApi {
         client_id: String,
         redirect_uri: String,
         state: Option<String>,
-    ) -> Result<(), Error> {
+    ) -> Result<()> {
         match state {
             Some(state) => self.get(api_url!(
                 ("oauth/authorize"),
@@ -33,7 +33,7 @@ impl TraktApi {
         &self,
         code: String,
         redirect_uri: String,
-    ) -> Result<AuthenticationTokenResponse, Error> {
+    ) -> Result<AuthenticationTokenResponse> {
         if self.client_secret == None {
             return Err(Error::ClientSecretNeeded);
         }
@@ -55,7 +55,7 @@ impl TraktApi {
         &self,
         refresh_token: String,
         redirect_uri: String,
-    ) -> Result<AuthenticationTokenResponse, Error> {
+    ) -> Result<AuthenticationTokenResponse> {
         if self.client_secret == None {
             return Err(Error::ClientSecretNeeded);
         }
@@ -73,7 +73,7 @@ impl TraktApi {
         )
     }
 
-    pub fn oauth_revoke_token(&self, token: String) -> Result<(), Error> {
+    pub fn oauth_revoke_token(&self, token: String) -> Result<()> {
         if self.client_secret == None {
             return Err(Error::ClientSecretNeeded);
         }
@@ -89,14 +89,14 @@ impl TraktApi {
         )
     }
 
-    pub fn devices_authenticate(&self) -> Result<AuthenticationDevices, Error> {
+    pub fn devices_authenticate(&self) -> Result<AuthenticationDevices> {
         self.post(
             api_url!(("oauth/device/code")),
             json!({"client_id": self.client_id}).to_string(),
         )
     }
 
-    pub fn get_token(&self, device_code: String) -> Result<AuthenticationTokenResponse, Error> {
+    pub fn get_token(&self, device_code: String) -> Result<AuthenticationTokenResponse> {
         if self.client_secret == None {
             return Err(Error::ClientSecretNeeded);
         }

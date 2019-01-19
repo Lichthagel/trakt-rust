@@ -1,3 +1,5 @@
+use std::result;
+
 #[derive(Debug)]
 pub enum Error {
     Response(reqwest::Response),
@@ -23,3 +25,5 @@ impl From<serde_json::Error> for Error {
         Error::Serde(e)
     }
 }
+
+pub type Result<T> = result::Result<T, Error>;
