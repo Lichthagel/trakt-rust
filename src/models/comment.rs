@@ -80,7 +80,7 @@ pub struct CommentPost {
 }
 
 impl CommentPost {
-    pub fn to_json_string(&self) -> Result<String, serde_json::Error>{
+    pub fn to_json_string(&self) -> Result<String, serde_json::Error> {
         serde_json::to_string(self)
     }
 }
@@ -90,7 +90,7 @@ pub struct CommentSharing {
     twitter: bool,
     facebook: bool,
     tumblr: bool,
-    medium: bool
+    medium: bool,
 }
 
 impl CommentSharing {
@@ -99,7 +99,23 @@ impl CommentSharing {
             twitter,
             facebook,
             tumblr,
-            medium
+            medium,
         }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CommentUpdate {
+    comment: String,
+    spoiler: bool,
+}
+
+impl CommentUpdate {
+    pub fn new(comment: String, spoiler: bool) -> Self {
+        Self { comment, spoiler }
+    }
+
+    pub fn to_json_string(&self) -> Result<String, serde_json::Error> {
+        serde_json::to_string(self)
     }
 }

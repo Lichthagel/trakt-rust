@@ -28,7 +28,10 @@ pub use crate::models::{
     calendar::{CalendarMovie, CalendarShow},
     certifications::{Certification, Certifications, CertificationsType},
     checkin::{Checkin, CheckinResponse, CheckinSharing},
-    comment::{Comment, CommentAndItem, CommentItem, CommentPost, CommentSharing, CommentType},
+    comment::{
+        Comment, CommentAndItem, CommentItem, CommentPost, CommentSharing, CommentType,
+        CommentUpdate,
+    },
     credits::{Character, Credits, Crew, CrewMember},
     episode::{Episode, OptionEpisode},
     genre::Genre,
