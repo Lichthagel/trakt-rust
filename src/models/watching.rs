@@ -1,13 +1,5 @@
-use chrono::{
-    DateTime,
-    Utc,
-};
-use crate::models::{
-    Episode,
-    Show,
-    Movie,
-    WatchableType
-};
+use crate::models::{Episode, Movie, Show, WatchableType};
+use chrono::{DateTime, Utc};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Watching {

@@ -9,36 +9,19 @@ mod macros;
 pub mod error;
 pub mod models;
 
+use crate::{
+    error::Error,
+    models::{
+        AllCommentableItemType, AnticipatedMovie, AuthenticationDevices,
+        AuthenticationTokenResponse, CalendarMovie, CalendarShow, Certifications,
+        CertificationsType, Comment, CommentAndItem, CommentItem, CommentType, Country, Genre,
+        Language, Like, ListInfo, MediaType, Movie, MovieInfo, TimePeriod, UpdatedMovie,
+        WatchedMovie,
+    },
+};
 use chrono::{Date, Utc};
 use serde::de::DeserializeOwned;
 use serde_json::json;
-use crate::{
-    models::{
-        Genre,
-        Country,
-        AllCommentableItemType,
-        AuthenticationDevices,
-        AuthenticationTokenResponse,
-        CalendarMovie,
-        CalendarShow,
-        Certifications,
-        CertificationsType,
-        Comment,
-        CommentAndItem,
-        CommentItem,
-        CommentType,
-        Like,
-        MediaType,
-        Language,
-        ListInfo,
-        MovieInfo,
-        Movie,
-        WatchedMovie,
-        TimePeriod,
-        AnticipatedMovie
-    },
-    error::Error,
-};
 
 #[derive(Debug)]
 pub struct TraktApi {
@@ -200,7 +183,7 @@ impl TraktApi {
         self.get(api_parameter!(
             api_route!("comments", comment_id, "replies"),
             ("page", page),
-            ("limit",limit)
+            ("limit", limit)
         ))
     }
 
@@ -217,7 +200,7 @@ impl TraktApi {
         self.get(api_parameter!(
             api_route!("comments", comment_id, "likes"),
             ("page", page),
-            ("limit",limit)
+            ("limit", limit)
         ))
     }
 
@@ -258,7 +241,7 @@ impl TraktApi {
                 item_type.to_string()
             ),
             ("page", page),
-            ("limit",limit),
+            ("limit", limit),
             ("include_replies", include_replies)
         ))
     }
@@ -279,37 +262,24 @@ impl TraktApi {
                 item_type.to_string()
             ),
             ("page", page),
-            ("limit",limit),
+            ("limit", limit),
             ("include_replies", include_replies)
-         ))
+        ))
     }
 
-    pub fn countries(
-        &self,
-        media_type: MediaType
-    ) -> Result<Vec<Country>, Error> {
+    pub fn countries(&self, media_type: MediaType) -> Result<Vec<Country>, Error> {
         self.get(api_route!("countries", media_type.to_string()))
     }
 
-    pub fn genres(
-        &self,
-        media_type: MediaType
-    ) -> Result<Vec<Genre>, Error> {
+    pub fn genres(&self, media_type: MediaType) -> Result<Vec<Genre>, Error> {
         self.get(api_route!("genres", media_type.to_string()))
     }
 
-    pub fn languages(
-        &self,
-        media_type: MediaType
-    ) -> Result<Vec<Language>, Error> {
+    pub fn languages(&self, media_type: MediaType) -> Result<Vec<Language>, Error> {
         self.get(api_route!("languages", media_type.to_string()))
     }
 
-    pub fn lists_trending(
-        &self,
-        page: u32,
-        limit: u32
-    ) -> Result<Vec<ListInfo>, Error> {
+    pub fn lists_trending(&self, page: u32, limit: u32) -> Result<Vec<ListInfo>, Error> {
         self.get(api_parameter!(
             api_route!("lists", "trending"),
             ("page", page),
@@ -317,11 +287,7 @@ impl TraktApi {
         ))
     }
 
-    pub fn lists_popular(
-        &self,
-        page: u32,
-        limit: u32
-    ) -> Result<Vec<ListInfo>, Error> {
+    pub fn lists_popular(&self, page: u32, limit: u32) -> Result<Vec<ListInfo>, Error> {
         self.get(api_parameter!(
             api_route!("lists", "popular"),
             ("page", page),
@@ -329,11 +295,7 @@ impl TraktApi {
         ))
     }
 
-    pub fn movies_trending(
-        &self,
-        page: u32,
-        limit: u32
-    ) -> Result<Vec<MovieInfo>, Error> {
+    pub fn movies_trending(&self, page: u32, limit: u32) -> Result<Vec<MovieInfo>, Error> {
         self.get(api_parameter!(
             api_route!("movies", "trending"),
             ("page", page),
@@ -341,11 +303,7 @@ impl TraktApi {
         ))
     }
 
-    pub fn movies_popular(
-        &self,
-        page: u32,
-        limit: u32
-    ) -> Result<Vec<Movie>, Error> {
+    pub fn movies_popular(&self, page: u32, limit: u32) -> Result<Vec<Movie>, Error> {
         self.get(api_parameter!(
             api_route!("movies", "popular"),
             ("page", page),
@@ -357,7 +315,7 @@ impl TraktApi {
         &self,
         page: u32,
         limit: u32,
-        period: TimePeriod
+        period: TimePeriod,
     ) -> Result<Vec<WatchedMovie>, Error> {
         self.get(api_parameter!(
             api_route!("movies", "played", period.to_string()),
@@ -370,7 +328,7 @@ impl TraktApi {
         &self,
         page: u32,
         limit: u32,
-        period: TimePeriod
+        period: TimePeriod,
     ) -> Result<Vec<WatchedMovie>, Error> {
         self.get(api_parameter!(
             api_route!("movies", "watched", period.to_string()),
@@ -383,7 +341,7 @@ impl TraktApi {
         &self,
         page: u32,
         limit: u32,
-        period: TimePeriod
+        period: TimePeriod,
     ) -> Result<Vec<WatchedMovie>, Error> {
         self.get(api_parameter!(
             api_route!("movies", "collected", period.to_string()),
@@ -395,10 +353,18 @@ impl TraktApi {
     pub fn movies_anticipated(
         &self,
         page: u32,
-        limit: u32
+        limit: u32,
     ) -> Result<Vec<AnticipatedMovie>, Error> {
         self.get(api_parameter!(
             api_route!("movies", "anticipated"),
+            ("page", page),
+            ("limit", limit)
+        ))
+    }
+
+    pub fn movies_updates(&self, page: u32, limit: u32) -> Result<Vec<UpdatedMovie>, Error> {
+        self.get(api_parameter!(
+            api_route!("movies", "updates"),
             ("page", page),
             ("limit", limit)
         ))

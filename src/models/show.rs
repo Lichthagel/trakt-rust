@@ -4,5 +4,5 @@ use crate::models::ids::Ids;
 pub struct Show {
     title: String,
     year: Option<u16>,
-    ids: Ids
+    ids: Ids,
 }

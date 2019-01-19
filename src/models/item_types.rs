@@ -9,7 +9,7 @@ pub enum ListItemType {
     #[serde(rename = "episode")]
     EPISODE,
     #[serde(rename = "person")]
-    PERSON
+    PERSON,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -23,7 +23,7 @@ pub enum CommentableItemType {
     #[serde(rename = "episode")]
     EPISODE,
     #[serde(rename = "list")]
-    LIST
+    LIST,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -39,21 +39,19 @@ pub enum AllCommentableItemType {
     #[serde(rename = "list")]
     LIST,
     #[serde(rename = "all")]
-    ALL
+    ALL,
 }
 
 impl ToString for AllCommentableItemType {
     fn to_string(&self) -> String {
-        String::from(
-            match self {
-                AllCommentableItemType::MOVIE => "movies",
-                AllCommentableItemType::SHOW => "shows",
-                AllCommentableItemType::SEASON => "seasons",
-                AllCommentableItemType::EPISODE => "episodes",
-                AllCommentableItemType::LIST => "lists",
-                AllCommentableItemType::ALL => "all"
-            }
-        )
+        String::from(match self {
+            AllCommentableItemType::MOVIE => "movies",
+            AllCommentableItemType::SHOW => "shows",
+            AllCommentableItemType::SEASON => "seasons",
+            AllCommentableItemType::EPISODE => "episodes",
+            AllCommentableItemType::LIST => "lists",
+            AllCommentableItemType::ALL => "all",
+        })
     }
 }
 
@@ -66,7 +64,7 @@ pub enum ItemType {
     #[serde(rename = "season")]
     SEASON,
     #[serde(rename = "episode")]
-    EPISODE
+    EPISODE,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -74,9 +72,8 @@ pub enum WatchableType {
     #[serde(rename = "movie")]
     MOVIE,
     #[serde(rename = "episode")]
-    EPISODE
+    EPISODE,
 }
-
 
 #[derive(Debug, Serialize, Deserialize)]
 pub enum MediaType {
@@ -88,12 +85,10 @@ pub enum MediaType {
 
 impl ToString for MediaType {
     fn to_string(&self) -> String {
-        String::from(
-            match self {
-                MediaType::Movies => "movies",
-                MediaType::Shows => "shows",
-            }
-        )
+        String::from(match self {
+            MediaType::Movies => "movies",
+            MediaType::Shows => "shows",
+        })
     }
 }
 
@@ -103,18 +98,16 @@ pub enum TimePeriod {
     Weekly,
     Monthly,
     Yearly,
-    All
+    All,
 }
 
 impl ToString for TimePeriod {
     fn to_string(&self) -> String {
-        String::from(
-            match self {
-                TimePeriod::Weekly => "weekly",
-                TimePeriod::Monthly => "monthly",
-                TimePeriod::Yearly => "yearly",
-                _ => "all"
-            }
-        )
+        String::from(match self {
+            TimePeriod::Weekly => "weekly",
+            TimePeriod::Monthly => "monthly",
+            TimePeriod::Yearly => "yearly",
+            _ => "all",
+        })
     }
 }

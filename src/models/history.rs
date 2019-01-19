@@ -1,12 +1,5 @@
-use chrono::{
-    DateTime,
-    Utc
-};
-use crate::models::{
-    Movie,
-    Episode,
-    WatchableType
-};
+use crate::models::{Episode, Movie, WatchableType};
+use chrono::{DateTime, Utc};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct HistoryItem {

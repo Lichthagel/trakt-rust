@@ -5,5 +5,5 @@ pub struct Ids {
     tvdb: Option<u64>,
     imdb: Option<String>,
     tmdb: Option<u64>,
-    tvrage: Option<u64>
+    tvrage: Option<u64>,
 }

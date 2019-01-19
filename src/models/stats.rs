@@ -5,7 +5,7 @@ pub struct Stats {
     seasons: SeasonStats,
     episodes: EpisodeStats,
     network: NetworkStats,
-    ratings: RatingStats
+    ratings: RatingStats,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -15,7 +15,7 @@ pub struct MovieStats {
     minutes: u64,
     collected: u64,
     ratings: u64,
-    comments: u64
+    comments: u64,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -23,13 +23,13 @@ pub struct ShowStats {
     watched: u64,
     collected: u64,
     ratings: u64,
-    comments: u64
+    comments: u64,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SeasonStats {
     ratings: u64,
-    comments: u64
+    comments: u64,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -39,18 +39,18 @@ pub struct EpisodeStats {
     minutes: u64,
     collected: u64,
     ratings: u64,
-    comments: u64
+    comments: u64,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct NetworkStats {
     friends: u64,
     followers: u64,
-    following: u64
+    following: u64,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct RatingStats {
     total: u64,
-    distribution: [u64; 10]
+    distribution: [u64; 10],
 }

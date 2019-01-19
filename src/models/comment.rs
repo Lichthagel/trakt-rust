@@ -1,16 +1,5 @@
-use chrono::{
-    DateTime,
-    Utc
-};
-use crate::models::{
-    user::User,
-    Show,
-    Movie,
-    Episode,
-    Season,
-    List,
-    CommentableItemType
-};
+use crate::models::{user::User, CommentableItemType, Episode, List, Movie, Season, Show};
+use chrono::{DateTime, Utc};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Comment {
@@ -24,7 +13,7 @@ pub struct Comment {
     replies: u64,
     likes: u64,
     user_rating: Option<u8>,
-    user: User
+    user: User,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -35,7 +24,7 @@ pub struct CommentItem {
     movie: Option<Movie>,
     season: Option<Season>,
     episode: Option<Episode>,
-    list: Option<List>
+    list: Option<List>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -47,7 +36,7 @@ pub struct CommentAndItem {
     season: Option<Season>,
     episode: Option<Episode>,
     list: Option<List>,
-    comment: Comment
+    comment: Comment,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -57,7 +46,7 @@ pub enum CommentType {
     #[serde(rename = "shouts")]
     SHOUTS,
     #[serde(rename = "all")]
-    ALL
+    ALL,
 }
 
 impl ToString for CommentType {
@@ -65,7 +54,7 @@ impl ToString for CommentType {
         String::from(match self {
             CommentType::REVIEWS => "reviews",
             CommentType::SHOUTS => "shouts",
-            _ => "all"
+            _ => "all",
         })
     }
 }

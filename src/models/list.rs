@@ -1,17 +1,5 @@
-use chrono::{
-    DateTime,
-    Utc
-};
-use crate::models::{
-    Season,
-    Episode,
-    Movie,
-    Show,
-    Ids,
-    Person,
-    ListItemType,
-    User
-};
+use crate::models::{Episode, Ids, ListItemType, Movie, Person, Season, Show, User};
+use chrono::{DateTime, Utc};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct List {
@@ -28,14 +16,14 @@ pub struct List {
     comment_count: u64,
     likes: u64,
     ids: Ids,
-    user: User
+    user: User,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ListInfo {
     like_count: u32,
     comment_count: u32,
-    list: List
+    list: List,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -48,5 +36,5 @@ pub struct ListItem {
     episode: Option<Episode>,
     season: Option<Season>,
     show: Option<Show>,
-    person: Option<Person>
+    person: Option<Person>,
 }

@@ -1,11 +1,5 @@
-use chrono::{
-    DateTime,
-    Utc
-};
-use crate::models::{
-    Movie,
-    Show,
-};
+use crate::models::{Movie, Show};
+use chrono::{DateTime, Utc};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct WatchedEntry {

@@ -7,5 +7,5 @@ pub struct User {
     name: Option<String>,
     vip: Option<bool>,
     vip_ep: Option<bool>,
-    ids: Ids
+    ids: Ids,
 }

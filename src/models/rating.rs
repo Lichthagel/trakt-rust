@@ -1,13 +1,5 @@
-use chrono::{
-    DateTime,
-    Utc
-};
-use crate::models::{
-    Season,
-    Show,
-    Movie,
-    ItemType
-};
+use crate::models::{ItemType, Movie, Season, Show};
+use chrono::{DateTime, Utc};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Rating {

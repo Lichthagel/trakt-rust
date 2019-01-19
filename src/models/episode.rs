@@ -5,5 +5,5 @@ pub struct Episode {
     season: u32,
     number: u32,
     title: Option<String>,
-    ids: Ids
+    ids: Ids,
 }
