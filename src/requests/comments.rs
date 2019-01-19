@@ -77,6 +77,29 @@ impl TraktApi {
         ))
     }
 
+    pub fn comment_like(
+        &self,
+        comment_id: u32,
+        access_token: String
+    ) -> Result<()> {
+        self.auth_post_no_body(
+            api_url!(("comments", comment_id, "like")),
+            String::from(""),
+            access_token
+        )
+    }
+
+    pub fn comment_like_delete(
+        &self,
+        comment_id: u32,
+        access_token: String
+    ) -> Result<()> {
+        self.auth_delete(
+            api_url!(("comments", comment_id, "like")),
+            access_token
+        )
+    }
+
     pub fn comments_trending(
         &self,
         comment_type: CommentType,
