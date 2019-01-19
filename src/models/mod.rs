@@ -2,15 +2,14 @@ pub mod authentication;
 pub mod calendar;
 pub mod certifications;
 pub mod comment;
-pub mod country;
 pub mod episode;
 pub mod genre;
 pub mod history;
 pub mod ids;
 pub mod item_types;
-pub mod language;
 pub mod like;
 pub mod list;
+pub mod localization;
 pub mod movie;
 pub mod person;
 pub mod rating;
@@ -26,7 +25,6 @@ pub use crate::models::{
     calendar::{CalendarMovie, CalendarShow},
     certifications::{Certification, Certifications, CertificationsType},
     comment::{Comment, CommentAndItem, CommentItem, CommentType},
-    country::Country,
     episode::Episode,
     genre::Genre,
     history::HistoryItem,
@@ -35,9 +33,9 @@ pub use crate::models::{
         AllCommentableItemType, CommentableItemType, ItemType, ListItemType, MediaType, TimePeriod,
         WatchableType,
     },
-    language::Language,
     like::Like,
     list::{List, ListInfo, ListItem},
+    localization::{Alias, Country, Language},
     movie::{AnticipatedMovie, Movie, MovieInfo, UpdatedMovie, WatchedMovie},
     person::Person,
     rating::Rating,
