@@ -28,7 +28,8 @@ use crate::{
         CommentItem,
         CommentType,
         Like,
-        MediaType
+        MediaType,
+        Language
     },
     error::Error,
 };
@@ -280,6 +281,13 @@ impl TraktApi {
         media_type: MediaType
     ) -> Result<Vec<Genre>, Error> {
         self.get(api_route!("genres", media_type.to_string()))
+    }
+
+    pub fn languages(
+        &self,
+        media_type: MediaType
+    ) -> Result<Vec<Language>, Error> {
+        self.get(api_route!("languages", media_type.to_string()))
     }
 }
 
