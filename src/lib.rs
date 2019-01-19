@@ -20,6 +20,8 @@ use crate::{
 use chrono::{Date, Utc};
 use serde::de::DeserializeOwned;
 use serde_json::json;
+use crate::models::CountryMedia;
+use crate::models::Country;
 
 #[derive(Debug)]
 pub struct TraktApi {
@@ -254,6 +256,13 @@ impl TraktApi {
             page,
             limit
         ), include_replies))
+    }
+
+    pub fn countries(
+        &self,
+        media_type: CountryMedia
+    ) -> Result<Vec<Country>, Error> {
+        self.get(api_route!("countries", media_type.to_string()))
     }
 }
 

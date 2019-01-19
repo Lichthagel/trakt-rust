@@ -2,6 +2,7 @@ pub mod authentication;
 pub mod calendar;
 pub mod certifications;
 pub mod comment;
+pub mod country;
 pub mod episode;
 pub mod genre;
 pub mod history;
@@ -24,6 +25,7 @@ pub use crate::models::{
     calendar::{CalendarMovie, CalendarShow},
     certifications::{Certification, Certifications, CertificationsType},
     comment::{Comment, CommentItem, CommentType, CommentAndItem},
+    country::{Country, CountryMedia},
     episode::Episode,
     genre::Genre,
     history::HistoryItem,
