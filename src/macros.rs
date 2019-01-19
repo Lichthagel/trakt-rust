@@ -34,7 +34,7 @@ mod tests {
     }
 
     #[test]
-    fn combined_force_test2() {
+    fn combined_force_test_only_url() {
         assert_eq!(
             "https://api.trakt.tv/test/1/2/3",
             api_url!(("test", "1", "2", "3"))

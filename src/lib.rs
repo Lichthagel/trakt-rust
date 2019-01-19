@@ -14,7 +14,7 @@ use crate::{
     models::{
         AllCommentableItemType, AuthenticationDevices, AuthenticationTokenResponse, CalendarMovie,
         CalendarShow, Certifications, CertificationsType, Comment, CommentAndItem, CommentItem,
-        CommentType, Country, Genre, Language, Like, MediaType,
+        CommentType, Country, Genre, Language, Like, ListInfo, MediaType,
     },
 };
 use chrono::{Date, Utc};
@@ -275,6 +275,14 @@ impl TraktApi {
 
     pub fn languages(&self, media_type: MediaType) -> Result<Vec<Language>, Error> {
         self.get(api_url!(("languages", media_type.to_string())))
+    }
+
+    pub fn lists_trending(&self, page: u32, limit: u32) -> Result<Vec<ListInfo>, Error> {
+        self.get(api_url!(
+            ("lists", "trending"),
+            ("page", page),
+            ("limit", limit)
+        ))
     }
 }
 

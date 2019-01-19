@@ -34,7 +34,7 @@ pub use crate::models::{
     item_types::{CommentableItemType, AllCommentableItemType, ListItemType, ItemType, WatchableType, MediaType},
     language::Language,
     like::Like,
-    list::{List, ListItem},
+    list::{List, ListItem, ListInfo},
     movie::Movie,
     person::Person,
     rating::Rating,
