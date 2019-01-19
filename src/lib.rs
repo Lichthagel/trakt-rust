@@ -213,6 +213,36 @@ impl TraktApi {
             limit
         ), include_replies))
     }
+
+    pub fn comments_recent(
+        &self,
+        comment_type: CommentType,
+        item_type: AllCommentableItemType,
+        include_replies: bool,
+        page: u32,
+        limit: u32
+    ) -> Result<Vec<CommentAndItem>, Error> {
+        self.get(format!("{}&include_replies={}", api_pagination!(
+            api_route!("comments", "recent", comment_type.to_string(), item_type.to_string()),
+            page,
+            limit
+        ), include_replies))
+    }
+
+    pub fn comments_updates(
+        &self,
+        comment_type: CommentType,
+        item_type: AllCommentableItemType,
+        include_replies: bool,
+        page: u32,
+        limit: u32
+    ) -> Result<Vec<CommentAndItem>, Error> {
+        self.get(format!("{}&include_replies={}", api_pagination!(
+            api_route!("comments", "updates", comment_type.to_string(), item_type.to_string()),
+            page,
+            limit
+        ), include_replies))
+    }
 }
 
 impl PartialEq for TraktApi {
