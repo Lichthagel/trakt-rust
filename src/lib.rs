@@ -52,6 +52,27 @@ impl TraktApi {
         }
     }
 
+    fn auth_get<T: DeserializeOwned>(&self, url: String, access_token: String) -> Result<T, Error> {
+        match self
+            .client
+            .get(&url)
+            .header("Content-Type", "application/json")
+            .header("trakt-api-version", "2")
+            .header("trakt-api-key", self.client_id.as_str())
+            .header("Authorization", format!("Bearer {}", access_token))
+            .send()
+            {
+                Ok(res) => {
+                    if res.status().is_success() {
+                        Ok(serde_json::from_reader(res).unwrap())
+                    } else {
+                        Err(Error::from(res))
+                    }
+                }
+                Err(e) => Err(Error::from(e)),
+            }
+    }
+
     fn post<T: DeserializeOwned>(&self, url: String, body: String) -> Result<T, Error> {
         match self
             .client
