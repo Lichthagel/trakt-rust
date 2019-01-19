@@ -96,3 +96,25 @@ impl ToString for MediaType {
         )
     }
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum TimePeriod {
+    Weekly,
+    Monthly,
+    Yearly,
+    All
+}
+
+impl ToString for TimePeriod {
+    fn to_string(&self) -> String {
+        String::from(
+            match self {
+                TimePeriod::Weekly => "weekly",
+                TimePeriod::Monthly => "monthly",
+                TimePeriod::Yearly => "yearly",
+                _ => "all"
+            }
+        )
+    }
+}

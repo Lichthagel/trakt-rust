@@ -12,3 +12,11 @@ pub struct MovieInfo {
     watchers: u32,
     movie: Movie
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct WatchedMovie {
+    watcher_count: u64,
+    play_count: u64,
+    collected_count: u64,
+    movie: Movie
+}
