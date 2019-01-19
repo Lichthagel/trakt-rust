@@ -2,7 +2,7 @@ use crate::{
     error::Error,
     models::{
         Alias, AnticipatedMovie, Comment, List, ListSort, ListType, Movie, MovieInfo, MovieStats,
-        Ratings, TimePeriod, Translation, UpdatedMovie, WatchedMovie,
+        Ratings, TimePeriod, Translation, UpdatedMovie, User, WatchedMovie,
     },
     TraktApi,
 };
@@ -151,5 +151,9 @@ impl TraktApi {
 
     pub fn movie_stats(&self, id: impl Display) -> Result<MovieStats, Error> {
         self.get(api_url!(("movies", id, "stats")))
+    }
+
+    pub fn movie_watching(&self, id: impl Display) -> Result<Vec<User>, Error> {
+        self.get(api_url!(("movies", id, "watching")))
     }
 }
