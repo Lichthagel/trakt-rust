@@ -33,6 +33,17 @@ impl TraktApi {
         )
     }
 
+    pub fn comment_delete(
+        &self,
+        comment_id: u32,
+        access_token: String
+    ) -> Result<()> {
+        self.auth_delete(
+            api_url!(("comments", comment_id)),
+            access_token
+        )
+    }
+
     pub fn replies(&self, comment_id: u32, page: u32, limit: u32) -> Result<Vec<Comment>> {
         self.get(api_url!(
             ("comments", comment_id, "replies"),

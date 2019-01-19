@@ -148,7 +148,7 @@ impl TraktApi {
         }
     }
 
-    fn auth_delete<T: DeserializeOwned>(&self, url: String, access_token: String) -> Result<T> {
+    fn auth_delete(&self, url: String, access_token: String) -> Result<()> {
         match self
             .client
             .delete(&url)
@@ -160,7 +160,7 @@ impl TraktApi {
         {
             Ok(res) => {
                 if res.status().is_success() {
-                    Ok(serde_json::from_reader(res).unwrap())
+                    Ok(())
                 } else {
                     Err(Error::from(res))
                 }
