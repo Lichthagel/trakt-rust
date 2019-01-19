@@ -27,15 +27,16 @@ use serde_json::json;
 pub struct TraktApi {
     client: reqwest::Client,
     client_id: String,
-    client_secret: String,
+    client_secret: Option<String>,
 }
 
 impl TraktApi {
-    pub fn new(client_id: String, client_secret: String) -> TraktApi {
+
+    pub fn new(client_id: String, client_secret: Option<String>) -> TraktApi {
         TraktApi {
             client: reqwest::Client::new(),
             client_id,
-            client_secret,
+            client_secret
         }
     }
 
@@ -52,10 +53,10 @@ impl TraktApi {
                 if res.status().is_success() {
                     Ok(serde_json::from_reader(res).unwrap())
                 } else {
-                    Err(Error::Response(res))
+                    Err(Error::from(res))
                 }
             }
-            Err(e) => Err(Error::Connection(e)),
+            Err(e) => Err(Error::from(e)),
         }
     }
 
@@ -73,10 +74,10 @@ impl TraktApi {
                 if res.status().is_success() {
                     Ok(serde_json::from_reader(res).unwrap())
                 } else {
-                    Err(Error::Response(res))
+                    Err(Error::from(res))
                 }
             }
-            Err(e) => Err(Error::Connection(e)),
+            Err(e) => Err(Error::from(e)),
         }
     }
 
@@ -88,6 +89,10 @@ impl TraktApi {
     }
 
     pub fn get_token(&self, device_code: String) -> Result<AuthenticationTokenResponse, Error> {
+        if self.client_secret == None {
+            return Err(Error::ClientSecretNeeded);
+        }
+
         self.post(
             api_url!(("oauth/device/token")),
             json!({
@@ -391,9 +396,9 @@ mod tests {
             TraktApi {
                 client: reqwest::Client::new(),
                 client_id: String::from("abc"),
-                client_secret: String::from("def"),
+                client_secret: Some(String::from("def")),
             },
-            TraktApi::new(String::from("abc"), String::from("def"))
+            TraktApi::new(String::from("abc"), Some(String::from("def")))
         );
     }
 }
