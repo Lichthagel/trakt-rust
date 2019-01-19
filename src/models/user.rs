@@ -4,8 +4,8 @@ use crate::models::ids::Ids;
 pub struct User {
     username: String,
     private: bool,
-    name: String,
-    vip: bool,
-    vip_ep: bool,
+    name: Option<String>,
+    vip: Option<bool>,
+    vip_ep: Option<bool>,
     ids: Ids
 }
