@@ -11,7 +11,7 @@ macro_rules! api_route {
     }};
 }
 
-macro_rules! api_pagination {
+macro_rules! api_parameter {
     ($url:expr, $(($a:expr, $b:expr)),+) => {{
         let mut string: String = $url;
         $(
@@ -38,10 +38,10 @@ mod tests {
         )
     }
     #[test]
-    fn api_pagination_test() {
+    fn api_parameter_test() {
         assert_eq!(
             "https://api.trakt.tv/example?test=1",
-            api_pagination!(String::from("https://api.trakt.tv/example"), ("test", "1"))
+            api_parameter!(String::from("https://api.trakt.tv/example"), ("test", "1"))
         )
     }
 }

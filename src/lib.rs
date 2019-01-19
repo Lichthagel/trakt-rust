@@ -192,7 +192,7 @@ impl TraktApi {
     }
 
     pub fn replies(&self, comment_id: u32, page: u32, limit: u32) -> Result<Vec<Comment>, Error> {
-        self.get(api_pagination!(
+        self.get(api_parameter!(
             api_route!("comments", comment_id, "replies"),
             ("page", page),
             ("limit",limit)
@@ -209,7 +209,7 @@ impl TraktApi {
         page: u32,
         limit: u32,
     ) -> Result<Vec<Like>, Error> {
-        self.get(api_pagination!(
+        self.get(api_parameter!(
             api_route!("comments", comment_id, "likes"),
             ("page", page),
             ("limit",limit)
@@ -224,19 +224,16 @@ impl TraktApi {
         page: u32,
         limit: u32,
     ) -> Result<Vec<CommentAndItem>, Error> {
-        self.get(format!(
-            "{}&include_replies={}",
-            api_pagination!(
-                api_route!(
-                    "comments",
-                    "trending",
-                    comment_type.to_string(),
-                    item_type.to_string()
-                ),
-                ("page", page),
-                ("limit",limit)
+        self.get(api_parameter!(
+            api_route!(
+                "comments",
+                "trending",
+                comment_type.to_string(),
+                item_type.to_string()
             ),
-            include_replies
+            ("page", page),
+            ("limit", limit),
+            ("include_replies", include_replies)
         ))
     }
 
@@ -248,19 +245,16 @@ impl TraktApi {
         page: u32,
         limit: u32,
     ) -> Result<Vec<CommentAndItem>, Error> {
-        self.get(format!(
-            "{}&include_replies={}",
-            api_pagination!(
-                api_route!(
-                    "comments",
-                    "recent",
-                    comment_type.to_string(),
-                    item_type.to_string()
-                ),
-                ("page", page),
-                ("limit",limit)
+        self.get(api_parameter!(
+            api_route!(
+                "comments",
+                "recent",
+                comment_type.to_string(),
+                item_type.to_string()
             ),
-            include_replies
+            ("page", page),
+            ("limit",limit),
+            ("include_replies", include_replies)
         ))
     }
 
@@ -272,20 +266,17 @@ impl TraktApi {
         page: u32,
         limit: u32,
     ) -> Result<Vec<CommentAndItem>, Error> {
-        self.get(format!(
-            "{}&include_replies={}",
-            api_pagination!(
-                api_route!(
-                    "comments",
-                    "updates",
-                    comment_type.to_string(),
-                    item_type.to_string()
-                ),
-                ("page", page),
-                ("limit",limit)
+        self.get(api_parameter!(
+            api_route!(
+                "comments",
+                "updates",
+                comment_type.to_string(),
+                item_type.to_string()
             ),
-            include_replies
-        ))
+            ("page", page),
+            ("limit",limit),
+            ("include_replies", include_replies)
+         ))
     }
 
     pub fn countries(
@@ -314,10 +305,10 @@ impl TraktApi {
         page: u32,
         limit: u32
     ) -> Result<Vec<ListInfo>, Error> {
-        self.get(api_pagination!(
+        self.get(api_parameter!(
             api_route!("lists", "trending"),
-            page,
-            limit
+            ("page", page),
+            ("limit", limit)
         ))
     }
 }
