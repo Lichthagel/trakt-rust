@@ -38,7 +38,7 @@ pub use crate::models::{
     localization::{Alias, Country, Language, Translation},
     movie::{AnticipatedMovie, Movie, MovieInfo, UpdatedMovie, WatchedMovie},
     person::Person,
-    rating::Rating,
+    rating::{Rating, RatingDistribution, Ratings},
     season::Season,
     show::Show,
     stats::{EpisodeStats, MovieStats, NetworkStats, RatingStats, SeasonStats, ShowStats, Stats},
