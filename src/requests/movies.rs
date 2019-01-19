@@ -133,8 +133,19 @@ impl TraktApi {
     }
 
     pub fn movie_ratings(&self, id: impl Display) -> Result<Ratings, Error> {
+        self.get(api_url!(("movies", id, "ratings")))
+    }
+
+    pub fn movie_related(
+        &self,
+        id: impl Display,
+        page: u32,
+        limit: u32,
+    ) -> Result<Vec<Movie>, Error> {
         self.get(api_url!(
-            ("movies", id, "ratings")
+            ("movies", id, "related"),
+            ("page", page),
+            ("limit", limit)
         ))
     }
 }
