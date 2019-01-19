@@ -3,7 +3,6 @@ pub mod calendar;
 pub mod certifications;
 pub mod checkin;
 pub mod comment;
-pub mod credits;
 pub mod episode;
 pub mod genre;
 pub mod history;
@@ -14,6 +13,7 @@ pub mod list;
 pub mod localization;
 pub mod movie;
 pub mod network;
+pub mod people;
 pub mod person;
 pub mod rating;
 pub mod season;
@@ -29,10 +29,8 @@ pub use crate::models::{
     certifications::{Certification, Certifications, CertificationsType},
     checkin::{Checkin, CheckinResponse, CheckinSharing},
     comment::{
-        Comment, CommentAndItem, CommentItem, CommentNew, CommentSharing, CommentType,
-        CommentPost,
+        Comment, CommentAndItem, CommentItem, CommentNew, CommentPost, CommentSharing, CommentType,
     },
-    credits::{Character, Credits, Crew, CrewMember},
     episode::{Episode, OptionEpisode},
     genre::Genre,
     history::HistoryItem,
@@ -48,6 +46,7 @@ pub use crate::models::{
         AnticipatedMovie, Movie, MovieInfo, MovieStats, OptionMovie, UpdatedMovie, WatchedMovie,
     },
     network::Network,
+    people::{CastPerson, Character, Credits, Crew, CrewMember, CrewPerson, MoviePeople},
     person::Person,
     rating::{Rating, RatingDistribution, Ratings},
     season::{OptionSeason, Season},

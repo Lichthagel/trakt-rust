@@ -1,8 +1,8 @@
 use crate::{
     error::Result,
     models::{
-        Alias, AnticipatedMovie, Comment, List, ListSort, ListType, Movie, MovieInfo, MovieStats,
-        Ratings, TimePeriod, Translation, UpdatedMovie, User, WatchedMovie,
+        Alias, AnticipatedMovie, Comment, List, ListSort, ListType, Movie, MovieInfo, MoviePeople,
+        MovieStats, Ratings, TimePeriod, Translation, UpdatedMovie, User, WatchedMovie,
     },
     TraktApi,
 };
@@ -119,8 +119,8 @@ impl TraktApi {
         ))
     }
 
-    pub fn movie_people(&self, _id: impl Display) -> Result<Vec<()>> {
-        unimplemented!() // TODO
+    pub fn movie_people(&self, id: impl Display) -> Result<MoviePeople> {
+        self.get(api_url!(("movies", id, "people")))
     }
 
     pub fn movie_ratings(&self, id: impl Display) -> Result<Ratings> {

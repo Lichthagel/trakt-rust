@@ -1,3 +1,4 @@
+use crate::models::Person;
 use crate::models::{Movie, Show};
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -12,6 +13,8 @@ pub enum Crew {
     Art(Vec<CrewMember>),
     #[serde(rename = "directing")]
     Directing(Vec<CrewMember>),
+    #[serde(rename = "editing")]
+    Editing(Vec<CrewMember>),
     #[serde(rename = "producing")]
     Producing(Vec<CrewMember>),
     #[serde(rename = "production")]
@@ -38,4 +41,35 @@ pub struct Character {
     character: String,
     show: Option<Show>,
     movie: Option<Movie>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct MoviePeople {
+    cast: Vec<CastPerson>,
+    crew: CrewPeople,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CrewPeople {
+    art: Option<Vec<CrewPerson>>,
+    production: Option<Vec<CrewPerson>>,
+    crew: Option<Vec<CrewPerson>>,
+    #[serde(rename = "costume & make-up")]
+    costume_and_make_up: Option<Vec<CrewPerson>>,
+    directing: Option<Vec<CrewPerson>>,
+    writing: Option<Vec<CrewPerson>>,
+    sound: Option<Vec<CrewPerson>>,
+    camera: Option<Vec<CrewPerson>>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CastPerson {
+    character: String,
+    person: Person,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CrewPerson {
+    job: String,
+    person: Person,
 }
