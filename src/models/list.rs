@@ -6,7 +6,7 @@ use std::fmt::Display;
 #[derive(Debug, Serialize, Deserialize)]
 pub struct List {
     name: String,
-    description: String,
+    description: Option<String>,
     privacy: String,
     display_numbers: bool,
     allow_comments: bool,

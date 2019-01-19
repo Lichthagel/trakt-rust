@@ -1,4 +1,4 @@
-use crate::models::Movie;
+use crate::models::{Movie, Show};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Credits {
@@ -29,11 +29,13 @@ pub enum Crew {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CrewMember {
     job: String,
-    movie: Movie,
+    show: Option<Show>,
+    movie: Option<Movie>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Character {
     character: String,
-    movie: Movie,
+    show: Option<Show>,
+    movie: Option<Movie>,
 }
