@@ -29,7 +29,8 @@ use crate::{
         CommentType,
         Like,
         MediaType,
-        Language
+        Language,
+        ListInfo
     },
     error::Error,
 };
@@ -288,6 +289,18 @@ impl TraktApi {
         media_type: MediaType
     ) -> Result<Vec<Language>, Error> {
         self.get(api_route!("languages", media_type.to_string()))
+    }
+
+    pub fn lists_trending(
+        &self,
+        page: u32,
+        limit: u32
+    ) -> Result<Vec<ListInfo>, Error> {
+        self.get(api_pagination!(
+            api_route!("lists", "trending"),
+            page,
+            limit
+        ))
     }
 }
 
