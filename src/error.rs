@@ -2,7 +2,7 @@
 pub enum Error {
     Response(reqwest::Response),
     Connection(reqwest::Error),
-    ClientSecretNeeded
+    ClientSecretNeeded,
 }
 
 impl From<reqwest::Error> for Error {
