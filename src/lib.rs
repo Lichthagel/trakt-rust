@@ -148,6 +148,27 @@ impl TraktApi {
         }
     }
 
+    fn auth_delete<T: DeserializeOwned>(&self, url: String, access_token: String) -> Result<T> {
+        match self
+            .client
+            .delete(&url)
+            .header("Content-Type", "application/json")
+            .header("trakt-api-version", "2")
+            .header("trakt-api-key", self.client_id.as_str())
+            .header("Authorization", format!("Bearer {}", access_token))
+            .send()
+        {
+            Ok(res) => {
+                if res.status().is_success() {
+                    Ok(serde_json::from_reader(res).unwrap())
+                } else {
+                    Err(Error::from(res))
+                }
+            }
+            Err(e) => Err(Error::from(e)),
+        }
+    }
+
     pub fn certifications(&self, ct: CertificationsType) -> Result<Certifications> {
         self.get(api_url!(("certifications", ct.to_string())))
     }
