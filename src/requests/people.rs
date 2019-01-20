@@ -1,6 +1,6 @@
 use crate::{
     error::Result,
-    models::{Credits, List, Person, PeopleListSearchFactory},
+    models::{Credits, List, ListFactory, Person},
     TraktApi,
 };
 
@@ -17,17 +17,18 @@ impl TraktApi {
         self.get(api_url!(("people", id, "shows")))
     }
 
-    pub fn people_lists<F>(&self, id: String, f: F) -> Result<Vec<List>>
-    where
-        F: FnOnce(PeopleListSearchFactory) -> PeopleListSearchFactory,
-    {
-        let search_factory = f(PeopleListSearchFactory::default());
+    pub fn people_lists(
+        &self,
+        id: String,
+        f: impl FnOnce(ListFactory) -> ListFactory,
+    ) -> Result<Vec<List>> {
+        let list_factory = f(ListFactory::default());
         self.get(api_url!((
             "people",
             id,
             "lists",
-            search_factory.filter_type,
-            search_factory.sorting
+            list_factory.list_filter,
+            list_factory.sorting
         )))
     }
 }

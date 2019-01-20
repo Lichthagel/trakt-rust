@@ -1,7 +1,6 @@
 use crate::models::{Episode, Ids, ListItemType, Movie, Person, Season, Show, User};
 use chrono::{DateTime, Utc};
 use std::fmt;
-use std::fmt::Display;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct List {
@@ -117,13 +116,32 @@ pub enum ListType {
     All,
 }
 
-impl Display for ListType {
+impl fmt::Display for ListType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         f.write_str(match self {
+            ListType::All => "all",
             ListType::Personal => "personal",
             ListType::Official => "official",
             ListType::Watchlists => "watchlists",
-            _ => "all",
+        })
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum ListFilter {
+    Personal,
+    Official,
+    All,
+}
+
+impl fmt::Display for ListFilter {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(match self {
+            ListFilter::All => "all",
+            ListFilter::Personal => "personal",
+            ListFilter::Official => "official",
+            ListFilter::All => "all",
         })
     }
 }
@@ -139,7 +157,7 @@ pub enum ListSort {
     Updated,
 }
 
-impl Display for ListSort {
+impl fmt::Display for ListSort {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         f.write_str(match self {
             ListSort::Popular => "popular",
@@ -149,5 +167,31 @@ impl Display for ListSort {
             ListSort::Added => "added",
             ListSort::Updated => "updated",
         })
+    }
+}
+
+pub struct ListFactory {
+    pub list_filter: ListFilter,
+    pub sorting: ListSort,
+}
+
+impl ListFactory {
+    pub fn with_filter_type(mut self, list_filter: ListFilter) -> ListFactory {
+        self.list_filter = list_filter;
+        self
+    }
+
+    pub fn with_sorting(mut self, sorting: ListSort) -> ListFactory {
+        self.sorting = sorting;
+        self
+    }
+}
+
+impl Default for ListFactory {
+    fn default() -> Self {
+        ListFactory {
+            list_filter: ListFilter::All,
+            sorting: ListSort::Popular,
+        }
     }
 }

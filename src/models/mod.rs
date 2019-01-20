@@ -45,14 +45,11 @@ pub use crate::models::{
         MediaType, SearchItemType, TimePeriod, WatchableType,
     },
     like::Like,
-    list::{List, ListInfo, ListItem, ListSort, ListType},
+    list::{List, ListFactory, ListFilter, ListInfo, ListItem, ListSort, ListSort, ListType},
     localization::{Alias, Country, Language, Translation},
     movie::{AnticipatedMovie, Movie, MovieInfo, OptionMovie, UpdatedMovie, WatchedMovie},
     network::Network,
-    people::{
-        CastPerson, Character, Credits, Crew, CrewMember, CrewPerson, FilterType, ListsSorting,
-        People, PeopleListSearchFactory,
-    },
+    people::{CastPerson, Character, Credits, Crew, CrewMember, CrewPerson, People},
     person::Person,
     progress::{
         CollectionProgress, CollectionProgressEpisode, CollectionProgressSeason, WatchedProgress,
