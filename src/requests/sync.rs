@@ -1,8 +1,9 @@
+use crate::pagination::PaginationFactory;
 use crate::{
     error::Result,
     models::{
         AllItemType, CollectionMovie, CollectionShow, HistoryItem, ItemType, LastActivities,
-        MediaType, Playback, Rating, SyncAddResponse, SyncRemoveResponse, SyncFactory, SyncType,
+        MediaType, Playback, Rating, SyncAddResponse, SyncFactory, SyncRemoveResponse, SyncType,
         WatchableType, WatchedEntry,
     },
     TraktApi,
@@ -75,17 +76,17 @@ impl TraktApi {
         item_type: ItemType,
         start_at: DateTime<Utc>,
         end_at: DateTime<Utc>,
-        page: u32,
-        limit: u32,
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
         access_token: String,
     ) -> Result<Vec<HistoryItem>> {
+        let pf = f(PaginationFactory::default());
         self.auth_get(
             api_url!(
                 ("sync", "history", item_type),
                 ("start_at", start_at),
                 ("end_at", end_at),
-                ("page", page),
-                ("limit", limit)
+                ("page", pf.page),
+                ("limit", pf.limit)
             ),
             access_token,
         )

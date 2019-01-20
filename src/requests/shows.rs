@@ -1,84 +1,100 @@
-use crate::models::ListFactory;
 use crate::{
     error::Result,
     models::{
-        Alias, AnticipatedShow, CollectionProgress, Comment, Episode, List, MediaStats, People,
-        Ratings, Show, ShowInfo, TimePeriod, Translation, UpdatedShow, User, WatchedProgress,
-        WatchedShow,
+        Alias, AnticipatedShow, CollectionProgress, Comment, Episode, List, ListFactory,
+        MediaStats, People, Ratings, Show, ShowInfo, TimePeriod, Translation, UpdatedShow, User,
+        WatchedProgress, WatchedShow,
     },
+    pagination::PaginationFactory,
     TraktApi,
 };
 use std::fmt::Display;
 
 impl TraktApi {
-    pub fn shows_trending(&self, page: u32, limit: u32) -> Result<Vec<ShowInfo>> {
+    pub fn shows_trending(
+        &self,
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
+    ) -> Result<Vec<ShowInfo>> {
+        let pf = f(PaginationFactory::default());
         self.get(api_url!(
             ("shows", "trending"),
-            ("page", page),
-            ("limit", limit)
+            ("page", pf.page),
+            ("limit", pf.limit)
         ))
     }
 
-    pub fn shows_popular(&self, page: u32, limit: u32) -> Result<Vec<Show>> {
+    pub fn shows_popular(
+        &self,
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
+    ) -> Result<Vec<Show>> {
+        let pf = f(PaginationFactory::default());
         self.get(api_url!(
             ("shows", "popular"),
-            ("page", page),
-            ("limit", limit)
+            ("page", pf.page),
+            ("limit", pf.limit)
         ))
     }
 
     pub fn shows_played(
         &self,
-        page: u32,
-        limit: u32,
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
         period: TimePeriod,
     ) -> Result<Vec<WatchedShow>> {
+        let pf = f(PaginationFactory::default());
         self.get(api_url!(
             ("shows", "played", period),
-            ("page", page),
-            ("limit", limit)
+            ("page", pf.page),
+            ("limit", pf.limit)
         ))
     }
 
     pub fn shows_watched(
         &self,
-        page: u32,
-        limit: u32,
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
         period: TimePeriod,
     ) -> Result<Vec<WatchedShow>> {
+        let pf = f(PaginationFactory::default());
         self.get(api_url!(
             ("shows", "watched", period),
-            ("page", page),
-            ("limit", limit)
+            ("page", pf.page),
+            ("limit", pf.limit)
         ))
     }
 
     pub fn shows_collected(
         &self,
-        page: u32,
-        limit: u32,
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
         period: TimePeriod,
     ) -> Result<Vec<WatchedShow>> {
+        let pf = f(PaginationFactory::default());
         self.get(api_url!(
             ("shows", "collected", period),
-            ("page", page),
-            ("limit", limit)
+            ("page", pf.page),
+            ("limit", pf.limit)
         ))
     }
 
-    pub fn shows_anticipated(&self, page: u32, limit: u32) -> Result<Vec<AnticipatedShow>> {
+    pub fn shows_anticipated(
+        &self,
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
+    ) -> Result<Vec<AnticipatedShow>> {
+        let pf = f(PaginationFactory::default());
         self.get(api_url!(
             ("shows", "anticipated"),
-            ("page", page),
-            ("limit", limit)
+            ("page", pf.page),
+            ("limit", pf.limit)
         ))
     }
 
-    pub fn shows_updates(&self, page: u32, limit: u32) -> Result<Vec<UpdatedShow>> {
+    pub fn shows_updates(
+        &self,
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
+    ) -> Result<Vec<UpdatedShow>> {
+        let pf = f(PaginationFactory::default());
         self.get(api_url!(
             ("shows", "updates"),
-            ("page", page),
-            ("limit", limit)
+            ("page", pf.page),
+            ("limit", pf.limit)
         ))
     }
 
@@ -98,11 +114,16 @@ impl TraktApi {
         self.get(api_url!(("shows", id, "translations", language)))
     }
 
-    pub fn show_comments(&self, id: impl Display, page: u32, limit: u32) -> Result<Vec<Comment>> {
+    pub fn show_comments(
+        &self,
+        id: impl Display,
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
+    ) -> Result<Vec<Comment>> {
+        let pf = f(PaginationFactory::default());
         self.get(api_url!(
             ("shows", id, "comments"),
-            ("page", page),
-            ("limit", limit)
+            ("page", pf.page),
+            ("limit", pf.limit)
         ))
     }
 
@@ -110,10 +131,10 @@ impl TraktApi {
         &self,
         id: impl Display,
         f: impl FnOnce(ListFactory) -> ListFactory,
-        page: u32,
-        limit: u32,
+        g: impl FnOnce(PaginationFactory) -> PaginationFactory,
     ) -> Result<Vec<List>> {
         let list_factory = f(ListFactory::default());
+        let pf = g(PaginationFactory::default());
         self.get(api_url!(
             (
                 "shows",
@@ -122,8 +143,8 @@ impl TraktApi {
                 list_factory.list_filter,
                 list_factory.sorting
             ),
-            ("page", page),
-            ("limit", limit)
+            ("page", pf.page),
+            ("limit", pf.limit)
         ))
     }
 
@@ -154,11 +175,16 @@ impl TraktApi {
         self.get(api_url!(("shows", id, "ratings")))
     }
 
-    pub fn show_related(&self, id: impl Display, page: u32, limit: u32) -> Result<Vec<Show>> {
+    pub fn show_related(
+        &self,
+        id: impl Display,
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
+    ) -> Result<Vec<Show>> {
+        let pf = f(PaginationFactory::default());
         self.get(api_url!(
             ("shows", id, "related"),
-            ("page", page),
-            ("limit", limit)
+            ("page", pf.page),
+            ("limit", pf.limit)
         ))
     }
 

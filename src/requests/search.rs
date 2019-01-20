@@ -1,6 +1,7 @@
 use crate::{
     error::Result,
     models::{IdType, SearchItemType, SearchResult, SearchType},
+    pagination::PaginationFactory,
     TraktApi,
 };
 use std::fmt::Display;
@@ -10,14 +11,14 @@ impl TraktApi {
         &self,
         item_type: SearchType,
         query: String,
-        page: u32,
-        limit: u32,
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
     ) -> Result<Vec<SearchResult>> {
+        let pf = f(PaginationFactory::default());
         self.get(api_url!(
             ("search", item_type),
             ("query", query),
-            ("page", page),
-            ("limit", limit)
+            ("page", pf.page),
+            ("limit", pf.limit)
         ))
     }
 

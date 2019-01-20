@@ -9,6 +9,7 @@ mod macros;
 pub mod error;
 pub mod models;
 mod requests;
+mod pagination;
 
 use crate::{
     error::{Error, Result},

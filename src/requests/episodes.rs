@@ -1,7 +1,7 @@
-use crate::models::ListFactory;
 use crate::{
     error::Result,
-    models::{Comment, Episode, List, MediaStats, Ratings, Translation, User},
+    models::{Comment, Episode, List, ListFactory, MediaStats, Ratings, Translation, User},
+    pagination::PaginationFactory,
     TraktApi,
 };
 use std::fmt::Display;
@@ -47,9 +47,9 @@ impl TraktApi {
         show_id: impl Display,
         season_number: u32,
         episode_number: u32,
-        page: u32,
-        limit: u32,
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
     ) -> Result<Vec<Comment>> {
+        let pf = f(PaginationFactory::default());
         self.get(api_url!(
             (
                 "shows",
@@ -60,8 +60,8 @@ impl TraktApi {
                 episode_number,
                 "comments"
             ),
-            ("page", page),
-            ("limit", limit)
+            ("page", pf.page),
+            ("limit", pf.limit)
         ))
     }
 
@@ -71,10 +71,10 @@ impl TraktApi {
         season_number: u32,
         episode_number: u32,
         f: impl FnOnce(ListFactory) -> ListFactory,
-        page: u32,
-        limit: u32,
+        g: impl FnOnce(PaginationFactory) -> PaginationFactory,
     ) -> Result<Vec<List>> {
         let list_factory = f(ListFactory::default());
+        let pf = g(PaginationFactory::default());
         self.get(api_url!(
             (
                 "shows",
@@ -87,8 +87,8 @@ impl TraktApi {
                 list_factory.list_filter,
                 list_factory.sorting
             ),
-            ("page", page),
-            ("limit", limit)
+            ("page", pf.page),
+            ("limit", pf.limit)
         ))
     }
 

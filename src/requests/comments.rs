@@ -1,9 +1,10 @@
 use crate::{
     error::Result,
     models::{
-        AllCommentableItemType, Comment, CommentAndItem, CommentItem, CommentNew, CommentType,
-        CommentPost, Like,
+        AllCommentableItemType, Comment, CommentAndItem, CommentItem, CommentNew, CommentPost,
+        CommentType, Like,
     },
+    pagination::PaginationFactory,
     TraktApi,
 };
 
@@ -29,26 +30,24 @@ impl TraktApi {
         self.auth_put(
             api_url!(("comments", comment_id)),
             comment_update.to_json_string()?,
-            access_token
+            access_token,
         )
     }
 
-    pub fn comment_delete(
+    pub fn comment_delete(&self, comment_id: u32, access_token: String) -> Result<()> {
+        self.auth_delete(api_url!(("comments", comment_id)), access_token)
+    }
+
+    pub fn replies(
         &self,
         comment_id: u32,
-        access_token: String
-    ) -> Result<()> {
-        self.auth_delete(
-            api_url!(("comments", comment_id)),
-            access_token
-        )
-    }
-
-    pub fn replies(&self, comment_id: u32, page: u32, limit: u32) -> Result<Vec<Comment>> {
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
+    ) -> Result<Vec<Comment>> {
+        let pf = pagination(PaginationFactory::default());
         self.get(api_url!(
             ("comments", comment_id, "replies"),
-            ("page", page),
-            ("limit", limit)
+            ("page", pf.page),
+            ("limit", pf.limit)
         ))
     }
 
@@ -56,12 +55,12 @@ impl TraktApi {
         &self,
         comment_id: u32,
         comment: CommentPost,
-        access_token: String
+        access_token: String,
     ) -> Result<Comment> {
         self.auth_post(
             api_url!(("comments", comment_id, "replies")),
             comment.to_json_string()?,
-            access_token
+            access_token,
         )
     }
 
@@ -69,35 +68,29 @@ impl TraktApi {
         self.get(api_url!(("comments", comment_id, "item")))
     }
 
-    pub fn comment_likes(&self, comment_id: u32, page: u32, limit: u32) -> Result<Vec<Like>> {
+    pub fn comment_likes(
+        &self,
+        comment_id: u32,
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
+    ) -> Result<Vec<Like>> {
+        let pf = f(PaginationFactory::default());
         self.get(api_url!(
             ("comments", comment_id, "likes"),
-            ("page", page),
-            ("limit", limit)
+            ("page", pf.page),
+            ("limit", pf.limit)
         ))
     }
 
-    pub fn comment_like(
-        &self,
-        comment_id: u32,
-        access_token: String
-    ) -> Result<()> {
+    pub fn comment_like(&self, comment_id: u32, access_token: String) -> Result<()> {
         self.auth_post_no_body(
             api_url!(("comments", comment_id, "like")),
             String::from(""),
-            access_token
+            access_token,
         )
     }
 
-    pub fn comment_like_delete(
-        &self,
-        comment_id: u32,
-        access_token: String
-    ) -> Result<()> {
-        self.auth_delete(
-            api_url!(("comments", comment_id, "like")),
-            access_token
-        )
+    pub fn comment_like_delete(&self, comment_id: u32, access_token: String) -> Result<()> {
+        self.auth_delete(api_url!(("comments", comment_id, "like")), access_token)
     }
 
     pub fn comments_trending(
@@ -105,9 +98,9 @@ impl TraktApi {
         comment_type: CommentType,
         item_type: AllCommentableItemType,
         include_replies: bool,
-        page: u32,
-        limit: u32,
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory
     ) -> Result<Vec<CommentAndItem>> {
+        let pf = f(PaginationFactory::default());
         self.get(api_url!(
             (
                 "comments",
@@ -115,8 +108,8 @@ impl TraktApi {
                 comment_type.to_string(),
                 item_type.to_string()
             ),
-            ("page", page),
-            ("limit", limit),
+            ("page", pf.page),
+            ("limit", pf.limit),
             ("include_replies", include_replies)
         ))
     }
@@ -126,9 +119,9 @@ impl TraktApi {
         comment_type: CommentType,
         item_type: AllCommentableItemType,
         include_replies: bool,
-        page: u32,
-        limit: u32,
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory
     ) -> Result<Vec<CommentAndItem>> {
+        let pf = f(PaginationFactory::default());
         self.get(api_url!(
             (
                 "comments",
@@ -136,8 +129,8 @@ impl TraktApi {
                 comment_type.to_string(),
                 item_type.to_string()
             ),
-            ("page", page),
-            ("limit", limit),
+            ("page", pf.page),
+            ("limit", pf.limit),
             ("include_replies", include_replies)
         ))
     }
@@ -147,9 +140,9 @@ impl TraktApi {
         comment_type: CommentType,
         item_type: AllCommentableItemType,
         include_replies: bool,
-        page: u32,
-        limit: u32,
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory
     ) -> Result<Vec<CommentAndItem>> {
+        let pf = f(PaginationFactory::default());
         self.get(api_url!(
             (
                 "comments",
@@ -157,8 +150,8 @@ impl TraktApi {
                 comment_type.to_string(),
                 item_type.to_string()
             ),
-            ("page", page),
-            ("limit", limit),
+            ("page", pf.page),
+            ("limit", pf.limit),
             ("include_replies", include_replies)
         ))
     }
