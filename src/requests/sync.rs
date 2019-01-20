@@ -1,14 +1,13 @@
 use crate::{
     error::Result,
     models::{
-        CollectionMovie, CollectionShow, HistoryItem, ItemType, LastActivities, MediaType,
-        Playback, SyncAddResponse, SyncRemoveResponse, SyncRequest, SyncType, WatchableType,
-        WatchedEntry,
+        AllItemType, CollectionMovie, CollectionShow, HistoryItem, ItemType, LastActivities,
+        MediaType, Playback, Rating, SyncAddResponse, SyncRemoveResponse, SyncRequest, SyncType,
+        WatchableType, WatchedEntry,
     },
     TraktApi,
 };
-use chrono::DateTime;
-use chrono::Utc;
+use chrono::{DateTime, Utc};
 
 impl TraktApi {
     pub fn sync_last_activities(&self, access_token: String) -> Result<LastActivities> {
@@ -130,5 +129,13 @@ impl TraktApi {
             serde_json::to_string(&req)?,
             access_token,
         )
+    }
+
+    pub fn sync_ratings(
+        &self,
+        item_type: AllItemType,
+        access_token: String,
+    ) -> Result<Vec<Rating>> {
+        self.auth_get(api_url!(("sync", "ratings", item_type)), access_token)
     }
 }

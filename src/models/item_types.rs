@@ -59,14 +59,11 @@ impl ToString for AllCommentableItemType {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
 pub enum ItemType {
-    #[serde(rename = "movie")]
     Movie,
-    #[serde(rename = "show")]
     Show,
-    #[serde(rename = "season")]
     Season,
-    #[serde(rename = "episode")]
     Episode,
 }
 
@@ -77,6 +74,28 @@ impl Display for ItemType {
             ItemType::Show => "shows",
             ItemType::Season => "seasons",
             ItemType::Episode => "episodes",
+        })
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum AllItemType {
+    Movie,
+    Show,
+    Season,
+    Episode,
+    All,
+}
+
+impl Display for AllItemType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(match self {
+            AllItemType::Movie => "movies",
+            AllItemType::Show => "shows",
+            AllItemType::Season => "seasons",
+            AllItemType::Episode => "episodes",
+            _ => "all",
         })
     }
 }
