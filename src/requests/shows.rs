@@ -1,12 +1,9 @@
-use crate::models::Episode;
-use crate::models::Ratings;
-use crate::models::ShowStats;
-use crate::models::User;
 use crate::{
     error::Result,
     models::{
-        Alias, AnticipatedShow, CollectionProgress, Comment, List, People, Show, ShowInfo,
-        TimePeriod, Translation, UpdatedShow, WatchedProgress, WatchedShow,
+        Alias, AnticipatedShow, CollectionProgress, Comment, Episode, List, People, Ratings, Show,
+        ShowInfo, ShowStats, TimePeriod, Translation, UpdatedShow, User, WatchedProgress,
+        WatchedShow,
     },
     TraktApi,
 };
