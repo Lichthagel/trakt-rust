@@ -1,3 +1,4 @@
+use crate::models::ListFactory;
 use crate::{
     error::Result,
     models::{
@@ -105,9 +106,22 @@ impl TraktApi {
         ))
     }
 
-    pub fn show_lists(&self, id: impl Display, page: u32, limit: u32) -> Result<Vec<List>> {
+    pub fn show_lists(
+        &self,
+        id: impl Display,
+        f: impl FnOnce(ListFactory) -> ListFactory,
+        page: u32,
+        limit: u32,
+    ) -> Result<Vec<List>> {
+        let list_factory = f(ListFactory::default());
         self.get(api_url!(
-            ("shows", id, "lists"),
+            (
+                "shows",
+                id,
+                "lists",
+                list_factory.list_filter,
+                list_factory.sorting
+            ),
             ("page", page),
             ("limit", limit)
         ))

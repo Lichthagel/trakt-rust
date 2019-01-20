@@ -1,6 +1,7 @@
+use crate::models::ListFactory;
 use crate::{
     error::Result,
-    models::{Comment, Episode, List, ListSort, ListType, MediaStats, Ratings, Translation, User},
+    models::{Comment, Episode, List, MediaStats, Ratings, Translation, User},
     TraktApi,
 };
 use std::fmt::Display;
@@ -69,11 +70,11 @@ impl TraktApi {
         show_id: impl Display,
         season_number: u32,
         episode_number: u32,
-        list_type: ListType,
-        list_sort: ListSort,
+        f: impl FnOnce(ListFactory) -> ListFactory,
         page: u32,
         limit: u32,
     ) -> Result<Vec<List>> {
+        let list_factory = f(ListFactory::default());
         self.get(api_url!(
             (
                 "shows",
@@ -83,8 +84,8 @@ impl TraktApi {
                 "episodes",
                 episode_number,
                 "lists",
-                list_type,
-                list_sort
+                list_factory.list_filter,
+                list_factory.sorting
             ),
             ("page", page),
             ("limit", limit)

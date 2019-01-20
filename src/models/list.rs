@@ -132,6 +132,7 @@ impl fmt::Display for ListType {
 pub enum ListFilter {
     Personal,
     Official,
+    Watchlists,
     All,
 }
 
@@ -141,6 +142,7 @@ impl fmt::Display for ListFilter {
             ListFilter::All => "all",
             ListFilter::Personal => "personal",
             ListFilter::Official => "official",
+            ListFilter::Watchlists => "watchlists"
         })
     }
 }

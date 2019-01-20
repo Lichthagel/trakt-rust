@@ -1,8 +1,9 @@
+use crate::models::ListFactory;
 use crate::{
     error::Result,
     models::{
-        Alias, AnticipatedMovie, Comment, List, ListSort, ListType, MediaStats, Movie, MovieInfo,
-        People, Ratings, TimePeriod, Translation, UpdatedMovie, User, WatchedMovie,
+        Alias, AnticipatedMovie, Comment, List, MediaStats, Movie, MovieInfo, People, Ratings,
+        TimePeriod, Translation, UpdatedMovie, User, WatchedMovie,
     },
     TraktApi,
 };
@@ -107,13 +108,19 @@ impl TraktApi {
     pub fn movie_lists(
         &self,
         id: impl Display,
-        list_type: ListType,
-        list_sorting: ListSort,
+        f: impl FnOnce(ListFactory) -> ListFactory,
         page: u32,
         limit: u32,
     ) -> Result<Vec<List>> {
+        let list_factory = f(ListFactory::default());
         self.get(api_url!(
-            ("movies", id, "lists", list_type, list_sorting),
+            (
+                "movies",
+                id,
+                "lists",
+                list_factory.list_filter,
+                list_factory.sorting
+            ),
             ("page", page),
             ("limit", limit)
         ))
