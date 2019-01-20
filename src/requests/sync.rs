@@ -83,13 +83,17 @@ impl TraktApi {
         item_type: ItemType,
         start_at: DateTime<Utc>,
         end_at: DateTime<Utc>,
+        page: u32,
+        limit: u32,
         access_token: String,
     ) -> Result<Vec<HistoryItem>> {
         self.auth_get(
             api_url!(
                 ("sync", "history", item_type),
                 ("start_at", start_at),
-                ("end_at", end_at)
+                ("end_at", end_at),
+                ("page", page),
+                ("limit", limit)
             ),
             access_token,
         )
