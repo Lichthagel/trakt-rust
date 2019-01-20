@@ -1,13 +1,9 @@
-use crate::models::CollectionRemoveResponse;
-use crate::models::HistoryItem;
-use crate::models::ItemType;
-use crate::models::MediaType;
-use crate::models::WatchedEntry;
 use crate::{
     error::Result,
     models::{
-        CollectionAddResponse, CollectionMovie, CollectionRequest, CollectionShow, LastActivities,
-        Playback, WatchableType,
+        CollectionMovie, CollectionShow, HistoryItem, ItemType, LastActivities, MediaType,
+        Playback, SyncAddResponse, SyncRemoveResponse, SyncRequest, SyncType, WatchableType,
+        WatchedEntry,
     },
     TraktApi,
 };
@@ -41,10 +37,10 @@ impl TraktApi {
 
     pub fn sync_collection_add(
         &self,
-        f: impl Fn(&mut CollectionRequest),
+        f: impl Fn(&mut SyncRequest),
         access_token: String,
-    ) -> Result<CollectionAddResponse> {
-        let mut req = CollectionRequest::new();
+    ) -> Result<SyncAddResponse> {
+        let mut req = SyncRequest::new(SyncType::Collect);
 
         f(&mut req);
 
@@ -59,10 +55,10 @@ impl TraktApi {
 
     pub fn sync_collection_remove(
         &self,
-        f: impl Fn(&mut CollectionRequest),
+        f: impl Fn(&mut SyncRequest),
         access_token: String,
-    ) -> Result<CollectionRemoveResponse> {
-        let mut req = CollectionRequest::new();
+    ) -> Result<SyncRemoveResponse> {
+        let mut req = SyncRequest::new(SyncType::Collect);
 
         f(&mut req);
 

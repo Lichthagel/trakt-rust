@@ -76,7 +76,7 @@ impl Display for ItemType {
             ItemType::Movie => "movies",
             ItemType::Show => "shows",
             ItemType::Season => "seasons",
-            ItemType::Episode => "episodes"
+            ItemType::Episode => "episodes",
         })
     }
 }
@@ -110,7 +110,7 @@ impl Display for MediaType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         f.write_str(match self {
             MediaType::Movies => "movies",
-            MediaType::Shows => "shows"
+            MediaType::Shows => "shows",
         })
     }
 }

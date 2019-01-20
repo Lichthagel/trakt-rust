@@ -32,11 +32,7 @@ pub use crate::models::{
     calendar::{CalendarMovie, CalendarShow},
     certifications::{Certification, Certifications, CertificationsType},
     checkin::{Checkin, CheckinResponse, CheckinSharing},
-    collection::{
-        CollectionAddResponse, CollectionEpisode, CollectionMovie, CollectionRemoveResponse,
-        CollectionRequest, CollectionResponseNotFound, CollectionResponseNumbers, CollectionSeason,
-        CollectionShow,
-    },
+    collection::{CollectionEpisode, CollectionMovie, CollectionSeason, CollectionShow},
     comment::{
         Comment, CommentAndItem, CommentItem, CommentNew, CommentPost, CommentSharing, CommentType,
     },
@@ -67,7 +63,11 @@ pub use crate::models::{
         MediaStats, UserEpisodeStats, UserMovieStats, UserNetworkStats, UserRatingStats,
         UserSeasonStats, UserShowStats, UserStats,
     },
-    sync::{LastActivities, LastActivitiesElement, Playback},
+    sync::{
+        LastActivities, LastActivitiesElement, Playback, SyncAddResponse, SyncRemoveResponse,
+        SyncRequest, SyncRequestSeason, SyncRequestShow, SyncResponseNotFound, SyncResponseNumbers,
+        SyncType,
+    },
     user::User,
     watched::{WatchedEntry, WatchedEpisode, WatchedSeason},
     watching::Watching,
