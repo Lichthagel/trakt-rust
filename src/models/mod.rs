@@ -46,7 +46,10 @@ pub use crate::models::{
     localization::{Alias, Country, Language, Translation},
     movie::{AnticipatedMovie, Movie, MovieInfo, OptionMovie, UpdatedMovie, WatchedMovie},
     network::Network,
-    people::{CastPerson, Character, Credits, Crew, CrewMember, CrewPerson, People},
+    people::{
+        CastPerson, Character, Credits, Crew, CrewMember, CrewPerson, FilterType, ListsSorting,
+        People, PeopleListSearchFactory,
+    },
     person::Person,
     progress::{
         CollectionProgress, CollectionProgressEpisode, CollectionProgressSeason, WatchedProgress,

@@ -1,6 +1,6 @@
 use crate::{
     error::Result,
-    models::{Credits, List, Person},
+    models::{Credits, List, Person, PeopleListSearchFactory},
     TraktApi,
 };
 
@@ -17,8 +17,17 @@ impl TraktApi {
         self.get(api_url!(("people", id, "shows")))
     }
 
-    // Todo add the possabillity to use filter
-    pub fn people_lists(&self, id: String) -> Result<Vec<List>> {
-        self.get(api_url!(("people", id, "lists")))
+    pub fn people_lists<F>(&self, id: String, f: F) -> Result<Vec<List>>
+    where
+        F: FnOnce(PeopleListSearchFactory) -> PeopleListSearchFactory,
+    {
+        let search_factory = f(PeopleListSearchFactory::default());
+        self.get(api_url!((
+            "people",
+            id,
+            "lists",
+            search_factory.filter_type,
+            search_factory.sorting
+        )))
     }
 }

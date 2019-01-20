@@ -1,5 +1,6 @@
 use crate::models::Person;
 use crate::models::{Movie, Show};
+use std::fmt;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Credits {
@@ -72,4 +73,68 @@ pub struct CastPerson {
 pub struct CrewPerson {
     job: String,
     person: Person,
+}
+
+pub enum FilterType {
+    All,
+    Personal,
+    Official,
+}
+
+impl fmt::Display for FilterType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(match self {
+            FilterType::All => "all",
+            FilterType::Personal => "personal",
+            FilterType::Official => "official",
+        })
+    }
+}
+
+pub enum ListsSorting {
+    Popular,
+    Likes,
+    Comments,
+    Items,
+    Added,
+    Updated,
+}
+
+impl fmt::Display for ListsSorting {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(match self {
+            ListsSorting::Popular => "popular",
+            ListsSorting::Likes => "likes",
+            ListsSorting::Comments => "comments",
+            ListsSorting::Items => "items",
+            ListsSorting::Added => "added",
+            ListsSorting::Updated => "updated",
+        })
+    }
+}
+
+pub struct PeopleListSearchFactory {
+    pub filter_type: FilterType,
+    pub sorting: ListsSorting,
+}
+
+impl PeopleListSearchFactory {
+    pub fn with_filter_type(mut self, filter_type: FilterType) -> PeopleListSearchFactory {
+        self.filter_type = filter_type;
+        self
+    }
+
+    pub fn with_sorting(mut self, sorting: ListsSorting) -> PeopleListSearchFactory {
+        self.sorting = sorting;
+        self
+    }
+}
+
+impl Default for PeopleListSearchFactory {
+    fn default() -> Self {
+        PeopleListSearchFactory {
+            filter_type: FilterType::All,
+            sorting: ListsSorting::Popular,
+        }
+    }
 }
