@@ -1,8 +1,8 @@
 use crate::{
     error::Result,
     models::{
-        Alias, AnticipatedShow, CollectionProgress, Comment, Episode, List, People, Ratings, Show,
-        ShowInfo, ShowStats, TimePeriod, Translation, UpdatedShow, User, WatchedProgress,
+        Alias, AnticipatedShow, CollectionProgress, Comment, Episode, List, MediaStats, People,
+        Ratings, Show, ShowInfo, TimePeriod, Translation, UpdatedShow, User, WatchedProgress,
         WatchedShow,
     },
     TraktApi,
@@ -92,7 +92,7 @@ impl TraktApi {
     pub fn show_translations(
         &self,
         id: impl Display,
-        language: String,
+        language: impl Display,
     ) -> Result<Vec<Translation>> {
         self.get(api_url!(("shows", id, "translations", language)))
     }
@@ -148,7 +148,7 @@ impl TraktApi {
         ))
     }
 
-    pub fn show_stats(&self, id: impl Display) -> Result<ShowStats> {
+    pub fn show_stats(&self, id: impl Display) -> Result<MediaStats> {
         self.get(api_url!(("shows", id, "stats")))
     }
 

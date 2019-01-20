@@ -1,8 +1,8 @@
 use crate::{
     error::Result,
     models::{
-        Alias, AnticipatedMovie, Comment, List, ListSort, ListType, Movie, MovieInfo, People,
-        MovieStats, Ratings, TimePeriod, Translation, UpdatedMovie, User, WatchedMovie,
+        Alias, AnticipatedMovie, Comment, List, ListSort, ListType, MediaStats, Movie, MovieInfo,
+        People, Ratings, TimePeriod, Translation, UpdatedMovie, User, WatchedMovie,
     },
     TraktApi,
 };
@@ -135,7 +135,7 @@ impl TraktApi {
         ))
     }
 
-    pub fn movie_stats(&self, id: impl Display) -> Result<MovieStats> {
+    pub fn movie_stats(&self, id: impl Display) -> Result<MediaStats> {
         self.get(api_url!(("movies", id, "stats")))
     }
 

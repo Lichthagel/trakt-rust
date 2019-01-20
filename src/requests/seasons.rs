@@ -1,6 +1,6 @@
 use crate::{
     error::Result,
-    models::{Comment, Episode, List, ListSort, ListType, Ratings, Season, ShowStats, User},
+    models::{Comment, Episode, List, ListSort, ListType, MediaStats, Ratings, Season, User},
     TraktApi,
 };
 use std::fmt::Display;
@@ -56,7 +56,7 @@ impl TraktApi {
         )))
     }
 
-    pub fn season_stats(&self, show_id: impl Display, season_number: u32) -> Result<ShowStats> {
+    pub fn season_stats(&self, show_id: impl Display, season_number: u32) -> Result<MediaStats> {
         self.get(api_url!((
             "shows",
             show_id,

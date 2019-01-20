@@ -35,16 +35,6 @@ pub struct UpdatedMovie {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct MovieStats {
-    watchers: u64,
-    plays: u64,
-    collectors: u64,
-    comments: u64,
-    lists: u64,
-    votes: u64,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
 pub struct OptionMovie {
     title: Option<String>,
     year: Option<u16>,

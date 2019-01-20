@@ -68,14 +68,3 @@ pub struct UpdatedShow {
     updated_at: DateTime<Utc>,
     show: Show,
 }
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct ShowStats {
-    watchers: u64,
-    plays: u64,
-    collectors: u64,
-    collected_episodes: u64,
-    comments: u64,
-    lists: u64,
-    votes: u64,
-}

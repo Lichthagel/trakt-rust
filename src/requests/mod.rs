@@ -2,6 +2,7 @@ mod authentication;
 mod calendar;
 mod checkin;
 mod comments;
+mod episodes;
 mod lists;
 mod movies;
 mod people;

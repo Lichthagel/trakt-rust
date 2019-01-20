@@ -54,3 +54,14 @@ pub struct UserRatingStats {
     total: u64,
     distribution: [u64; 10],
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct MediaStats {
+    watchers: u64,
+    plays: u64,
+    collectors: u64,
+    collected_episodes: Option<u64>,
+    comments: u64,
+    lists: u64,
+    votes: u64,
+}
