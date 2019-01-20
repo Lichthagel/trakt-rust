@@ -43,7 +43,7 @@ impl TraktApi {
         comment_id: u32,
         f: impl FnOnce(PaginationFactory) -> PaginationFactory,
     ) -> Result<Vec<Comment>> {
-        let pf = pagination(PaginationFactory::default());
+        let pf = f(PaginationFactory::default());
         self.get(api_url!(
             ("comments", comment_id, "replies"),
             ("page", pf.page),
