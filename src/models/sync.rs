@@ -105,7 +105,7 @@ impl SyncFactory {
 
         self.movies.push(Value::Object(movie));
 
-        Ok(Self)
+        Ok(self)
     }
 
     pub fn movie_id(mut self, trakt_id: u64) -> Self {
