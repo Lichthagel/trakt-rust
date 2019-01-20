@@ -113,4 +113,22 @@ impl TraktApi {
             access_token,
         )
     }
+
+    pub fn sync_history_remove(
+        &self,
+        f: impl Fn(&mut SyncRequest),
+        access_token: String,
+    ) -> Result<SyncRemoveResponse> {
+        let mut req = SyncRequest::new(SyncType::Watch);
+
+        f(&mut req);
+
+        let req = req.build();
+
+        self.auth_post(
+            api_url!(("sync", "history", "remove")),
+            serde_json::to_string(&req)?,
+            access_token,
+        )
+    }
 }
