@@ -45,7 +45,7 @@ pub use crate::models::{
         MediaType, SearchItemType, TimePeriod, WatchableType,
     },
     like::Like,
-    list::{List, ListFactory, ListFilter, ListInfo, ListItem, ListSort, ListSort, ListType},
+    list::{List, ListFactory, ListFilter, ListInfo, ListItem, ListSort, ListType},
     localization::{Alias, Country, Language, Translation},
     movie::{AnticipatedMovie, Movie, MovieInfo, OptionMovie, UpdatedMovie, WatchedMovie},
     network::Network,
@@ -65,7 +65,7 @@ pub use crate::models::{
     },
     sync::{
         LastActivities, LastActivitiesElement, Playback, SyncAddResponse, SyncRemoveResponse,
-        SyncRequest, SyncRequestSeason, SyncRequestShow, SyncResponseNotFound, SyncResponseNumbers,
+        SyncFactory, SyncSeasonFactory, SyncShowFactory, SyncResponseNotFound, SyncResponseNumbers,
         SyncType,
     },
     user::User,

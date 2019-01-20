@@ -2,7 +2,7 @@ use crate::{
     error::Result,
     models::{
         AllItemType, CollectionMovie, CollectionShow, HistoryItem, ItemType, LastActivities,
-        MediaType, Playback, Rating, SyncAddResponse, SyncRemoveResponse, SyncRequest, SyncType,
+        MediaType, Playback, Rating, SyncAddResponse, SyncRemoveResponse, SyncFactory, SyncType,
         WatchableType, WatchedEntry,
     },
     TraktApi,
@@ -36,36 +36,28 @@ impl TraktApi {
 
     pub fn sync_collection_add(
         &self,
-        f: impl Fn(&mut SyncRequest),
+        f: impl FnOnce(SyncFactory) -> SyncFactory,
         access_token: String,
     ) -> Result<SyncAddResponse> {
-        let mut req = SyncRequest::new(SyncType::Collect);
-
-        f(&mut req);
-
-        let req = req.build();
+        let body = f(SyncFactory::new(SyncType::Collect)).build();
 
         self.auth_post(
             api_url!(("sync", "collection")),
-            serde_json::to_string(&req)?,
+            serde_json::to_string(&body)?,
             access_token,
         )
     }
 
     pub fn sync_collection_remove(
         &self,
-        f: impl Fn(&mut SyncRequest),
+        f: impl FnOnce(SyncFactory) -> SyncFactory,
         access_token: String,
     ) -> Result<SyncRemoveResponse> {
-        let mut req = SyncRequest::new(SyncType::Collect);
-
-        f(&mut req);
-
-        let req = req.build();
+        let body = f(SyncFactory::new(SyncType::Collect)).build();
 
         self.auth_post(
             api_url!(("sync", "collection", "remove")),
-            serde_json::to_string(&req)?,
+            serde_json::to_string(&body)?,
             access_token,
         )
     }
@@ -101,36 +93,28 @@ impl TraktApi {
 
     pub fn sync_history_add(
         &self,
-        f: impl Fn(&mut SyncRequest),
+        f: impl FnOnce(SyncFactory) -> SyncFactory,
         access_token: String,
     ) -> Result<SyncAddResponse> {
-        let mut req = SyncRequest::new(SyncType::Watch);
-
-        f(&mut req);
-
-        let req = req.build();
+        let body = f(SyncFactory::new(SyncType::Watch)).build();
 
         self.auth_post(
             api_url!(("sync", "history")),
-            serde_json::to_string(&req)?,
+            serde_json::to_string(&body)?,
             access_token,
         )
     }
 
     pub fn sync_history_remove(
         &self,
-        f: impl Fn(&mut SyncRequest),
+        f: impl FnOnce(SyncFactory) -> SyncFactory,
         access_token: String,
     ) -> Result<SyncRemoveResponse> {
-        let mut req = SyncRequest::new(SyncType::Watch);
-
-        f(&mut req);
-
-        let req = req.build();
+        let body = f(SyncFactory::new(SyncType::Watch)).build();
 
         self.auth_post(
             api_url!(("sync", "history", "remove")),
-            serde_json::to_string(&req)?,
+            serde_json::to_string(&body)?,
             access_token,
         )
     }

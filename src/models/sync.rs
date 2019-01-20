@@ -61,7 +61,7 @@ impl SyncType {
     }
 }
 
-pub struct SyncRequest {
+pub struct SyncFactory {
     movies: Vec<Value>,
     shows: Vec<Value>,
     seasons: Vec<Value>,
@@ -69,7 +69,7 @@ pub struct SyncRequest {
     sync_type: SyncType,
 }
 
-impl SyncRequest {
+impl SyncFactory {
     pub fn new(sync_type: SyncType) -> Self {
         Self {
             movies: Vec::new(),
@@ -89,12 +89,12 @@ impl SyncRequest {
         Value::Object(obj)
     }
 
-    pub fn movie(&mut self, movie: Movie) -> Result<()> {
+    pub fn movie(mut self, movie: Movie) -> Result<Self> {
         self.movies.push(serde_json::to_value(movie)?);
-        Ok(())
+        Ok(self)
     }
 
-    pub fn movie_at(&mut self, movie: Movie, collected_at: DateTime<Utc>) -> Result<()> {
+    pub fn movie_at(mut self, movie: Movie, collected_at: DateTime<Utc>) -> Result<Self> {
         let movie = serde_json::to_value(movie)?;
         let mut movie = movie.as_object().ok_or(Error::NoneError)?.clone();
 
@@ -105,20 +105,21 @@ impl SyncRequest {
 
         self.movies.push(Value::Object(movie));
 
-        Ok(())
+        Ok(Self)
     }
 
-    pub fn movie_id(&mut self, trakt_id: u64) {
+    pub fn movie_id(mut self, trakt_id: u64) -> Self {
         let mut ids = Map::new();
         ids.insert("trakt".to_owned(), Value::Number(trakt_id.into()));
 
         let mut movie = Map::new();
         movie.insert("ids".to_owned(), Value::Object(ids));
 
-        self.movies.push(Value::Object(movie))
+        self.movies.push(Value::Object(movie));
+        self
     }
 
-    pub fn movie_id_at(&mut self, trakt_id: u64, collected_at: DateTime<Utc>) {
+    pub fn movie_id_at(mut self, trakt_id: u64, collected_at: DateTime<Utc>) -> Self {
         let mut ids = Map::new();
         ids.insert("trakt".to_owned(), Value::Number(trakt_id.into()));
 
@@ -130,20 +131,22 @@ impl SyncRequest {
             Value::String(collected_at.to_string()),
         );
 
-        self.movies.push(Value::Object(movie))
+        self.movies.push(Value::Object(movie));
+        self
     }
 
-    pub fn movie_slug(&mut self, trakt_slug: String) {
+    pub fn movie_slug(mut self, trakt_slug: String) -> Self {
         let mut ids = Map::new();
         ids.insert("slug".to_owned(), Value::String(trakt_slug));
 
         let mut movie = Map::new();
         movie.insert("ids".to_owned(), Value::Object(ids));
 
-        self.movies.push(Value::Object(movie))
+        self.movies.push(Value::Object(movie));
+        self
     }
 
-    pub fn movie_slug_at(&mut self, trakt_slug: String, collected_at: DateTime<Utc>) {
+    pub fn movie_slug_at(mut self, trakt_slug: String, collected_at: DateTime<Utc>) -> Self {
         let mut ids = Map::new();
         ids.insert("slug".to_owned(), Value::String(trakt_slug));
 
@@ -155,20 +158,22 @@ impl SyncRequest {
             Value::String(collected_at.to_string()),
         );
 
-        self.movies.push(Value::Object(movie))
+        self.movies.push(Value::Object(movie));
+        self
     }
 
-    pub fn movie_imdb(&mut self, imdb_id: String) {
+    pub fn movie_imdb(mut self, imdb_id: String) -> Self {
         let mut ids = Map::new();
         ids.insert("imdb".to_owned(), Value::String(imdb_id));
 
         let mut movie = Map::new();
         movie.insert("ids".to_owned(), Value::Object(ids));
 
-        self.movies.push(Value::Object(movie))
+        self.movies.push(Value::Object(movie));
+        self
     }
 
-    pub fn movie_imdb_at(&mut self, imdb_id: String, collected_at: DateTime<Utc>) {
+    pub fn movie_imdb_at(mut self, imdb_id: String, collected_at: DateTime<Utc>) -> Self {
         let mut ids = Map::new();
         ids.insert("imdb".to_owned(), Value::String(imdb_id));
 
@@ -180,69 +185,77 @@ impl SyncRequest {
             Value::String(collected_at.to_string()),
         );
 
-        self.movies.push(Value::Object(movie))
+        self.movies.push(Value::Object(movie));
+        self
     }
 
-    pub fn show(&mut self, show: Show, f: impl Fn(&mut SyncRequestShow)) -> Result<()> {
+    pub fn show(
+        mut self,
+        show: Show,
+        f: impl FnOnce(SyncShowFactory) -> SyncShowFactory,
+    ) -> Result<Self> {
         let show = serde_json::to_value(show)?;
         let show = show.as_object().ok_or(Error::NoneError)?.clone();
 
-        let mut pshow = SyncRequestShow::new(self.sync_type.clone());
-
-        f(&mut pshow);
-
-        self.shows.push(pshow.build(show));
-        Ok(())
+        self.shows
+            .push(f(SyncShowFactory::new(self.sync_type.clone())).build(show));
+        Ok(self)
     }
 
-    pub fn show_id(&mut self, trakt_id: u64, f: impl Fn(&mut SyncRequestShow)) {
+    pub fn show_id(
+        mut self,
+        trakt_id: u64,
+        f: impl Fn(SyncShowFactory) -> SyncShowFactory,
+    ) -> Self {
         let mut ids = Map::new();
         ids.insert("trakt".to_owned(), Value::Number(trakt_id.into()));
 
         let mut show = Map::new();
         show.insert("ids".to_owned(), Value::Object(ids));
 
-        let mut pshow = SyncRequestShow::new(self.sync_type.clone());
-
-        f(&mut pshow);
-
-        self.shows.push(pshow.build(show))
+        self.shows
+            .push(f(SyncShowFactory::new(self.sync_type.clone())).build(show));
+        self
     }
 
-    pub fn show_slug(&mut self, trakt_slug: String, f: impl Fn(&mut SyncRequestShow)) {
+    pub fn show_slug(
+        mut self,
+        trakt_slug: String,
+        f: impl Fn(SyncShowFactory) -> SyncShowFactory,
+    ) -> Self {
         let mut ids = Map::new();
         ids.insert("slug".to_owned(), Value::String(trakt_slug));
 
         let mut show = Map::new();
         show.insert("ids".to_owned(), Value::Object(ids));
 
-        let mut pshow = SyncRequestShow::new(self.sync_type.clone());
-
-        f(&mut pshow);
-
-        self.shows.push(pshow.build(show))
+        self.shows
+            .push(f(SyncShowFactory::new(self.sync_type.clone())).build(show));
+        self
     }
 
-    pub fn show_imdb(&mut self, imdb_id: String, f: impl Fn(&mut SyncRequestShow)) {
+    pub fn show_imdb(
+        mut self,
+        imdb_id: String,
+        f: impl Fn(SyncShowFactory) -> SyncShowFactory,
+    ) -> Self {
         let mut ids = Map::new();
         ids.insert("imdb".to_owned(), Value::String(imdb_id));
 
         let mut show = Map::new();
         show.insert("ids".to_owned(), Value::Object(ids));
 
-        let mut pshow = SyncRequestShow::new(self.sync_type.clone());
-
-        f(&mut pshow);
-
-        self.shows.push(pshow.build(show))
+        self.shows
+            .push(f(SyncShowFactory::new(self.sync_type.clone())).build(show));
+        self
     }
 
-    pub fn season(&mut self, season: Season) -> Result<()> {
+    pub fn season(mut self, season: Season) -> Result<Self> {
         self.seasons.push(serde_json::to_value(season)?);
-        Ok(())
+        Ok(self)
     }
 
-    pub fn season_at(&mut self, season: Season, collected_at: DateTime<Utc>) -> Result<()> {
+    pub fn season_at(mut self, season: Season, collected_at: DateTime<Utc>) -> Result<Self> {
         let season = serde_json::to_value(season)?;
         let mut season = season.as_object().ok_or(Error::NoneError)?.clone();
 
@@ -252,20 +265,21 @@ impl SyncRequest {
         );
 
         self.seasons.push(Value::Object(season));
-        Ok(())
+        Ok(self)
     }
 
-    pub fn season_id(&mut self, trakt_id: u64) {
+    pub fn season_id(mut self, trakt_id: u64) -> Self {
         let mut ids = Map::new();
         ids.insert("trakt".to_owned(), Value::Number(trakt_id.into()));
 
         let mut movie = Map::new();
         movie.insert("ids".to_owned(), Value::Object(ids));
 
-        self.seasons.push(Value::Object(movie))
+        self.seasons.push(Value::Object(movie));
+        self
     }
 
-    pub fn season_id_at(&mut self, trakt_id: u64, collected_at: DateTime<Utc>) {
+    pub fn season_id_at(mut self, trakt_id: u64, collected_at: DateTime<Utc>) -> Self {
         let mut ids = Map::new();
         ids.insert("trakt".to_owned(), Value::Number(trakt_id.into()));
 
@@ -277,20 +291,22 @@ impl SyncRequest {
             Value::String(collected_at.to_string()),
         );
 
-        self.seasons.push(Value::Object(movie))
+        self.seasons.push(Value::Object(movie));
+        self
     }
 
-    pub fn season_imdb(&mut self, imdb_id: String) {
+    pub fn season_imdb(mut self, imdb_id: String) -> Self {
         let mut ids = Map::new();
         ids.insert("imdb".to_owned(), Value::String(imdb_id));
 
         let mut movie = Map::new();
         movie.insert("ids".to_owned(), Value::Object(ids));
 
-        self.seasons.push(Value::Object(movie))
+        self.seasons.push(Value::Object(movie));
+        self
     }
 
-    pub fn season_imdb_at(&mut self, imdb_id: String, collected_at: DateTime<Utc>) {
+    pub fn season_imdb_at(mut self, imdb_id: String, collected_at: DateTime<Utc>) -> Self {
         let mut ids = Map::new();
         ids.insert("imdb".to_owned(), Value::String(imdb_id));
 
@@ -302,15 +318,16 @@ impl SyncRequest {
             Value::String(collected_at.to_string()),
         );
 
-        self.seasons.push(Value::Object(movie))
+        self.seasons.push(Value::Object(movie));
+        self
     }
 
-    pub fn episode(&mut self, episode: Episode) -> Result<()> {
+    pub fn episode(mut self, episode: Episode) -> Result<Self> {
         self.episodes.push(serde_json::to_value(episode)?);
-        Ok(())
+        Ok(self)
     }
 
-    pub fn episode_at(&mut self, episode: Episode, collected_at: DateTime<Utc>) -> Result<()> {
+    pub fn episode_at(mut self, episode: Episode, collected_at: DateTime<Utc>) -> Result<Self> {
         let episode = serde_json::to_value(episode)?;
         let mut episode = episode.as_object().ok_or(Error::NoneError)?.clone();
 
@@ -320,20 +337,21 @@ impl SyncRequest {
         );
 
         self.episodes.push(Value::Object(episode));
-        Ok(())
+        Ok(self)
     }
 
-    pub fn episode_id(&mut self, trakt_id: u64) {
+    pub fn episode_id(mut self, trakt_id: u64) -> Self {
         let mut ids = Map::new();
         ids.insert("trakt".to_owned(), Value::Number(trakt_id.into()));
 
         let mut movie = Map::new();
         movie.insert("ids".to_owned(), Value::Object(ids));
 
-        self.episodes.push(Value::Object(movie))
+        self.episodes.push(Value::Object(movie));
+        self
     }
 
-    pub fn episode_id_at(&mut self, trakt_id: u64, collected_at: DateTime<Utc>) {
+    pub fn episode_id_at(mut self, trakt_id: u64, collected_at: DateTime<Utc>) -> Self {
         let mut ids = Map::new();
         ids.insert("trakt".to_owned(), Value::Number(trakt_id.into()));
 
@@ -345,20 +363,22 @@ impl SyncRequest {
             Value::String(collected_at.to_string()),
         );
 
-        self.episodes.push(Value::Object(movie))
+        self.episodes.push(Value::Object(movie));
+        self
     }
 
-    pub fn episode_imdb(&mut self, imdb_id: String) {
+    pub fn episode_imdb(mut self, imdb_id: String) -> Self {
         let mut ids = Map::new();
         ids.insert("imdb".to_owned(), Value::String(imdb_id));
 
         let mut movie = Map::new();
         movie.insert("ids".to_owned(), Value::Object(ids));
 
-        self.episodes.push(Value::Object(movie))
+        self.episodes.push(Value::Object(movie));
+        self
     }
 
-    pub fn episode_imdb_at(&mut self, imdb_id: String, collected_at: DateTime<Utc>) {
+    pub fn episode_imdb_at(mut self, imdb_id: String, collected_at: DateTime<Utc>) -> Self {
         let mut ids = Map::new();
         ids.insert("imdb".to_owned(), Value::String(imdb_id));
 
@@ -370,16 +390,17 @@ impl SyncRequest {
             Value::String(collected_at.to_string()),
         );
 
-        self.episodes.push(Value::Object(movie))
+        self.episodes.push(Value::Object(movie));
+        self
     }
 }
 
-pub struct SyncRequestShow {
-    seasons: Vec<SyncRequestSeason>,
+pub struct SyncShowFactory {
+    seasons: Vec<SyncSeasonFactory>,
     sync_type: SyncType,
 }
 
-impl SyncRequestShow {
+impl SyncShowFactory {
     fn new(sync_type: SyncType) -> Self {
         Self {
             seasons: Vec::new(),
@@ -397,33 +418,41 @@ impl SyncRequestShow {
         Value::Object(show)
     }
 
-    pub fn season(&mut self, season_number: u32, f: impl Fn(&mut SyncRequestSeason)) {
-        let mut s = SyncRequestSeason::new(season_number, None, self.sync_type.clone());
-        f(&mut s);
-        self.seasons.push(s)
+    pub fn season(
+        mut self,
+        season_number: u32,
+        f: impl Fn(SyncSeasonFactory) -> SyncSeasonFactory,
+    ) -> Self {
+        self.seasons.push(f(SyncSeasonFactory::new(
+            season_number,
+            None,
+            self.sync_type.clone(),
+        )));
+        self
     }
 
     pub fn season_at(
-        &mut self,
+        mut self,
         season_number: u32,
         collected_at: DateTime<Utc>,
-        f: impl Fn(&mut SyncRequestSeason),
-    ) {
+        f: impl Fn(&mut SyncSeasonFactory),
+    ) -> Self {
         let mut s =
-            SyncRequestSeason::new(season_number, Some(collected_at), self.sync_type.clone());
+            SyncSeasonFactory::new(season_number, Some(collected_at), self.sync_type.clone());
         f(&mut s);
-        self.seasons.push(s)
+        self.seasons.push(s);
+        self
     }
 }
 
-pub struct SyncRequestSeason {
+pub struct SyncSeasonFactory {
     number: u32,
     collected_at: Option<DateTime<Utc>>,
     episodes: HashMap<u32, Option<DateTime<Utc>>>,
     sync_type: SyncType,
 }
 
-impl SyncRequestSeason {
+impl SyncSeasonFactory {
     fn new(season_number: u32, collected_at: Option<DateTime<Utc>>, sync_type: SyncType) -> Self {
         Self {
             number: season_number,
@@ -466,12 +495,14 @@ impl SyncRequestSeason {
         Value::Object(season)
     }
 
-    pub fn episode(&mut self, episode: u32) {
+    pub fn episode(mut self, episode: u32) -> Self {
         self.episodes.insert(episode, None);
+        self
     }
 
-    pub fn episode_at(&mut self, episode: u32, collected_at: DateTime<Utc>) {
+    pub fn episode_at(mut self, episode: u32, collected_at: DateTime<Utc>) -> Self {
         self.episodes.insert(episode, Some(collected_at));
+        self
     }
 }
 
