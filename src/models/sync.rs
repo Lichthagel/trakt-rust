@@ -478,8 +478,8 @@ impl SyncRequestSeason {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SyncAddResponse {
     added: SyncResponseNumbers,
-    updated: SyncResponseNumbers,
-    existing: SyncResponseNumbers,
+    updated: Option<SyncResponseNumbers>,
+    existing: Option<SyncResponseNumbers>,
     not_found: SyncResponseNotFound,
 }
 
