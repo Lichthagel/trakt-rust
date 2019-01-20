@@ -61,21 +61,41 @@ impl ToString for AllCommentableItemType {
 #[derive(Debug, Serialize, Deserialize)]
 pub enum ItemType {
     #[serde(rename = "movie")]
-    MOVIE,
+    Movie,
     #[serde(rename = "show")]
-    SHOW,
+    Show,
     #[serde(rename = "season")]
-    SEASON,
+    Season,
     #[serde(rename = "episode")]
-    EPISODE,
+    Episode,
+}
+
+impl Display for ItemType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(match self {
+            ItemType::Movie => "movies",
+            ItemType::Show => "shows",
+            ItemType::Season => "seasons",
+            ItemType::Episode => "episodes"
+        })
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub enum WatchableType {
     #[serde(rename = "movie")]
-    MOVIE,
+    Movie,
     #[serde(rename = "episode")]
-    EPISODE,
+    Episode,
+}
+
+impl Display for WatchableType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(match self {
+            WatchableType::Movie => "movies",
+            WatchableType::Episode => "episodes",
+        })
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -86,11 +106,11 @@ pub enum MediaType {
     Shows,
 }
 
-impl ToString for MediaType {
-    fn to_string(&self) -> String {
-        String::from(match self {
+impl Display for MediaType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(match self {
             MediaType::Movies => "movies",
-            MediaType::Shows => "shows",
+            MediaType::Shows => "shows"
         })
     }
 }

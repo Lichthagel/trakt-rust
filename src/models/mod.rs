@@ -2,6 +2,7 @@ pub mod authentication;
 pub mod calendar;
 pub mod certifications;
 pub mod checkin;
+pub mod collection;
 pub mod comment;
 pub mod episode;
 pub mod genre;
@@ -21,6 +22,7 @@ pub mod search;
 pub mod season;
 pub mod show;
 pub mod stats;
+pub mod sync;
 pub mod user;
 pub mod watched;
 pub mod watching;
@@ -30,6 +32,11 @@ pub use crate::models::{
     calendar::{CalendarMovie, CalendarShow},
     certifications::{Certification, Certifications, CertificationsType},
     checkin::{Checkin, CheckinResponse, CheckinSharing},
+    collection::{
+        CollectionAddResponse, CollectionEpisode, CollectionMovie, CollectionRemoveResponse,
+        CollectionRequest, CollectionResponseNotFound, CollectionResponseNumbers, CollectionSeason,
+        CollectionShow,
+    },
     comment::{
         Comment, CommentAndItem, CommentItem, CommentNew, CommentPost, CommentSharing, CommentType,
     },
@@ -60,6 +67,7 @@ pub use crate::models::{
         MediaStats, UserEpisodeStats, UserMovieStats, UserNetworkStats, UserRatingStats,
         UserSeasonStats, UserShowStats, UserStats,
     },
+    sync::{LastActivities, LastActivitiesElement, Playback},
     user::User,
     watched::{WatchedEntry, WatchedEpisode, WatchedSeason},
     watching::Watching,

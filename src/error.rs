@@ -5,6 +5,7 @@ pub enum Error {
     Response(reqwest::Response),
     Connection(reqwest::Error),
     Serde(serde_json::Error),
+    NoneError,
     ClientSecretNeeded,
 }
 
