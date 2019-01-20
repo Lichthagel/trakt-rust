@@ -7,3 +7,4 @@ mod movies;
 mod people;
 mod recommendations;
 mod search;
+mod shows;

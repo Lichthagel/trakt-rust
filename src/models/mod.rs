@@ -15,6 +15,7 @@ pub mod movie;
 pub mod network;
 pub mod people;
 pub mod person;
+pub mod progress;
 pub mod rating;
 pub mod search;
 pub mod season;
@@ -47,12 +48,16 @@ pub use crate::models::{
         AnticipatedMovie, Movie, MovieInfo, MovieStats, OptionMovie, UpdatedMovie, WatchedMovie,
     },
     network::Network,
-    people::{CastPerson, Character, Credits, Crew, CrewMember, CrewPerson, MoviePeople},
+    people::{CastPerson, Character, Credits, Crew, CrewMember, CrewPerson, People},
     person::Person,
+    progress::{
+        CollectionProgress, CollectionProgressEpisode, CollectionProgressSeason, WatchedProgress,
+        WatchedProgressEpisode, WatchedProgressSeason,
+    },
     rating::{Rating, RatingDistribution, Ratings},
     search::{SearchResult, SearchType},
     season::{OptionSeason, Season},
-    show::{OptionShow, Show},
+    show::{AnticipatedShow, OptionShow, Show, ShowInfo, ShowStats, UpdatedShow, WatchedShow},
     stats::{
         UserEpisodeStats, UserMovieStats, UserNetworkStats, UserRatingStats, UserSeasonStats,
         UserShowStats, UserStats,

@@ -104,9 +104,9 @@ pub enum TimePeriod {
     All,
 }
 
-impl ToString for TimePeriod {
-    fn to_string(&self) -> String {
-        String::from(match self {
+impl Display for TimePeriod {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(match self {
             TimePeriod::Weekly => "weekly",
             TimePeriod::Monthly => "monthly",
             TimePeriod::Yearly => "yearly",

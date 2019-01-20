@@ -44,9 +44,9 @@ pub struct Character {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct MoviePeople {
+pub struct People {
     cast: Vec<CastPerson>,
-    crew: CrewPeople,
+    crew: Option<CrewPeople>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
