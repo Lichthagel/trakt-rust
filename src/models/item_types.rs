@@ -59,23 +59,62 @@ impl ToString for AllCommentableItemType {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
 pub enum ItemType {
-    #[serde(rename = "movie")]
-    MOVIE,
-    #[serde(rename = "show")]
-    SHOW,
-    #[serde(rename = "season")]
-    SEASON,
-    #[serde(rename = "episode")]
-    EPISODE,
+    Movie,
+    Show,
+    Season,
+    Episode,
+}
+
+impl Display for ItemType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(match self {
+            ItemType::Movie => "movies",
+            ItemType::Show => "shows",
+            ItemType::Season => "seasons",
+            ItemType::Episode => "episodes",
+        })
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum AllItemType {
+    Movie,
+    Show,
+    Season,
+    Episode,
+    All,
+}
+
+impl Display for AllItemType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(match self {
+            AllItemType::Movie => "movies",
+            AllItemType::Show => "shows",
+            AllItemType::Season => "seasons",
+            AllItemType::Episode => "episodes",
+            _ => "all",
+        })
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub enum WatchableType {
     #[serde(rename = "movie")]
-    MOVIE,
+    Movie,
     #[serde(rename = "episode")]
-    EPISODE,
+    Episode,
+}
+
+impl Display for WatchableType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(match self {
+            WatchableType::Movie => "movies",
+            WatchableType::Episode => "episodes",
+        })
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -86,9 +125,9 @@ pub enum MediaType {
     Shows,
 }
 
-impl ToString for MediaType {
-    fn to_string(&self) -> String {
-        String::from(match self {
+impl Display for MediaType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(match self {
             MediaType::Movies => "movies",
             MediaType::Shows => "shows",
         })

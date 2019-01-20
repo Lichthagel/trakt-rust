@@ -2,6 +2,7 @@ pub mod authentication;
 pub mod calendar;
 pub mod certifications;
 pub mod checkin;
+pub mod collection;
 pub mod comment;
 pub mod episode;
 pub mod genre;
@@ -21,6 +22,7 @@ pub mod search;
 pub mod season;
 pub mod show;
 pub mod stats;
+pub mod sync;
 pub mod user;
 pub mod watched;
 pub mod watching;
@@ -30,6 +32,7 @@ pub use crate::models::{
     calendar::{CalendarMovie, CalendarShow},
     certifications::{Certification, Certifications, CertificationsType},
     checkin::{Checkin, CheckinResponse, CheckinSharing},
+    collection::{CollectionEpisode, CollectionMovie, CollectionSeason, CollectionShow},
     comment::{
         Comment, CommentAndItem, CommentItem, CommentNew, CommentPost, CommentSharing, CommentType,
     },
@@ -38,8 +41,8 @@ pub use crate::models::{
     history::HistoryItem,
     ids::{IdType, Ids},
     item_types::{
-        AllCommentableItemType, CommentableItemType, ItemType, ListItemType, MediaType,
-        SearchItemType, TimePeriod, WatchableType,
+        AllCommentableItemType, AllItemType, CommentableItemType, ItemType, ListItemType,
+        MediaType, SearchItemType, TimePeriod, WatchableType,
     },
     like::Like,
     list::{List, ListInfo, ListItem, ListSort, ListType},
@@ -62,6 +65,11 @@ pub use crate::models::{
     stats::{
         MediaStats, UserEpisodeStats, UserMovieStats, UserNetworkStats, UserRatingStats,
         UserSeasonStats, UserShowStats, UserStats,
+    },
+    sync::{
+        LastActivities, LastActivitiesElement, Playback, SyncAddResponse, SyncRemoveResponse,
+        SyncRequest, SyncRequestSeason, SyncRequestShow, SyncResponseNotFound, SyncResponseNumbers,
+        SyncType,
     },
     user::User,
     watched::{WatchedEntry, WatchedEpisode, WatchedSeason},

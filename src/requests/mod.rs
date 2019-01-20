@@ -10,3 +10,4 @@ mod recommendations;
 mod search;
 mod seasons;
 mod shows;
+mod sync;
