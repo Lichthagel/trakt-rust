@@ -10,6 +10,7 @@ use std::collections::HashMap;
 pub enum SyncType {
     Watch,
     Collect,
+    Rating,
 }
 
 impl SyncType {
@@ -17,6 +18,7 @@ impl SyncType {
         match self {
             SyncType::Watch => "watched_at",
             SyncType::Collect => "collected_at",
+            SyncType::Rating => "rated_at",
         }
         .to_owned()
     }

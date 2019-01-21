@@ -142,4 +142,18 @@ impl TraktApi {
             access_token,
         )
     }
+
+    pub fn sync_ratings_remove(
+        &self,
+        f: impl FnOnce(SyncFactory) -> SyncFactory,
+        access_token: String,
+    ) -> Result<SyncRemoveResponse> {
+        let body = f(SyncFactory::new(SyncType::Rating)).build();
+
+        self.auth_post(
+            api_url!(("sync", "ratings", "remove")),
+            serde_json::to_string(&body)?,
+            access_token,
+        )
+    }
 }
