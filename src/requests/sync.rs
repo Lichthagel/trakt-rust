@@ -1,4 +1,5 @@
 use crate::models::sync::RatingFactory;
+use crate::models::ListItem;
 use crate::pagination::PaginationFactory;
 use crate::{
     error::Result,
@@ -152,6 +153,34 @@ impl TraktApi {
 
         self.auth_post(
             api_url!(("sync", "ratings", "remove")),
+            serde_json::to_string(&body)?,
+            access_token,
+        )
+    }
+
+    pub fn sync_watchlist(
+        &self,
+        item_type: Option<ItemType>,
+        access_token: String,
+    ) -> Result<Vec<ListItem>> {
+        self.auth_get(
+            match item_type {
+                Some(t) => api_url!(("sync", "watchlist", t)),
+                None => api_url!(("sync", "watchlist")),
+            },
+            access_token,
+        )
+    }
+
+    pub fn sync_watchlist_add(
+        &self,
+        f: impl FnOnce(SyncFactory) -> SyncFactory,
+        access_token: String,
+    ) -> Result<SyncAddResponse> {
+        let body = f(SyncFactory::new(SyncType::Watchlist)).build();
+
+        self.auth_post(
+            api_url!(("sync", "watchlist")),
             serde_json::to_string(&body)?,
             access_token,
         )
