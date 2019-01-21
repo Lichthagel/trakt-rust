@@ -7,9 +7,10 @@ extern crate serde_json;
 #[macro_use]
 mod macros;
 pub mod error;
+mod filters;
 pub mod models;
-mod requests;
 mod pagination;
+mod requests;
 
 use crate::{
     error::{Error, Result},
@@ -122,12 +123,7 @@ impl TraktApi {
         }
     }
 
-    fn auth_post_no_body(
-        &self,
-        url: String,
-        body: String,
-        access_token: String,
-    ) -> Result<()> {
+    fn auth_post_no_body(&self, url: String, body: String, access_token: String) -> Result<()> {
         match self
             .client
             .post(&url)
@@ -137,16 +133,16 @@ impl TraktApi {
             .header("Authorization", format!("Bearer {}", access_token))
             .body(body)
             .send()
-            {
-                Ok(res) => {
-                    if res.status().is_success() {
-                        Ok(())
-                    } else {
-                        Err(Error::from(res))
-                    }
+        {
+            Ok(res) => {
+                if res.status().is_success() {
+                    Ok(())
+                } else {
+                    Err(Error::from(res))
                 }
-                Err(e) => Err(Error::from(e)),
             }
+            Err(e) => Err(Error::from(e)),
+        }
     }
 
     fn auth_put<T: DeserializeOwned>(
