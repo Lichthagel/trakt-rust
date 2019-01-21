@@ -1,12 +1,15 @@
+pub mod rating_request;
 pub mod sync_request;
 
+pub use crate::models::sync::rating_request::{
+    RatingFactory, RatingSeasonFactory, RatingShowFactory,
+};
 pub use crate::models::sync::sync_request::{
     SyncFactory, SyncSeasonFactory, SyncShowFactory, SyncType,
 };
 
 use crate::models::{
-    Episode, Movie, OptionEpisode, OptionMovie, OptionSeason, OptionShow, Season, Show,
-    WatchableType,
+    Episode, Movie, OptionEpisode, OptionMovie, OptionSeason, OptionShow, Show, WatchableType,
 };
 use chrono::{DateTime, Utc};
 
@@ -60,10 +63,13 @@ pub struct SyncRemoveResponse {
     not_found: SyncResponseNotFound,
 }
 
+/// shows and seasons only get returned when adding ratings
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SyncResponseNumbers {
     movies: u32,
     episodes: u32,
+    shows: Option<u32>,
+    seasons: Option<u32>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

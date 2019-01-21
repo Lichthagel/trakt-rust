@@ -1,3 +1,4 @@
+use crate::models::sync::RatingFactory;
 use crate::pagination::PaginationFactory;
 use crate::{
     error::Result,
@@ -126,5 +127,19 @@ impl TraktApi {
         access_token: String,
     ) -> Result<Vec<Rating>> {
         self.auth_get(api_url!(("sync", "ratings", item_type)), access_token)
+    }
+
+    pub fn sync_ratings_add(
+        &self,
+        f: impl FnOnce(RatingFactory) -> RatingFactory,
+        access_token: String,
+    ) -> Result<SyncAddResponse> {
+        let body = f(RatingFactory::new()).build();
+
+        self.auth_post(
+            api_url!(("sync", "ratings")),
+            serde_json::to_string(&body)?,
+            access_token,
+        )
     }
 }
