@@ -185,4 +185,18 @@ impl TraktApi {
             access_token,
         )
     }
+
+    pub fn sync_watchlist_remove(
+        &self,
+        f: impl FnOnce(SyncFactory) -> SyncFactory,
+        access_token: String,
+    ) -> Result<SyncRemoveResponse> {
+        let body = f(SyncFactory::new(SyncType::Watchlist)).build();
+
+        self.auth_post(
+            api_url!(("sync", "watchlist", "remove")),
+            serde_json::to_string(&body)?,
+            access_token,
+        )
+    }
 }
