@@ -1,3 +1,5 @@
+use std::fmt;
+use std::fmt::Display;
 use std::result;
 
 #[derive(Debug)]
@@ -24,6 +26,18 @@ impl From<reqwest::Response> for Error {
 impl From<serde_json::Error> for Error {
     fn from(e: serde_json::Error) -> Self {
         Error::Serde(e)
+    }
+}
+
+impl Display for Error {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", match self {
+            Error::Response(e) => format!("Response ( {} )", e.status()),
+            Error::Connection(e) => format!("Connection ( {} )", e),
+            Error::Serde(e) => format!("Serde ( {} )", e),
+            Error::NoneError => format!("NoneError"),
+            Error::ClientSecretNeeded => format!("ClientSecretNeeded"),
+        })
     }
 }
 
