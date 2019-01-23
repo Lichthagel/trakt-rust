@@ -8,9 +8,9 @@ use serde_json::json;
 impl TraktApi {
     pub fn oauth_authorize(
         &self,
-        client_id: String,
-        redirect_uri: String,
-        state: Option<String>,
+        client_id: &String,
+        redirect_uri: &String,
+        state: Option<&String>,
     ) -> Result<()> {
         match state {
             Some(state) => self.get(api_url!(
@@ -31,8 +31,8 @@ impl TraktApi {
 
     pub fn oauth_get_token(
         &self,
-        code: String,
-        redirect_uri: String,
+        code: &String,
+        redirect_uri: &String,
     ) -> Result<AuthenticationTokenResponse> {
         if self.client_secret == None {
             return Err(Error::ClientSecretNeeded);
@@ -53,8 +53,8 @@ impl TraktApi {
 
     pub fn oauth_refresh_token(
         &self,
-        refresh_token: String,
-        redirect_uri: String,
+        refresh_token: &String,
+        redirect_uri: &String,
     ) -> Result<AuthenticationTokenResponse> {
         if self.client_secret == None {
             return Err(Error::ClientSecretNeeded);
@@ -73,7 +73,7 @@ impl TraktApi {
         )
     }
 
-    pub fn oauth_revoke_token(&self, token: String) -> Result<()> {
+    pub fn oauth_revoke_token(&self, token: &String) -> Result<()> {
         if self.client_secret == None {
             return Err(Error::ClientSecretNeeded);
         }
@@ -96,7 +96,7 @@ impl TraktApi {
         )
     }
 
-    pub fn get_token(&self, device_code: String) -> Result<AuthenticationTokenResponse> {
+    pub fn get_token(&self, device_code: &String) -> Result<AuthenticationTokenResponse> {
         if self.client_secret == None {
             return Err(Error::ClientSecretNeeded);
         }
