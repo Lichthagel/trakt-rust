@@ -71,3 +71,16 @@ pub struct SettingsSharingText {
     watching: String,
     watched: String,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct FollowRequest {
+    id: u32,
+    requested_at: DateTime<Utc>,
+    user: User
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct FollowRequestApprove {
+    followed_at: DateTime<Utc>,
+    user: User
+}
