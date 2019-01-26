@@ -11,3 +11,4 @@ mod search;
 mod seasons;
 mod shows;
 mod sync;
+mod users;
