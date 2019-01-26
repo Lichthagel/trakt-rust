@@ -1,11 +1,11 @@
-use crate::models::like::LikeableType;
-use crate::models::like::UserLike;
-use crate::models::user::FullUser;
-use crate::models::User;
-use crate::pagination::PaginationFactory;
 use crate::{
     error::Result,
-    models::user::{FollowRequest, FollowRequestApprove, Settings},
+    models::{
+        like::{LikeableType, UserLike},
+        user::{FollowRequest, FollowRequestApprove, FullUser, Settings},
+        CollectionMovie, CollectionShow, User,
+    },
+    pagination::PaginationFactory,
     TraktApi,
 };
 
@@ -75,6 +75,34 @@ impl TraktApi {
                 access_token,
             ),
             None => self.get(api_url!(("users", slug), ("extended", "full"))),
+        }
+    }
+
+    pub fn user_collection_movies(
+        &self,
+        slug: String,
+        access_token: Option<String>,
+    ) -> Result<Vec<CollectionMovie>> {
+        match access_token {
+            Some(access_token) => self.auth_get(
+                api_url!(("users", slug, "collection", "movies")),
+                access_token,
+            ),
+            None => self.get(api_url!(("users", slug, "collection", "movies"))),
+        }
+    }
+
+    pub fn user_collection_shows(
+        &self,
+        slug: String,
+        access_token: Option<String>,
+    ) -> Result<Vec<CollectionShow>> {
+        match access_token {
+            Some(access_token) => self.auth_get(
+                api_url!(("users", slug, "collection", "shows")),
+                access_token,
+            ),
+            None => self.get(api_url!(("users", slug, "collection", "shows"))),
         }
     }
 }
