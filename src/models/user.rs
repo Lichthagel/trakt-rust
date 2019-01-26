@@ -23,15 +23,7 @@ pub struct Image {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct Settings {
-    user: SettingsUser,
-    account: SettingsAccount,
-    connections: SettingsConnections,
-    sharing_text: SettingsSharingText,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct SettingsUser {
+pub struct FullUser {
     username: String,
     private: bool,
     name: Option<String>,
@@ -40,12 +32,21 @@ pub struct SettingsUser {
     ids: Ids,
     joined_at: DateTime<Utc>,
     location: String,
-    about: String,
+    about: Option<String>,
     gender: String,
     age: u16,
     images: UserImages,
-    vip_og: bool,
-    vip_years: u32,
+    vip_og: Option<bool>,
+    vip_years: Option<u32>,
+}
+
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Settings {
+    user: FullUser,
+    account: SettingsAccount,
+    connections: SettingsConnections,
+    sharing_text: SettingsSharingText,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

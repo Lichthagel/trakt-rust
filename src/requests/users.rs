@@ -1,5 +1,7 @@
 use crate::models::like::LikeableType;
 use crate::models::like::UserLike;
+use crate::models::user::FullUser;
+use crate::models::User;
 use crate::pagination::PaginationFactory;
 use crate::{
     error::Result,
@@ -53,5 +55,26 @@ impl TraktApi {
             },
             access_token,
         )
+    }
+
+    pub fn user_profile(&self, slug: String, access_token: Option<String>) -> Result<User> {
+        match access_token {
+            Some(access_token) => self.auth_get(api_url!(("users", slug)), access_token),
+            None => self.get(api_url!(("users", slug))),
+        }
+    }
+
+    pub fn user_profile_full(
+        &self,
+        slug: String,
+        access_token: Option<String>,
+    ) -> Result<FullUser> {
+        match access_token {
+            Some(access_token) => self.auth_get(
+                api_url!(("users", slug), ("extended", "full")),
+                access_token,
+            ),
+            None => self.get(api_url!(("users", slug), ("extended", "full"))),
+        }
     }
 }
