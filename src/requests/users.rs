@@ -1,3 +1,6 @@
+use crate::models::like::LikeableType;
+use crate::models::like::UserLike;
+use crate::pagination::PaginationFactory;
 use crate::{
     error::Result,
     models::user::{FollowRequest, FollowRequestApprove, Settings},
@@ -27,5 +30,28 @@ impl TraktApi {
 
     pub fn user_request_deny(&self, id: u32, access_token: String) -> Result<()> {
         self.auth_delete(api_url!(("users", "requests", id)), access_token)
+    }
+
+    // TODO hidden items
+
+    pub fn user_likes(
+        &self,
+        item_type: Option<LikeableType>,
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
+        access_token: String,
+    ) -> Result<Vec<UserLike>> {
+        let pf = f(PaginationFactory::default());
+
+        self.auth_get(
+            match item_type {
+                Some(item_type) => api_url!(
+                    ("users", "likes", item_type),
+                    ("page", pf.page),
+                    ("limit", pf.limit)
+                ),
+                None => api_url!(("users", "likes"), ("page", pf.page), ("limit", pf.limit)),
+            },
+            access_token,
+        )
     }
 }
