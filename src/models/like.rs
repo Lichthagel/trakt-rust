@@ -21,15 +21,15 @@ impl Display for LikeableType {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Like {
-    liked_at: DateTime<Utc>,
-    user: User,
+    pub liked_at: DateTime<Utc>,
+    pub user: User,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserLike {
-    liked_at: DateTime<Utc>,
+    pub liked_at: DateTime<Utc>,
     #[serde(rename = "type")]
-    item_type: LikeableType,
-    comment: Option<Comment>,
-    list: Option<List>,
+    pub item_type: LikeableType,
+    pub comment: Option<Comment>,
+    pub list: Option<List>,
 }

@@ -1,25 +1,25 @@
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Alias {
-    title: String,
-    country: String,
+    pub title: String,
+    pub country: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Language {
-    name: String,
-    code: String,
+    pub name: String,
+    pub code: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Country {
-    name: String,
-    code: String,
+    pub name: String,
+    pub code: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Translation {
-    title: String,
-    overview: String,
-    tagline: Option<String>,
-    language: String,
+    pub title: String,
+    pub overview: String,
+    pub tagline: Option<String>,
+    pub language: String,
 }

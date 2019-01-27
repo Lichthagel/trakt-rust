@@ -2,14 +2,14 @@ use crate::models::ids::Ids;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Season {
-    number: u32,
-    ids: Ids,
+    pub number: u32,
+    pub ids: Ids,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct OptionSeason {
-    number: Option<u32>,
-    ids: Ids,
+    pub number: Option<u32>,
+    pub ids: Ids,
 }
 
 impl OptionSeason {

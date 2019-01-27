@@ -4,20 +4,20 @@ use std::fmt;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct List {
-    name: String,
-    description: Option<String>,
-    privacy: String,
-    display_numbers: bool,
-    allow_comments: bool,
-    sort_by: String,
-    sort_how: String,
-    created_at: DateTime<Utc>,
-    updated_at: Option<DateTime<Utc>>,
-    item_count: u64,
-    comment_count: u64,
-    likes: u64,
-    ids: Ids,
-    user: User,
+    pub name: String,
+    pub description: Option<String>,
+    pub privacy: String,
+    pub display_numbers: bool,
+    pub allow_comments: bool,
+    pub sort_by: String,
+    pub sort_how: String,
+    pub created_at: DateTime<Utc>,
+    pub updated_at: Option<DateTime<Utc>>,
+    pub item_count: u64,
+    pub comment_count: u64,
+    pub likes: u64,
+    pub ids: Ids,
+    pub user: User,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -89,22 +89,22 @@ impl From<List> for OptionList {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ListInfo {
-    like_count: u32,
-    comment_count: u32,
-    list: List,
+    pub like_count: u32,
+    pub comment_count: u32,
+    pub list: List,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ListItem {
-    rank: u32,
-    listed_at: DateTime<Utc>,
+    pub rank: u32,
+    pub listed_at: DateTime<Utc>,
     #[serde(rename = "type")]
-    item_type: ListItemType,
-    movie: Option<Movie>,
-    episode: Option<Episode>,
-    season: Option<Season>,
-    show: Option<Show>,
-    person: Option<Person>,
+    pub item_type: ListItemType,
+    pub movie: Option<Movie>,
+    pub episode: Option<Episode>,
+    pub season: Option<Season>,
+    pub show: Option<Show>,
+    pub person: Option<Person>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

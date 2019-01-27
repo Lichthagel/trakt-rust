@@ -3,12 +3,12 @@ use chrono::{DateTime, Utc};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Watching {
-    expires_at: DateTime<Utc>,
-    started_at: DateTime<Utc>,
-    action: String,
+    pub expires_at: DateTime<Utc>,
+    pub started_at: DateTime<Utc>,
+    pub action: String,
     #[serde(rename = "type")]
-    item_type: WatchableType,
-    episode: Option<Episode>,
-    show: Option<Show>,
-    movie: Option<Movie>,
+    pub item_type: WatchableType,
+    pub episode: Option<Episode>,
+    pub show: Option<Show>,
+    pub movie: Option<Movie>,
 }

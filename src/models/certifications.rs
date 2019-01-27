@@ -1,28 +1,27 @@
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Certifications {
-    us: Vec<Certification>,
+    pub us: Vec<Certification>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Certification {
-    name: String,
-    slug: String,
-    description: String,
+    pub name: String,
+    pub slug: String,
+    pub description: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
 pub enum CertificationsType {
-    #[serde(rename = "movies")]
-    MOVIES,
-    #[serde(rename = "shows")]
-    SHOWS,
+    Movies,
+    Shows,
 }
 
 impl ToString for CertificationsType {
     fn to_string(&self) -> String {
         match self {
-            CertificationsType::MOVIES => String::from("movies"),
-            CertificationsType::SHOWS => String::from("shows"),
+            CertificationsType::Movies => String::from("movies"),
+            CertificationsType::Shows => String::from("shows"),
         }
     }
 }

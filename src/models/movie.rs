@@ -10,35 +10,35 @@ pub struct Movie {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct MovieInfo {
-    watchers: u32,
-    movie: Movie,
+    pub watchers: u32,
+    pub movie: Movie,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct WatchedMovie {
-    watcher_count: u64,
-    play_count: u64,
-    collected_count: u64,
-    movie: Movie,
+    pub watcher_count: u64,
+    pub play_count: u64,
+    pub collected_count: u64,
+    pub movie: Movie,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct AnticipatedMovie {
-    list_count: u64,
-    movie: Movie,
+    pub list_count: u64,
+    pub movie: Movie,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UpdatedMovie {
-    updated_at: DateTime<Utc>,
-    movie: Movie,
+    pub updated_at: DateTime<Utc>,
+    pub movie: Movie,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct OptionMovie {
-    title: Option<String>,
-    year: Option<u16>,
-    ids: Option<Ids>,
+    pub title: Option<String>,
+    pub year: Option<u16>,
+    pub ids: Option<Ids>,
 }
 
 impl OptionMovie {

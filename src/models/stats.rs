@@ -1,67 +1,67 @@
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserStats {
-    movies: UserMovieStats,
-    shows: UserShowStats,
-    seasons: UserSeasonStats,
-    episodes: UserEpisodeStats,
-    network: UserNetworkStats,
-    ratings: UserRatingStats,
+    pub movies: UserMovieStats,
+    pub shows: UserShowStats,
+    pub seasons: UserSeasonStats,
+    pub episodes: UserEpisodeStats,
+    pub network: UserNetworkStats,
+    pub ratings: UserRatingStats,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserMovieStats {
-    plays: u64,
-    watched: u64,
-    minutes: u64,
-    collected: u64,
-    ratings: u64,
-    comments: u64,
+    pub plays: u64,
+    pub watched: u64,
+    pub minutes: u64,
+    pub collected: u64,
+    pub ratings: u64,
+    pub comments: u64,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserShowStats {
-    watched: u64,
-    collected: u64,
-    ratings: u64,
-    comments: u64,
+    pub watched: u64,
+    pub collected: u64,
+    pub ratings: u64,
+    pub comments: u64,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserSeasonStats {
-    ratings: u64,
-    comments: u64,
+    pub ratings: u64,
+    pub comments: u64,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserEpisodeStats {
-    plays: u64,
-    watched: u64,
-    minutes: u64,
-    collected: u64,
-    ratings: u64,
-    comments: u64,
+    pub plays: u64,
+    pub watched: u64,
+    pub minutes: u64,
+    pub collected: u64,
+    pub ratings: u64,
+    pub comments: u64,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserNetworkStats {
-    friends: u64,
-    followers: u64,
-    following: u64,
+    pub friends: u64,
+    pub followers: u64,
+    pub following: u64,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserRatingStats {
-    total: u64,
-    distribution: [u64; 10],
+    pub total: u64,
+    pub distribution: [u64; 10],
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct MediaStats {
-    watchers: u64,
-    plays: u64,
-    collectors: u64,
-    collected_episodes: Option<u64>,
-    comments: u64,
-    lists: u64,
-    votes: u64,
+    pub watchers: u64,
+    pub plays: u64,
+    pub collectors: u64,
+    pub collected_episodes: Option<u64>,
+    pub comments: u64,
+    pub lists: u64,
+    pub votes: u64,
 }

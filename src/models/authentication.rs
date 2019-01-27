@@ -1,10 +1,10 @@
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Authentication {
-    code: String,
-    client_id: String,
-    client_secret: String,
-    redirect_uri: Option<String>,
-    grant_type: Option<String>,
+    pub code: String,
+    pub client_id: String,
+    pub client_secret: String,
+    pub redirect_uri: Option<String>,
+    pub grant_type: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

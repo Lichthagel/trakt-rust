@@ -3,8 +3,8 @@ use crate::models::{Movie, Show};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Credits {
-    cast: Option<Vec<Character>>,
-    crew: Option<Crew>,
+    pub cast: Option<Vec<Character>>,
+    pub crew: Option<Crew>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -31,45 +31,45 @@ pub enum Crew {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CrewMember {
-    job: String,
-    show: Option<Show>,
-    movie: Option<Movie>,
+    pub job: String,
+    pub show: Option<Show>,
+    pub movie: Option<Movie>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Character {
-    character: String,
-    show: Option<Show>,
-    movie: Option<Movie>,
+    pub character: String,
+    pub show: Option<Show>,
+    pub movie: Option<Movie>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct People {
-    cast: Vec<CastPerson>,
-    crew: Option<CrewPeople>,
+    pub cast: Vec<CastPerson>,
+    pub crew: Option<CrewPeople>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CrewPeople {
-    art: Option<Vec<CrewPerson>>,
-    production: Option<Vec<CrewPerson>>,
-    crew: Option<Vec<CrewPerson>>,
+    pub art: Option<Vec<CrewPerson>>,
+    pub production: Option<Vec<CrewPerson>>,
+    pub crew: Option<Vec<CrewPerson>>,
     #[serde(rename = "costume & make-up")]
-    costume_and_make_up: Option<Vec<CrewPerson>>,
-    directing: Option<Vec<CrewPerson>>,
-    writing: Option<Vec<CrewPerson>>,
-    sound: Option<Vec<CrewPerson>>,
-    camera: Option<Vec<CrewPerson>>,
+    pub costume_and_make_up: Option<Vec<CrewPerson>>,
+    pub directing: Option<Vec<CrewPerson>>,
+    pub writing: Option<Vec<CrewPerson>>,
+    pub sound: Option<Vec<CrewPerson>>,
+    pub camera: Option<Vec<CrewPerson>>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CastPerson {
-    character: String,
-    person: Person,
+    pub character: String,
+    pub person: Person,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CrewPerson {
-    job: String,
-    person: Person,
+    pub job: String,
+    pub person: Person,
 }

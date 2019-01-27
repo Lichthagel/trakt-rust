@@ -3,20 +3,20 @@ use chrono::{DateTime, Utc};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Rating {
-    rated_at: DateTime<Utc>,
-    rating: u8,
+    pub rated_at: DateTime<Utc>,
+    pub rating: u8,
     #[serde(rename = "type")]
-    item_type: ItemType,
-    season: Option<Season>,
-    show: Option<Show>,
-    movie: Option<Movie>,
+    pub item_type: ItemType,
+    pub season: Option<Season>,
+    pub show: Option<Show>,
+    pub movie: Option<Movie>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Ratings {
-    rating: f32,
-    votes: u32,
-    distribution: RatingDistribution,
+    pub rating: f32,
+    pub votes: u32,
+    pub distribution: RatingDistribution,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

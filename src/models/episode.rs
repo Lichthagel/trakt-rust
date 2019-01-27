@@ -10,10 +10,10 @@ pub struct Episode {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct OptionEpisode {
-    season: Option<u32>,
-    number: Option<u32>,
-    title: Option<String>,
-    ids: Option<Ids>,
+    pub season: Option<u32>,
+    pub number: Option<u32>,
+    pub title: Option<String>,
+    pub ids: Option<Ids>,
 }
 
 impl OptionEpisode {

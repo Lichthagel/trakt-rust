@@ -1,5 +1,5 @@
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Genre {
-    name: String,
-    slug: String,
+    pub name: String,
+    pub slug: String,
 }

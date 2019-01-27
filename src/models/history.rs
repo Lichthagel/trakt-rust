@@ -3,11 +3,11 @@ use chrono::{DateTime, Utc};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct HistoryItem {
-    id: u64,
-    watched_at: DateTime<Utc>,
-    action: String,
+    pub id: u64,
+    pub watched_at: DateTime<Utc>,
+    pub action: String,
     #[serde(rename = "type")]
-    item_type: WatchableType,
-    movie: Option<Movie>,
-    episode: Option<Episode>,
+    pub item_type: WatchableType,
+    pub movie: Option<Movie>,
+    pub episode: Option<Episode>,
 }

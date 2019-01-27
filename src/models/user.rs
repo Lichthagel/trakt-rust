@@ -4,40 +4,40 @@ use chrono::Utc;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct User {
-    username: String,
-    private: bool,
-    name: Option<String>,
-    vip: Option<bool>,
-    vip_ep: Option<bool>,
-    ids: Ids,
+    pub username: String,
+    pub private: bool,
+    pub name: Option<String>,
+    pub vip: Option<bool>,
+    pub vip_ep: Option<bool>,
+    pub ids: Ids,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserImages {
-    avatar: Image,
+    pub avatar: Image,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Image {
-    full: String,
+    pub full: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FullUser {
-    username: String,
-    private: bool,
-    name: Option<String>,
-    vip: Option<bool>,
-    vip_ep: Option<bool>,
-    ids: Ids,
-    joined_at: DateTime<Utc>,
-    location: String,
-    about: Option<String>,
-    gender: String,
-    age: u16,
-    images: UserImages,
-    vip_og: Option<bool>,
-    vip_years: Option<u32>,
+    pub username: String,
+    pub private: bool,
+    pub name: Option<String>,
+    pub vip: Option<bool>,
+    pub vip_ep: Option<bool>,
+    pub ids: Ids,
+    pub joined_at: DateTime<Utc>,
+    pub location: String,
+    pub about: Option<String>,
+    pub gender: String,
+    pub age: u16,
+    pub images: UserImages,
+    pub vip_og: Option<bool>,
+    pub vip_years: Option<u32>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

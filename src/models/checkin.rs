@@ -20,9 +20,9 @@ impl Checkin {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CheckinSharing {
-    twitter: bool,
-    tumblr: bool,
-    facebook: bool,
+    pub twitter: bool,
+    pub tumblr: bool,
+    pub facebook: bool,
 }
 
 impl CheckinSharing {
@@ -37,10 +37,10 @@ impl CheckinSharing {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CheckinResponse {
-    id: u64,
-    watched_at: DateTime<Utc>,
-    sharing: CheckinSharing,
-    movie: Option<Movie>,
-    episode: Option<Episode>,
-    show: Option<Show>,
+    pub id: u64,
+    pub watched_at: DateTime<Utc>,
+    pub sharing: CheckinSharing,
+    pub movie: Option<Movie>,
+    pub episode: Option<Episode>,
+    pub show: Option<Show>,
 }

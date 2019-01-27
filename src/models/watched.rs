@@ -3,23 +3,23 @@ use chrono::{DateTime, Utc};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct WatchedEntry {
-    plays: u32,
-    last_watched_at: DateTime<Utc>,
-    last_updated_at: Option<DateTime<Utc>>,
-    movie: Option<Movie>,
-    show: Option<Show>,
-    seasons: Option<Vec<WatchedSeason>>,
+    pub plays: u32,
+    pub last_watched_at: DateTime<Utc>,
+    pub last_updated_at: Option<DateTime<Utc>>,
+    pub movie: Option<Movie>,
+    pub show: Option<Show>,
+    pub seasons: Option<Vec<WatchedSeason>>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct WatchedSeason {
-    number: u32,
-    episodes: Vec<WatchedEpisode>,
+    pub number: u32,
+    pub episodes: Vec<WatchedEpisode>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct WatchedEpisode {
-    number: u32,
-    plays: u32,
-    last_watched_at: DateTime<Utc>,
+    pub number: u32,
+    pub plays: u32,
+    pub last_watched_at: DateTime<Utc>,
 }

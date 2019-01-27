@@ -10,9 +10,9 @@ pub struct Show {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct OptionShow {
-    title: Option<String>,
-    year: Option<u16>,
-    ids: Option<Ids>,
+    pub title: Option<String>,
+    pub year: Option<u16>,
+    pub ids: Option<Ids>,
 }
 
 impl OptionShow {

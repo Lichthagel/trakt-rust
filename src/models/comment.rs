@@ -11,40 +11,40 @@ use std::fmt::Display;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Comment {
-    id: u64,
-    parent_id: u64,
-    created_at: DateTime<Utc>,
-    updated_at: Option<DateTime<Utc>>,
-    comment: String,
-    spoiler: bool,
-    review: bool,
-    replies: u64,
-    likes: u64,
-    user_rating: Option<u8>,
-    user: User,
+    pub id: u64,
+    pub parent_id: u64,
+    pub created_at: DateTime<Utc>,
+    pub updated_at: Option<DateTime<Utc>>,
+    pub comment: String,
+    pub spoiler: bool,
+    pub review: bool,
+    pub replies: u64,
+    pub likes: u64,
+    pub user_rating: Option<u8>,
+    pub user: User,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CommentItem {
     #[serde(rename = "type")]
-    item_type: CommentableItemType,
-    show: Option<Show>,
-    movie: Option<Movie>,
-    season: Option<Season>,
-    episode: Option<Episode>,
-    list: Option<List>,
+    pub item_type: CommentableItemType,
+    pub show: Option<Show>,
+    pub movie: Option<Movie>,
+    pub season: Option<Season>,
+    pub episode: Option<Episode>,
+    pub list: Option<List>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CommentAndItem {
     #[serde(rename = "type")]
-    item_type: CommentableItemType,
-    show: Option<Show>,
-    movie: Option<Movie>,
-    season: Option<Season>,
-    episode: Option<Episode>,
-    list: Option<List>,
-    comment: Comment,
+    pub item_type: CommentableItemType,
+    pub show: Option<Show>,
+    pub movie: Option<Movie>,
+    pub season: Option<Season>,
+    pub episode: Option<Episode>,
+    pub list: Option<List>,
+    pub comment: Comment,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -90,10 +90,10 @@ impl CommentNew {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CommentSharing {
-    twitter: bool,
-    facebook: bool,
-    tumblr: bool,
-    medium: bool,
+    pub twitter: bool,
+    pub facebook: bool,
+    pub tumblr: bool,
+    pub medium: bool,
 }
 
 impl CommentSharing {
@@ -109,8 +109,8 @@ impl CommentSharing {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CommentPost {
-    comment: String,
-    spoiler: bool,
+    pub comment: String,
+    pub spoiler: bool,
 }
 
 impl CommentPost {

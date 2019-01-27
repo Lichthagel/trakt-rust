@@ -5,21 +5,21 @@ use std::fmt::Display;
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SearchResult {
     #[serde(rename = "type")]
-    item_type: SearchItemType,
-    score: f64,
-    movie: Option<Movie>,
-    show: Option<Show>,
-    episode: Option<Episode>,
-    person: Option<Person>,
-    list: Option<List>,
+    pub item_type: SearchItemType,
+    pub score: f64,
+    pub movie: Option<Movie>,
+    pub show: Option<Show>,
+    pub episode: Option<Episode>,
+    pub person: Option<Person>,
+    pub list: Option<List>,
 }
 
 pub struct SearchType {
-    movie: bool,
-    show: bool,
-    episode: bool,
-    person: bool,
-    list: bool,
+    pub movie: bool,
+    pub show: bool,
+    pub episode: bool,
+    pub person: bool,
+    pub list: bool,
 }
 
 impl SearchType {
