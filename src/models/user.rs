@@ -42,45 +42,45 @@ pub struct FullUser {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Settings {
-    user: FullUser,
-    account: SettingsAccount,
-    connections: SettingsConnections,
-    sharing_text: SettingsSharingText,
+    pub user: FullUser,
+    pub account: SettingsAccount,
+    pub connections: SettingsConnections,
+    pub sharing_text: SettingsSharingText,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SettingsAccount {
-    timezone: String,
-    date_format: String,
-    time_24hr: bool,
-    cover_image: String,
+    pub timezone: String,
+    pub date_format: String,
+    pub time_24hr: bool,
+    pub cover_image: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SettingsConnections {
-    facebook: bool,
-    twitter: bool,
-    google: bool,
-    tumblr: bool,
-    medium: bool,
-    slack: bool,
+    pub facebook: bool,
+    pub twitter: bool,
+    pub google: bool,
+    pub tumblr: bool,
+    pub medium: bool,
+    pub slack: bool,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SettingsSharingText {
-    watching: String,
-    watched: String,
+    pub watching: String,
+    pub watched: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FollowRequest {
-    id: u32,
-    requested_at: DateTime<Utc>,
-    user: User,
+    pub id: u32,
+    pub requested_at: DateTime<Utc>,
+    pub user: User,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FollowRequestApprove {
-    followed_at: DateTime<Utc>,
-    user: User,
+    pub followed_at: DateTime<Utc>,
+    pub user: User,
 }
