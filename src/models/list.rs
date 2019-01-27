@@ -142,7 +142,7 @@ impl fmt::Display for ListFilter {
             ListFilter::All => "all",
             ListFilter::Personal => "personal",
             ListFilter::Official => "official",
-            ListFilter::Watchlists => "watchlists"
+            ListFilter::Watchlists => "watchlists",
         })
     }
 }

@@ -1,8 +1,13 @@
+use crate::filters::TypeFilter;
+use crate::models::item_types::IncludeReplies;
+use crate::models::AllCommentableItemType;
 use crate::models::{
     list::OptionList, user::User, CommentableItemType, Episode, List, Movie, OptionEpisode,
     OptionMovie, OptionSeason, OptionShow, Season, Show,
 };
 use chrono::{DateTime, Utc};
+use std::fmt;
+use std::fmt::Display;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Comment {
@@ -43,20 +48,18 @@ pub struct CommentAndItem {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename = "lowercase")]
 pub enum CommentType {
-    #[serde(rename = "reviews")]
-    REVIEWS,
-    #[serde(rename = "shouts")]
-    SHOUTS,
-    #[serde(rename = "all")]
-    ALL,
+    Reviews,
+    Shouts,
+    All,
 }
 
-impl ToString for CommentType {
-    fn to_string(&self) -> String {
-        String::from(match self {
-            CommentType::REVIEWS => "reviews",
-            CommentType::SHOUTS => "shouts",
+impl Display for CommentType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(match self {
+            CommentType::Reviews => "reviews",
+            CommentType::Shouts => "shouts",
             _ => "all",
         })
     }
@@ -117,5 +120,40 @@ impl CommentPost {
 
     pub fn to_json_string(&self) -> Result<String, serde_json::Error> {
         serde_json::to_string(self)
+    }
+}
+
+pub struct GetComments {
+    pub comment_type: CommentType,
+    pub item_type: AllCommentableItemType,
+    pub include_replies: IncludeReplies,
+}
+
+impl GetComments {
+    pub fn comment_type(mut self, comment_type: CommentType) -> Self {
+        self.comment_type = comment_type;
+        self
+    }
+
+    pub fn include_replies(mut self, include_replies: IncludeReplies) -> Self {
+        self.include_replies = include_replies;
+        self
+    }
+}
+
+impl TypeFilter<AllCommentableItemType> for GetComments {
+    fn item_type(mut self, item_type: AllCommentableItemType) -> Self {
+        self.item_type = item_type;
+        self
+    }
+}
+
+impl Default for GetComments {
+    fn default() -> Self {
+        GetComments {
+            comment_type: CommentType::All,
+            item_type: AllCommentableItemType::All,
+            include_replies: IncludeReplies::False,
+        }
     }
 }

@@ -2,58 +2,45 @@ use std::fmt;
 use std::fmt::Display;
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
 pub enum ListItemType {
-    #[serde(rename = "movie")]
-    MOVIE,
-    #[serde(rename = "show")]
-    SHOW,
-    #[serde(rename = "season")]
-    SEASON,
-    #[serde(rename = "episode")]
-    EPISODE,
-    #[serde(rename = "person")]
-    PERSON,
+    Movie,
+    Show,
+    Season,
+    Episode,
+    Person,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
 pub enum CommentableItemType {
-    #[serde(rename = "movie")]
-    MOVIE,
-    #[serde(rename = "show")]
-    SHOW,
-    #[serde(rename = "season")]
-    SEASON,
-    #[serde(rename = "episode")]
-    EPISODE,
-    #[serde(rename = "list")]
-    LIST,
+    Movie,
+    Show,
+    Season,
+    Episode,
+    List,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
 pub enum AllCommentableItemType {
-    #[serde(rename = "movie")]
-    MOVIE,
-    #[serde(rename = "show")]
-    SHOW,
-    #[serde(rename = "season")]
-    SEASON,
-    #[serde(rename = "episode")]
-    EPISODE,
-    #[serde(rename = "list")]
-    LIST,
-    #[serde(rename = "all")]
-    ALL,
+    Movie,
+    Show,
+    Season,
+    Episode,
+    List,
+    All,
 }
 
-impl ToString for AllCommentableItemType {
-    fn to_string(&self) -> String {
-        String::from(match self {
-            AllCommentableItemType::MOVIE => "movies",
-            AllCommentableItemType::SHOW => "shows",
-            AllCommentableItemType::SEASON => "seasons",
-            AllCommentableItemType::EPISODE => "episodes",
-            AllCommentableItemType::LIST => "lists",
-            AllCommentableItemType::ALL => "all",
+impl Display for AllCommentableItemType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(match self {
+            AllCommentableItemType::Movie => "movies",
+            AllCommentableItemType::Show => "shows",
+            AllCommentableItemType::Season => "seasons",
+            AllCommentableItemType::Episode => "episodes",
+            AllCommentableItemType::List => "lists",
+            AllCommentableItemType::All => "all",
         })
     }
 }
@@ -172,6 +159,23 @@ impl Display for SearchItemType {
             SearchItemType::Episode => "episode",
             SearchItemType::Person => "person",
             SearchItemType::List => "list",
+        })
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub enum IncludeReplies {
+    True,
+    False,
+    Only,
+}
+
+impl Display for IncludeReplies {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(match self {
+            IncludeReplies::True => "true",
+            IncludeReplies::False => "false",
+            IncludeReplies::Only => "only",
         })
     }
 }

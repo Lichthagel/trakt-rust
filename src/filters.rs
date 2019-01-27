@@ -45,3 +45,7 @@ pub trait ShowFilters {
     fn network(self, network_name: String) -> Self;
     fn status(self, status: ShowStatus) -> Self;
 }
+
+pub trait TypeFilter<T> {
+    fn item_type(self, item_type: T) -> Self;
+}

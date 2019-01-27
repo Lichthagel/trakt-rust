@@ -1,3 +1,5 @@
+use crate::models::comment::GetComments;
+use crate::models::CommentAndItem;
 use crate::{
     error::Result,
     models::{
@@ -103,6 +105,35 @@ impl TraktApi {
                 access_token,
             ),
             None => self.get(api_url!(("users", slug, "collection", "shows"))),
+        }
+    }
+
+    pub fn user_comments(
+        &self,
+        slug: String,
+        f: impl FnOnce(GetComments) -> GetComments,
+        g: impl FnOnce(PaginationFactory) -> PaginationFactory,
+        access_token: Option<String>,
+    ) -> Result<Vec<CommentAndItem>> {
+        let gc = f(GetComments::default());
+        let pf = g(PaginationFactory::default());
+
+        match access_token {
+            Some(access_token) => self.auth_get(
+                api_url!(
+                    ("users", slug, "comments", gc.comment_type, gc.item_type),
+                    ("include_replies", gc.include_replies),
+                    ("page", pf.page),
+                    ("limit", pf.limit)
+                ),
+                access_token,
+            ),
+            None => self.get(api_url!(
+                ("users", slug, "comments", gc.comment_type, gc.item_type),
+                ("include_replies", gc.include_replies),
+                ("page", pf.page),
+                ("limit", pf.limit)
+            )),
         }
     }
 }

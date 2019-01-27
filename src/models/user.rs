@@ -40,7 +40,6 @@ pub struct FullUser {
     vip_years: Option<u32>,
 }
 
-
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Settings {
     user: FullUser,
@@ -77,11 +76,11 @@ pub struct SettingsSharingText {
 pub struct FollowRequest {
     id: u32,
     requested_at: DateTime<Utc>,
-    user: User
+    user: User,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FollowRequestApprove {
     followed_at: DateTime<Utc>,
-    user: User
+    user: User,
 }

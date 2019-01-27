@@ -41,8 +41,8 @@ pub use crate::models::{
     history::HistoryItem,
     ids::{IdType, Ids},
     item_types::{
-        AllCommentableItemType, AllItemType, CommentableItemType, ItemType, ListItemType,
-        MediaType, SearchItemType, TimePeriod, WatchableType,
+        AllCommentableItemType, AllItemType, CommentableItemType, IncludeReplies, ItemType,
+        ListItemType, MediaType, SearchItemType, TimePeriod, WatchableType,
     },
     like::Like,
     list::{List, ListFactory, ListFilter, ListInfo, ListItem, ListSort, ListType},
@@ -64,9 +64,9 @@ pub use crate::models::{
         UserSeasonStats, UserShowStats, UserStats,
     },
     sync::{
-        LastActivities, LastActivitiesElement, Playback, SyncAddResponse, SyncRemoveResponse,
-        SyncFactory, SyncSeasonFactory, SyncShowFactory, SyncResponseNotFound, SyncResponseNumbers,
-        SyncType,
+        LastActivities, LastActivitiesElement, Playback, SyncAddResponse, SyncFactory,
+        SyncRemoveResponse, SyncResponseNotFound, SyncResponseNumbers, SyncSeasonFactory,
+        SyncShowFactory, SyncType,
     },
     user::User,
     watched::{WatchedEntry, WatchedEpisode, WatchedSeason},

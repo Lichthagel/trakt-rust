@@ -9,7 +9,7 @@ mod macros;
 pub mod error;
 mod filters;
 pub mod models;
-mod pagination;
+pub mod pagination;
 mod requests;
 
 use crate::{

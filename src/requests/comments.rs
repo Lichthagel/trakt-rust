@@ -98,7 +98,7 @@ impl TraktApi {
         comment_type: CommentType,
         item_type: AllCommentableItemType,
         include_replies: bool,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
     ) -> Result<Vec<CommentAndItem>> {
         let pf = f(PaginationFactory::default());
         self.get(api_url!(
@@ -119,7 +119,7 @@ impl TraktApi {
         comment_type: CommentType,
         item_type: AllCommentableItemType,
         include_replies: bool,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
     ) -> Result<Vec<CommentAndItem>> {
         let pf = f(PaginationFactory::default());
         self.get(api_url!(
@@ -140,7 +140,7 @@ impl TraktApi {
         comment_type: CommentType,
         item_type: AllCommentableItemType,
         include_replies: bool,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory
+        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
     ) -> Result<Vec<CommentAndItem>> {
         let pf = f(PaginationFactory::default());
         self.get(api_url!(

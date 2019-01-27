@@ -11,7 +11,7 @@ pub enum SyncType {
     Watch,
     Collect,
     Rating,
-    Watchlist
+    Watchlist,
 }
 
 impl SyncType {

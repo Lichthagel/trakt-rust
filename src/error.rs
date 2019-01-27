@@ -31,13 +31,17 @@ impl From<serde_json::Error> for Error {
 
 impl Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", match self {
-            Error::Response(e) => format!("Response ( {} )", e.status()),
-            Error::Connection(e) => format!("Connection ( {} )", e),
-            Error::Serde(e) => format!("Serde ( {} )", e),
-            Error::NoneError => format!("NoneError"),
-            Error::ClientSecretNeeded => format!("ClientSecretNeeded"),
-        })
+        write!(
+            f,
+            "{}",
+            match self {
+                Error::Response(e) => format!("Response ( {} )", e.status()),
+                Error::Connection(e) => format!("Connection ( {} )", e),
+                Error::Serde(e) => format!("Serde ( {} )", e),
+                Error::NoneError => format!("NoneError"),
+                Error::ClientSecretNeeded => format!("ClientSecretNeeded"),
+            }
+        )
     }
 }
 
