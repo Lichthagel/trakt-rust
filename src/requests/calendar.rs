@@ -24,7 +24,7 @@ impl TraktApi {
         &self,
         start_date: Date<Utc>,
         days: u32,
-        access_token: String,
+        access_token: &str,
     ) -> Result<Vec<CalendarShow>> {
         self.auth_get(
             api_url!((
@@ -57,7 +57,7 @@ impl TraktApi {
         &self,
         start_date: Date<Utc>,
         days: u32,
-        access_token: String,
+        access_token: &str,
     ) -> Result<Vec<CalendarShow>> {
         self.auth_get(
             api_url!((
@@ -91,7 +91,7 @@ impl TraktApi {
         &self,
         start_date: Date<Utc>,
         days: u32,
-        access_token: String,
+        access_token: &str,
     ) -> Result<Vec<CalendarShow>> {
         self.auth_get(
             api_url!((
@@ -124,7 +124,7 @@ impl TraktApi {
         &self,
         start_date: Date<Utc>,
         days: u32,
-        access_token: String,
+        access_token: &str,
     ) -> Result<Vec<CalendarMovie>> {
         self.auth_get(
             api_url!((
@@ -152,7 +152,7 @@ impl TraktApi {
         &self,
         start_date: Date<Utc>,
         days: u32,
-        access_token: String,
+        access_token: &str,
     ) -> Result<Vec<CalendarMovie>> {
         self.auth_get(
             api_url!((

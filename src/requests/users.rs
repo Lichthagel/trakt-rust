@@ -12,18 +12,18 @@ use crate::{
 };
 
 impl TraktApi {
-    pub fn user_settings(&self, access_token: String) -> Result<Settings> {
+    pub fn user_settings(&self, access_token: &str) -> Result<Settings> {
         self.auth_get(api_url!(("users", "settings")), access_token)
     }
 
-    pub fn user_requests(&self, access_token: String) -> Result<Vec<FollowRequest>> {
+    pub fn user_requests(&self, access_token: &str) -> Result<Vec<FollowRequest>> {
         self.auth_get(api_url!(("users", "requests")), access_token)
     }
 
     pub fn user_request_approve(
         &self,
         id: u32,
-        access_token: String,
+        access_token: &str,
     ) -> Result<FollowRequestApprove> {
         self.auth_post(
             api_url!(("users", "requests", id)),
@@ -32,7 +32,7 @@ impl TraktApi {
         )
     }
 
-    pub fn user_request_deny(&self, id: u32, access_token: String) -> Result<()> {
+    pub fn user_request_deny(&self, id: u32, access_token: &str) -> Result<()> {
         self.auth_delete(api_url!(("users", "requests", id)), access_token)
     }
 
@@ -42,7 +42,7 @@ impl TraktApi {
         &self,
         item_type: Option<LikeableType>,
         f: impl FnOnce(PaginationFactory) -> PaginationFactory,
-        access_token: String,
+        access_token: &str,
     ) -> Result<Vec<UserLike>> {
         let pf = f(PaginationFactory::default());
 
@@ -59,18 +59,14 @@ impl TraktApi {
         )
     }
 
-    pub fn user_profile(&self, slug: String, access_token: Option<String>) -> Result<User> {
+    pub fn user_profile(&self, slug: &str, access_token: Option<&str>) -> Result<User> {
         match access_token {
             Some(access_token) => self.auth_get(api_url!(("users", slug)), access_token),
             None => self.get(api_url!(("users", slug))),
         }
     }
 
-    pub fn user_profile_full(
-        &self,
-        slug: String,
-        access_token: Option<String>,
-    ) -> Result<FullUser> {
+    pub fn user_profile_full(&self, slug: &str, access_token: Option<&str>) -> Result<FullUser> {
         match access_token {
             Some(access_token) => self.auth_get(
                 api_url!(("users", slug), ("extended", "full")),
@@ -82,8 +78,8 @@ impl TraktApi {
 
     pub fn user_collection_movies(
         &self,
-        slug: String,
-        access_token: Option<String>,
+        slug: &str,
+        access_token: Option<&str>,
     ) -> Result<Vec<CollectionMovie>> {
         match access_token {
             Some(access_token) => self.auth_get(
@@ -96,8 +92,8 @@ impl TraktApi {
 
     pub fn user_collection_shows(
         &self,
-        slug: String,
-        access_token: Option<String>,
+        slug: &str,
+        access_token: Option<&str>,
     ) -> Result<Vec<CollectionShow>> {
         match access_token {
             Some(access_token) => self.auth_get(
@@ -110,10 +106,10 @@ impl TraktApi {
 
     pub fn user_comments(
         &self,
-        slug: String,
+        slug: &str,
         f: impl FnOnce(GetComments) -> GetComments,
         g: impl FnOnce(PaginationFactory) -> PaginationFactory,
-        access_token: Option<String>,
+        access_token: Option<&str>,
     ) -> Result<Vec<CommentAndItem>> {
         let gc = f(GetComments::default());
         let pf = g(PaginationFactory::default());

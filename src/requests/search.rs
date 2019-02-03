@@ -10,7 +10,7 @@ impl TraktApi {
     pub fn search(
         &self,
         item_type: SearchType,
-        query: String,
+        query: &str,
         f: impl FnOnce(PaginationFactory) -> PaginationFactory,
     ) -> Result<Vec<SearchResult>> {
         let pf = f(PaginationFactory::default());

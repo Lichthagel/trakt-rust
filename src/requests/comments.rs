@@ -9,7 +9,7 @@ use crate::{
 };
 
 impl TraktApi {
-    pub fn comment_post(&self, comment: CommentNew, access_token: String) -> Result<Comment> {
+    pub fn comment_post(&self, comment: CommentNew, access_token: &str) -> Result<Comment> {
         self.auth_post(
             api_url!(("comments")),
             comment.to_json_string()?,
@@ -25,7 +25,7 @@ impl TraktApi {
         &self,
         comment_id: u32,
         comment_update: CommentPost,
-        access_token: String,
+        access_token: &str,
     ) -> Result<Comment> {
         self.auth_put(
             api_url!(("comments", comment_id)),
@@ -34,7 +34,7 @@ impl TraktApi {
         )
     }
 
-    pub fn comment_delete(&self, comment_id: u32, access_token: String) -> Result<()> {
+    pub fn comment_delete(&self, comment_id: u32, access_token: &str) -> Result<()> {
         self.auth_delete(api_url!(("comments", comment_id)), access_token)
     }
 
@@ -55,7 +55,7 @@ impl TraktApi {
         &self,
         comment_id: u32,
         comment: CommentPost,
-        access_token: String,
+        access_token: &str,
     ) -> Result<Comment> {
         self.auth_post(
             api_url!(("comments", comment_id, "replies")),
@@ -81,7 +81,7 @@ impl TraktApi {
         ))
     }
 
-    pub fn comment_like(&self, comment_id: u32, access_token: String) -> Result<()> {
+    pub fn comment_like(&self, comment_id: u32, access_token: &str) -> Result<()> {
         self.auth_post_no_body(
             api_url!(("comments", comment_id, "like")),
             String::from(""),
@@ -89,7 +89,7 @@ impl TraktApi {
         )
     }
 
-    pub fn comment_like_delete(&self, comment_id: u32, access_token: String) -> Result<()> {
+    pub fn comment_like_delete(&self, comment_id: u32, access_token: &str) -> Result<()> {
         self.auth_delete(api_url!(("comments", comment_id, "like")), access_token)
     }
 

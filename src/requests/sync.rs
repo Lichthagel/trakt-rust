@@ -13,34 +13,34 @@ use crate::{
 use chrono::{DateTime, Utc};
 
 impl TraktApi {
-    pub fn sync_last_activities(&self, access_token: String) -> Result<LastActivities> {
+    pub fn sync_last_activities(&self, access_token: &str) -> Result<LastActivities> {
         self.auth_get(api_url!(("sync", "last_activities")), access_token)
     }
 
     pub fn sync_playback(
         &self,
         item_type: WatchableType,
-        access_token: String,
+        access_token: &str,
     ) -> Result<Vec<Playback>> {
         self.auth_get(api_url!(("sync", "playback", item_type)), access_token)
     }
 
-    pub fn sync_playback_delete(&self, playback_id: u64, access_token: String) -> Result<()> {
+    pub fn sync_playback_delete(&self, playback_id: u64, access_token: &str) -> Result<()> {
         self.auth_delete(api_url!(("sync", "playback", playback_id)), access_token)
     }
 
-    pub fn sync_collection_movie(&self, access_token: String) -> Result<Vec<CollectionMovie>> {
+    pub fn sync_collection_movie(&self, access_token: &str) -> Result<Vec<CollectionMovie>> {
         self.auth_get(api_url!(("sync", "collection", "movies")), access_token)
     }
 
-    pub fn sync_collection_show(&self, access_token: String) -> Result<Vec<CollectionShow>> {
+    pub fn sync_collection_show(&self, access_token: &str) -> Result<Vec<CollectionShow>> {
         self.auth_get(api_url!(("sync", "collection", "shows")), access_token)
     }
 
     pub fn sync_collection_add(
         &self,
         f: impl FnOnce(SyncFactory) -> SyncFactory,
-        access_token: String,
+        access_token: &str,
     ) -> Result<SyncAddResponse> {
         let body = f(SyncFactory::new(SyncType::Collect)).build();
 
@@ -54,7 +54,7 @@ impl TraktApi {
     pub fn sync_collection_remove(
         &self,
         f: impl FnOnce(SyncFactory) -> SyncFactory,
-        access_token: String,
+        access_token: &str,
     ) -> Result<SyncRemoveResponse> {
         let body = f(SyncFactory::new(SyncType::Collect)).build();
 
@@ -68,7 +68,7 @@ impl TraktApi {
     pub fn sync_watched(
         &self,
         item_type: MediaType,
-        access_token: String,
+        access_token: &str,
     ) -> Result<Vec<WatchedEntry>> {
         self.auth_get(api_url!(("sync", "watched", item_type)), access_token)
     }
@@ -79,7 +79,7 @@ impl TraktApi {
         start_at: DateTime<Utc>,
         end_at: DateTime<Utc>,
         f: impl FnOnce(PaginationFactory) -> PaginationFactory,
-        access_token: String,
+        access_token: &str,
     ) -> Result<Vec<HistoryItem>> {
         let pf = f(PaginationFactory::default());
         self.auth_get(
@@ -97,7 +97,7 @@ impl TraktApi {
     pub fn sync_history_add(
         &self,
         f: impl FnOnce(SyncFactory) -> SyncFactory,
-        access_token: String,
+        access_token: &str,
     ) -> Result<SyncAddResponse> {
         let body = f(SyncFactory::new(SyncType::Watch)).build();
 
@@ -111,7 +111,7 @@ impl TraktApi {
     pub fn sync_history_remove(
         &self,
         f: impl FnOnce(SyncFactory) -> SyncFactory,
-        access_token: String,
+        access_token: &str,
     ) -> Result<SyncRemoveResponse> {
         let body = f(SyncFactory::new(SyncType::Watch)).build();
 
@@ -122,18 +122,14 @@ impl TraktApi {
         )
     }
 
-    pub fn sync_ratings(
-        &self,
-        item_type: AllItemType,
-        access_token: String,
-    ) -> Result<Vec<Rating>> {
+    pub fn sync_ratings(&self, item_type: AllItemType, access_token: &str) -> Result<Vec<Rating>> {
         self.auth_get(api_url!(("sync", "ratings", item_type)), access_token)
     }
 
     pub fn sync_ratings_add(
         &self,
         f: impl FnOnce(RatingFactory) -> RatingFactory,
-        access_token: String,
+        access_token: &str,
     ) -> Result<SyncAddResponse> {
         let body = f(RatingFactory::new()).build();
 
@@ -147,7 +143,7 @@ impl TraktApi {
     pub fn sync_ratings_remove(
         &self,
         f: impl FnOnce(SyncFactory) -> SyncFactory,
-        access_token: String,
+        access_token: &str,
     ) -> Result<SyncRemoveResponse> {
         let body = f(SyncFactory::new(SyncType::Rating)).build();
 
@@ -161,7 +157,7 @@ impl TraktApi {
     pub fn sync_watchlist(
         &self,
         item_type: Option<ItemType>,
-        access_token: String,
+        access_token: &str,
     ) -> Result<Vec<ListItem>> {
         self.auth_get(
             match item_type {
@@ -175,7 +171,7 @@ impl TraktApi {
     pub fn sync_watchlist_add(
         &self,
         f: impl FnOnce(SyncFactory) -> SyncFactory,
-        access_token: String,
+        access_token: &str,
     ) -> Result<SyncAddResponse> {
         let body = f(SyncFactory::new(SyncType::Watchlist)).build();
 
@@ -189,7 +185,7 @@ impl TraktApi {
     pub fn sync_watchlist_remove(
         &self,
         f: impl FnOnce(SyncFactory) -> SyncFactory,
-        access_token: String,
+        access_token: &str,
     ) -> Result<SyncRemoveResponse> {
         let body = f(SyncFactory::new(SyncType::Watchlist)).build();
 

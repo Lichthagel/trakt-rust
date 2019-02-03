@@ -151,7 +151,7 @@ impl TraktApi {
     pub fn show_progress_collection(
         &self,
         id: impl Display,
-        access_token: String,
+        access_token: &str,
     ) -> Result<CollectionProgress> {
         self.auth_get(
             api_url!(("shows", id, "progress", "collection")),
@@ -162,7 +162,7 @@ impl TraktApi {
     pub fn show_progress_watched(
         &self,
         id: impl Display,
-        access_token: String,
+        access_token: &str,
     ) -> Result<WatchedProgress> {
         self.auth_get(api_url!(("shows", id, "progress", "watched")), access_token)
     }

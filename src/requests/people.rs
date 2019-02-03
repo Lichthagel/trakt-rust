@@ -5,21 +5,21 @@ use crate::{
 };
 
 impl TraktApi {
-    pub fn people(&self, id: String) -> Result<Person> {
+    pub fn people(&self, id: &str) -> Result<Person> {
         self.get(api_url!(("people", id)))
     }
 
-    pub fn people_movie_credits(&self, id: String) -> Result<Credits> {
+    pub fn people_movie_credits(&self, id: &str) -> Result<Credits> {
         self.get(api_url!(("people", id, "movies")))
     }
 
-    pub fn people_show_credits(&self, id: String) -> Result<Credits> {
+    pub fn people_show_credits(&self, id: &str) -> Result<Credits> {
         self.get(api_url!(("people", id, "shows")))
     }
 
     pub fn people_lists(
         &self,
-        id: String,
+        id: &str,
         f: impl FnOnce(ListFactory) -> ListFactory,
     ) -> Result<Vec<List>> {
         let list_factory = f(ListFactory::default());

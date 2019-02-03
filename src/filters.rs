@@ -1,17 +1,17 @@
 use std::fmt;
 
 pub trait CommonFilters {
-    fn query(self, query: String) -> Self;
+    fn query(self, query: &str) -> Self;
     fn year(self, year: u32) -> Self;
-    fn genre(self, genre_slug: String) -> Self;
-    fn language(self, language_code: String) -> Self;
-    fn country(self, country_code: String) -> Self;
+    fn genre(self, genre_slug: &str) -> Self;
+    fn language(self, language_code: &str) -> Self;
+    fn country(self, country_code: &str) -> Self;
     fn runtimes(self, from: u32, to: u32) -> Self;
     fn ratings(self, from: u32, to: u32) -> Self;
 }
 
 pub trait MovieFilters {
-    fn certification(self, cert_slug: String) -> Self;
+    fn certification(self, cert_slug: &str) -> Self;
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -41,8 +41,8 @@ impl fmt::Display for ShowStatus {
 }
 
 pub trait ShowFilters {
-    fn certification(self, cert_slug: String) -> Self;
-    fn network(self, network_name: String) -> Self;
+    fn certification(self, cert_slug: &str) -> Self;
+    fn network(self, network_name: &str) -> Self;
     fn status(self, status: ShowStatus) -> Self;
 }
 

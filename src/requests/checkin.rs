@@ -5,7 +5,7 @@ use crate::{
 };
 
 impl TraktApi {
-    pub fn checkin(&self, checkin: Checkin, access_token: String) -> Result<CheckinResponse> {
+    pub fn checkin(&self, checkin: Checkin, access_token: &str) -> Result<CheckinResponse> {
         self.auth_post(
             api_url!(("checkin")),
             checkin.to_json_string()?,
@@ -13,7 +13,7 @@ impl TraktApi {
         )
     }
 
-    pub fn checkout(&self, access_token: String) -> Result<()> {
+    pub fn checkout(&self, access_token: &str) -> Result<()> {
         match self
             .client
             .delete(&api_url!(("checkin")))

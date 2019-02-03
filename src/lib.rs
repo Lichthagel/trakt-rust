@@ -35,9 +35,13 @@ impl TraktApi {
     }
 
     fn get<T: DeserializeOwned>(&self, url: String) -> Result<T> {
+        self._get(&url)
+    }
+
+    fn _get<T: DeserializeOwned>(&self, url: &str) -> Result<T> {
         match self
             .client
-            .get(&url)
+            .get(url)
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
@@ -54,10 +58,14 @@ impl TraktApi {
         }
     }
 
-    fn auth_get<T: DeserializeOwned>(&self, url: String, access_token: String) -> Result<T> {
+    fn auth_get<T: DeserializeOwned>(&self, url: String, access_token: &str) -> Result<T> {
+        self._auth_get(&url, access_token)
+    }
+
+    fn _auth_get<T: DeserializeOwned>(&self, url: &str, access_token: &str) -> Result<T> {
         match self
             .client
-            .get(&url)
+            .get(url)
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
@@ -76,9 +84,13 @@ impl TraktApi {
     }
 
     fn post<T: DeserializeOwned>(&self, url: String, body: String) -> Result<T> {
+        self._post(&url, body)
+    }
+
+    fn _post<T: DeserializeOwned>(&self, url: &str, body: String) -> Result<T> {
         match self
             .client
-            .post(&url)
+            .post(url)
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
@@ -100,11 +112,20 @@ impl TraktApi {
         &self,
         url: String,
         body: String,
-        access_token: String,
+        access_token: &str,
+    ) -> Result<T> {
+        self._auth_post(&url, body, access_token)
+    }
+
+    fn _auth_post<T: DeserializeOwned>(
+        &self,
+        url: &str,
+        body: String,
+        access_token: &str,
     ) -> Result<T> {
         match self
             .client
-            .post(&url)
+            .post(url)
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
@@ -123,10 +144,14 @@ impl TraktApi {
         }
     }
 
-    fn auth_post_no_body(&self, url: String, body: String, access_token: String) -> Result<()> {
+    fn auth_post_no_body(&self, url: String, body: String, access_token: &str) -> Result<()> {
+        self._auth_post_no_body(&url, body, access_token)
+    }
+
+    fn _auth_post_no_body(&self, url: &str, body: String, access_token: &str) -> Result<()> {
         match self
             .client
-            .post(&url)
+            .post(url)
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
@@ -149,11 +174,20 @@ impl TraktApi {
         &self,
         url: String,
         body: String,
-        access_token: String,
+        access_token: &str,
+    ) -> Result<T> {
+        self._auth_put(&url, body, access_token)
+    }
+
+    fn _auth_put<T: DeserializeOwned>(
+        &self,
+        url: &str,
+        body: String,
+        access_token: &str,
     ) -> Result<T> {
         match self
             .client
-            .put(&url)
+            .put(url)
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
@@ -172,10 +206,14 @@ impl TraktApi {
         }
     }
 
-    fn auth_delete(&self, url: String, access_token: String) -> Result<()> {
+    fn auth_delete(&self, url: String, access_token: &str) -> Result<()> {
+        self._auth_delete(&url, access_token)
+    }
+
+    fn _auth_delete(&self, url: &str, access_token: &str) -> Result<()> {
         match self
             .client
-            .delete(&url)
+            .delete(url)
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
