@@ -1,5 +1,6 @@
 use std::fmt;
 use std::fmt::Display;
+use std::ops::AddAssign;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Ids {
@@ -9,6 +10,30 @@ pub struct Ids {
     pub imdb: Option<String>,
     pub tmdb: Option<u64>,
     pub tvrage: Option<u64>,
+}
+
+impl Default for Ids {
+    fn default() -> Self {
+        Self {
+            trakt: None,
+            slug: None,
+            tvdb: None,
+            imdb: None,
+            tmdb: None,
+            tvrage: None,
+        }
+    }
+}
+
+impl AddAssign<Ids> for &mut Ids {
+    fn add_assign(&mut self, rhs: Ids) {
+        self.trakt = self.trakt.clone().or(rhs.trakt);
+        self.slug = self.slug.clone().or(rhs.slug);
+        self.tvdb = self.tvdb.clone().or(rhs.tvdb);
+        self.imdb = self.imdb.clone().or(rhs.imdb);
+        self.tmdb = self.tmdb.clone().or(rhs.tmdb);
+        self.tvrage = self.tvrage.clone().or(rhs.tvrage);
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]

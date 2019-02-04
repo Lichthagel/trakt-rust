@@ -9,21 +9,14 @@ pub struct Season {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct OptionSeason {
     pub number: Option<u32>,
-    pub ids: Ids,
+    pub ids: Option<Ids>,
 }
 
 impl OptionSeason {
-    pub fn new(trakt_id: u64) -> Self {
+    pub fn new(season_number: u32) -> Self {
         Self {
-            number: None,
-            ids: Ids {
-                trakt: Some(trakt_id),
-                slug: None,
-                tvdb: None,
-                imdb: None,
-                tmdb: None,
-                tvrage: None,
-            },
+            number: Some(season_number),
+            ids: None,
         }
     }
 }
@@ -32,7 +25,16 @@ impl From<Season> for OptionSeason {
     fn from(season: Season) -> Self {
         Self {
             number: Some(season.number),
-            ids: season.ids,
+            ids: Some(season.ids),
+        }
+    }
+}
+
+impl Default for OptionSeason {
+    fn default() -> Self {
+        Self {
+            number: None,
+            ids: None
         }
     }
 }

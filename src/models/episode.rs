@@ -53,3 +53,14 @@ impl From<Episode> for OptionEpisode {
         }
     }
 }
+
+impl Default for OptionEpisode {
+    fn default() -> Self {
+        Self {
+            season: None,
+            number: None,
+            title: None,
+            ids: None
+        }
+    }
+}

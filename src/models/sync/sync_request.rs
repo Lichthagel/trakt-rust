@@ -1,6 +1,7 @@
 use crate::{
     error::{Error, Result},
-    models::{Episode, Movie, Season, Show},
+    models::{Episode, Season, Show},
+    selectors::{SelectMovie, SelectMovieData},
 };
 use chrono::{DateTime, Utc};
 use serde_json::{Map, Value};
@@ -51,106 +52,6 @@ impl SyncFactory {
         obj.insert("seasons".to_owned(), Value::Array(self.seasons));
         obj.insert("episodes".to_owned(), Value::Array(self.episodes));
         Value::Object(obj)
-    }
-
-    pub fn movie(mut self, movie: Movie) -> Result<Self> {
-        self.movies.push(serde_json::to_value(movie)?);
-        Ok(self)
-    }
-
-    pub fn movie_at(mut self, movie: Movie, collected_at: DateTime<Utc>) -> Result<Self> {
-        let movie = serde_json::to_value(movie)?;
-        let mut movie = movie.as_object().ok_or(Error::NoneError)?.clone();
-
-        movie.insert(
-            self.sync_type.get_date_name(),
-            Value::String(collected_at.to_string()),
-        );
-
-        self.movies.push(Value::Object(movie));
-
-        Ok(self)
-    }
-
-    pub fn movie_id(mut self, trakt_id: u64) -> Self {
-        let mut ids = Map::new();
-        ids.insert("trakt".to_owned(), Value::Number(trakt_id.into()));
-
-        let mut movie = Map::new();
-        movie.insert("ids".to_owned(), Value::Object(ids));
-
-        self.movies.push(Value::Object(movie));
-        self
-    }
-
-    pub fn movie_id_at(mut self, trakt_id: u64, collected_at: DateTime<Utc>) -> Self {
-        let mut ids = Map::new();
-        ids.insert("trakt".to_owned(), Value::Number(trakt_id.into()));
-
-        let mut movie = Map::new();
-        movie.insert("ids".to_owned(), Value::Object(ids));
-
-        movie.insert(
-            self.sync_type.get_date_name(),
-            Value::String(collected_at.to_string()),
-        );
-
-        self.movies.push(Value::Object(movie));
-        self
-    }
-
-    pub fn movie_slug(mut self, trakt_slug: String) -> Self {
-        let mut ids = Map::new();
-        ids.insert("slug".to_owned(), Value::String(trakt_slug));
-
-        let mut movie = Map::new();
-        movie.insert("ids".to_owned(), Value::Object(ids));
-
-        self.movies.push(Value::Object(movie));
-        self
-    }
-
-    pub fn movie_slug_at(mut self, trakt_slug: String, collected_at: DateTime<Utc>) -> Self {
-        let mut ids = Map::new();
-        ids.insert("slug".to_owned(), Value::String(trakt_slug));
-
-        let mut movie = Map::new();
-        movie.insert("ids".to_owned(), Value::Object(ids));
-
-        movie.insert(
-            self.sync_type.get_date_name(),
-            Value::String(collected_at.to_string()),
-        );
-
-        self.movies.push(Value::Object(movie));
-        self
-    }
-
-    pub fn movie_imdb(mut self, imdb_id: String) -> Self {
-        let mut ids = Map::new();
-        ids.insert("imdb".to_owned(), Value::String(imdb_id));
-
-        let mut movie = Map::new();
-        movie.insert("ids".to_owned(), Value::Object(ids));
-
-        self.movies.push(Value::Object(movie));
-        self
-    }
-
-    pub fn movie_imdb_at(mut self, imdb_id: String, collected_at: DateTime<Utc>) -> Self {
-        let mut ids = Map::new();
-        ids.insert("imdb".to_owned(), Value::String(imdb_id));
-
-        let mut movie = Map::new();
-        movie.insert("ids".to_owned(), Value::Object(ids));
-
-        movie.insert(
-            self.sync_type.get_date_name(),
-            Value::String(collected_at.to_string()),
-        );
-
-        self.movies.push(Value::Object(movie));
-        self
     }
 
     pub fn show(
@@ -355,6 +256,27 @@ impl SyncFactory {
         );
 
         self.episodes.push(Value::Object(movie));
+        self
+    }
+}
+
+impl SelectMovie for SyncFactory {
+    fn movie_v(mut self, movie: Value) -> Self {
+        self.movies.push(movie);
+        self
+    }
+}
+
+impl SelectMovieData<DateTime<Utc>> for SyncFactory {
+    fn movie_v_d(mut self, movie: Value, data: DateTime<Utc>) -> Self {
+        let mut movie = movie.as_object().unwrap().clone();
+
+        movie.insert(
+            self.sync_type.get_date_name(),
+            Value::String(data.to_string()),
+        );
+
+        self.movies.push(Value::Object(movie));
         self
     }
 }

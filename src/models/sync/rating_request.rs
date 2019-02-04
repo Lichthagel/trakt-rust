@@ -1,10 +1,11 @@
 use crate::{
     error::{Error, Result},
-    models::{Episode, Movie, Season, Show},
+    models::{Episode, Season, Show},
 };
 use chrono::{DateTime, Utc};
 use serde_json::{Map, Value};
 use std::collections::HashMap;
+use crate::selectors::SelectMovieData;
 
 pub struct RatingFactory {
     movies: Vec<Value>,
@@ -30,140 +31,6 @@ impl RatingFactory {
         obj.insert("seasons".to_owned(), Value::Array(self.seasons));
         obj.insert("episodes".to_owned(), Value::Array(self.episodes));
         Value::Object(obj)
-    }
-
-    pub fn movie(mut self, movie: Movie, rating: u8) -> Result<Self> {
-        let movie = serde_json::to_value(movie)?;
-        let mut movie = movie.as_object().ok_or(Error::NoneError)?.clone();
-
-        movie.insert("rating".to_owned(), Value::Number(rating.into()));
-
-        self.movies.push(Value::Object(movie));
-        Ok(self)
-    }
-
-    pub fn movie_at(
-        mut self,
-        movie: Movie,
-        collected_at: DateTime<Utc>,
-        rating: u8,
-    ) -> Result<Self> {
-        let movie = serde_json::to_value(movie)?;
-        let mut movie = movie.as_object().ok_or(Error::NoneError)?.clone();
-
-        movie.insert(
-            "rated_at".to_owned(),
-            Value::String(collected_at.to_string()),
-        );
-
-        movie.insert("rating".to_owned(), Value::Number(rating.into()));
-
-        self.movies.push(Value::Object(movie));
-
-        Ok(self)
-    }
-
-    pub fn movie_id(mut self, trakt_id: u64, rating: u8) -> Self {
-        let mut ids = Map::new();
-        ids.insert("trakt".to_owned(), Value::Number(trakt_id.into()));
-
-        let mut movie = Map::new();
-        movie.insert("ids".to_owned(), Value::Object(ids));
-
-        movie.insert("rating".to_owned(), Value::Number(rating.into()));
-
-        self.movies.push(Value::Object(movie));
-        self
-    }
-
-    pub fn movie_id_at(mut self, trakt_id: u64, collected_at: DateTime<Utc>, rating: u8) -> Self {
-        let mut ids = Map::new();
-        ids.insert("trakt".to_owned(), Value::Number(trakt_id.into()));
-
-        let mut movie = Map::new();
-        movie.insert("ids".to_owned(), Value::Object(ids));
-
-        movie.insert(
-            "rated_at".to_owned(),
-            Value::String(collected_at.to_string()),
-        );
-
-        movie.insert("rating".to_owned(), Value::Number(rating.into()));
-
-        self.movies.push(Value::Object(movie));
-        self
-    }
-
-    pub fn movie_slug(mut self, trakt_slug: String, rating: u8) -> Self {
-        let mut ids = Map::new();
-        ids.insert("slug".to_owned(), Value::String(trakt_slug));
-
-        let mut movie = Map::new();
-        movie.insert("ids".to_owned(), Value::Object(ids));
-
-        movie.insert("rating".to_owned(), Value::Number(rating.into()));
-
-        self.movies.push(Value::Object(movie));
-        self
-    }
-
-    pub fn movie_slug_at(
-        mut self,
-        trakt_slug: String,
-        collected_at: DateTime<Utc>,
-        rating: u8,
-    ) -> Self {
-        let mut ids = Map::new();
-        ids.insert("slug".to_owned(), Value::String(trakt_slug));
-
-        let mut movie = Map::new();
-        movie.insert("ids".to_owned(), Value::Object(ids));
-
-        movie.insert(
-            "rated_at".to_owned(),
-            Value::String(collected_at.to_string()),
-        );
-
-        movie.insert("rating".to_owned(), Value::Number(rating.into()));
-
-        self.movies.push(Value::Object(movie));
-        self
-    }
-
-    pub fn movie_imdb(mut self, imdb_id: String, rating: u8) -> Self {
-        let mut ids = Map::new();
-        ids.insert("imdb".to_owned(), Value::String(imdb_id));
-
-        let mut movie = Map::new();
-        movie.insert("ids".to_owned(), Value::Object(ids));
-
-        movie.insert("rating".to_owned(), Value::Number(rating.into()));
-
-        self.movies.push(Value::Object(movie));
-        self
-    }
-
-    pub fn movie_imdb_at(
-        mut self,
-        imdb_id: String,
-        collected_at: DateTime<Utc>,
-        rating: u8,
-    ) -> Self {
-        let mut ids = Map::new();
-        ids.insert("imdb".to_owned(), Value::String(imdb_id));
-
-        let mut movie = Map::new();
-        movie.insert("ids".to_owned(), Value::Object(ids));
-
-        movie.insert(
-            "rated_at".to_owned(),
-            Value::String(collected_at.to_string()),
-        );
-
-        movie.insert("rating".to_owned(), Value::Number(rating.into()));
-
-        self.movies.push(Value::Object(movie));
-        self
     }
 
     pub fn show(
@@ -364,6 +231,30 @@ impl RatingFactory {
         );
 
         self.episodes.push(Value::Object(movie));
+        self
+    }
+}
+
+impl SelectMovieData<u8> for RatingFactory {
+    fn movie_v_d(mut self, movie: Value, rating: u8) -> Self {
+        let mut movie = movie.as_object().unwrap().clone();
+
+        movie.insert("rating".to_owned(), Value::Number(rating.into()));
+
+        self.movies.push(Value::Object(movie));
+        self
+    }
+}
+
+impl SelectMovieData<(u8, DateTime<Utc>)> for RatingFactory {
+    fn movie_v_d(mut self, movie: Value, (rating, date): (u8, DateTime<Utc>)) -> Self {
+        let mut movie = movie.as_object().unwrap().clone();
+
+        movie.insert("rated_at".to_owned(), Value::String(date.to_string()));
+
+        movie.insert("rating".to_owned(), Value::Number(rating.into()));
+
+        self.movies.push(Value::Object(movie));
         self
     }
 }

@@ -11,6 +11,7 @@ mod filters;
 pub mod models;
 pub mod pagination;
 mod requests;
+pub mod selectors;
 
 use crate::{
     error::{Error, Result},
@@ -18,7 +19,7 @@ use crate::{
 };
 use serde::de::DeserializeOwned;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct TraktApi {
     client: reqwest::Client,
     client_id: String,

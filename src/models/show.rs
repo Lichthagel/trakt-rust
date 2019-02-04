@@ -1,5 +1,6 @@
 use crate::models::ids::Ids;
 use chrono::{DateTime, Utc};
+use std::ops::AddAssign;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Show {
@@ -38,6 +39,40 @@ impl From<Show> for OptionShow {
             title: Some(show.title),
             year: show.year,
             ids: Some(show.ids),
+        }
+    }
+}
+
+impl Default for OptionShow {
+    fn default() -> Self {
+        Self {
+            title: None,
+            year: None,
+            ids: None
+        }
+    }
+}
+
+impl AddAssign for OptionShow {
+    fn add_assign(&mut self, rhs: Self) {
+        if let Some(title) = rhs.title {
+            self.title = Some(title);
+        }
+        if let Some(year) = rhs.year {
+            self.year = Some(year);
+        }
+        if let Some(ids) = rhs.ids {
+            match &mut self.ids {
+                Some(lids) => {
+                    lids.trakt = lids.trakt.clone().or(ids.trakt);
+                    lids.slug = lids.slug.clone().or(ids.slug);
+                    lids.tvdb = lids.tvdb.clone().or(ids.tvdb);
+                    lids.imdb = lids.imdb.clone().or(ids.imdb);
+                    lids.tmdb = lids.tmdb.clone().or(ids.tmdb);
+                    lids.tvrage = lids.tvrage.clone().or(ids.tvrage);
+                }
+                None => self.ids = Some(ids),
+            }
         }
     }
 }
