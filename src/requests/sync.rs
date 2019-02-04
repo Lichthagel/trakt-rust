@@ -1,13 +1,11 @@
-use crate::models::sync::RatingFactory;
-use crate::models::ListItem;
-use crate::pagination::PaginationFactory;
 use crate::{
     error::Result,
     models::{
         AllItemType, CollectionMovie, CollectionShow, HistoryItem, ItemType, LastActivities,
-        MediaType, Playback, Rating, SyncAddResponse, SyncFactory, SyncRemoveResponse, SyncType,
+        ListItem, MediaType, Playback, Rating, SyncAddResponse, SyncFactory, SyncRemoveResponse,
         WatchableType, WatchedEntry,
     },
+    pagination::PaginationFactory,
     TraktApi,
 };
 use chrono::{DateTime, Utc};
@@ -42,7 +40,7 @@ impl TraktApi {
         f: impl FnOnce(SyncFactory) -> SyncFactory,
         access_token: &str,
     ) -> Result<SyncAddResponse> {
-        let body = f(SyncFactory::new(SyncType::Collect)).build();
+        let body = f(SyncFactory::new()).build();
 
         self.auth_post(
             api_url!(("sync", "collection")),
@@ -56,7 +54,7 @@ impl TraktApi {
         f: impl FnOnce(SyncFactory) -> SyncFactory,
         access_token: &str,
     ) -> Result<SyncRemoveResponse> {
-        let body = f(SyncFactory::new(SyncType::Collect)).build();
+        let body = f(SyncFactory::new()).build();
 
         self.auth_post(
             api_url!(("sync", "collection", "remove")),
@@ -99,7 +97,7 @@ impl TraktApi {
         f: impl FnOnce(SyncFactory) -> SyncFactory,
         access_token: &str,
     ) -> Result<SyncAddResponse> {
-        let body = f(SyncFactory::new(SyncType::Watch)).build();
+        let body = f(SyncFactory::new()).build();
 
         self.auth_post(
             api_url!(("sync", "history")),
@@ -113,7 +111,7 @@ impl TraktApi {
         f: impl FnOnce(SyncFactory) -> SyncFactory,
         access_token: &str,
     ) -> Result<SyncRemoveResponse> {
-        let body = f(SyncFactory::new(SyncType::Watch)).build();
+        let body = f(SyncFactory::new()).build();
 
         self.auth_post(
             api_url!(("sync", "history", "remove")),
@@ -128,10 +126,10 @@ impl TraktApi {
 
     pub fn sync_ratings_add(
         &self,
-        f: impl FnOnce(RatingFactory) -> RatingFactory,
+        f: impl FnOnce(SyncFactory) -> SyncFactory,
         access_token: &str,
     ) -> Result<SyncAddResponse> {
-        let body = f(RatingFactory::new()).build();
+        let body = f(SyncFactory::new()).build();
 
         self.auth_post(
             api_url!(("sync", "ratings")),
@@ -145,7 +143,7 @@ impl TraktApi {
         f: impl FnOnce(SyncFactory) -> SyncFactory,
         access_token: &str,
     ) -> Result<SyncRemoveResponse> {
-        let body = f(SyncFactory::new(SyncType::Rating)).build();
+        let body = f(SyncFactory::new()).build();
 
         self.auth_post(
             api_url!(("sync", "ratings", "remove")),
@@ -173,7 +171,7 @@ impl TraktApi {
         f: impl FnOnce(SyncFactory) -> SyncFactory,
         access_token: &str,
     ) -> Result<SyncAddResponse> {
-        let body = f(SyncFactory::new(SyncType::Watchlist)).build();
+        let body = f(SyncFactory::new()).build();
 
         self.auth_post(
             api_url!(("sync", "watchlist")),
@@ -187,7 +185,7 @@ impl TraktApi {
         f: impl FnOnce(SyncFactory) -> SyncFactory,
         access_token: &str,
     ) -> Result<SyncRemoveResponse> {
-        let body = f(SyncFactory::new(SyncType::Watchlist)).build();
+        let body = f(SyncFactory::new()).build();
 
         self.auth_post(
             api_url!(("sync", "watchlist", "remove")),

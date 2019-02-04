@@ -34,7 +34,7 @@ impl Default for OptionSeason {
     fn default() -> Self {
         Self {
             number: None,
-            ids: None
+            ids: None,
         }
     }
 }

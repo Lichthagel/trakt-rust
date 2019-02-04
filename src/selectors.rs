@@ -1,10 +1,41 @@
 use crate::models::{
     Episode, Ids, Movie, OptionEpisode, OptionMovie, OptionSeason, OptionShow, Season, Show,
 };
-use serde_json::Value;
+use chrono::{DateTime, Utc};
+use serde_json::{Map, Number, Value};
 
-pub trait Selector {
+pub trait Selector: Sized {
     fn build(self) -> Value;
+
+    fn insert(self, k: String, v: Value) -> Self;
+
+    fn insert_num(self, k: String, v: impl Into<Number>) -> Self {
+        self.insert(k, Value::Number(v.into()))
+    }
+
+    fn insert_str(self, k: String, v: String) -> Self {
+        self.insert(k, Value::String(v))
+    }
+
+    fn insert_date(self, k: String, v: DateTime<Utc>) -> Self {
+        self.insert_str(k, v.to_string())
+    }
+
+    fn rated_at(self, date: DateTime<Utc>) -> Self {
+        self.insert_date("rated_at".to_owned(), date)
+    }
+
+    fn collected_at(self, date: DateTime<Utc>) -> Self {
+        self.insert_date("collected_at".to_owned(), date)
+    }
+
+    fn watched_at(self, date: DateTime<Utc>) -> Self {
+        self.insert_date("watched_at".to_owned(), date)
+    }
+
+    fn rating(self, rating: u8) -> Self {
+        self.insert_num("rating".to_owned(), rating)
+    }
 }
 
 pub trait SelectIds: Sized {
@@ -53,33 +84,36 @@ pub trait SelectMovie: Sized {
     }
 }
 
-pub trait SelectMovieData<T>: Sized {
-    fn movie_v_d(self, movie: Value, data: T) -> Self;
-
-    fn movie_obj_d(self, movie: Movie, data: T) -> Self {
-        self.movie_v_d(serde_json::to_value(movie).unwrap(), data)
-    }
-
-    fn movie_d(self, f: impl FnOnce(MovieSelector) -> MovieSelector, data: T) -> Self {
-        self.movie_v_d(f(MovieSelector::default()).build(), data)
-    }
-}
-
 pub struct MovieSelector {
     movie: OptionMovie,
+    additional: Map<String, Value>,
 }
 
 impl Default for MovieSelector {
     fn default() -> Self {
         Self {
             movie: OptionMovie::default(),
+            additional: Map::new(),
         }
     }
 }
 
 impl Selector for MovieSelector {
     fn build(self) -> Value {
-        serde_json::to_value(self.movie).unwrap()
+        let v = serde_json::to_value(self.movie).unwrap();
+        let mut m = v.as_object().unwrap().clone();
+        drop(v);
+
+        for (k, v) in self.additional {
+            m.insert(k, v);
+        }
+
+        Value::Object(m)
+    }
+
+    fn insert(mut self, k: String, v: Value) -> Self {
+        self.additional.insert(k, v);
+        self
     }
 }
 
@@ -124,6 +158,7 @@ pub trait SelectShow: Sized {
 pub struct ShowSelector {
     show: OptionShow,
     seasons: Vec<Value>,
+    additional: Map<String, Value>,
 }
 
 impl Default for ShowSelector {
@@ -131,6 +166,7 @@ impl Default for ShowSelector {
         Self {
             show: OptionShow::default(),
             seasons: Vec::new(),
+            additional: Map::new(),
         }
     }
 }
@@ -143,7 +179,16 @@ impl Selector for ShowSelector {
 
         m.insert("seasons".to_owned(), Value::Array(self.seasons));
 
+        for (k, v) in self.additional {
+            m.insert(k, v);
+        }
+
         Value::Object(m)
+    }
+
+    fn insert(mut self, k: String, v: Value) -> Self {
+        self.additional.insert(k, v);
+        self
     }
 }
 
@@ -153,7 +198,7 @@ impl ShowSelector {
         self
     }
 
-    pub fn show(mut self, show: Show) -> Self {
+    pub fn show(self, show: Show) -> Self {
         self.value(serde_json::to_value(show).unwrap())
     }
 
@@ -193,6 +238,7 @@ pub trait SelectSeason: Sized {
 pub struct SeasonSelector {
     season: OptionSeason,
     episodes: Vec<Value>,
+    additional: Map<String, Value>,
 }
 
 impl Default for SeasonSelector {
@@ -200,6 +246,7 @@ impl Default for SeasonSelector {
         Self {
             season: OptionSeason::default(),
             episodes: Vec::new(),
+            additional: Map::new(),
         }
     }
 }
@@ -212,7 +259,16 @@ impl Selector for SeasonSelector {
 
         m.insert("episodes".to_owned(), Value::Array(self.episodes));
 
+        for (k, v) in self.additional {
+            m.insert(k, v);
+        }
+
         Value::Object(m)
+    }
+
+    fn insert(mut self, k: String, v: Value) -> Self {
+        self.additional.insert(k, v);
+        self
     }
 }
 
@@ -251,19 +307,34 @@ pub trait SelectEpisode: Sized {
 
 pub struct EpisodeSelector {
     episode: OptionEpisode,
+    additional: Map<String, Value>,
 }
 
 impl Default for EpisodeSelector {
     fn default() -> Self {
         Self {
             episode: OptionEpisode::default(),
+            additional: Map::new(),
         }
     }
 }
 
 impl Selector for EpisodeSelector {
     fn build(self) -> Value {
-        serde_json::to_value(self.episode).unwrap()
+        let v = serde_json::to_value(self.episode).unwrap();
+        let mut m = v.as_object().unwrap().clone();
+        drop(v);
+
+        for (k, v) in self.additional {
+            m.insert(k, v);
+        }
+
+        Value::Object(m)
+    }
+
+    fn insert(mut self, k: String, v: Value) -> Self {
+        self.additional.insert(k, v);
+        self
     }
 }
 

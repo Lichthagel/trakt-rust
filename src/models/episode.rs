@@ -60,7 +60,7 @@ impl Default for OptionEpisode {
             season: None,
             number: None,
             title: None,
-            ids: None
+            ids: None,
         }
     }
 }

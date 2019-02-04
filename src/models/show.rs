@@ -48,7 +48,7 @@ impl Default for OptionShow {
         Self {
             title: None,
             year: None,
-            ids: None
+            ids: None,
         }
     }
 }
