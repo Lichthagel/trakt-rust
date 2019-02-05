@@ -64,7 +64,7 @@ pub use crate::models::{
         UserSeasonStats, UserShowStats, UserStats,
     },
     sync::{
-        LastActivities, LastActivitiesElement, Playback, SyncAddResponse, SyncFactory,
+        LastActivities, LastActivitiesElement, Playback, SyncAddResponse,
         SyncRemoveResponse, SyncResponseNotFound, SyncResponseNumbers,
     },
     user::User,

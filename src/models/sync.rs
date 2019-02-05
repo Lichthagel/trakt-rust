@@ -1,6 +1,4 @@
-pub mod sync_request;
-
-pub use crate::models::sync::sync_request::SyncFactory;
+pub use crate::requests::sync::sync_request::SyncRequest;
 
 use crate::models::{
     Episode, Movie, OptionEpisode, OptionMovie, OptionSeason, OptionShow, Show, WatchableType,
