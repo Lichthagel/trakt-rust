@@ -1,4 +1,6 @@
-/// A trait that allows for pagination being added to a request
+/// A trait that allows for pagination being added to a request. [More]
+///
+/// [More]: https://trakt.docs.apiary.io/#introduction/pagination
 pub trait Pagination {
 
     /// Set requested page
