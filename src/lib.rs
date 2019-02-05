@@ -64,15 +64,15 @@ impl TraktApi {
     ///
     /// # Errors
     ///
-    /// Returns [`Error::Response`] if the response contains an unsuccessful status code
+    /// Returns [Error::Response] if the response contains an unsuccessful status code
     ///
-    /// Returns [`Error::Connection`] if the connection failed
+    /// Returns [Error::Connection] if the connection failed
     ///
-    /// Returns [`Error::Serde`] if the response could not be deserialized
+    /// Returns [Error::Serde] if the response could not be deserialized
     ///
-    /// [`Error::Response`]: error/enum.Error.html#variant.Response
-    /// [`Error::Connection`]: error/enum.Error.html#variant.Connection
-    /// [`Error::Serde`]: error/enum.Error.html#variant.Serde
+    /// [Error::Response]: error/enum.Error.html#variant.Response
+    /// [Error::Connection]: error/enum.Error.html#variant.Connection
+    /// [Error::Serde]: error/enum.Error.html#variant.Serde
     fn get<T: DeserializeOwned>(&self, url: String) -> Result<T> {
         self._get(&url)
     }
@@ -81,15 +81,15 @@ impl TraktApi {
     ///
     /// # Errors
     ///
-    /// Returns [`Error::Response`] if the response contains an unsuccessful status code
+    /// Returns [Error::Response] if the response contains an unsuccessful status code
     ///
-    /// Returns [`Error::Connection`] if the connection failed
+    /// Returns [Error::Connection] if the connection failed
     ///
-    /// Returns [`Error::Serde`] if the response could not be deserialized
+    /// Returns [Error::Serde] if the response could not be deserialized
     ///
-    /// [`Error::Response`]: error/enum.Error.html#variant.Response
-    /// [`Error::Connection`]: error/enum.Error.html#variant.Connection
-    /// [`Error::Serde`]: error/enum.Error.html#variant.Serde
+    /// [Error::Response]: error/enum.Error.html#variant.Response
+    /// [Error::Connection]: error/enum.Error.html#variant.Connection
+    /// [Error::Serde]: error/enum.Error.html#variant.Serde
     fn _get<T: DeserializeOwned>(&self, url: &str) -> Result<T> {
         match self
             .client
@@ -114,15 +114,15 @@ impl TraktApi {
     ///
     /// # Errors
     ///
-    /// Returns [`Error::Response`] if the response contains an unsuccessful status code
+    /// Returns [Error::Response] if the response contains an unsuccessful status code
     ///
-    /// Returns [`Error::Connection`] if the connection failed
+    /// Returns [Error::Connection] if the connection failed
     ///
-    /// Returns [`Error::Serde`] if the response could not be deserialized
+    /// Returns [Error::Serde] if the response could not be deserialized
     ///
-    /// [`Error::Response`]: error/enum.Error.html#variant.Response
-    /// [`Error::Connection`]: error/enum.Error.html#variant.Connection
-    /// [`Error::Serde`]: error/enum.Error.html#variant.Serde
+    /// [Error::Response]: error/enum.Error.html#variant.Response
+    /// [Error::Connection]: error/enum.Error.html#variant.Connection
+    /// [Error::Serde]: error/enum.Error.html#variant.Serde
     fn auth_get<T: DeserializeOwned>(&self, url: String, access_token: &str) -> Result<T> {
         self._auth_get(&url, access_token)
     }
@@ -131,15 +131,15 @@ impl TraktApi {
     ///
     /// # Errors
     ///
-    /// Returns [`Error::Response`] if the response contains an unsuccessful status code
+    /// Returns [Error::Response] if the response contains an unsuccessful status code
     ///
-    /// Returns [`Error::Connection`] if the connection failed
+    /// Returns [Error::Connection] if the connection failed
     ///
-    /// Returns [`Error::Serde`] if the response could not be deserialized
+    /// Returns [Error::Serde] if the response could not be deserialized
     ///
-    /// [`Error::Response`]: error/enum.Error.html#variant.Response
-    /// [`Error::Connection`]: error/enum.Error.html#variant.Connection
-    /// [`Error::Serde`]: error/enum.Error.html#variant.Serde
+    /// [Error::Response]: error/enum.Error.html#variant.Response
+    /// [Error::Connection]: error/enum.Error.html#variant.Connection
+    /// [Error::Serde]: error/enum.Error.html#variant.Serde
     fn _auth_get<T: DeserializeOwned>(&self, url: &str, access_token: &str) -> Result<T> {
         match self
             .client
@@ -165,15 +165,15 @@ impl TraktApi {
     ///
     /// # Errors
     ///
-    /// Returns [`Error::Response`] if the response contains an unsuccessful status code
+    /// Returns [Error::Response] if the response contains an unsuccessful status code
     ///
-    /// Returns [`Error::Connection`] if the connection failed
+    /// Returns [Error::Connection] if the connection failed
     ///
-    /// Returns [`Error::Serde`] if the response could not be deserialized
+    /// Returns [Error::Serde] if the response could not be deserialized
     ///
-    /// [`Error::Response`]: error/enum.Error.html#variant.Response
-    /// [`Error::Connection`]: error/enum.Error.html#variant.Connection
-    /// [`Error::Serde`]: error/enum.Error.html#variant.Serde
+    /// [Error::Response]: error/enum.Error.html#variant.Response
+    /// [Error::Connection]: error/enum.Error.html#variant.Connection
+    /// [Error::Serde]: error/enum.Error.html#variant.Serde
     fn post<T: DeserializeOwned>(&self, url: String, body: String) -> Result<T> {
         self._post(&url, body)
     }
@@ -182,15 +182,15 @@ impl TraktApi {
     ///
     /// # Errors
     ///
-    /// Returns [`Error::Response`] if the response contains an unsuccessful status code
+    /// Returns [Error::Response] if the response contains an unsuccessful status code
     ///
-    /// Returns [`Error::Connection`] if the connection failed
+    /// Returns [Error::Connection] if the connection failed
     ///
-    /// Returns [`Error::Serde`] if the response could not be deserialized
+    /// Returns [Error::Serde] if the response could not be deserialized
     ///
-    /// [`Error::Response`]: error/enum.Error.html#variant.Response
-    /// [`Error::Connection`]: error/enum.Error.html#variant.Connection
-    /// [`Error::Serde`]: error/enum.Error.html#variant.Serde
+    /// [Error::Response]: error/enum.Error.html#variant.Response
+    /// [Error::Connection]: error/enum.Error.html#variant.Connection
+    /// [Error::Serde]: error/enum.Error.html#variant.Serde
     fn _post<T: DeserializeOwned>(&self, url: &str, body: String) -> Result<T> {
         match self
             .client
@@ -216,15 +216,15 @@ impl TraktApi {
     ///
     /// # Errors
     ///
-    /// Returns [`Error::Response`] if the response contains an unsuccessful status code
+    /// Returns [Error::Response] if the response contains an unsuccessful status code
     ///
-    /// Returns [`Error::Connection`] if the connection failed
+    /// Returns [Error::Connection] if the connection failed
     ///
-    /// Returns [`Error::Serde`] if the response could not be deserialized
+    /// Returns [Error::Serde] if the response could not be deserialized
     ///
-    /// [`Error::Response`]: error/enum.Error.html#variant.Response
-    /// [`Error::Connection`]: error/enum.Error.html#variant.Connection
-    /// [`Error::Serde`]: error/enum.Error.html#variant.Serde
+    /// [Error::Response]: error/enum.Error.html#variant.Response
+    /// [Error::Connection]: error/enum.Error.html#variant.Connection
+    /// [Error::Serde]: error/enum.Error.html#variant.Serde
     fn auth_post<T: DeserializeOwned>(
         &self,
         url: String,
@@ -238,15 +238,15 @@ impl TraktApi {
     ///
     /// # Errors
     ///
-    /// Returns [`Error::Response`] if the response contains an unsuccessful status code
+    /// Returns [Error::Response] if the response contains an unsuccessful status code
     ///
-    /// Returns [`Error::Connection`] if the connection failed
+    /// Returns [Error::Connection] if the connection failed
     ///
-    /// Returns [`Error::Serde`] if the response could not be deserialized
+    /// Returns [Error::Serde] if the response could not be deserialized
     ///
-    /// [`Error::Response`]: error/enum.Error.html#variant.Response
-    /// [`Error::Connection`]: error/enum.Error.html#variant.Connection
-    /// [`Error::Serde`]: error/enum.Error.html#variant.Serde
+    /// [Error::Response]: error/enum.Error.html#variant.Response
+    /// [Error::Connection]: error/enum.Error.html#variant.Connection
+    /// [Error::Serde]: error/enum.Error.html#variant.Serde
     fn _auth_post<T: DeserializeOwned>(
         &self,
         url: &str,
@@ -278,15 +278,15 @@ impl TraktApi {
     ///
     /// # Errors
     ///
-    /// Returns [`Error::Response`] if the response contains an unsuccessful status code
+    /// Returns [Error::Response] if the response contains an unsuccessful status code
     ///
-    /// Returns [`Error::Connection`] if the connection failed
+    /// Returns [Error::Connection] if the connection failed
     ///
-    /// Returns [`Error::Serde`] if the response could not be deserialized
+    /// Returns [Error::Serde] if the response could not be deserialized
     ///
-    /// [`Error::Response`]: error/enum.Error.html#variant.Response
-    /// [`Error::Connection`]: error/enum.Error.html#variant.Connection
-    /// [`Error::Serde`]: error/enum.Error.html#variant.Serde
+    /// [Error::Response]: error/enum.Error.html#variant.Response
+    /// [Error::Connection]: error/enum.Error.html#variant.Connection
+    /// [Error::Serde]: error/enum.Error.html#variant.Serde
     fn auth_post_no_body(&self, url: String, body: String, access_token: &str) -> Result<()> {
         self._auth_post_no_body(&url, body, access_token)
     }
@@ -295,15 +295,15 @@ impl TraktApi {
     ///
     /// # Errors
     ///
-    /// Returns [`Error::Response`] if the response contains an unsuccessful status code
+    /// Returns [Error::Response] if the response contains an unsuccessful status code
     ///
-    /// Returns [`Error::Connection`] if the connection failed
+    /// Returns [Error::Connection] if the connection failed
     ///
-    /// Returns [`Error::Serde`] if the response could not be deserialized
+    /// Returns [Error::Serde] if the response could not be deserialized
     ///
-    /// [`Error::Response`]: error/enum.Error.html#variant.Response
-    /// [`Error::Connection`]: error/enum.Error.html#variant.Connection
-    /// [`Error::Serde`]: error/enum.Error.html#variant.Serde
+    /// [Error::Response]: error/enum.Error.html#variant.Response
+    /// [Error::Connection]: error/enum.Error.html#variant.Connection
+    /// [Error::Serde]: error/enum.Error.html#variant.Serde
     fn _auth_post_no_body(&self, url: &str, body: String, access_token: &str) -> Result<()> {
         match self
             .client
@@ -330,15 +330,15 @@ impl TraktApi {
     ///
     /// # Errors
     ///
-    /// Returns [`Error::Response`] if the response contains an unsuccessful status code
+    /// Returns [Error::Response] if the response contains an unsuccessful status code
     ///
-    /// Returns [`Error::Connection`] if the connection failed
+    /// Returns [Error::Connection] if the connection failed
     ///
-    /// Returns [`Error::Serde`] if the response could not be deserialized
+    /// Returns [Error::Serde] if the response could not be deserialized
     ///
-    /// [`Error::Response`]: error/enum.Error.html#variant.Response
-    /// [`Error::Connection`]: error/enum.Error.html#variant.Connection
-    /// [`Error::Serde`]: error/enum.Error.html#variant.Serde
+    /// [Error::Response]: error/enum.Error.html#variant.Response
+    /// [Error::Connection]: error/enum.Error.html#variant.Connection
+    /// [Error::Serde]: error/enum.Error.html#variant.Serde
     fn auth_put<T: DeserializeOwned>(
         &self,
         url: String,
@@ -352,15 +352,15 @@ impl TraktApi {
     ///
     /// # Errors
     ///
-    /// Returns [`Error::Response`] if the response contains an unsuccessful status code
+    /// Returns [Error::Response] if the response contains an unsuccessful status code
     ///
-    /// Returns [`Error::Connection`] if the connection failed
+    /// Returns [Error::Connection] if the connection failed
     ///
-    /// Returns [`Error::Serde`] if the response could not be deserialized
+    /// Returns [Error::Serde] if the response could not be deserialized
     ///
-    /// [`Error::Response`]: error/enum.Error.html#variant.Response
-    /// [`Error::Connection`]: error/enum.Error.html#variant.Connection
-    /// [`Error::Serde`]: error/enum.Error.html#variant.Serde
+    /// [Error::Response]: error/enum.Error.html#variant.Response
+    /// [Error::Connection]: error/enum.Error.html#variant.Connection
+    /// [Error::Serde]: error/enum.Error.html#variant.Serde
     fn _auth_put<T: DeserializeOwned>(
         &self,
         url: &str,
@@ -392,15 +392,15 @@ impl TraktApi {
     ///
     /// # Errors
     ///
-    /// Returns [`Error::Response`] if the response contains an unsuccessful status code
+    /// Returns [Error::Response] if the response contains an unsuccessful status code
     ///
-    /// Returns [`Error::Connection`] if the connection failed
+    /// Returns [Error::Connection] if the connection failed
     ///
-    /// Returns [`Error::Serde`] if the response could not be deserialized
+    /// Returns [Error::Serde] if the response could not be deserialized
     ///
-    /// [`Error::Response`]: error/enum.Error.html#variant.Response
-    /// [`Error::Connection`]: error/enum.Error.html#variant.Connection
-    /// [`Error::Serde`]: error/enum.Error.html#variant.Serde
+    /// [Error::Response]: error/enum.Error.html#variant.Response
+    /// [Error::Connection]: error/enum.Error.html#variant.Connection
+    /// [Error::Serde]: error/enum.Error.html#variant.Serde
     fn auth_delete(&self, url: String, access_token: &str) -> Result<()> {
         self._auth_delete(&url, access_token)
     }
@@ -409,15 +409,15 @@ impl TraktApi {
     ///
     /// # Errors
     ///
-    /// Returns [`Error::Response`] if the response contains an unsuccessful status code
+    /// Returns [Error::Response] if the response contains an unsuccessful status code
     ///
-    /// Returns [`Error::Connection`] if the connection failed
+    /// Returns [Error::Connection] if the connection failed
     ///
-    /// Returns [`Error::Serde`] if the response could not be deserialized
+    /// Returns [Error::Serde] if the response could not be deserialized
     ///
-    /// [`Error::Response`]: error/enum.Error.html#variant.Response
-    /// [`Error::Connection`]: error/enum.Error.html#variant.Connection
-    /// [`Error::Serde`]: error/enum.Error.html#variant.Serde
+    /// [Error::Response]: error/enum.Error.html#variant.Response
+    /// [Error::Connection]: error/enum.Error.html#variant.Connection
+    /// [Error::Serde]: error/enum.Error.html#variant.Serde
     fn _auth_delete(&self, url: &str, access_token: &str) -> Result<()> {
         match self
             .client
@@ -443,15 +443,15 @@ impl TraktApi {
     ///
     /// # Errors
     ///
-    /// Returns [`Error::Response`] if the response contains an unsuccessful status code
+    /// Returns [Error::Response] if the response contains an unsuccessful status code
     ///
-    /// Returns [`Error::Connection`] if the connection failed
+    /// Returns [Error::Connection] if the connection failed
     ///
-    /// Returns [`Error::Serde`] if the response could not be deserialized
+    /// Returns [Error::Serde] if the response could not be deserialized
     ///
-    /// [`Error::Response`]: error/enum.Error.html#variant.Response
-    /// [`Error::Connection`]: error/enum.Error.html#variant.Connection
-    /// [`Error::Serde`]: error/enum.Error.html#variant.Serde
+    /// [Error::Response]: error/enum.Error.html#variant.Response
+    /// [Error::Connection]: error/enum.Error.html#variant.Connection
+    /// [Error::Serde]: error/enum.Error.html#variant.Serde
     /// [more]: https://trakt.docs.apiary.io/#reference/certifications/list/get-certifications
     pub fn certifications(&self, ct: CertificationsType) -> Result<Certifications> {
         self.get(api_url!(("certifications", ct.to_string())))
@@ -461,15 +461,15 @@ impl TraktApi {
     ///
     /// # Errors
     ///
-    /// Returns [`Error::Response`] if the response contains an unsuccessful status code
+    /// Returns [Error::Response] if the response contains an unsuccessful status code
     ///
-    /// Returns [`Error::Connection`] if the connection failed
+    /// Returns [Error::Connection] if the connection failed
     ///
-    /// Returns [`Error::Serde`] if the response could not be deserialized
+    /// Returns [Error::Serde] if the response could not be deserialized
     ///
-    /// [`Error::Response`]: error/enum.Error.html#variant.Response
-    /// [`Error::Connection`]: error/enum.Error.html#variant.Connection
-    /// [`Error::Serde`]: error/enum.Error.html#variant.Serde
+    /// [Error::Response]: error/enum.Error.html#variant.Response
+    /// [Error::Connection]: error/enum.Error.html#variant.Connection
+    /// [Error::Serde]: error/enum.Error.html#variant.Serde
     /// [more]: https://trakt.docs.apiary.io/#reference/countries/list/get-countries
     pub fn countries(&self, media_type: MediaType) -> Result<Vec<Country>> {
         self.get(api_url!(("countries", media_type.to_string())))
@@ -479,33 +479,33 @@ impl TraktApi {
     ///
     /// # Errors
     ///
-    /// Returns [`Error::Response`] if the response contains an unsuccessful status code
+    /// Returns [Error::Response] if the response contains an unsuccessful status code
     ///
-    /// Returns [`Error::Connection`] if the connection failed
+    /// Returns [Error::Connection] if the connection failed
     ///
-    /// Returns [`Error::Serde`] if the response could not be deserialized
+    /// Returns [Error::Serde] if the response could not be deserialized
     ///
-    /// [`Error::Response`]: error/enum.Error.html#variant.Response
-    /// [`Error::Connection`]: error/enum.Error.html#variant.Connection
-    /// [`Error::Serde`]: error/enum.Error.html#variant.Serde
+    /// [Error::Response]: error/enum.Error.html#variant.Response
+    /// [Error::Connection]: error/enum.Error.html#variant.Connection
+    /// [Error::Serde]: error/enum.Error.html#variant.Serde
     /// [more]: https://trakt.docs.apiary.io/#reference/genres/get-genres
     pub fn genres(&self, media_type: MediaType) -> Result<Vec<Genre>> {
         self.get(api_url!(("genres", media_type.to_string())))
     }
 
-    /// Get a Vec of all langauges, including names and codes. [Trakt API][more]
+    /// Get a Vec of all languages, including names and codes. [Trakt API][more]
     ///
     /// # Errors
     ///
-    /// Returns [`Error::Response`] if the response contains an unsuccessful status code
+    /// Returns [Error::Response] if the response contains an unsuccessful status code
     ///
-    /// Returns [`Error::Connection`] if the connection failed
+    /// Returns [Error::Connection] if the connection failed
     ///
-    /// Returns [`Error::Serde`] if the response could not be deserialized
+    /// Returns [Error::Serde] if the response could not be deserialized
     ///
-    /// [`Error::Response`]: error/enum.Error.html#variant.Response
-    /// [`Error::Connection`]: error/enum.Error.html#variant.Connection
-    /// [`Error::Serde`]: error/enum.Error.html#variant.Serde
+    /// [Error::Response]: error/enum.Error.html#variant.Response
+    /// [Error::Connection]: error/enum.Error.html#variant.Connection
+    /// [Error::Serde]: error/enum.Error.html#variant.Serde
     /// [more]: https://trakt.docs.apiary.io/#reference/genres/list/get-languages
     pub fn languages(&self, media_type: MediaType) -> Result<Vec<Language>> {
         self.get(api_url!(("languages", media_type.to_string())))
@@ -515,15 +515,15 @@ impl TraktApi {
     ///
     /// # Errors
     ///
-    /// Returns [`Error::Response`] if the response contains an unsuccessful status code
+    /// Returns [Error::Response] if the response contains an unsuccessful status code
     ///
-    /// Returns [`Error::Connection`] if the connection failed
+    /// Returns [Error::Connection] if the connection failed
     ///
-    /// Returns [`Error::Serde`] if the response could not be deserialized
+    /// Returns [Error::Serde] if the response could not be deserialized
     ///
-    /// [`Error::Response`]: error/enum.Error.html#variant.Response
-    /// [`Error::Connection`]: error/enum.Error.html#variant.Connection
-    /// [`Error::Serde`]: error/enum.Error.html#variant.Serde
+    /// [Error::Response]: error/enum.Error.html#variant.Response
+    /// [Error::Connection]: error/enum.Error.html#variant.Connection
+    /// [Error::Serde]: error/enum.Error.html#variant.Serde
     /// [more]: https://trakt.docs.apiary.io/#reference/networks/list/get-networks
     pub fn networks(&self) -> Result<Vec<Network>> {
         self.get(api_url!(("networks")))
