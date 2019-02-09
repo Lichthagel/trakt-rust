@@ -1,7 +1,6 @@
 pub mod authentication;
 pub mod calendar;
 pub mod certifications;
-pub mod checkin;
 pub mod collection;
 pub mod comment;
 pub mod episode;
@@ -31,7 +30,6 @@ pub use crate::models::{
     authentication::{Authentication, AuthenticationDevices, AuthenticationTokenResponse},
     calendar::{CalendarMovie, CalendarShow, FullCalendarMovie, FullCalendarShow},
     certifications::{Certification, Certifications, CertificationsType},
-    checkin::{Checkin, CheckinResponse, CheckinSharing},
     collection::{CollectionEpisode, CollectionMovie, CollectionSeason, CollectionShow},
     comment::{
         Comment, CommentAndItem, CommentItem, CommentNew, CommentPost, CommentSharing, CommentType,
