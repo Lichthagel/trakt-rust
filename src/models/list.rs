@@ -1,3 +1,4 @@
+use crate::models::user::OptionUser;
 use crate::models::{Episode, Ids, ListItemType, Movie, Person, Season, Show, User};
 use chrono::{DateTime, Utc};
 use std::fmt;
@@ -35,7 +36,7 @@ pub struct OptionList {
     pub comment_count: Option<u64>,
     pub likes: Option<u64>,
     pub ids: Option<Ids>,
-    pub user: Option<User>,
+    pub user: Option<OptionUser>,
 }
 
 impl OptionList {
@@ -82,7 +83,28 @@ impl From<List> for OptionList {
             comment_count: Some(list.comment_count),
             likes: Some(list.likes),
             ids: Some(list.ids),
-            user: Some(list.user),
+            user: Some(list.user.into()),
+        }
+    }
+}
+
+impl Default for OptionList {
+    fn default() -> Self {
+        Self {
+            name: None,
+            description: None,
+            privacy: None,
+            display_numbers: None,
+            allow_comments: None,
+            sort_by: None,
+            sort_how: None,
+            created_at: None,
+            updated_at: None,
+            item_count: None,
+            comment_count: None,
+            likes: None,
+            ids: None,
+            user: None,
         }
     }
 }

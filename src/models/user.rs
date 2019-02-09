@@ -23,6 +23,55 @@ pub struct Image {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+pub struct OptionUser {
+    pub username: Option<String>,
+    pub private: Option<bool>,
+    pub name: Option<String>,
+    pub vip: Option<bool>,
+    pub vip_ep: Option<bool>,
+    pub ids: Option<Ids>,
+}
+
+impl OptionUser {
+    pub fn new(username: String) -> Self {
+        Self {
+            username: Some(username),
+            private: None,
+            name: None,
+            vip: None,
+            vip_ep: None,
+            ids: None,
+        }
+    }
+}
+
+impl Default for OptionUser {
+    fn default() -> Self {
+        Self {
+            username: None,
+            private: None,
+            name: None,
+            vip: None,
+            vip_ep: None,
+            ids: None,
+        }
+    }
+}
+
+impl From<User> for OptionUser {
+    fn from(user: User) -> Self {
+        Self {
+            username: Some(user.username),
+            private: Some(user.private),
+            name: user.name,
+            vip: user.vip,
+            vip_ep: user.vip_ep,
+            ids: Some(user.ids),
+        }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct FullUser {
     pub username: String,
     pub private: bool,

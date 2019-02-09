@@ -1,5 +1,7 @@
+use crate::models::User;
 use crate::models::{
-    Episode, Ids, Movie, OptionEpisode, OptionMovie, OptionSeason, OptionShow, Season, Show,
+    list::OptionList, Episode, Ids, List, Movie, OptionEpisode, OptionMovie, OptionSeason,
+    OptionShow, OptionUser, Season, Show,
 };
 use chrono::{DateTime, Utc};
 use serde_json::{Map, Number, Value};
@@ -357,5 +359,127 @@ impl SelectIds for EpisodeSelector {
         }
 
         self.episode.ids.as_mut().unwrap()
+    }
+}
+
+pub trait SelectList: Sized {
+    fn list_v(self, list: Value) -> Self;
+
+    fn list_obj(self, list: List) -> Self {
+        self.list_v(serde_json::to_value(list).unwrap())
+    }
+
+    fn list(self, f: impl FnOnce(ListSelector) -> ListSelector) -> Self {
+        self.list_v(f(ListSelector::default()).build())
+    }
+}
+
+pub struct ListSelector {
+    list: OptionList,
+    additional: Map<String, Value>,
+}
+
+impl Default for ListSelector {
+    fn default() -> Self {
+        Self {
+            list: OptionList::default(),
+            additional: Map::new(),
+        }
+    }
+}
+
+impl Selector for ListSelector {
+    fn build(self) -> Value {
+        let v = serde_json::to_value(self.list).unwrap();
+        let mut m = v.as_object().unwrap().clone();
+        drop(v);
+
+        for (k, v) in self.additional {
+            m.insert(k, v);
+        }
+
+        Value::Object(m)
+    }
+
+    fn insert(mut self, k: String, v: Value) -> Self {
+        self.additional.insert(k, v);
+        self
+    }
+}
+
+impl ListSelector {
+    pub fn name(mut self, name: &str) -> Self {
+        self.list.name = Some(name.to_owned());
+        self
+    }
+
+    pub fn user(mut self, f: impl FnOnce(UserSelector) -> UserSelector) -> Self {
+        self.list.user = Some(f(UserSelector::default()).user);
+        self
+    }
+}
+
+impl SelectIds for ListSelector {
+    fn ids(&mut self) -> &mut Ids {
+        if let None = self.list.ids {
+            self.list.ids = Some(Ids::default())
+        }
+
+        self.list.ids.as_mut().unwrap()
+    }
+}
+
+pub trait SelectUser: Sized {
+    fn user_v(self, user: Value) -> Self;
+
+    fn user_obj(self, user: User) -> Self {
+        self.user_v(serde_json::to_value(user).unwrap())
+    }
+
+    fn user(self, f: impl FnOnce(UserSelector) -> UserSelector) -> Self {
+        self.user_v(f(UserSelector::default()).build())
+    }
+}
+
+pub struct UserSelector {
+    user: OptionUser,
+    additional: Map<String, Value>,
+}
+
+impl Default for UserSelector {
+    fn default() -> Self {
+        Self {
+            user: OptionUser::default(),
+            additional: Map::new(),
+        }
+    }
+}
+
+impl Selector for UserSelector {
+    fn build(self) -> Value {
+        let v = serde_json::to_value(self.user).unwrap();
+        let mut m = v.as_object().unwrap().clone();
+        drop(v);
+
+        for (k, v) in self.additional {
+            m.insert(k, v);
+        }
+
+        Value::Object(m)
+    }
+
+    fn insert(mut self, k: String, v: Value) -> Self {
+        self.additional.insert(k, v);
+        self
+    }
+}
+
+impl SelectIds for UserSelector {
+    fn ids(&mut self) -> &mut Ids {
+        if let None = self.user.ids {
+            self.user.ids = Some(Ids::default())
+        }
+
+        self.user.ids.as_mut().unwrap()
     }
 }

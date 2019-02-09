@@ -1,7 +1,11 @@
+pub mod comment_create_request;
+
+pub use crate::requests::comments::comment_create_request::CommentCreateRequest;
+
 use crate::{
     error::Result,
     models::{
-        AllCommentableItemType, Comment, CommentAndItem, CommentItem, CommentNew, CommentPost,
+        AllCommentableItemType, Comment, CommentAndItem, CommentItem, CommentPost,
         CommentType, Like,
     },
     pagination::PaginationFactory,
@@ -9,12 +13,8 @@ use crate::{
 };
 
 impl TraktApi {
-    pub fn comment_post(&self, comment: CommentNew, access_token: &str) -> Result<Comment> {
-        self.auth_post(
-            api_url!(("comments")),
-            comment.to_json_string()?,
-            access_token,
-        )
+    pub fn comment_post<'a>(&'a self, comment: &'a str) -> CommentCreateRequest<'a> {
+        CommentCreateRequest::new(self, api_url!(("comments")), comment)
     }
 
     pub fn comment(&self, id: u32) -> Result<Comment> {

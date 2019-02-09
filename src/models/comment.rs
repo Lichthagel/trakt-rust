@@ -1,13 +1,12 @@
-use crate::filters::TypeFilter;
-use crate::models::item_types::IncludeReplies;
-use crate::models::AllCommentableItemType;
-use crate::models::{
-    list::OptionList, user::User, CommentableItemType, Episode, List, Movie, OptionEpisode,
-    OptionMovie, OptionSeason, OptionShow, Season, Show,
+use crate::{
+    filters::TypeFilter,
+    models::{
+        item_types::IncludeReplies, user::User, AllCommentableItemType, CommentableItemType,
+        Episode, List, Movie, Season, Show,
+    },
 };
 use chrono::{DateTime, Utc};
 use std::fmt;
-use std::fmt::Display;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Comment {
@@ -55,36 +54,13 @@ pub enum CommentType {
     All,
 }
 
-impl Display for CommentType {
+impl fmt::Display for CommentType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         f.write_str(match self {
             CommentType::Reviews => "reviews",
             CommentType::Shouts => "shouts",
             _ => "all",
         })
-    }
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct CommentNew {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub movie: Option<OptionMovie>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub show: Option<OptionShow>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub season: Option<OptionSeason>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub episode: Option<OptionEpisode>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub list: Option<OptionList>,
-    pub comment: String,
-    pub spoiler: bool,
-    pub sharing: CommentSharing,
-}
-
-impl CommentNew {
-    pub fn to_json_string(&self) -> Result<String, serde_json::Error> {
-        serde_json::to_string(self)
     }
 }
 

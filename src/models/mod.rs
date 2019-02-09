@@ -32,7 +32,7 @@ pub use crate::models::{
     certifications::{Certification, Certifications, CertificationsType},
     collection::{CollectionEpisode, CollectionMovie, CollectionSeason, CollectionShow},
     comment::{
-        Comment, CommentAndItem, CommentItem, CommentNew, CommentPost, CommentSharing, CommentType,
+        Comment, CommentAndItem, CommentItem, CommentPost, CommentSharing, CommentType,
     },
     episode::{Episode, FullEpisode, OptionEpisode},
     genre::Genre,
@@ -69,7 +69,7 @@ pub use crate::models::{
         LastActivities, LastActivitiesElement, Playback, SyncAddResponse, SyncRemoveResponse,
         SyncResponseNotFound, SyncResponseNumbers,
     },
-    user::User,
+    user::{FullUser, OptionUser, User},
     watched::{WatchedEntry, WatchedEpisode, WatchedSeason},
     watching::Watching,
 };
