@@ -20,7 +20,7 @@ use std::marker::PhantomData;
 /// fn main() {
 ///     let api = TraktApi::new(
 ///         "...".to_owned(),
-///         None),
+///         None
 ///     );
 ///
 ///     dbg!(api
