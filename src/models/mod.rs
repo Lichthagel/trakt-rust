@@ -29,14 +29,14 @@ pub mod watching;
 
 pub use crate::models::{
     authentication::{Authentication, AuthenticationDevices, AuthenticationTokenResponse},
-    calendar::{CalendarMovie, CalendarShow},
+    calendar::{CalendarMovie, CalendarShow, FullCalendarMovie, FullCalendarShow},
     certifications::{Certification, Certifications, CertificationsType},
     checkin::{Checkin, CheckinResponse, CheckinSharing},
     collection::{CollectionEpisode, CollectionMovie, CollectionSeason, CollectionShow},
     comment::{
         Comment, CommentAndItem, CommentItem, CommentNew, CommentPost, CommentSharing, CommentType,
     },
-    episode::{Episode, OptionEpisode},
+    episode::{Episode, FullEpisode, OptionEpisode},
     genre::Genre,
     history::HistoryItem,
     ids::{IdType, Ids},
@@ -47,7 +47,9 @@ pub use crate::models::{
     like::Like,
     list::{List, ListFactory, ListFilter, ListInfo, ListItem, ListSort, ListType},
     localization::{Alias, Country, Language, Translation},
-    movie::{AnticipatedMovie, Movie, MovieInfo, OptionMovie, UpdatedMovie, WatchedMovie},
+    movie::{
+        AnticipatedMovie, FullMovie, Movie, MovieInfo, OptionMovie, UpdatedMovie, WatchedMovie,
+    },
     network::Network,
     people::{CastPerson, Character, Credits, Crew, CrewMember, CrewPerson, People},
     person::Person,
@@ -58,14 +60,16 @@ pub use crate::models::{
     rating::{Rating, RatingDistribution, Ratings},
     search::{SearchResult, SearchType},
     season::{OptionSeason, Season},
-    show::{AnticipatedShow, OptionShow, Show, ShowInfo, UpdatedShow, WatchedShow},
+    show::{
+        AnticipatedShow, FullShow, OptionShow, Show, ShowInfo, ShowStatus, UpdatedShow, WatchedShow,
+    },
     stats::{
         MediaStats, UserEpisodeStats, UserMovieStats, UserNetworkStats, UserRatingStats,
         UserSeasonStats, UserShowStats, UserStats,
     },
     sync::{
-        LastActivities, LastActivitiesElement, Playback, SyncAddResponse,
-        SyncRemoveResponse, SyncResponseNotFound, SyncResponseNumbers,
+        LastActivities, LastActivitiesElement, Playback, SyncAddResponse, SyncRemoveResponse,
+        SyncResponseNotFound, SyncResponseNumbers,
     },
     user::User,
     watched::{WatchedEntry, WatchedEpisode, WatchedSeason},

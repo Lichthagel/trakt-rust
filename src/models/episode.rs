@@ -1,4 +1,8 @@
-use crate::models::ids::Ids;
+use crate::{
+    extended_info::{WithFull, WithNone},
+    models::ids::Ids,
+};
+use chrono::{DateTime, Utc};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Episode {
@@ -6,6 +10,31 @@ pub struct Episode {
     pub number: u32,
     pub title: Option<String>,
     pub ids: Ids,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct FullEpisode {
+    pub season: u32,
+    pub number: u32,
+    pub title: Option<String>,
+    pub ids: Ids,
+    pub number_abs: Option<u32>,
+    pub overview: Option<String>,
+    pub rating: f32,
+    pub votes: u32,
+    pub comment_count: u32,
+    pub first_aired: Option<DateTime<Utc>>,
+    pub updated_at: Option<DateTime<Utc>>,
+    pub available_translations: Vec<String>,
+    pub runtime: u32,
+}
+
+impl WithFull for Episode {
+    type Full = FullEpisode;
+}
+
+impl WithNone for FullEpisode {
+    type None = Episode;
 }
 
 #[derive(Debug, Serialize, Deserialize)]

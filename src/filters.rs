@@ -1,4 +1,4 @@
-use std::fmt;
+use crate::models::ShowStatus;
 
 pub trait CommonFilters {
     fn query(self, query: &str) -> Self;
@@ -12,32 +12,6 @@ pub trait CommonFilters {
 
 pub trait MovieFilters {
     fn certification(self, cert_slug: &str) -> Self;
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-pub enum ShowStatus {
-    #[serde(rename = "returning series")]
-    Returning,
-    #[serde(rename = "in production")]
-    InProduction,
-    #[serde(rename = "planned")]
-    Planned,
-    #[serde(rename = "cancelled")]
-    Cancelled,
-    #[serde(rename = "ended")]
-    Ended,
-}
-
-impl fmt::Display for ShowStatus {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str(match self {
-            ShowStatus::Returning => "returning series",
-            ShowStatus::InProduction => "in production",
-            ShowStatus::Planned => "planned",
-            ShowStatus::Cancelled => "cancelled",
-            ShowStatus::Ended => "ended",
-        })
-    }
 }
 
 pub trait ShowFilters {

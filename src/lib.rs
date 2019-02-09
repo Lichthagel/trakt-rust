@@ -29,7 +29,8 @@ extern crate serde_json;
 #[macro_use]
 mod macros;
 pub mod error;
-mod filters;
+pub mod extended_info;
+pub mod filters;
 pub mod models;
 pub mod pagination;
 mod requests;

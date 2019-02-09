@@ -1,5 +1,8 @@
-use crate::models::Ids;
-use chrono::{DateTime, Utc};
+use crate::{
+    extended_info::{WithFull, WithNone},
+    models::Ids,
+};
+use chrono::{DateTime, NaiveDate, Utc};
 use std::ops::AddAssign;
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -7,6 +10,36 @@ pub struct Movie {
     pub title: String,
     pub year: Option<u16>,
     pub ids: Ids,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct FullMovie {
+    pub title: String,
+    pub year: Option<u16>,
+    pub ids: Ids,
+    pub tagline: String,
+    pub overview: String,
+    pub released: NaiveDate,
+    pub runtime: u32,
+    pub country: Option<String>,
+    pub trailer: Option<String>,
+    pub homepage: Option<String>,
+    pub rating: f64,
+    pub votes: u32,
+    pub comment_count: u32,
+    pub updated_at: Option<DateTime<Utc>>,
+    pub language: Option<String>,
+    pub available_translations: Vec<String>,
+    pub genres: Vec<String>,
+    pub certification: Option<String>,
+}
+
+impl WithFull for Movie {
+    type Full = FullMovie;
+}
+
+impl WithNone for FullMovie {
+    type None = Movie;
 }
 
 #[derive(Debug, Serialize, Deserialize)]

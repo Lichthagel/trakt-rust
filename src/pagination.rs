@@ -2,7 +2,6 @@
 ///
 /// [More]: https://trakt.docs.apiary.io/#introduction/pagination
 pub trait Pagination {
-
     /// Set requested page
     fn page(self, page: u32) -> Self;
 
@@ -19,7 +18,6 @@ pub struct PaginationFactory {
 }
 
 impl Default for PaginationFactory {
-
     /// Creates a default [PaginationFactory] with page 1 and 10 entries
     ///
     /// [PaginationFactory]: struct.PaginationFactory.html
@@ -33,7 +31,6 @@ impl Default for PaginationFactory {
 /// [Pagination]: trait.Pagination.html
 /// [PaginationFactory]: struct.PaginationFactory.html
 impl Pagination for PaginationFactory {
-
     /// Set requested page
     fn page(mut self, page: u32) -> Self {
         self.page = page;
