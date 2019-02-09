@@ -8,7 +8,6 @@ repository = "https://github.com/Lichthagel/trakt-rust"
 readme = "README.md"
 categories = ["api-bindings", "web-programming"]
 license = "MIT"
-license-file = "LICENSE"
 
 [badges]
 maintenance = { status = "experimental" }

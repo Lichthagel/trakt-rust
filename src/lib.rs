@@ -33,7 +33,7 @@ pub mod extended_info;
 pub mod filters;
 pub mod models;
 pub mod pagination;
-mod requests;
+pub mod requests;
 pub mod selectors;
 
 use crate::{

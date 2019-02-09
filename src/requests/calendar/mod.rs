@@ -1,8 +1,9 @@
-mod calendar_request;
+pub mod calendar_request;
+
+pub use crate::requests::calendar::calendar_request::CalendarRequest;
 
 use crate::{
     models::{CalendarMovie, CalendarShow},
-    requests::calendar::calendar_request::CalendarRequest,
     TraktApi,
 };
 

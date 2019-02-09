@@ -7,6 +7,31 @@ use chrono::{Date, Utc};
 use serde::de::DeserializeOwned;
 use std::marker::PhantomData;
 
+/// A request to a calendar endpoint
+///
+/// # Example
+///
+/// ```rust,no_run
+/// extern crate chrono;
+///
+/// use chrono::Utc;
+/// use trakt::{extended_info::ExtendedInfoFull, TraktApi};
+///
+/// fn main() {
+///     let api = TraktApi::new(
+///         "...".to_owned(),
+///         None),
+///     );
+///
+///     dbg!(api
+///         .calendar_all_movies()
+///         .full()
+///         .start_date(Utc::today())
+///         .days(1)
+///         .execute()
+///         .unwrap());
+/// }
+/// ```
 #[derive(Debug, Clone)]
 pub struct CalendarRequest<'a, T: DeserializeOwned> {
     client: &'a TraktApi,
@@ -31,16 +56,21 @@ impl<'a, T: DeserializeOwned> CalendarRequest<'a, T> {
         }
     }
 
+    /// Set the start date
     pub fn start_date(mut self, start_date: Date<Utc>) -> Self {
         self.start_date = Some(start_date);
         self
     }
 
+    /// Set the number of days you want entries for. Will be ignored if you don't use [start_date].
+    ///
+    /// [start_date]: struct.CalendarRequest.html#method.start_date
     pub fn days(mut self, days: u32) -> Self {
         self.days = Some(days);
         self
     }
 
+    /// Execute this request
     pub fn execute(self) -> Result<Vec<T>> {
         let mut url = self.url.to_owned();
 
@@ -86,6 +116,7 @@ where
     T: DeserializeOwned + WithFull,
     T::Full: DeserializeOwned,
 {
+    /// Request full extended info
     fn full(self) -> CalendarRequest<'a, T::Full> {
         CalendarRequest {
             client: self.client,
@@ -104,6 +135,7 @@ where
     T: DeserializeOwned + WithNone,
     T::None: DeserializeOwned,
 {
+    /// Request no extended info
     fn none(self) -> CalendarRequest<'a, T::None> {
         CalendarRequest {
             client: self.client,
