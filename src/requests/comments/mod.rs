@@ -1,12 +1,14 @@
 pub mod comment_create_request;
 pub mod comment_post_request;
+pub mod comments_request;
 
 pub use crate::requests::comments::comment_create_request::CommentCreateRequest;
 pub use crate::requests::comments::comment_post_request::CommentPostRequest;
+pub use crate::requests::comments::comments_request::CommentsRequest;
 
 use crate::{
     error::Result,
-    models::{AllCommentableItemType, Comment, CommentAndItem, CommentItem, CommentType, Like},
+    models::{Comment, CommentAndItem, CommentItem, Like},
     pagination::PaginationFactory,
     TraktApi,
 };
@@ -79,66 +81,15 @@ impl TraktApi {
         self.auth_delete(api_url!(("comments", comment_id, "like")), access_token)
     }
 
-    pub fn comments_trending(
-        &self,
-        comment_type: CommentType,
-        item_type: AllCommentableItemType,
-        include_replies: bool,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
-    ) -> Result<Vec<CommentAndItem>> {
-        let pf = f(PaginationFactory::default());
-        self.get(api_url!(
-            (
-                "comments",
-                "trending",
-                comment_type.to_string(),
-                item_type.to_string()
-            ),
-            ("page", pf.page),
-            ("limit", pf.limit),
-            ("include_replies", include_replies)
-        ))
+    pub fn comments_trending(&self) -> CommentsRequest<CommentAndItem> {
+        CommentsRequest::new(self, "trending")
     }
 
-    pub fn comments_recent(
-        &self,
-        comment_type: CommentType,
-        item_type: AllCommentableItemType,
-        include_replies: bool,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
-    ) -> Result<Vec<CommentAndItem>> {
-        let pf = f(PaginationFactory::default());
-        self.get(api_url!(
-            (
-                "comments",
-                "recent",
-                comment_type.to_string(),
-                item_type.to_string()
-            ),
-            ("page", pf.page),
-            ("limit", pf.limit),
-            ("include_replies", include_replies)
-        ))
+    pub fn comments_recent(&self) -> CommentsRequest<CommentAndItem> {
+        CommentsRequest::new(self, "recent")
     }
 
-    pub fn comments_updates(
-        &self,
-        comment_type: CommentType,
-        item_type: AllCommentableItemType,
-        include_replies: bool,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
-    ) -> Result<Vec<CommentAndItem>> {
-        let pf = f(PaginationFactory::default());
-        self.get(api_url!(
-            (
-                "comments",
-                "updates",
-                comment_type.to_string(),
-                item_type.to_string()
-            ),
-            ("page", pf.page),
-            ("limit", pf.limit),
-            ("include_replies", include_replies)
-        ))
+    pub fn comments_updates(&self) -> CommentsRequest<CommentAndItem> {
+        CommentsRequest::new(self, "updates")
     }
 }

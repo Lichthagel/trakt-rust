@@ -1,8 +1,9 @@
 use crate::{
+    extended_info::{WithFull, WithNone},
     filters::TypeFilter,
     models::{
-        item_types::IncludeReplies, user::User, AllCommentableItemType, CommentableItemType,
-        Episode, List, Movie, Season, Show,
+        AllCommentableItemType, CommentableItemType, Episode, FullEpisode, FullList, FullMovie,
+        FullSeason, FullShow, FullUser, IncludeReplies, List, Movie, Season, Show, User,
     },
 };
 use chrono::{DateTime, Utc};
@@ -21,6 +22,29 @@ pub struct Comment {
     pub likes: u64,
     pub user_rating: Option<u8>,
     pub user: User,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct FullComment {
+    pub id: u64,
+    pub parent_id: u64,
+    pub created_at: DateTime<Utc>,
+    pub updated_at: Option<DateTime<Utc>>,
+    pub comment: String,
+    pub spoiler: bool,
+    pub review: bool,
+    pub replies: u64,
+    pub likes: u64,
+    pub user_rating: Option<u8>,
+    pub user: FullUser,
+}
+
+impl WithFull for Comment {
+    type Full = FullComment;
+}
+
+impl WithNone for FullComment {
+    type None = Comment;
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -44,6 +68,26 @@ pub struct CommentAndItem {
     pub episode: Option<Episode>,
     pub list: Option<List>,
     pub comment: Comment,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct FullCommentAndItem {
+    #[serde(rename = "type")]
+    pub item_type: CommentableItemType,
+    pub show: Option<FullShow>,
+    pub movie: Option<FullMovie>,
+    pub season: Option<FullSeason>,
+    pub episode: Option<FullEpisode>,
+    pub list: Option<FullList>,
+    pub comment: FullComment,
+}
+
+impl WithFull for CommentAndItem {
+    type Full = FullCommentAndItem;
+}
+
+impl WithNone for FullCommentAndItem {
+    type None = CommentAndItem;
 }
 
 #[derive(Debug, Serialize, Deserialize)]

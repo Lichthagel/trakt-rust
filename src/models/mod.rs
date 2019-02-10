@@ -37,11 +37,11 @@ pub use crate::models::{
     history::HistoryItem,
     ids::{IdType, Ids},
     item_types::{
-        AllCommentableItemType, AllItemType, CommentableItemType, IncludeReplies, ItemType,
-        ListItemType, MediaType, SearchItemType, TimePeriod, WatchableType,
+        AllCommentableItemType, AllItemType, CommentableItemType, IncludeReplies,
+        ItemType, ListItemType, MediaType, SearchItemType, TimePeriod, WatchableType,
     },
     like::Like,
-    list::{List, ListFactory, ListFilter, ListInfo, ListItem, ListSort, ListType},
+    list::{FullList, List, ListFactory, ListFilter, ListInfo, ListItem, ListSort, ListType},
     localization::{Alias, Country, Language, Translation},
     movie::{
         AnticipatedMovie, FullMovie, Movie, MovieInfo, OptionMovie, UpdatedMovie, WatchedMovie,
@@ -55,7 +55,7 @@ pub use crate::models::{
     },
     rating::{Rating, RatingDistribution, Ratings},
     search::{SearchResult, SearchType},
-    season::{OptionSeason, Season},
+    season::{FullSeason, OptionSeason, Season},
     show::{
         AnticipatedShow, FullShow, OptionShow, Show, ShowInfo, ShowStatus, UpdatedShow, WatchedShow,
     },

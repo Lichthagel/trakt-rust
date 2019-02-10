@@ -1,5 +1,7 @@
-use crate::models::user::OptionUser;
-use crate::models::{Episode, Ids, ListItemType, Movie, Person, Season, Show, User};
+use crate::{
+    extended_info::{WithFull, WithNone},
+    models::{Episode, FullUser, Ids, ListItemType, Movie, OptionUser, Person, Season, Show, User},
+};
 use chrono::{DateTime, Utc};
 use std::fmt;
 
@@ -19,6 +21,32 @@ pub struct List {
     pub likes: u64,
     pub ids: Ids,
     pub user: User,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct FullList {
+    pub name: String,
+    pub description: Option<String>,
+    pub privacy: String,
+    pub display_numbers: bool,
+    pub allow_comments: bool,
+    pub sort_by: String,
+    pub sort_how: String,
+    pub created_at: DateTime<Utc>,
+    pub updated_at: Option<DateTime<Utc>>,
+    pub item_count: u64,
+    pub comment_count: u64,
+    pub likes: u64,
+    pub ids: Ids,
+    pub user: FullUser,
+}
+
+impl WithFull for List {
+    type Full = FullList;
+}
+
+impl WithNone for FullList {
+    type None = List;
 }
 
 #[derive(Debug, Serialize, Deserialize)]
