@@ -148,7 +148,7 @@ impl TraktApi {
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
-            .header("Authorization", format!("Bearer {}", access_token))
+            .bearer_auth(access_token)
             .send()
         {
             Ok(res) => {
@@ -260,7 +260,7 @@ impl TraktApi {
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
-            .header("Authorization", format!("Bearer {}", access_token))
+            .bearer_auth(access_token)
             .body(body)
             .send()
         {
@@ -312,7 +312,7 @@ impl TraktApi {
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
-            .header("Authorization", format!("Bearer {}", access_token))
+            .bearer_auth(access_token)
             .body(body)
             .send()
         {
@@ -374,7 +374,7 @@ impl TraktApi {
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
-            .header("Authorization", format!("Bearer {}", access_token))
+            .bearer_auth(access_token)
             .body(body)
             .send()
         {
@@ -426,7 +426,7 @@ impl TraktApi {
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
-            .header("Authorization", format!("Bearer {}", access_token))
+            .bearer_auth(access_token)
             .send()
         {
             Ok(res) => {
