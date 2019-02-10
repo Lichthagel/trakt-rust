@@ -1,19 +1,18 @@
 pub mod comment_create_request;
+pub mod comment_post_request;
 
 pub use crate::requests::comments::comment_create_request::CommentCreateRequest;
+pub use crate::requests::comments::comment_post_request::CommentPostRequest;
 
 use crate::{
     error::Result,
-    models::{
-        AllCommentableItemType, Comment, CommentAndItem, CommentItem, CommentPost,
-        CommentType, Like,
-    },
+    models::{AllCommentableItemType, Comment, CommentAndItem, CommentItem, CommentType, Like},
     pagination::PaginationFactory,
     TraktApi,
 };
 
 impl TraktApi {
-    pub fn comment_post<'a>(&'a self, comment: &'a str) -> CommentCreateRequest<'a> {
+    pub fn comment_create<'a>(&'a self, comment: &'a str) -> CommentCreateRequest<'a> {
         CommentCreateRequest::new(self, api_url!(("comments")), comment)
     }
 
@@ -21,17 +20,8 @@ impl TraktApi {
         self.get(api_url!(("comments", id)))
     }
 
-    pub fn comment_update(
-        &self,
-        comment_id: u32,
-        comment_update: CommentPost,
-        access_token: &str,
-    ) -> Result<Comment> {
-        self.auth_put(
-            api_url!(("comments", comment_id)),
-            comment_update.to_json_string()?,
-            access_token,
-        )
+    pub fn comment_update(&self, comment_id: u32, comment: String) -> CommentPostRequest {
+        CommentPostRequest::new(self, api_url!(("comments", comment_id)), true, comment)
     }
 
     pub fn comment_delete(&self, comment_id: u32, access_token: &str) -> Result<()> {
@@ -51,16 +41,12 @@ impl TraktApi {
         ))
     }
 
-    pub fn replies_post(
-        &self,
-        comment_id: u32,
-        comment: CommentPost,
-        access_token: &str,
-    ) -> Result<Comment> {
-        self.auth_post(
+    pub fn replies_post(&self, comment_id: u32, comment: String) -> CommentPostRequest {
+        CommentPostRequest::new(
+            self,
             api_url!(("comments", comment_id, "replies")),
-            comment.to_json_string()?,
-            access_token,
+            false,
+            comment,
         )
     }
 

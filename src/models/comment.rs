@@ -83,22 +83,6 @@ impl CommentSharing {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct CommentPost {
-    pub comment: String,
-    pub spoiler: bool,
-}
-
-impl CommentPost {
-    pub fn new(comment: String, spoiler: bool) -> Self {
-        Self { comment, spoiler }
-    }
-
-    pub fn to_json_string(&self) -> Result<String, serde_json::Error> {
-        serde_json::to_string(self)
-    }
-}
-
 pub struct GetComments {
     pub comment_type: CommentType,
     pub item_type: AllCommentableItemType,

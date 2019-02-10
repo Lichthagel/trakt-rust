@@ -31,9 +31,7 @@ pub use crate::models::{
     calendar::{CalendarMovie, CalendarShow, FullCalendarMovie, FullCalendarShow},
     certifications::{Certification, Certifications, CertificationsType},
     collection::{CollectionEpisode, CollectionMovie, CollectionSeason, CollectionShow},
-    comment::{
-        Comment, CommentAndItem, CommentItem, CommentPost, CommentSharing, CommentType,
-    },
+    comment::{Comment, CommentAndItem, CommentItem, CommentSharing, CommentType},
     episode::{Episode, FullEpisode, OptionEpisode},
     genre::Genre,
     history::HistoryItem,
