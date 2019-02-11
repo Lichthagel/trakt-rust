@@ -40,6 +40,7 @@ use crate::{
     error::{Error, Result},
     models::{Certifications, CertificationsType, Country, Genre, Language, MediaType, Network},
 };
+use reqwest::{IntoUrl, Method, RequestBuilder};
 use serde::de::DeserializeOwned;
 
 /// The main struct which contains all requests
@@ -58,6 +59,34 @@ impl TraktApi {
             client: reqwest::Client::new(),
             client_id,
             client_secret,
+        }
+    }
+
+    /// Generates a [reqwest::RequestBuilder] with the necessary headers
+    ///
+    /// [reqwest::RequestBuilder]: ../reqwest/struct.RequestBuilder.html
+    fn builder(&self, method: Method, url: impl IntoUrl) -> RequestBuilder {
+        self.client
+            .request(method, url)
+            .header("Content-Type", "application/json")
+            .header("trakt-api-version", "2")
+            .header("trakt-api-key", self.client_id.as_str())
+    }
+
+    /// Executes a [reqwest::RequestBuilder] and parses the [reqwest::Response]
+    ///
+    /// [reqwest::RequestBuilder]: ../reqwest/struct.RequestBuilder.html
+    /// [reqwest::Response]: ../reqwest/struct.Response.html
+    fn execute<T: DeserializeOwned>(&self, request: RequestBuilder) -> Result<T> {
+        match self.client.execute(request.build()?) {
+            Ok(res) => {
+                if res.status().is_success() {
+                    Ok(serde_json::from_reader(res).unwrap())
+                } else {
+                    Err(Error::from(res))
+                }
+            }
+            Err(e) => Err(Error::from(e)),
         }
     }
 
