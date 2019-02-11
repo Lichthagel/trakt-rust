@@ -40,7 +40,7 @@ use crate::{
     error::{Error, Result},
     models::{Certifications, CertificationsType, Country, Genre, Language, MediaType, Network},
 };
-use reqwest::{IntoUrl, Method, RequestBuilder};
+use reqwest::{Method, RequestBuilder};
 use serde::de::DeserializeOwned;
 
 /// The main struct which contains all requests
@@ -65,9 +65,9 @@ impl TraktApi {
     /// Generates a [reqwest::RequestBuilder] with the necessary headers
     ///
     /// [reqwest::RequestBuilder]: ../reqwest/struct.RequestBuilder.html
-    fn builder(&self, method: Method, url: impl IntoUrl) -> RequestBuilder {
+    fn builder(&self, method: Method, url: String) -> RequestBuilder {
         self.client
-            .request(method, url)
+            .request(method, &url)
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())

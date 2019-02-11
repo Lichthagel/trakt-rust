@@ -1,25 +1,19 @@
 use crate::{
     error::Result,
     models::{IdType, SearchItemType, SearchResult, SearchType},
-    pagination::PaginationFactory,
+    pagination::PaginationRequest,
     TraktApi,
 };
 use std::fmt::Display;
+use reqwest::Method;
 
 impl TraktApi {
     pub fn search(
         &self,
         item_type: SearchType,
         query: &str,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
-    ) -> Result<Vec<SearchResult>> {
-        let pf = f(PaginationFactory::default());
-        self.get(api_url!(
-            ("search", item_type),
-            ("query", query),
-            ("page", pf.page),
-            ("limit", pf.limit)
-        ))
+    ) -> PaginationRequest<SearchResult> {
+        PaginationRequest::new(self, self.builder(Method::GET, api_url!(("search", item_type))).query(&[("query", query)]))
     }
 
     pub fn id_lookup(

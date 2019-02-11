@@ -7,9 +7,10 @@ use crate::{
         user::{FollowRequest, FollowRequestApprove, FullUser, Settings},
         CollectionMovie, CollectionShow, User,
     },
-    pagination::PaginationFactory,
+    pagination::PaginationRequest,
     TraktApi,
 };
+use reqwest::Method;
 
 impl TraktApi {
     pub fn user_settings(&self, access_token: &str) -> Result<Settings> {
@@ -41,22 +42,16 @@ impl TraktApi {
     pub fn user_likes(
         &self,
         item_type: Option<LikeableType>,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
         access_token: &str,
-    ) -> Result<Vec<UserLike>> {
-        let pf = f(PaginationFactory::default());
-
-        self.auth_get(
-            match item_type {
-                Some(item_type) => api_url!(
-                    ("users", "likes", item_type),
-                    ("page", pf.page),
-                    ("limit", pf.limit)
-                ),
-                None => api_url!(("users", "likes"), ("page", pf.page), ("limit", pf.limit)),
+    ) -> PaginationRequest<UserLike> {
+        PaginationRequest::new(self, self.builder(Method::GET, match item_type {
+            Some(item_type) => {
+                api_url!(("users", "likes", item_type))
             },
-            access_token,
-        )
+            None => {
+                api_url!(("users", "likes"))
+            }
+        }).bearer_auth(access_token))
     }
 
     pub fn user_profile(&self, slug: &str, access_token: Option<&str>) -> Result<User> {
@@ -108,28 +103,17 @@ impl TraktApi {
         &self,
         slug: &str,
         f: impl FnOnce(GetComments) -> GetComments,
-        g: impl FnOnce(PaginationFactory) -> PaginationFactory,
         access_token: Option<&str>,
-    ) -> Result<Vec<CommentAndItem>> {
+    ) -> PaginationRequest<CommentAndItem> {
         let gc = f(GetComments::default());
-        let pf = g(PaginationFactory::default());
 
-        match access_token {
-            Some(access_token) => self.auth_get(
-                api_url!(
-                    ("users", slug, "comments", gc.comment_type, gc.item_type),
-                    ("include_replies", gc.include_replies),
-                    ("page", pf.page),
-                    ("limit", pf.limit)
-                ),
-                access_token,
-            ),
-            None => self.get(api_url!(
-                ("users", slug, "comments", gc.comment_type, gc.item_type),
-                ("include_replies", gc.include_replies),
-                ("page", pf.page),
-                ("limit", pf.limit)
-            )),
-        }
+        PaginationRequest::new(self, match access_token {
+            Some(access_token) => {
+                self.builder(Method::GET, api_url!(("users", slug, "comments", gc.comment_type, gc.item_type))).query(&[("include_replies", gc.include_replies)]).bearer_auth(access_token)
+            },
+            None => {
+                self.builder(Method::GET, api_url!(("users", slug, "comments", gc.comment_type, gc.item_type))).query(&[("include_replies", gc.include_replies)])
+            }
+        })
     }
 }

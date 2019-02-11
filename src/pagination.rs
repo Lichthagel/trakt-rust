@@ -1,3 +1,8 @@
+use crate::{error::Result, TraktApi};
+use reqwest::RequestBuilder;
+use serde::de::DeserializeOwned;
+use std::marker::PhantomData;
+
 /// A trait that allows for pagination being added to a request. [More]
 ///
 /// [More]: https://trakt.docs.apiary.io/#introduction/pagination
@@ -12,17 +17,31 @@ pub trait Pagination {
 /// A simple implementation of [Pagination]
 ///
 /// [Pagination]: trait.Pagination.html
-pub struct PaginationFactory {
-    pub page: u32,
-    pub limit: u32,
+pub struct PaginationRequest<'a, T> {
+    client: &'a TraktApi,
+    request: RequestBuilder,
+    response_type: PhantomData<T>,
 }
 
-impl Default for PaginationFactory {
-    /// Creates a default [PaginationFactory] with page 1 and 10 entries
-    ///
-    /// [PaginationFactory]: struct.PaginationFactory.html
-    fn default() -> Self {
-        Self { page: 1, limit: 10 }
+impl<'a, T: DeserializeOwned> PaginationRequest<'a, T> {
+    pub fn new(client: &'a TraktApi, request: RequestBuilder) -> Self {
+        Self {
+            client,
+            request,
+            response_type: PhantomData,
+        }
+    }
+
+    fn apply(self, f: impl FnOnce(RequestBuilder) -> RequestBuilder) -> Self {
+        Self {
+            client: self.client,
+            request: f(self.request),
+            response_type: PhantomData,
+        }
+    }
+
+    pub fn execute(self) -> Result<Vec<T>> {
+        self.client.execute(self.request)
     }
 }
 
@@ -30,16 +49,14 @@ impl Default for PaginationFactory {
 ///
 /// [Pagination]: trait.Pagination.html
 /// [PaginationFactory]: struct.PaginationFactory.html
-impl Pagination for PaginationFactory {
+impl<'a, T: DeserializeOwned> Pagination for PaginationRequest<'a, T> {
     /// Set requested page
-    fn page(mut self, page: u32) -> Self {
-        self.page = page;
-        self
+    fn page(self, page: u32) -> Self {
+        self.apply(|b| b.query(&[("page", page)]))
     }
 
     /// Set number of requested entries
-    fn limit(mut self, limit: u32) -> Self {
-        self.limit = limit;
-        self
+    fn limit(self, limit: u32) -> Self {
+        self.apply(|b| b.query(&[("limit", limit)]))
     }
 }

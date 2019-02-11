@@ -7,11 +7,12 @@ use crate::{
         ListItem, MediaType, Playback, Rating, SyncAddResponse, SyncRemoveResponse, WatchableType,
         WatchedEntry,
     },
-    pagination::PaginationFactory,
+    pagination::PaginationRequest,
     requests::sync::sync_request::SyncRequest,
     TraktApi,
 };
 use chrono::{DateTime, Utc};
+use reqwest::Method;
 
 impl TraktApi {
     pub fn sync_last_activities(&self, access_token: &str) -> Result<LastActivities> {
@@ -59,20 +60,9 @@ impl TraktApi {
         item_type: ItemType,
         start_at: DateTime<Utc>,
         end_at: DateTime<Utc>,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
         access_token: &str,
-    ) -> Result<Vec<HistoryItem>> {
-        let pf = f(PaginationFactory::default());
-        self.auth_get(
-            api_url!(
-                ("sync", "history", item_type),
-                ("start_at", start_at),
-                ("end_at", end_at),
-                ("page", pf.page),
-                ("limit", pf.limit)
-            ),
-            access_token,
-        )
+    ) -> PaginationRequest<HistoryItem> {
+        PaginationRequest::new(self, self.builder(Method::GET, api_url!(("sync", "history", item_type))).bearer_auth(access_token).query(&[("start_at", start_at), ("end_at", end_at)]))
     }
 
     pub fn sync_history_add(&self) -> SyncRequest<SyncAddResponse> {

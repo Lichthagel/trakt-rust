@@ -3,9 +3,10 @@ use crate::models::FullUser;
 use crate::{
     error::Result,
     models::{Comment, Episode, List, ListFactory, MediaStats, Ratings, Translation, User},
-    pagination::PaginationFactory,
+    pagination::PaginationRequest,
     TraktApi,
 };
+use reqwest::Method;
 use std::fmt::Display;
 
 impl TraktApi {
@@ -68,22 +69,22 @@ impl TraktApi {
         show_id: impl Display,
         season_number: u32,
         episode_number: u32,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
-    ) -> Result<Vec<Comment>> {
-        let pf = f(PaginationFactory::default());
-        self.get(api_url!(
-            (
-                "shows",
-                show_id,
-                "seasons",
-                season_number,
-                "episodes",
-                episode_number,
-                "comments"
+    ) -> PaginationRequest<Comment> {
+        PaginationRequest::new(
+            self,
+            self.builder(
+                Method::GET,
+                api_url!((
+                    "shows",
+                    show_id,
+                    "seasons",
+                    season_number,
+                    "episodes",
+                    episode_number,
+                    "comments"
+                )),
             ),
-            ("page", pf.page),
-            ("limit", pf.limit)
-        ))
+        )
     }
 
     pub fn episode_lists(
@@ -92,25 +93,26 @@ impl TraktApi {
         season_number: u32,
         episode_number: u32,
         f: impl FnOnce(ListFactory) -> ListFactory,
-        g: impl FnOnce(PaginationFactory) -> PaginationFactory,
-    ) -> Result<Vec<List>> {
+    ) -> PaginationRequest<List> {
         let list_factory = f(ListFactory::default());
-        let pf = g(PaginationFactory::default());
-        self.get(api_url!(
-            (
-                "shows",
-                show_id,
-                "seasons",
-                season_number,
-                "episodes",
-                episode_number,
-                "lists",
-                list_factory.list_filter,
-                list_factory.sorting
+
+        PaginationRequest::new(
+            self,
+            self.builder(
+                Method::GET,
+                api_url!((
+                    "shows",
+                    show_id,
+                    "seasons",
+                    season_number,
+                    "episodes",
+                    episode_number,
+                    "lists",
+                    list_factory.list_filter,
+                    list_factory.sorting
+                )),
             ),
-            ("page", pf.page),
-            ("limit", pf.limit)
-        ))
+        )
     }
 
     pub fn episode_ratings(

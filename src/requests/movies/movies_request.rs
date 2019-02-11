@@ -19,7 +19,7 @@ impl<'a, T: DeserializeOwned> MoviesRequest<'a, T> {
     pub fn new(client: &'a TraktApi, url: String) -> Self {
         Self {
             client,
-            request: client.builder(Method::GET, &api_url!(("movies", url))),
+            request: client.builder(Method::GET, api_url!(("movies", url))),
             response_type: PhantomData,
         }
     }

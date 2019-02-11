@@ -9,9 +9,10 @@ pub use crate::requests::comments::comments_request::CommentsRequest;
 use crate::{
     error::Result,
     models::{Comment, CommentAndItem, CommentItem, Like},
-    pagination::PaginationFactory,
+    pagination::PaginationRequest,
     TraktApi,
 };
+use reqwest::Method;
 
 impl TraktApi {
     pub fn comment_create<'a>(&'a self, comment: &'a str) -> CommentCreateRequest<'a> {
@@ -30,17 +31,11 @@ impl TraktApi {
         self.auth_delete(api_url!(("comments", comment_id)), access_token)
     }
 
-    pub fn replies(
-        &self,
-        comment_id: u32,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
-    ) -> Result<Vec<Comment>> {
-        let pf = f(PaginationFactory::default());
-        self.get(api_url!(
-            ("comments", comment_id, "replies"),
-            ("page", pf.page),
-            ("limit", pf.limit)
-        ))
+    pub fn replies(&self, comment_id: u32) -> PaginationRequest<Comment> {
+        PaginationRequest::new(
+            self,
+            self.builder(Method::GET, api_url!(("comments", comment_id, "replies"))),
+        )
     }
 
     pub fn replies_post(&self, comment_id: u32, comment: String) -> CommentPostRequest {
@@ -56,17 +51,11 @@ impl TraktApi {
         self.get(api_url!(("comments", comment_id, "item")))
     }
 
-    pub fn comment_likes(
-        &self,
-        comment_id: u32,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
-    ) -> Result<Vec<Like>> {
-        let pf = f(PaginationFactory::default());
-        self.get(api_url!(
-            ("comments", comment_id, "likes"),
-            ("page", pf.page),
-            ("limit", pf.limit)
-        ))
+    pub fn comment_likes(&self, comment_id: u32) -> PaginationRequest<Like> {
+        PaginationRequest::new(
+            self,
+            self.builder(Method::GET, api_url!(("comments", comment_id, "likes"))),
+        )
     }
 
     pub fn comment_like(&self, comment_id: u32, access_token: &str) -> Result<()> {

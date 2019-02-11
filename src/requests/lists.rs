@@ -1,27 +1,16 @@
-use crate::{error::Result, models::ListInfo, pagination::PaginationFactory, TraktApi};
+use crate::{models::ListInfo, pagination::PaginationRequest, TraktApi};
+use reqwest::Method;
 
 impl TraktApi {
     pub fn lists_trending(
         &self,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
-    ) -> Result<Vec<ListInfo>> {
-        let pf = f(PaginationFactory::default());
-        self.get(api_url!(
-            ("lists", "trending"),
-            ("page", pf.page),
-            ("limit", pf.limit)
-        ))
+    ) -> PaginationRequest<ListInfo> {
+        PaginationRequest::new(self, self.builder(Method::GET, api_url!(("lists", "trending"))))
     }
 
     pub fn lists_popular(
         &self,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
-    ) -> Result<Vec<ListInfo>> {
-        let pf = f(PaginationFactory::default());
-        self.get(api_url!(
-            ("lists", "popular"),
-            ("page", pf.page),
-            ("limit", pf.limit)
-        ))
+    ) -> PaginationRequest<ListInfo> {
+        PaginationRequest::new(self, self.builder(Method::GET, api_url!(("lists", "popular"))))
     }
 }
