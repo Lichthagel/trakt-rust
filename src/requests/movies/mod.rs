@@ -1,3 +1,7 @@
+pub mod movies_request;
+
+pub use crate::requests::movies::movies_request::MoviesRequest;
+
 use crate::{
     error::Result,
     models::{
@@ -10,79 +14,28 @@ use crate::{
 use std::fmt::Display;
 
 impl TraktApi {
-    pub fn movies_trending(
-        &self,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
-    ) -> Result<Vec<MovieInfo>> {
-        let pf = f(PaginationFactory::default());
-        self.get(api_url!(
-            ("movies", "trending"),
-            ("page", pf.page),
-            ("limit", pf.limit)
-        ))
+    pub fn movies_trending(&self) -> MoviesRequest<MovieInfo> {
+        MoviesRequest::new(self, "trending".to_owned())
     }
 
-    pub fn movies_popular(
-        &self,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
-    ) -> Result<Vec<Movie>> {
-        let pf = f(PaginationFactory::default());
-        self.get(api_url!(
-            ("movies", "popular"),
-            ("page", pf.page),
-            ("limit", pf.limit)
-        ))
+    pub fn movies_popular(&self) -> MoviesRequest<Movie> {
+        MoviesRequest::new(self, "popular".to_owned())
     }
 
-    pub fn movies_played(
-        &self,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
-        period: TimePeriod,
-    ) -> Result<Vec<WatchedMovie>> {
-        let pf = f(PaginationFactory::default());
-        self.get(api_url!(
-            ("movies", "played", period.to_string()),
-            ("page", pf.page),
-            ("limit", pf.limit)
-        ))
+    pub fn movies_played(&self, period: TimePeriod) -> MoviesRequest<WatchedMovie> {
+        MoviesRequest::new(self, format!("played/{}", period.to_string()))
     }
 
-    pub fn movies_watched(
-        &self,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
-        period: TimePeriod,
-    ) -> Result<Vec<WatchedMovie>> {
-        let pf = f(PaginationFactory::default());
-        self.get(api_url!(
-            ("movies", "watched", period.to_string()),
-            ("page", pf.page),
-            ("limit", pf.limit)
-        ))
+    pub fn movies_watched(&self, period: TimePeriod) -> MoviesRequest<WatchedMovie> {
+        MoviesRequest::new(self, format!("watched/{}", period.to_string()))
     }
 
-    pub fn movies_collected(
-        &self,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
-        period: TimePeriod,
-    ) -> Result<Vec<WatchedMovie>> {
-        let pf = f(PaginationFactory::default());
-        self.get(api_url!(
-            ("movies", "collected", period.to_string()),
-            ("page", pf.page),
-            ("limit", pf.limit)
-        ))
+    pub fn movies_collected(&self, period: TimePeriod) -> MoviesRequest<WatchedMovie> {
+        MoviesRequest::new(self, format!("collected/{}", period.to_string()))
     }
 
-    pub fn movies_anticipated(
-        &self,
-        f: impl FnOnce(PaginationFactory) -> PaginationFactory,
-    ) -> Result<Vec<AnticipatedMovie>> {
-        let pf = f(PaginationFactory::default());
-        self.get(api_url!(
-            ("movies", "anticipated"),
-            ("page", pf.page),
-            ("limit", pf.limit)
-        ))
+    pub fn movies_anticipated(&self) -> MoviesRequest<AnticipatedMovie> {
+        MoviesRequest::new(self, "anticipated".to_owned())
     }
 
     pub fn movies_updates(
