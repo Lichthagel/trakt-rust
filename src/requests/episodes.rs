@@ -1,3 +1,5 @@
+use crate::models::FullEpisode;
+use crate::models::FullUser;
 use crate::{
     error::Result,
     models::{Comment, Episode, List, ListFactory, MediaStats, Ratings, Translation, User},
@@ -21,6 +23,25 @@ impl TraktApi {
             "episodes",
             episode_number
         )))
+    }
+
+    pub fn episode_full(
+        &self,
+        show_id: impl Display,
+        season_number: u32,
+        episode_number: u32,
+    ) -> Result<FullEpisode> {
+        self.get(api_url!(
+            (
+                "shows",
+                show_id,
+                "seasons",
+                season_number,
+                "episodes",
+                episode_number
+            ),
+            ("extended", "full")
+        ))
     }
 
     pub fn episode_translations(
@@ -141,5 +162,25 @@ impl TraktApi {
             episode_number,
             "watching"
         )))
+    }
+
+    pub fn episode_watching_full(
+        &self,
+        show_id: impl Display,
+        season_number: u32,
+        episode_number: u32,
+    ) -> Result<Vec<FullUser>> {
+        self.get(api_url!(
+            (
+                "shows",
+                show_id,
+                "seasons",
+                season_number,
+                "episodes",
+                episode_number,
+                "watching"
+            ),
+            ("extended", "full")
+        ))
     }
 }
