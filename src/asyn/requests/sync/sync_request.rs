@@ -10,37 +10,6 @@ use std::marker::PhantomData;
 
 /// A struct for making changes to your watchlist, collection, ratings etc.
 ///
-/// # Example
-///
-/// ```rust,no_run
-/// extern crate chrono;
-///
-/// use chrono::{offset::TimeZone, Utc};
-/// use trakt::{selectors::*, TraktApi};
-///
-/// fn main() {
-///     let api = TraktApi::new(
-///         String::from("SOME_CLIENT_ID"),
-///         Some(String::from(
-///             "SOME_CLIENT_SECRET",
-///         )),
-///     );
-///
-///     let access_token = "SOME_ACCESS_TOKEN";
-///
-///     dbg!(api
-///         .sync_ratings_add()
-///         .movie(|m| m
-///             .slug("warcraft-2016")
-///             .rating(3)
-///             .rated_at(Utc.ymd(2010, 10, 10).and_hms(10, 10, 10)))
-///         .execute(access_token)
-///         .unwrap());
-/// }
-/// ```
-///
-/// **Note**: [TraktApi.sync_ratings_add()] returns SyncRequest<SyncAddResponse>
-///
 /// [TraktApi.sync_ratings_add()]: ../../struct.TraktApi.html#method.sync_ratings_add
 pub struct SyncRequest<'a, R: DeserializeOwned> {
     movies: Vec<Value>,

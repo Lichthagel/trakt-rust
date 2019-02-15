@@ -19,13 +19,11 @@ use std::marker::PhantomData;
 ///
 /// fn main() {
 ///     let api = TraktApi::new(
-///         String::from("SOME_CLIENT_ID"),
-///         Some(String::from(
-///             "SOME_CLIENT_SECRET",
-///         )),
+///         env!("CLIENT_ID").to_owned(),
+///         None,
 ///     );
 ///
-///     let access_token = "SOME_ACCESS_TOKEN";
+///     let access_token = env!("ACCESS_TOKEN");
 ///
 ///     dbg!(api
 ///         .sync_ratings_add()

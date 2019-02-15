@@ -10,7 +10,7 @@ use std::marker::PhantomData;
 ///
 /// # Example
 ///
-/// ```rust,no_run
+/// ```rust
 /// extern crate chrono;
 ///
 /// use chrono::Utc;
@@ -18,7 +18,7 @@ use std::marker::PhantomData;
 ///
 /// fn main() {
 ///     let api = TraktApi::new(
-///         "...".to_owned(),
+///         env!("CLIENT_ID").to_owned(),
 ///         None
 ///     );
 ///

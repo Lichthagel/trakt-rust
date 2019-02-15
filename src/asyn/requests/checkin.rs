@@ -10,30 +10,6 @@ use serde_json::{Map, Value};
 
 /// A struct for creating a checkin. [More]
 ///
-/// # Example
-///
-/// ```rust,no_run
-/// use trakt::{
-///     selectors::{MovieSelector, SelectIds, SelectMovie},
-///     TraktApi,
-/// };
-///
-/// fn main() {
-///     let api = TraktApi::new(
-///         "...".to_owned(),
-///         Some("...".to_owned()),
-///     );
-///
-///     let access_token = "...";
-///
-///     dbg!(api
-///         .checkin()
-///         .movie(|m| m.slug("warcraft-2016"))
-///         .execute(access_token)
-///         .unwrap());
-/// }
-/// ```
-///
 /// [More]: https://trakt.docs.apiary.io/#reference/checkin/checkin/check-into-an-item
 #[derive(Debug)]
 pub struct Checkin<'a> {

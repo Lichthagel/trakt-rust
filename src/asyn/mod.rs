@@ -26,7 +26,7 @@ pub struct TraktApi {
 ///
 /// # Example
 ///
-/// ```rust,no_run
+/// ```rust
 /// extern crate futures;
 /// extern crate tokio;
 /// extern crate trakt;
@@ -36,11 +36,11 @@ pub struct TraktApi {
 ///
 /// fn fetch() -> impl Future<Item = (), Error = ()> {
 ///     let api = TraktApi::new(
-///         "5fb6cb3a16007b60122d7af2b7763ed70987a33ebc5df10fbc2dcbfebfd635fa".to_owned(),
-///         Some("d2170874a9801585a4af757c5a2753efd5dce75cc195559afa51da1b42d213b4".to_owned()),
+///         env!("CLIENT_ID").to_owned(),
+///         None,
 ///     );
 ///
-///     let access_token = "83b31fdde241da25b582d3a682f6abaae696134efbbc2743983310c3c5317311";
+///     let access_token = env!("ACCESS_TOKEN");
 ///
 ///     api.user_settings(access_token)
 ///         .map(|res| {
@@ -533,14 +533,14 @@ impl PartialEq for TraktApi {
 mod tests {
     use crate::models::Country;
     use crate::models::Genre;
+    use crate::models::Language;
     use crate::models::MediaType;
+    use crate::models::Network;
     use crate::{
         asyn::TraktApi,
         models::{Certification, Certifications, CertificationsType},
     };
     use futures::future::Future;
-    use crate::models::Language;
-    use crate::models::Network;
 
     #[test]
     fn new_trakt_api() {
