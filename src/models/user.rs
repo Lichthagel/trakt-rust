@@ -103,7 +103,7 @@ pub struct SettingsAccount {
     pub date_format: String,
     pub time_24hr: bool,
     pub cover_image: Option<String>,
-    pub token: Option<String>
+    pub token: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

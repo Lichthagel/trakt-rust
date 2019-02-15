@@ -1,5 +1,3 @@
-pub use crate::requests::sync::sync_request::SyncRequest;
-
 use crate::models::{
     Episode, Movie, OptionEpisode, OptionMovie, OptionSeason, OptionShow, Show, WatchableType,
 };

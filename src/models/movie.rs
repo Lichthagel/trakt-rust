@@ -123,12 +123,12 @@ impl AddAssign for OptionMovie {
         if let Some(ids) = rhs.ids {
             match &mut self.ids {
                 Some(lids) => {
-                    lids.trakt = lids.trakt.clone().or(ids.trakt);
+                    lids.trakt = lids.trakt.or(ids.trakt);
                     lids.slug = lids.slug.clone().or(ids.slug);
-                    lids.tvdb = lids.tvdb.clone().or(ids.tvdb);
+                    lids.tvdb = lids.tvdb.or(ids.tvdb);
                     lids.imdb = lids.imdb.clone().or(ids.imdb);
-                    lids.tmdb = lids.tmdb.clone().or(ids.tmdb);
-                    lids.tvrage = lids.tvrage.clone().or(ids.tvrage);
+                    lids.tmdb = lids.tmdb.or(ids.tmdb);
+                    lids.tvrage = lids.tvrage.or(ids.tvrage);
                 }
                 None => self.ids = Some(ids),
             }

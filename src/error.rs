@@ -1,10 +1,9 @@
 use std::fmt;
 use std::fmt::Display;
-use std::result;
 
 #[derive(Debug)]
 pub enum Error {
-    Response(reqwest::Response),
+    Response(Box<reqwest::Response>),
     Connection(reqwest::Error),
     Serde(serde_json::Error),
     NoneError,
@@ -19,7 +18,7 @@ impl From<reqwest::Error> for Error {
 
 impl From<reqwest::Response> for Error {
     fn from(res: reqwest::Response) -> Self {
-        Error::Response(res)
+        Error::Response(Box::new(res))
     }
 }
 
@@ -38,11 +37,9 @@ impl Display for Error {
                 Error::Response(e) => format!("Response ( {} )", e.status()),
                 Error::Connection(e) => format!("Connection ( {} )", e),
                 Error::Serde(e) => format!("Serde ( {} )", e),
-                Error::NoneError => format!("NoneError"),
-                Error::ClientSecretNeeded => format!("ClientSecretNeeded"),
+                Error::NoneError => "NoneError".to_owned(),
+                Error::ClientSecretNeeded => "ClientSecretNeeded".to_owned(),
             }
         )
     }
 }
-
-pub type Result<T> = result::Result<T, Error>;

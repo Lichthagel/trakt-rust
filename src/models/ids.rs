@@ -27,12 +27,12 @@ impl Default for Ids {
 
 impl AddAssign<Ids> for &mut Ids {
     fn add_assign(&mut self, rhs: Ids) {
-        self.trakt = self.trakt.clone().or(rhs.trakt);
+        self.trakt = self.trakt.or(rhs.trakt);
         self.slug = self.slug.clone().or(rhs.slug);
-        self.tvdb = self.tvdb.clone().or(rhs.tvdb);
+        self.tvdb = self.tvdb.or(rhs.tvdb);
         self.imdb = self.imdb.clone().or(rhs.imdb);
-        self.tmdb = self.tmdb.clone().or(rhs.tmdb);
-        self.tvrage = self.tvrage.clone().or(rhs.tvrage);
+        self.tmdb = self.tmdb.or(rhs.tmdb);
+        self.tvrage = self.tvrage.or(rhs.tvrage);
     }
 }
 

@@ -137,7 +137,7 @@ impl MovieSelector {
 
 impl SelectIds for MovieSelector {
     fn ids(&mut self) -> &mut Ids {
-        if let None = self.movie.ids {
+        if self.movie.ids.is_none() {
             self.movie.ids = Some(Ids::default())
         }
 
@@ -217,7 +217,7 @@ impl ShowSelector {
 
 impl SelectIds for ShowSelector {
     fn ids(&mut self) -> &mut Ids {
-        if let None = self.show.ids {
+        if self.show.ids.is_none() {
             self.show.ids = Some(Ids::default());
         }
 
@@ -288,7 +288,7 @@ impl SeasonSelector {
 
 impl SelectIds for SeasonSelector {
     fn ids(&mut self) -> &mut Ids {
-        if let None = self.season.ids {
+        if self.season.ids.is_none() {
             self.season.ids = Some(Ids::default());
         }
         self.season.ids.as_mut().unwrap()
@@ -354,7 +354,7 @@ impl EpisodeSelector {
 
 impl SelectIds for EpisodeSelector {
     fn ids(&mut self) -> &mut Ids {
-        if let None = self.episode.ids {
+        if self.episode.ids.is_none() {
             self.episode.ids = Some(Ids::default());
         }
 
@@ -421,7 +421,7 @@ impl ListSelector {
 
 impl SelectIds for ListSelector {
     fn ids(&mut self) -> &mut Ids {
-        if let None = self.list.ids {
+        if self.list.ids.is_none() {
             self.list.ids = Some(Ids::default())
         }
 
@@ -476,7 +476,7 @@ impl Selector for UserSelector {
 
 impl SelectIds for UserSelector {
     fn ids(&mut self) -> &mut Ids {
-        if let None = self.user.ids {
+        if self.user.ids.is_none() {
             self.user.ids = Some(Ids::default())
         }
 

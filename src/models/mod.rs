@@ -37,8 +37,8 @@ pub use crate::models::{
     history::HistoryItem,
     ids::{IdType, Ids},
     item_types::{
-        AllCommentableItemType, AllItemType, CommentableItemType, IncludeReplies,
-        ItemType, ListItemType, MediaType, SearchItemType, TimePeriod, WatchableType,
+        AllCommentableItemType, AllItemType, CommentableItemType, IncludeReplies, ItemType,
+        ListItemType, MediaType, SearchItemType, TimePeriod, WatchableType,
     },
     like::Like,
     list::{FullList, List, ListFactory, ListFilter, ListInfo, ListItem, ListSort, ListType},
