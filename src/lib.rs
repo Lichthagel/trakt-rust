@@ -34,6 +34,7 @@ pub mod error;
 pub mod extended_info;
 pub mod filters;
 pub mod models;
+pub mod prelude;
 pub mod pagination;
 pub mod selectors;
 #[cfg(feature = "sync")]
