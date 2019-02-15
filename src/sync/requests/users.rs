@@ -5,9 +5,8 @@ use crate::{
         user::{FollowRequest, FollowRequestApprove, FullUser, Settings},
         CollectionMovie, CollectionShow, CommentAndItem, User,
     },
-    sync::{pagination::PaginationRequest},
-    Result,
-    TraktApi,
+    sync::pagination::PaginationRequest,
+    Result, TraktApi,
 };
 use reqwest::Method;
 

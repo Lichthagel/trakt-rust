@@ -540,7 +540,7 @@ impl PartialEq for TraktApi {
 
 #[cfg(test)]
 mod tests {
-    use crate::TraktApi;
+    use crate::{error::Error, models::*, TraktApi};
 
     #[test]
     fn new_trakt_api() {
@@ -552,5 +552,108 @@ mod tests {
             },
             TraktApi::new(String::from("abc"), Some(String::from("def")))
         );
+    }
+
+    #[test]
+    fn certifications() -> Result<(), Error> {
+        TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+            .certifications(CertificationsType::Movies)
+            .map(|res| {
+                assert_eq!(
+                    res,
+                    Certifications {
+                        us: vec![
+                            Certification {
+                                name: "G".to_owned(),
+                                slug: "g".to_owned(),
+                                description: "All Ages".to_owned()
+                            },
+                            Certification {
+                                name: "PG".to_owned(),
+                                slug: "pg".to_owned(),
+                                description: "Parental Guidance Suggested".to_owned()
+                            },
+                            Certification {
+                                name: "PG-13".to_owned(),
+                                slug: "pg-13".to_owned(),
+                                description: "Parents Strongly Cautioned - Ages 13+ Recommended"
+                                    .to_owned()
+                            },
+                            Certification {
+                                name: "R".to_owned(),
+                                slug: "r".to_owned(),
+                                description: "Mature Audiences - Ages 17+ Recommended".to_owned()
+                            },
+                            Certification {
+                                name: "Not Rated".to_owned(),
+                                slug: "nr".to_owned(),
+                                description: "Not Rated".to_owned()
+                            }
+                        ]
+                    }
+                )
+            })
+    }
+
+    #[test]
+    fn countries() -> Result<(), Error> {
+        TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+            .countries(MediaType::Movies)
+            .map(|res| {
+                assert!(res.contains(&Country {
+                    name: "Greece".to_owned(),
+                    code: "gr".to_owned()
+                }));
+                assert!(res.contains(&Country {
+                    name: "Zambia".to_owned(),
+                    code: "zm".to_owned()
+                }));
+            })
+    }
+
+    #[test]
+    fn genres() -> Result<(), Error> {
+        TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+            .genres(MediaType::Movies)
+            .map(|res| {
+                assert!(res.contains(&Genre {
+                    name: "Animation".to_owned(),
+                    slug: "animation".to_owned()
+                }));
+                assert!(res.contains(&Genre {
+                    name: "Superhero".to_owned(),
+                    slug: "superhero".to_owned()
+                }));
+            })
+    }
+
+    #[test]
+    fn languages() -> Result<(), Error> {
+        TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+            .languages(MediaType::Movies)
+            .map(|res| {
+                assert!(res.contains(&Language {
+                    name: "English".to_owned(),
+                    code: "en".to_owned()
+                }));
+                assert!(res.contains(&Language {
+                    name: "Fulah".to_owned(),
+                    code: "ff".to_owned()
+                }));
+            })
+    }
+
+    #[test]
+    fn networks() -> Result<(), Error> {
+        TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+            .networks()
+            .map(|res| {
+                assert!(res.contains(&Network {
+                    name: "AT-X".to_owned()
+                }));
+                assert!(res.contains(&Network {
+                    name: "Apple Music".to_owned()
+                }));
+            })
     }
 }

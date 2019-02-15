@@ -26,6 +26,9 @@ features = ["serde"]
 version = "0.1"
 optional = true
 
+[dev-dependencies]
+tokio = "0.1"
+
 [features]
 default = ["sync"]
 sync = []
