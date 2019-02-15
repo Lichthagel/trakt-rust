@@ -16,7 +16,7 @@ pub struct Country {
     pub code: String,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct Translation {
     pub title: String,
     pub overview: String,

@@ -2,7 +2,7 @@ use std::fmt;
 use std::fmt::Display;
 use std::ops::AddAssign;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Ids {
     pub trakt: Option<u64>,
     pub slug: Option<String>,

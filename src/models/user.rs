@@ -2,7 +2,7 @@ use crate::models::ids::Ids;
 use chrono::DateTime;
 use chrono::Utc;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct User {
     pub username: String,
     pub private: bool,
@@ -87,6 +87,18 @@ pub struct FullUser {
     pub images: Option<UserImages>,
     pub vip_og: Option<bool>,
     pub vip_years: Option<u32>,
+}
+
+impl PartialEq for FullUser {
+    fn eq(&self, other: &FullUser) -> bool {
+        self.username == other.username
+            && self.private == other.private
+            && self.name == other.name
+            && self.vip == other.vip
+            && self.vip_ep == other.vip_ep
+            && self.ids == other.ids
+            && self.joined_at == other.joined_at
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]

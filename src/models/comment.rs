@@ -24,6 +24,18 @@ pub struct Comment {
     pub user: User,
 }
 
+impl PartialEq for Comment {
+    fn eq(&self, other: &Comment) -> bool {
+        self.id == other.id
+            && self.parent_id == other.parent_id
+            && self.created_at == other.created_at
+            && self.comment == other.comment
+            && self.spoiler == other.spoiler
+            && self.review == other.review
+            && self.user == other.user
+    }
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FullComment {
     pub id: u64,
@@ -37,6 +49,18 @@ pub struct FullComment {
     pub likes: u64,
     pub user_rating: Option<u8>,
     pub user: FullUser,
+}
+
+impl PartialEq for FullComment {
+    fn eq(&self, other: &FullComment) -> bool {
+        self.id == other.id
+            && self.parent_id == other.parent_id
+            && self.created_at == other.created_at
+            && self.comment == other.comment
+            && self.spoiler == other.spoiler
+            && self.review == other.review
+            && self.user == other.user
+    }
 }
 
 impl WithFull for Comment {

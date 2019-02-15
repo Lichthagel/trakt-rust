@@ -531,15 +531,7 @@ impl PartialEq for TraktApi {
 
 #[cfg(test)]
 mod tests {
-    use crate::models::Country;
-    use crate::models::Genre;
-    use crate::models::Language;
-    use crate::models::MediaType;
-    use crate::models::Network;
-    use crate::{
-        asyn::TraktApi,
-        models::{Certification, Certifications, CertificationsType},
-    };
+    use crate::{asyn::TraktApi, models::*};
     use futures::future::Future;
 
     #[test]

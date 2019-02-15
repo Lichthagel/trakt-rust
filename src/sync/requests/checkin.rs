@@ -11,7 +11,7 @@ use serde_json::{Map, Value};
 ///
 /// # Example
 ///
-/// ```rust
+/// ```rust,no_run
 /// use trakt::{
 ///     selectors::{MovieSelector, SelectIds, SelectMovie},
 ///     TraktApi,

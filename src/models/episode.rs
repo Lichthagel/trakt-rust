@@ -4,7 +4,7 @@ use crate::{
 };
 use chrono::{DateTime, Utc};
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Episode {
     pub season: u32,
     pub number: u32,
@@ -35,6 +35,20 @@ impl WithFull for Episode {
 
 impl WithNone for FullEpisode {
     type None = Episode;
+}
+
+impl PartialEq for FullEpisode {
+    fn eq(&self, other: &FullEpisode) -> bool {
+        self.season == other.season
+            && self.number == other.number
+            && self.title == other.title
+            && self.ids == other.ids
+            && self.number_abs == other.number_abs
+            && self.overview == other.overview
+            && self.first_aired == other.first_aired
+            && self.available_translations == other.available_translations
+            && self.runtime == other.runtime
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]

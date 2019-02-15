@@ -9,7 +9,7 @@ use std::fmt;
 pub struct List {
     pub name: String,
     pub description: Option<String>,
-    pub privacy: String,
+    pub privacy: Option<String>,
     pub display_numbers: bool,
     pub allow_comments: bool,
     pub sort_by: String,
@@ -21,6 +21,21 @@ pub struct List {
     pub likes: u64,
     pub ids: Ids,
     pub user: User,
+}
+
+impl PartialEq for List {
+    fn eq(&self, other: &List) -> bool {
+        self.name == other.name
+            && self.description == other.description
+            && self.privacy == other.privacy
+            && self.display_numbers == other.display_numbers
+            && self.allow_comments == other.allow_comments
+            && self.sort_by == other.sort_by
+            && self.sort_how == other.sort_how
+            && self.created_at == other.created_at
+            && self.ids == other.ids
+            && self.user == other.user
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -39,6 +54,21 @@ pub struct FullList {
     pub likes: u64,
     pub ids: Ids,
     pub user: FullUser,
+}
+
+impl PartialEq for FullList {
+    fn eq(&self, other: &FullList) -> bool {
+        self.name == other.name
+            && self.description == other.description
+            && self.privacy == other.privacy
+            && self.display_numbers == other.display_numbers
+            && self.allow_comments == other.allow_comments
+            && self.sort_by == other.sort_by
+            && self.sort_how == other.sort_how
+            && self.created_at == other.created_at
+            && self.ids == other.ids
+            && self.user == other.user
+    }
 }
 
 impl WithFull for List {
@@ -100,7 +130,7 @@ impl From<List> for OptionList {
         Self {
             name: Some(list.name),
             description: list.description,
-            privacy: Some(list.privacy),
+            privacy: list.privacy,
             display_numbers: Some(list.display_numbers),
             allow_comments: Some(list.allow_comments),
             sort_by: Some(list.sort_by),
