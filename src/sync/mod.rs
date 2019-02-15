@@ -525,6 +525,11 @@ impl TraktApi {
     pub fn networks(&self) -> Result<Vec<Network>> {
         self.get(api_url!(("networks")))
     }
+
+    #[cfg(feature = "async")]
+    pub fn into_async(self) -> crate::asyn::TraktApi {
+        crate::asyn::TraktApi::new(self.client_id, self.client_secret)
+    }
 }
 
 impl PartialEq for TraktApi {
