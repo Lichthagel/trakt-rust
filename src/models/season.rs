@@ -34,7 +34,9 @@ impl WithNone for FullSeason {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct OptionSeason {
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub number: Option<u32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub ids: Option<Ids>,
 }
 

@@ -53,9 +53,13 @@ impl PartialEq for FullEpisode {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct OptionEpisode {
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub season: Option<u32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub number: Option<u32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub title: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub ids: Option<Ids>,
 }
 

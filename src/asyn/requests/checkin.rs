@@ -11,7 +11,7 @@ use serde_json::{Map, Value};
 /// A struct for creating a checkin. [More]
 ///
 /// [More]: https://trakt.docs.apiary.io/#reference/checkin/checkin/check-into-an-item
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct Checkin<'a> {
     pub client: &'a TraktApi,
     pub body: Map<String, Value>,
@@ -113,7 +113,7 @@ impl<'a> SelectShow for Checkin<'a> {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct CheckinSharing {
     pub twitter: bool,
     pub tumblr: bool,
@@ -158,4 +158,56 @@ impl TraktApi {
                 .map_err(Error::from),
         )
     }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::{
+        asyn::{
+            requests::checkin::{Checkin, CheckinSharing},
+            TraktApi,
+        },
+        selectors::{SelectIds, SelectMovie},
+    };
+    use chrono::Utc;
+    use serde_json::{Map, Value};
+
+    #[test]
+    fn checkin_struct() {
+        let client = TraktApi::new("_".to_owned(), Some("_".to_owned()));
+        let c = Checkin::new(&client)
+            .twitter()
+            .message("MSG")
+            .movie(|movie| movie.slug("warcraft-2016"))
+            .app_date(Utc::today().naive_utc())
+            .app_version("0.1.0");
+
+        let mut body = Map::new();
+
+        body.insert("app_version".to_owned(), Value::String("0.1.0".to_owned()));
+        body.insert(
+            "app_date".to_owned(),
+            serde_json::to_value(Utc::today().naive_utc()).unwrap(),
+        );
+        body.insert("message".to_owned(), Value::String("MSG".to_owned()));
+        body.insert("movie".to_owned(), json!({
+            "ids": {
+                "slug": "warcraft-2016"
+            }
+        }));
+
+        assert_eq!(
+            c,
+            Checkin {
+                client: &client,
+                body,
+                sharing: CheckinSharing {
+                    twitter: true,
+                    tumblr: false,
+                    facebook: false
+                }
+            }
+        );
+    }
+
 }
