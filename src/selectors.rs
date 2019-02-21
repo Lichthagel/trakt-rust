@@ -81,6 +81,10 @@ pub trait SelectMovie: Sized {
         self.movie_v(serde_json::to_value(movie).unwrap())
     }
 
+    fn movie_json(self, movie: &str) -> Self {
+        self.movie_v(json!(movie))
+    }
+
     fn movie(self, f: impl FnOnce(MovieSelector) -> MovieSelector) -> Self {
         self.movie_v(f(MovieSelector::default()).build())
     }
@@ -150,6 +154,10 @@ pub trait SelectShow: Sized {
 
     fn show_obj(self, show: Show) -> Self {
         self.show_v(serde_json::to_value(show).unwrap())
+    }
+
+    fn show_json(self, show: &str) -> Self {
+        self.show_v(json!(show))
     }
 
     fn show(self, f: impl FnOnce(ShowSelector) -> ShowSelector) -> Self {
@@ -232,6 +240,10 @@ pub trait SelectSeason: Sized {
         self.season_v(serde_json::to_value(season).unwrap())
     }
 
+    fn season_json(self, season: &str) -> Self {
+        self.season_v(json!(season))
+    }
+
     fn season(self, f: impl FnOnce(SeasonSelector) -> SeasonSelector) -> Self {
         self.season_v(f(SeasonSelector::default()).build())
     }
@@ -302,6 +314,10 @@ pub trait SelectEpisode: Sized {
         self.episode_v(serde_json::to_value(episode).unwrap())
     }
 
+    fn episode_json(self, episode: &str) -> Self {
+        self.episode_v(json!(episode))
+    }
+
     fn episode(self, f: impl FnOnce(EpisodeSelector) -> EpisodeSelector) -> Self {
         self.episode_v(f(EpisodeSelector::default()).build())
     }
@@ -369,6 +385,10 @@ pub trait SelectList: Sized {
         self.list_v(serde_json::to_value(list).unwrap())
     }
 
+    fn list_json(self, list: &str) -> Self {
+        self.list_v(json!(list))
+    }
+
     fn list(self, f: impl FnOnce(ListSelector) -> ListSelector) -> Self {
         self.list_v(f(ListSelector::default()).build())
     }
@@ -434,6 +454,10 @@ pub trait SelectUser: Sized {
 
     fn user_obj(self, user: User) -> Self {
         self.user_v(serde_json::to_value(user).unwrap())
+    }
+
+    fn user_json(self, user: &str) -> Self {
+        self.user_v(json!(user))
     }
 
     fn user(self, f: impl FnOnce(UserSelector) -> UserSelector) -> Self {
