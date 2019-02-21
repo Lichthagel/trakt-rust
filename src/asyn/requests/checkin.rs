@@ -91,7 +91,7 @@ impl<'a> Checkin<'a> {
 
 /// Select the movie of a checkin
 impl<'a> SelectMovie for Checkin<'a> {
-    fn movie_v(mut self, movie: Value) -> Self {
+    fn movie_value(mut self, movie: Value) -> Self {
         self.body.insert("movie".to_owned(), movie);
         self
     }
@@ -99,7 +99,7 @@ impl<'a> SelectMovie for Checkin<'a> {
 
 /// Select the episode of a checkin
 impl<'a> SelectEpisode for Checkin<'a> {
-    fn episode_v(mut self, episode: Value) -> Self {
+    fn episode_value(mut self, episode: Value) -> Self {
         self.body.insert("episode".to_owned(), episode);
         self
     }
@@ -107,7 +107,7 @@ impl<'a> SelectEpisode for Checkin<'a> {
 
 /// Select the show of a checkin
 impl<'a> SelectShow for Checkin<'a> {
-    fn show_v(mut self, show: Value) -> Self {
+    fn show_value(mut self, show: Value) -> Self {
         self.body.insert("show".to_owned(), show);
         self
     }

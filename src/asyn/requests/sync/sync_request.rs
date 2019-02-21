@@ -56,28 +56,28 @@ impl<'a, R: DeserializeOwned + Send + 'static> SyncRequest<'a, R> {
 }
 
 impl<'a, R: DeserializeOwned> SelectMovie for SyncRequest<'a, R> {
-    fn movie_v(mut self, movie: Value) -> Self {
+    fn movie_value(mut self, movie: Value) -> Self {
         self.movies.push(movie);
         self
     }
 }
 
 impl<'a, R: DeserializeOwned> SelectShow for SyncRequest<'a, R> {
-    fn show_v(mut self, show: Value) -> Self {
+    fn show_value(mut self, show: Value) -> Self {
         self.shows.push(show);
         self
     }
 }
 
 impl<'a, R: DeserializeOwned> SelectSeason for SyncRequest<'a, R> {
-    fn season_v(mut self, season: Value) -> Self {
+    fn season_value(mut self, season: Value) -> Self {
         self.seasons.push(season);
         self
     }
 }
 
 impl<'a, R: DeserializeOwned> SelectEpisode for SyncRequest<'a, R> {
-    fn episode_v(mut self, episode: Value) -> Self {
+    fn episode_value(mut self, episode: Value) -> Self {
         self.episodes.push(episode);
         self
     }

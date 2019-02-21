@@ -63,35 +63,35 @@ impl<'a> CommentCreateRequest<'a> {
 }
 
 impl<'a> SelectMovie for CommentCreateRequest<'a> {
-    fn movie_v(mut self, movie: Value) -> Self {
+    fn movie_value(mut self, movie: Value) -> Self {
         self.body.insert("movie".to_owned(), movie);
         self
     }
 }
 
 impl<'a> SelectEpisode for CommentCreateRequest<'a> {
-    fn episode_v(mut self, episode: Value) -> Self {
+    fn episode_value(mut self, episode: Value) -> Self {
         self.body.insert("episode".to_ascii_lowercase(), episode);
         self
     }
 }
 
 impl<'a> SelectShow for CommentCreateRequest<'a> {
-    fn show_v(mut self, show: Value) -> Self {
+    fn show_value(mut self, show: Value) -> Self {
         self.body.insert("show".to_owned(), show);
         self
     }
 }
 
 impl<'a> SelectSeason for CommentCreateRequest<'a> {
-    fn season_v(mut self, season: Value) -> Self {
+    fn season_value(mut self, season: Value) -> Self {
         self.body.insert("season".to_owned(), season);
         self
     }
 }
 
 impl<'a> SelectList for CommentCreateRequest<'a> {
-    fn list_v(mut self, list: Value) -> Self {
+    fn list_value(mut self, list: Value) -> Self {
         self.body.insert("list".to_owned(), list);
         self
     }

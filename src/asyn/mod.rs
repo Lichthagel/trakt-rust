@@ -26,7 +26,7 @@ pub struct TraktApi {
 ///
 /// # Example
 ///
-/// ```rust
+/// ```rust,ignore
 /// extern crate futures;
 /// extern crate tokio;
 /// extern crate trakt;
@@ -40,14 +40,14 @@ pub struct TraktApi {
 ///         None,
 ///     );
 ///
-///     let access_token = env!("ACCESS_TOKEN");
+///     let access_token = "";
 ///
 ///     api.user_settings(access_token)
 ///         .map(|res| {
 ///             dbg!(res);
 ///         })
 ///         .map_err(|e| {
-///             dbg!(e);
+///             panic!(e);
 ///         })
 /// }
 ///
