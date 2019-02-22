@@ -1,5 +1,9 @@
 use chrono::{DateTime, Utc};
 
+/// Progress of how many items a user collected from a show.
+/// [API docs]
+///
+/// [API docs]: https://trakt.docs.apiary.io/#reference/shows/collection-progress/get-show-collection-progress
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CollectionProgress {
     pub aired: u32,
@@ -8,6 +12,9 @@ pub struct CollectionProgress {
     pub seasons: Vec<CollectionProgressSeason>,
 }
 
+/// Collection progress of a season in [CollectionProgress]
+///
+/// [CollectionProgress]: struct.CollectionProgress.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CollectionProgressSeason {
     pub number: u32,
@@ -16,6 +23,9 @@ pub struct CollectionProgressSeason {
     pub episodes: Vec<CollectionProgressEpisode>,
 }
 
+/// Collection progress of a episode in [CollectionProgressSeason]
+///
+/// [CollectionProgressSeason] struct.CollectionProgressSeason.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CollectionProgressEpisode {
     pub number: u32,
@@ -23,6 +33,10 @@ pub struct CollectionProgressEpisode {
     pub collected_at: Option<DateTime<Utc>>,
 }
 
+/// Progress of how many items a user watched from a show.
+/// [API docs]
+///
+/// [API docs]: https://trakt.docs.apiary.io/#reference/shows/watched-progress/get-show-watched-progress
 #[derive(Debug, Serialize, Deserialize)]
 pub struct WatchedProgress {
     pub aired: u32,
@@ -32,6 +46,9 @@ pub struct WatchedProgress {
     pub seasons: Vec<WatchedProgressSeason>,
 }
 
+/// Watched progress of a season in [WatchedProgress]
+///
+/// [WatchedProgress]: struct.WatchedProgress.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct WatchedProgressSeason {
     pub number: u32,
@@ -40,6 +57,9 @@ pub struct WatchedProgressSeason {
     pub episodes: Vec<WatchedProgressEpisode>,
 }
 
+/// Watched progress of a episode in [WatchedProgressSeason]
+///
+/// [WatchedProgressSeason]: struct.WatchedProgressSeason.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct WatchedProgressEpisode {
     pub number: u32,
