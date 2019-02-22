@@ -1,24 +1,14 @@
 //! # trakt-rust
 //!
-//! A api wrapper in Rust for trakt.tv
-//!
-//! ## Installation
-//!
-//! Not yet released but you may add
-//! ```toml
-//! trakt = { git = "https://github.com/Lichthagel/trakt-rust" }
-//! ```
-//! to your dependencies
-//!
-//! ## Examples
-//!
-//! TODO
+//! A api wrapper in Rust for trakt.tv.
+//! [README]
 //!
 //! ## License
 //!
 //! [MIT][license]
 //!
 //! [license]: https://github.com/Lichthagel/trakt-rust/blob/master/LICENSE
+//! [README]: https://github.com/Lichthagel/trakt-rust/blob/master/README.md
 
 #[macro_use]
 extern crate serde_derive;
