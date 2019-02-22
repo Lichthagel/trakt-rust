@@ -2,6 +2,9 @@ use std::fmt;
 use std::fmt::Display;
 use std::ops::AddAssign;
 
+/// [Ids] of almost every item
+///
+/// [Ids]: https://trakt.docs.apiary.io/#introduction/standard-media-objects
 #[derive(Debug, Serialize, Deserialize, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Ids {
     #[serde(skip_serializing_if = "Option::is_none")]
