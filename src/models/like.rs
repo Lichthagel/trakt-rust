@@ -3,6 +3,7 @@ use chrono::{DateTime, Utc};
 use std::fmt;
 use std::fmt::Display;
 
+/// All items that can be liked (not rated)
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum LikeableType {
@@ -19,12 +20,18 @@ impl Display for LikeableType {
     }
 }
 
+/// A [like] by a known comment/list
+///
+/// [like]: https://trakt.docs.apiary.io/#reference/comments/likes
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Like {
     pub liked_at: DateTime<Utc>,
     pub user: User,
 }
 
+/// A [like] by a known user
+///
+/// [like]: https://trakt.docs.apiary.io/#reference/users/likes/get-likes
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserLike {
     pub liked_at: DateTime<Utc>,
