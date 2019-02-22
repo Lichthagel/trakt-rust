@@ -2,6 +2,9 @@ use crate::models::ids::Ids;
 use chrono::DateTime;
 use chrono::Utc;
 
+/// An [user]
+///
+/// [user]: https://trakt.docs.apiary.io/#reference/users
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct User {
     pub username: String,
@@ -12,16 +15,23 @@ pub struct User {
     pub ids: Ids,
 }
 
+/// Images of an [User]
+///
+/// [User]: struct.User.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserImages {
     pub avatar: Image,
 }
 
+/// An image with its url
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Image {
     pub full: String,
 }
 
+/// An [User] with only optional fields
+///
+/// [User]: struct.User.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct OptionUser {
     pub username: Option<String>,
@@ -71,6 +81,10 @@ impl From<User> for OptionUser {
     }
 }
 
+/// An [user] with full [extended info]
+///
+/// [user]: https://trakt.docs.apiary.io/#reference/users
+/// [extended info]: https://trakt.docs.apiary.io/#introduction/extended-info
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FullUser {
     pub username: String,
@@ -101,6 +115,9 @@ impl PartialEq for FullUser {
     }
 }
 
+/// [Settings] of an user
+///
+/// [Settings]: https://trakt.docs.apiary.io/#reference/users/settings
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Settings {
     pub user: FullUser,
@@ -109,6 +126,9 @@ pub struct Settings {
     pub sharing_text: SettingsSharingText,
 }
 
+/// Account in [Settings]
+///
+/// [Settings]: struct.Settings.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SettingsAccount {
     pub timezone: String,
@@ -118,6 +138,9 @@ pub struct SettingsAccount {
     pub token: Option<String>,
 }
 
+/// Connections in [Settings]
+///
+/// [Settings]: struct.Settings.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SettingsConnections {
     pub facebook: bool,
@@ -128,12 +151,18 @@ pub struct SettingsConnections {
     pub slack: bool,
 }
 
+/// Sharing text in [Settings]
+///
+/// [Settings]: struct.Settings.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SettingsSharingText {
     pub watching: String,
     pub watched: String,
 }
 
+/// A [follow request]
+///
+/// [follow request]: https://trakt.docs.apiary.io/#reference/users/follower-requests
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FollowRequest {
     pub id: u32,
@@ -141,6 +170,9 @@ pub struct FollowRequest {
     pub user: User,
 }
 
+/// Response after [approving a follow request]
+///
+/// [approving a follow request]: https://trakt.docs.apiary.io/#reference/users/approve-or-deny-follower-requests/approve-follow-request
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FollowRequestApprove {
     pub followed_at: DateTime<Utc>,
