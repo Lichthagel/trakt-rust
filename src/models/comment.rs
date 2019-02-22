@@ -9,6 +9,9 @@ use crate::{
 use chrono::{DateTime, Utc};
 use std::fmt;
 
+/// A [comment]
+///
+/// [comment]: https://trakt.docs.apiary.io/#reference/comments
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Comment {
     pub id: u64,
@@ -36,6 +39,10 @@ impl PartialEq for Comment {
     }
 }
 
+/// A [comment] with full [extended info]
+///
+/// [comment]: https://trakt.docs.apiary.io/#reference/comments
+/// [extended info]: https://trakt.docs.apiary.io/#introduction/extended-info
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FullComment {
     pub id: u64,
@@ -71,6 +78,7 @@ impl WithNone for FullComment {
     type None = Comment;
 }
 
+/// Wraps around an item that can be commented
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CommentItem {
     #[serde(rename = "type")]
@@ -82,6 +90,9 @@ pub struct CommentItem {
     pub list: Option<List>,
 }
 
+/// Wraps around an item that can be [comment]ed including the [comment]
+///
+/// [comment]: https://trakt.docs.apiary.io/#reference/comments
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CommentAndItem {
     #[serde(rename = "type")]
@@ -94,6 +105,10 @@ pub struct CommentAndItem {
     pub comment: Comment,
 }
 
+/// Wraps around an item that can be [comment]ed including the [comment] and full [extended info]
+///
+/// [comment]: https://trakt.docs.apiary.io/#reference/comments
+/// [extended info]: https://trakt.docs.apiary.io/#introduction/extended-info
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FullCommentAndItem {
     #[serde(rename = "type")]
@@ -114,6 +129,9 @@ impl WithNone for FullCommentAndItem {
     type None = CommentAndItem;
 }
 
+/// For requesting different types of [comment]s
+///
+/// [comment]: https://trakt.docs.apiary.io/#reference/comments
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename = "lowercase")]
 pub enum CommentType {
@@ -132,6 +150,7 @@ impl fmt::Display for CommentType {
     }
 }
 
+/// For specifying where a comment should be shared
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CommentSharing {
     pub twitter: bool,
