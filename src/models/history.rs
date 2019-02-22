@@ -1,6 +1,9 @@
 use crate::models::{Episode, Movie, WatchableType};
 use chrono::{DateTime, Utc};
 
+/// An item in an user's [history]
+///
+/// [history]: https://trakt.docs.apiary.io/#reference/users/history
 #[derive(Debug, Serialize, Deserialize)]
 pub struct HistoryItem {
     pub id: u64,
