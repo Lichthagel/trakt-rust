@@ -27,7 +27,7 @@ pub struct TraktApi<'a> {
 ///
 /// # Example
 ///
-/// ```rust,ignore
+/// ```rust,no_run
 /// extern crate futures;
 /// extern crate tokio;
 /// extern crate trakt;
@@ -37,7 +37,7 @@ pub struct TraktApi<'a> {
 ///
 /// fn fetch() -> impl Future<Item = (), Error = ()> {
 ///     let api = TraktApi::new(
-///         env!("CLIENT_ID").to_owned(),
+///         "...".to_owned(),
 ///         None,
 ///     );
 ///

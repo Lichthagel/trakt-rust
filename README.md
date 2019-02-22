@@ -1,6 +1,6 @@
 # trakt-rust
 
-[![discord_badge]][discord] [![docs_badge]][docs] [![cratesio_badge]][cratesio]
+[![ci_badge]][ci] [![discord_badge]][discord] [![docs_badge]][docs] [![cratesio_badge]][cratesio]
 
 A api wrapper in Rust for trakt.tv
 
@@ -38,3 +38,5 @@ fn main() {
 [docs_badge]: https://img.shields.io/badge/docs-online-5023dd.svg?style=flat-square
 [cratesio]: https://crates.io/crates/trakt
 [cratesio_badge]: https://img.shields.io/crates/v/trakt.svg?style=flat-square
+[ci]: https://travis-ci.org/Lichthagel/trakt-rust
+[ci_badge]: https://img.shields.io/travis/lichthagel/trakt-rust.svg?style=flat-square

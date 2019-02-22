@@ -246,7 +246,7 @@ pub trait SelectShow: Sized {
     ///
     /// # Example
     ///
-    /// ```ignore
+    /// ```json,ignore
     /// "{
     ///     "ids": {
     ///         "slug": "fairy-tail"

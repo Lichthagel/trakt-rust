@@ -11,7 +11,7 @@ use serde_json::{Map, Value};
 ///
 /// # Example
 ///
-/// ```rust,ignore
+/// ```rust,no_run
 /// use trakt::{
 ///     selectors::{MovieSelector, SelectIds, SelectMovie},
 ///     TraktApi,
@@ -19,7 +19,7 @@ use serde_json::{Map, Value};
 ///
 /// fn main() {
 ///     let api = TraktApi::new(
-///         env!("CLIENT_ID").to_owned(),
+///         "...".to_owned(),
 ///         None,
 ///     );
 ///
