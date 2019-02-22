@@ -1,3 +1,6 @@
+//! All models related to [collections]
+//!
+//! [collections]: https://trakt.docs.apiary.io/#reference/users/collection
 use crate::models::{Movie, Show};
 use chrono::{DateTime, Utc};
 

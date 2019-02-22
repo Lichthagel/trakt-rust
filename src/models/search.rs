@@ -1,3 +1,6 @@
+//! All models related to [search]
+//!
+//! [search]: https://trakt.docs.apiary.io/#reference/search
 use crate::models::{Episode, List, Movie, Person, SearchItemType, Show};
 use std::fmt;
 use std::fmt::Display;

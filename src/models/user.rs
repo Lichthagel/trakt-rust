@@ -1,3 +1,6 @@
+//! All models related to [users]
+//!
+//! [users]: https://trakt.docs.apiary.io/#reference/users
 use crate::models::ids::Ids;
 use chrono::DateTime;
 use chrono::Utc;

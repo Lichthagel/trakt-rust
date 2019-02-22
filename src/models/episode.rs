@@ -1,3 +1,6 @@
+//! All models related to [episodes]
+//!
+//! [episodes]: https://trakt.docs.apiary.io/#reference/episodes
 use crate::{
     extended_info::{WithFull, WithNone},
     models::ids::Ids,

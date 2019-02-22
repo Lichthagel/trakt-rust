@@ -1,3 +1,6 @@
+//! All models related to [movies]
+//!
+//! [movies]: https://trakt.docs.apiary.io/#reference/movies
 use crate::{
     extended_info::{WithFull, WithNone},
     models::Ids,

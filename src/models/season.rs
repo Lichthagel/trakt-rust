@@ -1,3 +1,6 @@
+//! All models related to [seasons]
+//!
+//! [seasons]: https://trakt.docs.apiary.io/#reference/seasons
 use crate::{
     extended_info::{WithFull, WithNone},
     models::ids::Ids,

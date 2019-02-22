@@ -5,7 +5,7 @@ use std::marker::PhantomData;
 
 /// A simple implementation of [Pagination]
 ///
-/// [Pagination]: trait.Pagination.html
+/// [Pagination]: ../trait.Pagination.html
 pub struct PaginationRequest<'a, T> {
     client: &'a TraktApi,
     request: RequestBuilder,
@@ -36,7 +36,7 @@ impl<'a, T: DeserializeOwned> PaginationRequest<'a, T> {
 
 /// Implementation of [Pagination] for a simple [PaginationFactory]
 ///
-/// [Pagination]: trait.Pagination.html
+/// [Pagination]: ../trait.Pagination.html
 /// [PaginationFactory]: struct.PaginationFactory.html
 impl<'a, T: DeserializeOwned> Pagination for PaginationRequest<'a, T> {
     /// Set requested page

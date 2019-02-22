@@ -1,3 +1,6 @@
+//! All models related to [lists]
+//!
+//! [lists]: https://trakt.docs.apiary.io/#reference/lists
 use crate::{
     extended_info::{WithFull, WithNone},
     models::{Episode, FullUser, Ids, ListItemType, Movie, OptionUser, Person, Season, Show, User},

@@ -1,3 +1,6 @@
+//! All models related to [people]
+//!
+//! [people]: https://trakt.docs.apiary.io/#reference/people
 use crate::models::{Ids, Movie, Show};
 
 /// A [person]

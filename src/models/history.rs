@@ -1,3 +1,6 @@
+//! All models related to [histories]
+//!
+//! [histories]: https://trakt.docs.apiary.io/#reference/users/history
 use crate::models::{Episode, Movie, WatchableType};
 use chrono::{DateTime, Utc};
 

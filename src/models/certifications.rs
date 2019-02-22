@@ -1,3 +1,7 @@
+//! All models related to [certifications]
+//!
+//! [certifications]: https://trakt.docs.apiary.io/#reference/certifications
+
 /// The response of getting certifications.
 /// [API docs]
 ///

@@ -1,3 +1,7 @@
+//! All models related to [genres]
+//!
+//! [genres]: https://trakt.docs.apiary.io/#reference/genres
+
 /// A [genre]
 ///
 /// [genre]: https://trakt.docs.apiary.io/#reference/genres

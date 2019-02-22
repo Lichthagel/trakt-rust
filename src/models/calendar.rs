@@ -1,3 +1,6 @@
+//! All models related to [calendars]
+//!
+//! [calendars]: https://trakt.docs.apiary.io/#reference/calendars
 use crate::{
     extended_info::{WithFull, WithNone},
     models::{Episode, FullEpisode, FullMovie, FullShow, Movie, Show},

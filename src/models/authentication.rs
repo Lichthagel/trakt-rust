@@ -1,3 +1,7 @@
+//! All models related to [authentication]
+//!
+//! [authentication]: https://trakt.docs.apiary.io/#reference/authentication-oauth
+
 /// The body for getting an access_token.
 ///
 /// Look [here]

@@ -1,3 +1,6 @@
+//! All models related to [comments]
+//!
+//! [comments]: https://trakt.docs.apiary.io/#reference/comments
 use crate::{
     extended_info::{WithFull, WithNone},
     filters::TypeFilter,

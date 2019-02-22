@@ -1,3 +1,6 @@
+//! All models related to [shows]
+//!
+//! [shows]: https://trakt.docs.apiary.io/#reference/shows
 use crate::{
     error::Error,
     extended_info::{WithFull, WithNone},
