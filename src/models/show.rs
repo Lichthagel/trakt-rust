@@ -7,6 +7,9 @@ use chrono::{DateTime, Utc};
 use serde::{de::Visitor, Deserializer};
 use std::{fmt, ops::AddAssign, str::FromStr};
 
+/// A [show]
+///
+/// [show]: https://trakt.docs.apiary.io/#reference/shows
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Show {
     pub title: String,
@@ -14,6 +17,10 @@ pub struct Show {
     pub ids: Ids,
 }
 
+/// Airing information of a [show]. Used in [FullShow]
+///
+/// [show]: https://trakt.docs.apiary.io/#reference/shows
+/// [FullShow]: struct.FullShow.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Airing {
     pub day: Option<String>,
@@ -21,6 +28,10 @@ pub struct Airing {
     pub timezone: Option<String>,
 }
 
+/// Status of a [show]. Used in [FullShow]
+///
+/// [show]: https://trakt.docs.apiary.io/#reference/shows
+/// [FullShow]: struct.FullShow.html
 #[derive(Debug, Serialize, Deserialize)]
 pub enum ShowStatus {
     #[serde(rename = "returning series")]
@@ -89,6 +100,10 @@ where
     deserializer.deserialize_any(ShowStatusVisitor)
 }
 
+/// A [show] with full [extended info]
+///
+/// [show]: https://trakt.docs.apiary.io/#reference/shows
+/// [extended info]: https://trakt.docs.apiary.io/#introduction/extended-info
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FullShow {
     pub title: String,
@@ -123,6 +138,9 @@ impl WithNone for FullShow {
     type None = Show;
 }
 
+/// A [Show] with only optional fields
+///
+/// [Show]: struct.Show.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct OptionShow {
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -194,12 +212,18 @@ impl AddAssign for OptionShow {
     }
 }
 
+/// Info about a [trending show]
+///
+/// [trending show]: https://trakt.docs.apiary.io/#reference/shows/trending/get-trending-shows
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ShowInfo {
     watchers: u32,
     show: Show,
 }
 
+/// Stats of a [show]
+///
+/// [show]: https://trakt.docs.apiary.io/#reference/shows/played/get-the-most-played-shows
 #[derive(Debug, Serialize, Deserialize)]
 pub struct WatchedShow {
     watcher_count: u64,
@@ -209,12 +233,18 @@ pub struct WatchedShow {
     show: Show,
 }
 
+/// An [anticipated show] that is not yet released but in some lists
+///
+/// [anticipated show]: https://trakt.docs.apiary.io/#reference/shows/anticipated/get-the-most-anticipated-shows
 #[derive(Debug, Serialize, Deserialize)]
 pub struct AnticipatedShow {
     list_count: u64,
     show: Show,
 }
 
+/// A [show] that got recently updated
+///
+/// [show]: https://trakt.docs.apiary.io/#reference/shows
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UpdatedShow {
     updated_at: DateTime<Utc>,
