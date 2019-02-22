@@ -1,3 +1,8 @@
+/// The body for getting an access_token.
+///
+/// Look [here]
+///
+/// [here]: https://trakt.docs.apiary.io/#reference/authentication-oauth/get-token/exchange-code-for-access_token
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Authentication {
     pub code: String,
@@ -7,6 +12,11 @@ pub struct Authentication {
     pub grant_type: Option<String>,
 }
 
+/// The device codes required for device authentication
+///
+/// Look [here]
+///
+/// [here]: https://trakt.docs.apiary.io/#reference/authentication-devices/device-code/generate-new-device-codes
 #[derive(Debug, Serialize, Deserialize)]
 pub struct AuthenticationDevices {
     pub device_code: String,
@@ -16,6 +26,11 @@ pub struct AuthenticationDevices {
     pub interval: u64,
 }
 
+/// The response of getting an access_token
+///
+/// Look [here]
+///
+/// [here]: https://trakt.docs.apiary.io/#reference/authentication-oauth/get-token/exchange-code-for-access_token
 #[derive(Debug, Serialize, Deserialize)]
 pub struct AuthenticationTokenResponse {
     pub access_token: String,
