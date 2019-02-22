@@ -1,12 +1,19 @@
 use crate::models::Person;
 use crate::models::{Movie, Show};
 
+/// [Credits] of a [person]
+///
+/// [Credits]: https://trakt.docs.apiary.io/#reference/people/movies/get-movie-credits
+/// [person]: ../person/struct.Person.rs
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Credits {
     pub cast: Option<Vec<Character>>,
     pub crew: Option<Crew>,
 }
 
+/// Crew in [credits]
+///
+/// [credits]: https://trakt.docs.apiary.io/#reference/people/movies/get-movie-credits
 #[derive(Debug, Serialize, Deserialize)]
 pub enum Crew {
     #[serde(rename = "art")]
@@ -29,6 +36,9 @@ pub enum Crew {
     Camera(Vec<CrewMember>),
 }
 
+/// Crewmember in crew in [credits]
+///
+/// [Credits]: https://trakt.docs.apiary.io/#reference/people/movies/get-movie-credits
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CrewMember {
     pub job: String,
@@ -36,6 +46,7 @@ pub struct CrewMember {
     pub movie: Option<Movie>,
 }
 
+/// A character played by someone
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Character {
     pub character: String,
@@ -43,12 +54,16 @@ pub struct Character {
     pub movie: Option<Movie>,
 }
 
+/// People/credits of a movie/show
 #[derive(Debug, Serialize, Deserialize)]
 pub struct People {
     pub cast: Vec<CastPerson>,
     pub crew: Option<CrewPeople>,
 }
 
+/// crew in [People]
+///
+/// [People]: struct.People.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CrewPeople {
     pub art: Option<Vec<CrewPerson>>,
@@ -62,12 +77,19 @@ pub struct CrewPeople {
     pub camera: Option<Vec<CrewPerson>>,
 }
 
+/// A [person] acting a character
+///
+/// [person]: ../person/struct.Person.rs
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CastPerson {
     pub character: String,
     pub person: Person,
 }
 
+/// A [person] working in the [crew]
+///
+/// [person]: ../person/struct.Person.rs
+/// [crew]: struct.CrewPeople.rs
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CrewPerson {
     pub job: String,
