@@ -1,6 +1,7 @@
 use std::fmt;
 use std::fmt::Display;
 
+/// All item types that can be put in a list
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum ListItemType {
@@ -11,6 +12,7 @@ pub enum ListItemType {
     Person,
 }
 
+/// All item types that can be commented
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum CommentableItemType {
@@ -21,6 +23,7 @@ pub enum CommentableItemType {
     List,
 }
 
+/// All item types that can be commented and an All variant
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum AllCommentableItemType {
@@ -45,6 +48,7 @@ impl Display for AllCommentableItemType {
     }
 }
 
+/// All media item types
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum ItemType {
@@ -65,6 +69,7 @@ impl Display for ItemType {
     }
 }
 
+/// All media item types and an All variant
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum AllItemType {
@@ -87,6 +92,7 @@ impl Display for AllItemType {
     }
 }
 
+/// All item types that can be watched
 #[derive(Debug, Serialize, Deserialize)]
 pub enum WatchableType {
     #[serde(rename = "movie")]
@@ -104,6 +110,7 @@ impl Display for WatchableType {
     }
 }
 
+/// Movies or Shows enum
 #[derive(Debug, Serialize, Deserialize)]
 pub enum MediaType {
     #[serde(rename = "movies")]
@@ -121,6 +128,7 @@ impl Display for MediaType {
     }
 }
 
+/// All time periods
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum TimePeriod {
@@ -141,6 +149,7 @@ impl Display for TimePeriod {
     }
 }
 
+/// All item types that can be searched after
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum SearchItemType {
@@ -163,6 +172,9 @@ impl Display for SearchItemType {
     }
 }
 
+/// An enum for the [include_replies] query
+///
+/// [include_replies]: https://trakt.docs.apiary.io/#reference/comments/trending/get-trending-comments
 #[derive(Debug, Serialize, Deserialize)]
 pub enum IncludeReplies {
     True,
