@@ -1,6 +1,9 @@
 use crate::models::{ItemType, Movie, Season, Show};
 use chrono::{DateTime, Utc};
 
+/// A [rating]
+///
+/// [rating]: https://trakt.docs.apiary.io/#reference/users/ratings/get-ratings
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Rating {
     pub rated_at: DateTime<Utc>,
@@ -12,6 +15,9 @@ pub struct Rating {
     pub movie: Option<Movie>,
 }
 
+/// [Ratings] for a movie/show/season/episode
+///
+/// [Ratings]: https://trakt.docs.apiary.io/#reference/movies/ratings/get-movie-ratings
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Ratings {
     pub rating: f32,
@@ -19,6 +25,9 @@ pub struct Ratings {
     pub distribution: RatingDistribution,
 }
 
+/// The rating distribution in [Ratings]
+///
+/// [Ratings]: struct.Ratings.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct RatingDistribution {
     #[serde(rename = "1")]
