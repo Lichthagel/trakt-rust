@@ -1,6 +1,9 @@
 use crate::models::{Episode, Movie, Show, WatchableType};
 use chrono::{DateTime, Utc};
 
+/// The item an user is [currently watching]
+///
+/// [currently watching]: https://trakt.docs.apiary.io/#reference/users/watching/get-watching
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Watching {
     pub expires_at: DateTime<Utc>,
