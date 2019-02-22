@@ -1,10 +1,18 @@
-use crate::models::Person;
-use crate::models::{Movie, Show};
+use crate::models::{Ids, Movie, Show};
+
+/// A [person]
+///
+/// [person]: https://trakt.docs.apiary.io/#reference/people
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Person {
+    pub name: String,
+    pub ids: Ids,
+}
 
 /// [Credits] of a [person]
 ///
 /// [Credits]: https://trakt.docs.apiary.io/#reference/people/movies/get-movie-credits
-/// [person]: ../person/struct.Person.rs
+/// [person]: struct.Person.rs
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Credits {
     pub cast: Option<Vec<Character>>,
@@ -13,7 +21,7 @@ pub struct Credits {
 
 /// Crew in [credits]
 ///
-/// [credits]: https://trakt.docs.apiary.io/#reference/people/movies/get-movie-credits
+/// [credits]: struct.Credits.html
 #[derive(Debug, Serialize, Deserialize)]
 pub enum Crew {
     #[serde(rename = "art")]
@@ -38,7 +46,7 @@ pub enum Crew {
 
 /// Crewmember in crew in [credits]
 ///
-/// [Credits]: https://trakt.docs.apiary.io/#reference/people/movies/get-movie-credits
+/// [credits]: struct.Credits.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CrewMember {
     pub job: String,
@@ -79,7 +87,7 @@ pub struct CrewPeople {
 
 /// A [person] acting a character
 ///
-/// [person]: ../person/struct.Person.rs
+/// [person]: struct.Person.rs
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CastPerson {
     pub character: String,
@@ -88,7 +96,7 @@ pub struct CastPerson {
 
 /// A [person] working in the [crew]
 ///
-/// [person]: ../person/struct.Person.rs
+/// [person]: struct.Person.rs
 /// [crew]: struct.CrewPeople.rs
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CrewPerson {
