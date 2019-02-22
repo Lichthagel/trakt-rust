@@ -10,7 +10,7 @@ use std::marker::PhantomData;
 ///
 /// [Pagination]: ../trait.Pagination.html
 pub struct PaginationRequest<'a, T> {
-    client: &'a TraktApi,
+    client: &'a TraktApi<'a>,
     request: RequestBuilder,
     response_type: PhantomData<T>,
 }

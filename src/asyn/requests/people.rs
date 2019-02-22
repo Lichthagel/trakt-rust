@@ -3,7 +3,7 @@ use crate::{
     models::{Credits, List, ListFactory, Person},
 };
 
-impl TraktApi {
+impl<'a> TraktApi<'a> {
     pub fn people(&self, id: &str) -> Result<Person> {
         self.get(api_url!(("people", id)))
     }

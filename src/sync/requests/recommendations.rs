@@ -1,7 +1,7 @@
 use crate::{models::Movie, Result, TraktApi};
 use std::fmt::Display;
 
-impl TraktApi {
+impl<'a> TraktApi<'a> {
     pub fn recommendations_movie(&self, access_token: &str) -> Result<Vec<Movie>> {
         self.auth_get(api_url!(("recommendations", "movies")), access_token)
     }

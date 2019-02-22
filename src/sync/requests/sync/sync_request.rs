@@ -45,7 +45,7 @@ pub struct SyncRequest<'a, R: DeserializeOwned> {
     seasons: Vec<Value>,
     episodes: Vec<Value>,
     url: String,
-    client: &'a TraktApi,
+    client: &'a TraktApi<'a>,
     response_type: PhantomData<R>,
 }
 

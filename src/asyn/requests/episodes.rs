@@ -8,7 +8,7 @@ use crate::{
 use reqwest::Method;
 use std::fmt::Display;
 
-impl TraktApi {
+impl<'a> TraktApi<'a> {
     pub fn episode(
         &self,
         show_id: impl Display,
@@ -198,10 +198,16 @@ mod tests {
     };
     use chrono::{offset::TimeZone, Utc};
     use futures::future::Future;
+    use mockito::mock;
 
     #[test]
     fn episode() {
-        let fut = TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock("GET", "/shows/fairy-tail/seasons/3/episodes/3")
+            .with_status(200)
+            .with_body_from_file("mock_data/episode.json")
+            .create();
+
+        let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode("fairy-tail", 3, 3)
             .map(|res| {
                 assert_eq!(
@@ -231,7 +237,12 @@ mod tests {
 
     #[test]
     fn episode_full() {
-        let fut = TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock("GET", "/shows/fairy-tail/seasons/3/episodes/3?extended=full")
+            .with_status(200)
+            .with_body_from_file("mock_data/episode_full.json")
+            .create();
+
+        let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_full("fairy-tail", 3, 3)
             .map(|res| {
                 assert_eq!(
@@ -287,7 +298,12 @@ mod tests {
 
     #[test]
     fn episode_translations() {
-        let fut = TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock("GET", "/shows/fairy-tail/seasons/3/episodes/3/translations/de")
+            .with_status(200)
+            .with_body_from_file("mock_data/episode_translations.json")
+            .create();
+
+        let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_translations("fairy-tail", 3, 3, "de")
             .map(|res| {
                 assert_eq!(res, vec![Translation {
@@ -307,7 +323,12 @@ mod tests {
 
     #[test]
     fn episode_comments() {
-        let fut = TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock("GET", "/shows/fairy-tail/seasons/8/episodes/1/comments")
+            .with_status(200)
+            .with_body_from_file("mock_data/episode_comments.json")
+            .create();
+
+        let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_comments("fairy-tail", 8, 1)
             .page(1)
             .limit(20)
@@ -351,7 +372,12 @@ mod tests {
 
     #[test]
     fn episode_lists() {
-        let fut = TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/lists/all/added?page=1&limit=20")
+            .with_status(200)
+            .with_body_from_file("mock_data/episode_lists.json")
+            .create();
+
+        let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_lists("fairy-tail", 1, 1, |lf: ListFactory| {
                 lf.with_sorting(ListSort::Added)
                     .with_filter_type(ListFilter::All)
@@ -408,7 +434,12 @@ mod tests {
 
     #[test]
     fn episode_ratings() {
-        let fut = TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/ratings")
+            .with_status(200)
+            .with_body_from_file("mock_data/episode_ratings.json")
+            .create();
+
+        let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_ratings("fairy-tail", 1, 1)
             .map(|_res| ())
             .map_err(|e| {
@@ -421,7 +452,12 @@ mod tests {
 
     #[test]
     fn episode_stats() {
-        let fut = TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/stats")
+            .with_status(200)
+            .with_body_from_file("mock_data/episode_stats.json")
+            .create();
+
+        let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_stats("fairy-tail", 1, 1)
             .map(|_res| ())
             .map_err(|e| {
@@ -434,7 +470,12 @@ mod tests {
 
     #[test]
     fn episode_watching() {
-        let fut = TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/watching")
+            .with_status(200)
+            .with_body_from_file("mock_data/episode_watching.json")
+            .create();
+
+        let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_watching("fairy-tail", 1, 1)
             .map(|_res| ())
             .map_err(|e| {
@@ -447,7 +488,12 @@ mod tests {
 
     #[test]
     fn episode_watching_full() {
-        let fut = TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/watching?extended=full")
+            .with_status(200)
+            .with_body_from_file("mock_data/episode_watching_full.json")
+            .create();
+
+        let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_watching_full("fairy-tail", 1, 1)
             .map(|_res| ())
             .map_err(|e| {

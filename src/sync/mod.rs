@@ -12,20 +12,32 @@ pub type Result<T> = std::result::Result<T, Error>;
 
 /// The main struct which contains all requests
 #[derive(Debug, Clone)]
-pub struct TraktApi {
+pub struct TraktApi<'a> {
+    base_url: &'a str,
     client: reqwest::Client,
     client_id: String,
     client_secret: Option<String>,
 }
 
 /// Generic functions and simple requests
-impl TraktApi {
-    /// Creates a new client client ID is needed client secret is optional if you need authorization
-    pub fn new(client_id: String, client_secret: Option<String>) -> TraktApi {
+impl<'a> TraktApi<'a> {
+    /// Creates a new client. Client ID is needed. Client secret is optional, if you need authorization
+    pub fn new(client_id: String, client_secret: Option<String>) -> TraktApi<'a> {
+        Self::with_url("https://api.trakt.tv", client_id, client_secret)
+    }
+
+    /// Creates a new client in the staging environment. Client ID is needed. Client secret is optional, if you need authorization
+    pub fn staging(client_id: String, client_secret: Option<String>) -> TraktApi<'a> {
+        Self::with_url("https://api-staging.trakt.tv", client_id, client_secret)
+    }
+
+    /// Creates a new client with a specified base url. Client ID is needed. Client secret is optional, if you need authorization
+    pub fn with_url(base_url: &'a str, client_id: String, client_secret: Option<String>) -> TraktApi {
         TraktApi {
+            base_url,
             client: reqwest::Client::new(),
             client_id,
-            client_secret,
+            client_secret
         }
     }
 
@@ -34,7 +46,7 @@ impl TraktApi {
     /// [reqwest::RequestBuilder]: ../reqwest/struct.RequestBuilder.html
     fn builder(&self, method: Method, url: String) -> RequestBuilder {
         self.client
-            .request(method, &url)
+            .request(method, &format!("{}{}", self.base_url, url))
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
@@ -90,7 +102,7 @@ impl TraktApi {
     fn _get<T: DeserializeOwned>(&self, url: &str) -> Result<T> {
         match self
             .client
-            .get(url)
+            .get(&format!("{}{}", self.base_url, url))
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
@@ -140,7 +152,7 @@ impl TraktApi {
     fn _auth_get<T: DeserializeOwned>(&self, url: &str, access_token: &str) -> Result<T> {
         match self
             .client
-            .get(url)
+            .get(&format!("{}{}", self.base_url, url))
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
@@ -191,7 +203,7 @@ impl TraktApi {
     fn _post<T: DeserializeOwned>(&self, url: &str, body: String) -> Result<T> {
         match self
             .client
-            .post(url)
+            .post(&format!("{}{}", self.base_url, url))
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
@@ -252,7 +264,7 @@ impl TraktApi {
     ) -> Result<T> {
         match self
             .client
-            .post(url)
+            .post(&format!("{}{}", self.base_url, url))
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
@@ -304,7 +316,7 @@ impl TraktApi {
     fn _auth_post_no_body(&self, url: &str, body: String, access_token: &str) -> Result<()> {
         match self
             .client
-            .post(url)
+            .post(&format!("{}{}", self.base_url, url))
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
@@ -366,7 +378,7 @@ impl TraktApi {
     ) -> Result<T> {
         match self
             .client
-            .put(url)
+            .put(&format!("{}{}", self.base_url, url))
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
@@ -418,7 +430,7 @@ impl TraktApi {
     fn _auth_delete(&self, url: &str, access_token: &str) -> Result<()> {
         match self
             .client
-            .delete(url)
+            .delete(&format!("{}{}", self.base_url, url))
             .header("Content-Type", "application/json")
             .header("trakt-api-version", "2")
             .header("trakt-api-key", self.client_id.as_str())
@@ -527,25 +539,27 @@ impl TraktApi {
     }
 
     #[cfg(feature = "async")]
-    pub fn into_async(self) -> crate::asyn::TraktApi {
+    pub fn into_async(self) -> crate::asyn::TraktApi<'a> {
         crate::asyn::TraktApi::new(self.client_id, self.client_secret)
     }
 }
 
-impl PartialEq for TraktApi {
+impl<'a> PartialEq for TraktApi<'a> {
     fn eq(&self, other: &TraktApi) -> bool {
-        self.client_id == other.client_id && self.client_secret == other.client_secret
+        self.client_id == other.client_id && self.client_secret == other.client_secret && self.base_url == other.base_url
     }
 }
 
 #[cfg(test)]
 mod tests {
     use crate::{error::Error, models::*, TraktApi};
+    use mockito::mock;
 
     #[test]
     fn new_trakt_api() {
         assert_eq!(
             TraktApi {
+                base_url: "https://api.trakt.tv",
                 client: reqwest::Client::new(),
                 client_id: String::from("abc"),
                 client_secret: Some(String::from("def")),
@@ -555,8 +569,26 @@ mod tests {
     }
 
     #[test]
+    fn staging_trakt_api() {
+        assert_eq!(
+            TraktApi {
+                base_url: "https://api-staging.trakt.tv",
+                client: reqwest::Client::new(),
+                client_id: String::from("abc"),
+                client_secret: Some(String::from("def")),
+            },
+            TraktApi::staging(String::from("abc"), Some(String::from("def")))
+        );
+    }
+
+    #[test]
     fn certifications() -> Result<(), Error> {
-        TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock("GET", "/certifications/movies")
+            .with_status(200)
+            .with_body_from_file("mock_data/certifications_movies.json")
+            .create();
+
+        TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .certifications(CertificationsType::Movies)
             .map(|res| {
                 assert_eq!(
@@ -597,7 +629,12 @@ mod tests {
 
     #[test]
     fn countries() -> Result<(), Error> {
-        TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock("GET", "/countries/movies")
+            .with_status(200)
+            .with_body_from_file("mock_data/countries_movies.json")
+            .create();
+
+        TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .countries(MediaType::Movies)
             .map(|res| {
                 assert!(res.contains(&Country {
@@ -613,7 +650,12 @@ mod tests {
 
     #[test]
     fn genres() -> Result<(), Error> {
-        TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock("GET", "/genres/movies")
+            .with_status(200)
+            .with_body_from_file("mock_data/genres_movies.json")
+            .create();
+
+        TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .genres(MediaType::Movies)
             .map(|res| {
                 assert!(res.contains(&Genre {
@@ -629,7 +671,12 @@ mod tests {
 
     #[test]
     fn languages() -> Result<(), Error> {
-        TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock("GET", "/languages/movies")
+            .with_status(200)
+            .with_body_from_file("mock_data/languages_movies.json")
+            .create();
+
+        TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .languages(MediaType::Movies)
             .map(|res| {
                 assert!(res.contains(&Language {
@@ -645,7 +692,12 @@ mod tests {
 
     #[test]
     fn networks() -> Result<(), Error> {
-        TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock("GET", "/networks")
+            .with_status(200)
+            .with_body_from_file("mock_data/networks.json")
+            .create();
+
+        TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .networks()
             .map(|res| {
                 assert!(res.contains(&Network {

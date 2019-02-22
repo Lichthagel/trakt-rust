@@ -1,7 +1,7 @@
 use crate::{models::ListInfo, sync::pagination::PaginationRequest, TraktApi};
 use reqwest::Method;
 
-impl TraktApi {
+impl<'a> TraktApi<'a> {
     pub fn lists_trending(&self) -> PaginationRequest<ListInfo> {
         PaginationRequest::new(
             self,

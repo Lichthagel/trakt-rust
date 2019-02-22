@@ -5,7 +5,7 @@ use crate::{
 use reqwest::Method;
 use std::fmt::Display;
 
-impl TraktApi {
+impl<'a> TraktApi<'a> {
     pub fn search(&self, item_type: SearchType, query: &str) -> PaginationRequest<SearchResult> {
         PaginationRequest::new(
             self,

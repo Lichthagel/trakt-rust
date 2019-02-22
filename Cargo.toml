@@ -29,6 +29,7 @@ optional = true
 
 [dev-dependencies]
 tokio = "0.1"
+mockito = "0.16"
 
 [features]
 default = ["sync"]

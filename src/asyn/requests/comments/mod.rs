@@ -16,7 +16,7 @@ use crate::{
 
 use reqwest::Method;
 
-impl TraktApi {
+impl<'b> TraktApi<'b> {
     pub fn comment_create<'a>(&'a self, comment: &'a str) -> CommentCreateRequest<'a> {
         CommentCreateRequest::new(self, api_url!(("comments")), comment)
     }

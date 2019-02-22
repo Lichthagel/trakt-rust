@@ -1,0 +1,22 @@
+[
+  {
+    "username": "Lichthagel",
+    "private": false,
+    "name": "Lichthagel | Jens",
+    "vip": true,
+    "vip_ep": false,
+    "ids": {
+      "slug": "lichthagel"
+    },
+    "joined_at": "2018-12-23T21:44:58.000Z",
+    "location": "Germany",
+    "about": "",
+    "gender": "male",
+    "age": 18,
+    "images": {
+      "avatar": {
+        "full": "https://walter.trakt.tv/images/users/004/952/606/avatars/large/e3084d1699.png"
+      }
+    }
+  }
+]

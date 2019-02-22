@@ -4,7 +4,7 @@ use crate::{
 };
 use std::fmt::Display;
 
-impl TraktApi {
+impl<'a> TraktApi<'a> {
     pub fn seasons(&self, show_id: impl Display) -> Result<Vec<Season>> {
         self.get(api_url!(("shows", show_id, "seasons")))
     }

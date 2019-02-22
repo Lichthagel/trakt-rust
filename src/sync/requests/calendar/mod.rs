@@ -7,7 +7,7 @@ use crate::{
     TraktApi,
 };
 
-impl TraktApi {
+impl<'b> TraktApi<'b> {
     pub fn calendar_all_shows(&self) -> CalendarRequest<CalendarShow> {
         CalendarRequest::new(self, "all/shows", None)
     }

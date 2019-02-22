@@ -10,7 +10,7 @@ use crate::{
 };
 use reqwest::Method;
 
-impl TraktApi {
+impl<'a> TraktApi<'a> {
     pub fn user_settings(&self, access_token: &str) -> Result<Settings> {
         self.auth_get(api_url!(("users", "settings")), access_token)
     }

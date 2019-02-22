@@ -2,7 +2,7 @@
 // TODO this needs to be improved
 macro_rules! api_url {
     (($($y:expr),+) $(,($a:expr, $b:expr))*) => {{
-        let mut string: String = String::from("https://api.trakt.tv");
+        let mut string: String = String::new();
         $(
             string.push_str("/");
             string.push_str(&format!("{}", $y));
@@ -28,7 +28,7 @@ mod tests {
     #[test]
     fn combined_force_test() {
         assert_eq!(
-            "https://api.trakt.tv/test/1/2/3?test=1&test1=2",
+            "/test/1/2/3?test=1&test1=2",
             &api_url!(("test", "1", "2", "3"), ("test", "1"), ("test1", "2"))
         )
     }
@@ -36,7 +36,7 @@ mod tests {
     #[test]
     fn combined_force_test_only_url() {
         assert_eq!(
-            "https://api.trakt.tv/test/1/2/3",
+            "/test/1/2/3",
             &api_url!(("test", "1", "2", "3"))
         )
     }

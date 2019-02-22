@@ -9,7 +9,7 @@ use serde::de::DeserializeOwned;
 use std::marker::PhantomData;
 
 pub struct MoviesRequest<'a, T> {
-    client: &'a TraktApi,
+    client: &'a TraktApi<'a>,
     request: RequestBuilder,
     response_type: PhantomData<T>,
 }

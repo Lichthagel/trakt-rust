@@ -9,7 +9,7 @@ use crate::{
 use reqwest::Method;
 use std::fmt::Display;
 
-impl TraktApi {
+impl<'a> TraktApi<'a> {
     pub fn episode(
         &self,
         show_id: impl Display,
@@ -199,10 +199,16 @@ mod tests {
         TraktApi,
     };
     use chrono::{offset::TimeZone, Utc};
+    use mockito::mock;
 
     #[test]
     fn episode() -> Result<(), Error> {
-        TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock("GET", "/shows/fairy-tail/seasons/3/episodes/3")
+            .with_status(200)
+            .with_body_from_file("mock_data/episode.json")
+            .create();
+
+        TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode("fairy-tail", 3, 3)
             .map(|res| {
                 assert_eq!(
@@ -217,8 +223,8 @@ mod tests {
                             tvdb: Some(4173728),
                             imdb: None,
                             tmdb: Some(908194),
-                            tvrage: Some(0)
-                        }
+                            tvrage: Some(0),
+                        },
                     }
                 )
             })
@@ -226,7 +232,15 @@ mod tests {
 
     #[test]
     fn episode_full() -> Result<(), Error> {
-        TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock(
+            "GET",
+            "/shows/fairy-tail/seasons/3/episodes/3?extended=full",
+        )
+        .with_status(200)
+        .with_body_from_file("mock_data/episode_full.json")
+        .create();
+
+        TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_full("fairy-tail", 3, 3)
             .map(|res| {
                 assert_eq!(
@@ -241,7 +255,7 @@ mod tests {
                             tvdb: Some(4173728),
                             imdb: None,
                             tmdb: Some(908194),
-                            tvrage: Some(0)
+                            tvrage: Some(0),
                         },
                         number_abs: Some(99),
                         overview: Some("For their preliminary trials, Juvia and Lisanna face off against Erza, while Elfman and Evergreen find themselves standing against Mirajane. Meanwhile, Natsu enthusiastically battles against Gildarts, with a series of flashbacks detailing how Natsu had never once been able to defeat him since childhood. Just when Natsu believes he has gained the upper hand, Gildarts unleashes an immense aura of magical power, prompting Natsu to surrender in fear. Gildarts teaches Natsu the benefits that fear has in order for him to grow stronger, and tells him that he has passed his preliminary trial.".to_owned()),
@@ -268,7 +282,7 @@ mod tests {
                             "uk".to_owned(),
                             "zh".to_owned()
                         ],
-                        runtime: 24
+                        runtime: 24,
                     }
                 )
             })
@@ -276,21 +290,34 @@ mod tests {
 
     #[test]
     fn episode_translations() -> Result<(), Error> {
-        TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock("GET", "/shows/fairy-tail/seasons/3/episodes/3/translations/de")
+            .with_status(200)
+            .with_body_from_file("mock_data/episode_translations.json")
+            .create();
+
+        TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_translations("fairy-tail", 3, 3, "de")
             .map(|res| {
                 assert_eq!(res, vec![Translation {
                     title: "Natsu versus Gildarts".to_owned(),
                     overview: "For their preliminary trials, Juvia and Lisanna face off against Erza, while Elfman and Evergreen find themselves standing against Mirajane. Meanwhile, Natsu enthusiastically battles against Gildarts, with a series of flashbacks detailing how Natsu had never once been able to defeat him since childhood. Just when Natsu believes he has gained the upper hand, Gildarts unleashes an immense aura of magical power, prompting Natsu to surrender in fear. Gildarts teaches Natsu the benefits that fear has in order for him to grow stronger, and tells him that he has passed his preliminary trial.".to_owned(),
                     tagline: None,
-                    language: "de".to_owned()
+                    language: "de".to_owned(),
                 }])
             })
     }
 
     #[test]
     fn episode_comments() -> Result<(), Error> {
-        TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock(
+            "GET",
+            "/shows/fairy-tail/seasons/8/episodes/1/comments?page=1&limit=20",
+        )
+        .with_status(200)
+        .with_body_from_file("mock_data/episode_comments.json")
+        .create();
+
+        TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_comments("fairy-tail", 8, 1)
             .page(1)
             .limit(20)
@@ -319,16 +346,24 @@ mod tests {
                             tvdb: None,
                             imdb: None,
                             tmdb: None,
-                            tvrage: None
-                        }
-                    }
+                            tvrage: None,
+                        },
+                    },
                 }))
             })
     }
 
     #[test]
     fn episode_lists() -> Result<(), Error> {
-        TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock(
+            "GET",
+            "/shows/fairy-tail/seasons/1/episodes/1/lists/all/added?page=1&limit=20",
+        )
+        .with_status(200)
+        .with_body_from_file("mock_data/episode_lists.json")
+        .create();
+
+        TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_lists("fairy-tail", 1, 1, |lf: ListFactory| {
                 lf.with_sorting(ListSort::Added)
                     .with_filter_type(ListFilter::All)
@@ -356,7 +391,7 @@ mod tests {
                         tvdb: None,
                         imdb: None,
                         tmdb: None,
-                        tvrage: None
+                        tvrage: None,
                     },
                     user: User {
                         username: "w i n g s".to_owned(),
@@ -370,37 +405,60 @@ mod tests {
                             tvdb: None,
                             imdb: None,
                             tmdb: None,
-                            tvrage: None
-                        }
-                    }
+                            tvrage: None,
+                        },
+                    },
                 }))
             })
     }
 
     #[test]
     fn episode_ratings() -> Result<(), Error> {
-        TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/ratings")
+            .with_status(200)
+            .with_body_from_file("mock_data/episode_ratings.json")
+            .create();
+
+        TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_ratings("fairy-tail", 1, 1)
             .map(|_res| ())
     }
 
     #[test]
     fn episode_stats() -> Result<(), Error> {
-        TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/stats")
+            .with_status(200)
+            .with_body_from_file("mock_data/episode_stats.json")
+            .create();
+
+        TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_stats("fairy-tail", 1, 1)
             .map(|_res| ())
     }
 
     #[test]
     fn episode_watching() -> Result<(), Error> {
-        TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/watching")
+            .with_status(200)
+            .with_body_from_file("mock_data/episode_watching.json")
+            .create();
+
+        TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_watching("fairy-tail", 1, 1)
             .map(|_res| ())
     }
 
     #[test]
     fn episode_watching_full() -> Result<(), Error> {
-        TraktApi::new(env!("CLIENT_ID").to_owned(), None)
+        let _m = mock(
+            "GET",
+            "/shows/fairy-tail/seasons/1/episodes/1/watching?extended=full",
+        )
+        .with_status(200)
+        .with_body_from_file("mock_data/episode_watching_full.json")
+        .create();
+
+        TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_watching_full("fairy-tail", 1, 1)
             .map(|_res| ())
     }

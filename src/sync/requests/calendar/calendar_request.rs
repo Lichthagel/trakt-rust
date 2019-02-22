@@ -33,7 +33,7 @@ use std::marker::PhantomData;
 /// ```
 #[derive(Debug, Clone)]
 pub struct CalendarRequest<'a, T: DeserializeOwned> {
-    client: &'a TraktApi,
+    client: &'a TraktApi<'a>,
     url: &'a str,
     start_date: Option<Date<Utc>>,
     days: Option<u32>,
@@ -174,7 +174,7 @@ mod tests {
 
     #[test]
     fn calendar_request() {
-        let api = TraktApi::new("...".to_owned(), Some("...".to_owned()));
+        let api = TraktApi::staging("...".to_owned(), Some("...".to_owned()));
 
         assert_eq!(
             CalendarRequest::<CalendarShow>::new(&api.clone(), "some_url", None)

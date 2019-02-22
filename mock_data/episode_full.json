@@ -1,0 +1,38 @@
+{
+  "season": 3,
+  "number": 3,
+  "title": "Natsu vs. Gildarts",
+  "ids": {
+    "trakt": 916320,
+    "tvdb": 4173728,
+    "imdb": null,
+    "tmdb": 908194,
+    "tvrage": 0
+  },
+  "number_abs": 99,
+  "overview": "For their preliminary trials, Juvia and Lisanna face off against Erza, while Elfman and Evergreen find themselves standing against Mirajane. Meanwhile, Natsu enthusiastically battles against Gildarts, with a series of flashbacks detailing how Natsu had never once been able to defeat him since childhood. Just when Natsu believes he has gained the upper hand, Gildarts unleashes an immense aura of magical power, prompting Natsu to surrender in fear. Gildarts teaches Natsu the benefits that fear has in order for him to grow stronger, and tells him that he has passed his preliminary trial.",
+  "rating": 8.55914,
+  "votes": 93,
+  "comment_count": 0,
+  "first_aired": "2011-09-30T22:00:00.000Z",
+  "updated_at": "2019-02-22T08:07:35.000Z",
+  "available_translations": [
+    "ar",
+    "cs",
+    "de",
+    "el",
+    "en",
+    "es",
+    "fr",
+    "he",
+    "hu",
+    "it",
+    "ja",
+    "pt",
+    "ru",
+    "sr",
+    "uk",
+    "zh"
+  ],
+  "runtime": 24
+}

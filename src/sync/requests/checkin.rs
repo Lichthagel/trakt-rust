@@ -36,7 +36,7 @@ use serde_json::{Map, Value};
 /// [More]: https://trakt.docs.apiary.io/#reference/checkin/checkin/check-into-an-item
 #[derive(Debug, PartialEq)]
 pub struct Checkin<'a> {
-    pub client: &'a TraktApi,
+    pub client: &'a TraktApi<'a>,
     pub body: Map<String, Value>,
     pub sharing: CheckinSharing,
 }
@@ -163,7 +163,7 @@ pub struct CheckinResponse {
     pub show: Option<Show>,
 }
 
-impl TraktApi {
+impl<'a> TraktApi<'a> {
     pub fn checkin(&self) -> Checkin {
         Checkin::new(self)
     }
@@ -202,7 +202,7 @@ mod tests {
 
     #[test]
     fn checkin_struct() {
-        let client = TraktApi::new("_".to_owned(), Some("_".to_owned()));
+        let client = TraktApi::staging("_".to_owned(), Some("_".to_owned()));
         let c = Checkin::new(&client)
             .twitter()
             .message("MSG")

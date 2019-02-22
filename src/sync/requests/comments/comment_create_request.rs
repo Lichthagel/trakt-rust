@@ -6,7 +6,7 @@ use crate::{
 use serde_json::{Map, Value};
 
 pub struct CommentCreateRequest<'a> {
-    client: &'a TraktApi,
+    client: &'a TraktApi<'a>,
     url: String,
     body: Map<String, Value>,
     sharing: CommentSharing,

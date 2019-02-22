@@ -12,7 +12,7 @@ use crate::{
 use reqwest::Method;
 use std::fmt::Display;
 
-impl TraktApi {
+impl<'a> TraktApi<'a> {
     pub fn movies_trending(&self) -> MoviesRequest<MovieInfo> {
         MoviesRequest::new(self, "trending".to_owned())
     }

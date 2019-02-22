@@ -2,7 +2,7 @@ use crate::{models::Comment, Result, TraktApi};
 use serde_json::{Map, Value};
 
 pub struct CommentPostRequest<'a> {
-    client: &'a TraktApi,
+    client: &'a TraktApi<'a>,
     url: String,
     // false => POST, true => PUT
     method: bool,

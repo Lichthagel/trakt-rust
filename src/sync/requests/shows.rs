@@ -10,7 +10,7 @@ use crate::{
 use reqwest::Method;
 use std::fmt::Display;
 
-impl TraktApi {
+impl<'a> TraktApi<'a> {
     pub fn shows_trending(&self) -> PaginationRequest<ShowInfo> {
         PaginationRequest::new(
             self,

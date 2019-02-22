@@ -5,7 +5,7 @@ use crate::{
 };
 use serde_json::json;
 
-impl TraktApi {
+impl<'a> TraktApi<'a> {
     pub fn oauth_authorize(
         &self,
         client_id: &str,

@@ -8,7 +8,7 @@ use serde::de::DeserializeOwned;
 use std::marker::PhantomData;
 
 pub struct CommentsRequest<'a, T> {
-    client: &'a TraktApi,
+    client: &'a TraktApi<'a>,
     url: &'a str,
     comment_type: CommentType,
     item_type: AllCommentableItemType,

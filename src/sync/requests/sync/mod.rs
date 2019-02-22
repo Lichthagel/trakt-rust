@@ -12,7 +12,7 @@ use crate::{
 use chrono::{DateTime, Utc};
 use reqwest::Method;
 
-impl TraktApi {
+impl<'a> TraktApi<'a> {
     pub fn sync_last_activities(&self, access_token: &str) -> Result<LastActivities> {
         self.auth_get(api_url!(("sync", "last_activities")), access_token)
     }

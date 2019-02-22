@@ -3,7 +3,6 @@ use crate::{
     error::Error,
     selectors::{SelectEpisode, SelectMovie, SelectSeason, SelectShow},
 };
-use futures::future::{Future, IntoFuture};
 use serde::de::DeserializeOwned;
 use serde_json::{Map, Value};
 use std::marker::PhantomData;
@@ -17,7 +16,7 @@ pub struct SyncRequest<'a, R: DeserializeOwned> {
     seasons: Vec<Value>,
     episodes: Vec<Value>,
     url: String,
-    client: &'a TraktApi,
+    client: &'a TraktApi<'a>,
     response_type: PhantomData<R>,
 }
 
@@ -42,16 +41,10 @@ impl<'a, R: DeserializeOwned + Send + 'static> SyncRequest<'a, R> {
         obj.insert("episodes".to_owned(), Value::Array(self.episodes));
         let body = Value::Object(obj);
 
-        let client = self.client.clone();
-        let url = self.url;
-        let access_token = access_token.to_owned();
-
-        Box::new(
-            serde_json::to_string(&body)
-                .into_future()
-                .map_err(Error::from)
-                .and_then(move |body| client.auth_post(url, body, &access_token)),
-        )
+        match serde_json::to_string(&body) {
+            Ok(body) => self.client.auth_post(self.url, body, access_token),
+            Err(e) => Box::new(futures::future::err(Error::from(e))),
+        }
     }
 }
 
