@@ -1,3 +1,6 @@
+/// [Stats] of a user
+///
+/// [Stats]: https://trakt.docs.apiary.io/#reference/users/stats/get-stats
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserStats {
     pub movies: UserMovieStats,
@@ -8,6 +11,9 @@ pub struct UserStats {
     pub ratings: UserRatingStats,
 }
 
+/// See [UserStats]
+///
+/// [UserStats]: struct.UserStats.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserMovieStats {
     pub plays: u64,
@@ -18,6 +24,9 @@ pub struct UserMovieStats {
     pub comments: u64,
 }
 
+/// See [UserStats]
+///
+/// [UserStats]: struct.UserStats.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserShowStats {
     pub watched: u64,
@@ -26,12 +35,18 @@ pub struct UserShowStats {
     pub comments: u64,
 }
 
+/// See [UserStats]
+///
+/// [UserStats]: struct.UserStats.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserSeasonStats {
     pub ratings: u64,
     pub comments: u64,
 }
 
+/// See [UserStats]
+///
+/// [UserStats]: struct.UserStats.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserEpisodeStats {
     pub plays: u64,
@@ -42,6 +57,9 @@ pub struct UserEpisodeStats {
     pub comments: u64,
 }
 
+/// See [UserStats]
+///
+/// [UserStats]: struct.UserStats.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserNetworkStats {
     pub friends: u64,
@@ -49,12 +67,19 @@ pub struct UserNetworkStats {
     pub following: u64,
 }
 
+/// See [UserStats]
+///
+/// [UserStats]: struct.UserStats.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserRatingStats {
     pub total: u64,
     pub distribution: [u64; 10],
 }
 
+/// Stats of a [movie] or [show]
+///
+/// [movie]: https://trakt.docs.apiary.io/#reference/movies/stats/get-movie-stats
+/// [show]: https://trakt.docs.apiary.io/#reference/shows/stats/get-show-stats
 #[derive(Debug, Serialize, Deserialize)]
 pub struct MediaStats {
     pub watchers: u64,
