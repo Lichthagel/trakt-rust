@@ -1,9 +1,9 @@
 [package]
 name = "trakt"
-version = "0.1.0"
+version = "0.0.1"
 authors = ["Jens Gatzweiler <me@lichthagel.de>"]
 edition = "2018"
-description = "A api wrapper in Rust for trakt.tv"
+description = "An api wrapper in Rust for trakt.tv"
 repository = "https://github.com/Lichthagel/trakt-rust"
 readme = "README.md"
 categories = ["api-bindings", "web-programming"]
