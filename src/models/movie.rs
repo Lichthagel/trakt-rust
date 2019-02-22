@@ -5,6 +5,9 @@ use crate::{
 use chrono::{DateTime, NaiveDate, Utc};
 use std::ops::AddAssign;
 
+/// A [movie]
+///
+/// [movie]: https://trakt.docs.apiary.io/#reference/movies
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Movie {
     pub title: String,
@@ -12,6 +15,10 @@ pub struct Movie {
     pub ids: Ids,
 }
 
+/// A [movie] with full [extended info]
+///
+/// [movie]: https://trakt.docs.apiary.io/#reference/movies
+/// [extended info]: https://trakt.docs.apiary.io/#introduction/extended-info
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FullMovie {
     pub title: String,
@@ -42,12 +49,18 @@ impl WithNone for FullMovie {
     type None = Movie;
 }
 
+/// Info about a [trending movie]
+///
+/// [trending movie]: https://trakt.docs.apiary.io/#reference/movies/trending/get-trending-movies
 #[derive(Debug, Serialize, Deserialize)]
 pub struct MovieInfo {
     pub watchers: u32,
     pub movie: Movie,
 }
 
+/// Stats of a [movie]
+///
+/// [movie]: https://trakt.docs.apiary.io/#reference/movies/played/get-the-most-played-movies
 #[derive(Debug, Serialize, Deserialize)]
 pub struct WatchedMovie {
     pub watcher_count: u64,
@@ -56,18 +69,27 @@ pub struct WatchedMovie {
     pub movie: Movie,
 }
 
+/// An [anticipated movie] that is not yet released but in some lists
+///
+/// [anticipated movie]: https://trakt.docs.apiary.io/#reference/movies/anticipated/get-the-most-anticipated-movies
 #[derive(Debug, Serialize, Deserialize)]
 pub struct AnticipatedMovie {
     pub list_count: u64,
     pub movie: Movie,
 }
 
+/// A [movie] that got recently updated
+///
+/// [movie]: https://trakt.docs.apiary.io/#reference/movies
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UpdatedMovie {
     pub updated_at: DateTime<Utc>,
     pub movie: Movie,
 }
 
+/// A [Movie] with only optional fields
+///
+/// [Movie]: struct.Movie.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct OptionMovie {
     #[serde(skip_serializing_if = "Option::is_none")]
