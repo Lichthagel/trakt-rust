@@ -4,6 +4,9 @@ use crate::{
 };
 use chrono::{DateTime, Utc};
 
+/// An [episode]
+///
+/// [episode]: https://trakt.docs.apiary.io/#reference/episodes
 #[derive(Debug, Serialize, Deserialize, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Episode {
     pub season: u32,
@@ -12,6 +15,10 @@ pub struct Episode {
     pub ids: Ids,
 }
 
+/// An [episode] with full [extended info]
+///
+/// [episode]: https://trakt.docs.apiary.io/#reference/episodes
+/// [extended info]: https://trakt.docs.apiary.io/#introduction/extended-info
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FullEpisode {
     pub season: u32,
@@ -51,6 +58,9 @@ impl PartialEq for FullEpisode {
     }
 }
 
+/// An [Episode] with all fields optional
+///
+/// [Episode]: struct.Episode.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct OptionEpisode {
     #[serde(skip_serializing_if = "Option::is_none")]
