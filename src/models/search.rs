@@ -2,6 +2,9 @@ use crate::models::{Episode, List, Movie, Person, SearchItemType, Show};
 use std::fmt;
 use std::fmt::Display;
 
+/// A [search] result
+///
+/// [search]: https://trakt.docs.apiary.io/#reference/search
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SearchResult {
     #[serde(rename = "type")]
@@ -14,6 +17,9 @@ pub struct SearchResult {
     pub list: Option<List>,
 }
 
+/// Types to [search] after
+///
+/// [search]: https://trakt.docs.apiary.io/#reference/search
 pub struct SearchType {
     pub movie: bool,
     pub show: bool,
