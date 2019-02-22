@@ -5,6 +5,9 @@ use crate::{
 use chrono::{DateTime, Utc};
 use std::fmt;
 
+/// A [list]
+///
+/// [list]: https://trakt.docs.apiary.io/#reference/lists
 #[derive(Debug, Serialize, Deserialize)]
 pub struct List {
     pub name: String,
@@ -38,6 +41,10 @@ impl PartialEq for List {
     }
 }
 
+/// A [list] with full [extended info]
+///
+/// [list]: https://trakt.docs.apiary.io/#reference/lists
+/// [extended info]: https://trakt.docs.apiary.io/#introduction/extended-info
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FullList {
     pub name: String,
@@ -79,6 +86,9 @@ impl WithNone for FullList {
     type None = List;
 }
 
+/// A [List] with only optional fields
+///
+/// [List]: struct.List.html
 #[derive(Debug, Serialize, Deserialize)]
 pub struct OptionList {
     pub name: Option<String>,
@@ -167,6 +177,9 @@ impl Default for OptionList {
     }
 }
 
+/// Info for a [list]
+///
+/// [list]: https://trakt.docs.apiary.io/#reference/lists
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ListInfo {
     pub like_count: u32,
@@ -174,6 +187,9 @@ pub struct ListInfo {
     pub list: List,
 }
 
+/// An item in a [list]
+///
+/// [list]: https://trakt.docs.apiary.io/#reference/lists
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ListItem {
     pub rank: u32,
@@ -187,6 +203,9 @@ pub struct ListItem {
     pub person: Option<Person>,
 }
 
+/// The type of a [list]
+///
+/// [list]: https://trakt.docs.apiary.io/#reference/lists
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum ListType {
@@ -207,6 +226,9 @@ impl fmt::Display for ListType {
     }
 }
 
+/// An enum for filtering [list]s
+///
+/// [list]: https://trakt.docs.apiary.io/#reference/lists
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum ListFilter {
@@ -227,6 +249,9 @@ impl fmt::Display for ListFilter {
     }
 }
 
+/// An enum for sorting [list]s
+///
+/// [list]: https://trakt.docs.apiary.io/#reference/lists
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum ListSort {
@@ -251,6 +276,9 @@ impl fmt::Display for ListSort {
     }
 }
 
+/// A struct for requesting certain [list]s
+///
+/// [list]: https://trakt.docs.apiary.io/#reference/lists
 pub struct ListFactory {
     pub list_filter: ListFilter,
     pub sorting: ListSort,
