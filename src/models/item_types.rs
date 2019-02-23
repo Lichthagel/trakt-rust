@@ -150,7 +150,7 @@ impl Display for TimePeriod {
 }
 
 /// All item types that can be searched after
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum SearchItemType {
     Movie,

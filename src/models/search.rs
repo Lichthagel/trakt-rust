@@ -8,7 +8,7 @@ use std::fmt::Display;
 /// A [search] result
 ///
 /// [search]: https://trakt.docs.apiary.io/#reference/search
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct SearchResult {
     #[serde(rename = "type")]
     pub item_type: SearchItemType,

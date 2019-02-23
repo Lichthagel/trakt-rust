@@ -1,0 +1,16 @@
+[
+  {
+    "type": "movie",
+    "score": 1000,
+    "movie": {
+      "title": "Tron",
+      "year": 1982,
+      "ids": {
+        "trakt": 66,
+        "slug": "tron-1982",
+        "imdb": "tt0084827",
+        "tmdb": 97
+      }
+    }
+  }
+]

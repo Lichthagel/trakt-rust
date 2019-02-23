@@ -1,0 +1,104 @@
+[
+  {
+    "type": "movie",
+    "score": 1000,
+    "movie": {
+      "title": "Tron",
+      "year": 1982,
+      "ids": {
+        "trakt": 66,
+        "slug": "tron-1982",
+        "imdb": "tt0084827",
+        "tmdb": 97
+      }
+    }
+  },
+  {
+    "type": "show",
+    "score": 1000,
+    "show": {
+      "title": "Tron",
+      "year": null,
+      "ids": {
+        "trakt": 142773,
+        "slug": "tron",
+        "tvdb": 358021,
+        "imdb": "https://m.imdb.com/title/",
+        "tmdb": null,
+        "tvrage": null
+      }
+    }
+  },
+  {
+    "type": "movie",
+    "score": 715.9379,
+    "movie": {
+      "title": "TRON: Legacy",
+      "year": 2010,
+      "ids": {
+        "trakt": 12601,
+        "slug": "tron-legacy-2010",
+        "imdb": "tt1104001",
+        "tmdb": 20526
+      }
+    }
+  },
+  {
+    "type": "show",
+    "score": 501.52332,
+    "show": {
+      "title": "Tron: Uprising",
+      "year": 2012,
+      "ids": {
+        "trakt": 34209,
+        "slug": "tron-uprising",
+        "tvdb": 258480,
+        "imdb": "tt1812523",
+        "tmdb": 34356,
+        "tvrage": null
+      }
+    }
+  },
+  {
+    "type": "movie",
+    "score": 316.43073,
+    "movie": {
+      "title": "TRON: Destiny",
+      "year": 2011,
+      "ids": {
+        "trakt": 419283,
+        "slug": "tron-destiny-2011",
+        "imdb": "tt4061290",
+        "tmdb": 567883
+      }
+    }
+  },
+  {
+    "type": "movie",
+    "score": 282.13275,
+    "movie": {
+      "title": "TRON: The Next Day",
+      "year": 2011,
+      "ids": {
+        "trakt": 53924,
+        "slug": "tron-the-next-day-2011",
+        "imdb": "tt1865543",
+        "tmdb": 73362
+      }
+    }
+  },
+  {
+    "type": "movie",
+    "score": 237.21924,
+    "movie": {
+      "title": "The Making of TRON",
+      "year": 2002,
+      "ids": {
+        "trakt": 53365,
+        "slug": "the-making-of-tron-2002",
+        "imdb": "tt0340232",
+        "tmdb": 72645
+      }
+    }
+  }
+]
