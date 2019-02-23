@@ -32,12 +32,16 @@ impl<'a> TraktApi<'a> {
     }
 
     /// Creates a new client with a specified base url. Client ID is needed. Client secret is optional, if you need authorization
-    pub fn with_url(base_url: &'a str, client_id: String, client_secret: Option<String>) -> TraktApi {
+    pub fn with_url(
+        base_url: &'a str,
+        client_id: String,
+        client_secret: Option<String>,
+    ) -> TraktApi {
         TraktApi {
             base_url,
             client: reqwest::Client::new(),
             client_id,
-            client_secret
+            client_secret,
         }
     }
 
@@ -546,7 +550,9 @@ impl<'a> TraktApi<'a> {
 
 impl<'a> PartialEq for TraktApi<'a> {
     fn eq(&self, other: &TraktApi) -> bool {
-        self.client_id == other.client_id && self.client_secret == other.client_secret && self.base_url == other.base_url
+        self.client_id == other.client_id
+            && self.client_secret == other.client_secret
+            && self.base_url == other.base_url
     }
 }
 
@@ -583,7 +589,7 @@ mod tests {
 
     #[test]
     fn certifications() -> Result<(), Error> {
-        let _m = mock("GET", "/certifications/movies")
+        let m = mock("GET", "/certifications/movies")
             .with_status(200)
             .with_body_from_file("mock_data/certifications_movies.json")
             .create();
@@ -625,11 +631,15 @@ mod tests {
                     }
                 )
             })
+            .and_then(|_| {
+                m.assert();
+                Ok(())
+            })
     }
 
     #[test]
     fn countries() -> Result<(), Error> {
-        let _m = mock("GET", "/countries/movies")
+        let m = mock("GET", "/countries/movies")
             .with_status(200)
             .with_body_from_file("mock_data/countries_movies.json")
             .create();
@@ -646,11 +656,15 @@ mod tests {
                     code: "zm".to_owned()
                 }));
             })
+            .and_then(|_| {
+                m.assert();
+                Ok(())
+            })
     }
 
     #[test]
     fn genres() -> Result<(), Error> {
-        let _m = mock("GET", "/genres/movies")
+        let m = mock("GET", "/genres/movies")
             .with_status(200)
             .with_body_from_file("mock_data/genres_movies.json")
             .create();
@@ -667,11 +681,15 @@ mod tests {
                     slug: "superhero".to_owned()
                 }));
             })
+            .and_then(|_| {
+                m.assert();
+                Ok(())
+            })
     }
 
     #[test]
     fn languages() -> Result<(), Error> {
-        let _m = mock("GET", "/languages/movies")
+        let m = mock("GET", "/languages/movies")
             .with_status(200)
             .with_body_from_file("mock_data/languages_movies.json")
             .create();
@@ -688,11 +706,15 @@ mod tests {
                     code: "ff".to_owned()
                 }));
             })
+            .and_then(|_| {
+                m.assert();
+                Ok(())
+            })
     }
 
     #[test]
     fn networks() -> Result<(), Error> {
-        let _m = mock("GET", "/networks")
+        let m = mock("GET", "/networks")
             .with_status(200)
             .with_body_from_file("mock_data/networks.json")
             .create();
@@ -706,6 +728,10 @@ mod tests {
                 assert!(res.contains(&Network {
                     name: "Apple Music".to_owned()
                 }));
+            })
+            .and_then(|_| {
+                m.assert();
+                Ok(())
             })
     }
 }

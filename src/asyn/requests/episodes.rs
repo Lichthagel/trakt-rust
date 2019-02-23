@@ -202,7 +202,7 @@ mod tests {
 
     #[test]
     fn episode() {
-        let _m = mock("GET", "/shows/fairy-tail/seasons/3/episodes/3")
+        let m = mock("GET", "/shows/fairy-tail/seasons/3/episodes/3")
             .with_status(200)
             .with_body_from_file("mock_data/episode.json")
             .create();
@@ -232,12 +232,14 @@ mod tests {
                 panic!(e)
             });
 
-        tokio::run(fut)
+        tokio::run(fut);
+
+        m.assert();
     }
 
     #[test]
     fn episode_full() {
-        let _m = mock("GET", "/shows/fairy-tail/seasons/3/episodes/3?extended=full")
+        let m = mock("GET", "/shows/fairy-tail/seasons/3/episodes/3?extended=full")
             .with_status(200)
             .with_body_from_file("mock_data/episode_full.json")
             .create();
@@ -293,12 +295,14 @@ mod tests {
                 panic!(e)
             });
 
-        tokio::run(fut)
+        tokio::run(fut);
+
+        m.assert();
     }
 
     #[test]
     fn episode_translations() {
-        let _m = mock("GET", "/shows/fairy-tail/seasons/3/episodes/3/translations/de")
+        let m = mock("GET", "/shows/fairy-tail/seasons/3/episodes/3/translations/de")
             .with_status(200)
             .with_body_from_file("mock_data/episode_translations.json")
             .create();
@@ -318,12 +322,14 @@ mod tests {
                 panic!(e)
             });
 
-        tokio::run(fut)
+        tokio::run(fut);
+
+        m.assert();
     }
 
     #[test]
     fn episode_comments() {
-        let _m = mock("GET", "/shows/fairy-tail/seasons/8/episodes/1/comments")
+        let m = mock("GET", "/shows/fairy-tail/seasons/8/episodes/1/comments?page=1&limit=20")
             .with_status(200)
             .with_body_from_file("mock_data/episode_comments.json")
             .create();
@@ -367,12 +373,14 @@ mod tests {
                 panic!(e)
             });
 
-        tokio::run(fut)
+        tokio::run(fut);
+
+        m.assert();
     }
 
     #[test]
     fn episode_lists() {
-        let _m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/lists/all/added?page=1&limit=20")
+        let m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/lists/all/added?page=1&limit=20")
             .with_status(200)
             .with_body_from_file("mock_data/episode_lists.json")
             .create();
@@ -429,12 +437,14 @@ mod tests {
                 panic!(e)
             });
 
-        tokio::run(fut)
+        tokio::run(fut);
+
+        m.assert();
     }
 
     #[test]
     fn episode_ratings() {
-        let _m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/ratings")
+        let m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/ratings")
             .with_status(200)
             .with_body_from_file("mock_data/episode_ratings.json")
             .create();
@@ -447,12 +457,14 @@ mod tests {
                 panic!(e)
             });
 
-        tokio::run(fut)
+        tokio::run(fut);
+
+        m.assert();
     }
 
     #[test]
     fn episode_stats() {
-        let _m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/stats")
+        let m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/stats")
             .with_status(200)
             .with_body_from_file("mock_data/episode_stats.json")
             .create();
@@ -465,12 +477,14 @@ mod tests {
                 panic!(e)
             });
 
-        tokio::run(fut)
+        tokio::run(fut);
+
+        m.assert();
     }
 
     #[test]
     fn episode_watching() {
-        let _m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/watching")
+        let m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/watching")
             .with_status(200)
             .with_body_from_file("mock_data/episode_watching.json")
             .create();
@@ -483,12 +497,14 @@ mod tests {
                 panic!(e)
             });
 
-        tokio::run(fut)
+        tokio::run(fut);
+
+        m.assert();
     }
 
     #[test]
     fn episode_watching_full() {
-        let _m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/watching?extended=full")
+        let m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/watching?extended=full")
             .with_status(200)
             .with_body_from_file("mock_data/episode_watching_full.json")
             .create();
@@ -501,6 +517,8 @@ mod tests {
                 panic!(e)
             });
 
-        tokio::run(fut)
+        tokio::run(fut);
+
+        m.assert();
     }
 }

@@ -581,7 +581,7 @@ mod tests {
 
     #[test]
     fn certifications() {
-        let _m = mock("GET", "/certifications/movies")
+        let m = mock("GET", "/certifications/movies")
             .with_status(200)
             .with_body_from_file("mock_data/certifications_movies.json")
             .create();
@@ -628,12 +628,14 @@ mod tests {
                 panic!(e)
             });
 
-        tokio::run(fut)
+        tokio::run(fut);
+
+        m.assert();
     }
 
     #[test]
     fn countries() {
-        let _m = mock("GET", "/countries/movies")
+        let m = mock("GET", "/countries/movies")
             .with_status(200)
             .with_body_from_file("mock_data/countries_movies.json")
             .create();
@@ -655,12 +657,14 @@ mod tests {
                 panic!(e)
             });
 
-        tokio::run(fut)
+        tokio::run(fut);
+
+        m.assert();
     }
 
     #[test]
     fn genres() {
-        let _m = mock("GET", "/genres/movies")
+        let m = mock("GET", "/genres/movies")
             .with_status(200)
             .with_body_from_file("mock_data/genres_movies.json")
             .create();
@@ -682,12 +686,14 @@ mod tests {
                 panic!(e)
             });
 
-        tokio::run(fut)
+        tokio::run(fut);
+
+        m.assert();
     }
 
     #[test]
     fn languages() {
-        let _m = mock("GET", "/languages/movies")
+        let m = mock("GET", "/languages/movies")
             .with_status(200)
             .with_body_from_file("mock_data/languages_movies.json")
             .create();
@@ -709,12 +715,14 @@ mod tests {
                 panic!(e)
             });
 
-        tokio::run(fut)
+        tokio::run(fut);
+
+        m.assert();
     }
 
     #[test]
     fn networks() {
-        let _m = mock("GET", "/networks")
+        let m = mock("GET", "/networks")
             .with_status(200)
             .with_body_from_file("mock_data/networks.json")
             .create();
@@ -734,6 +742,8 @@ mod tests {
                 panic!(e)
             });
 
-        tokio::run(fut)
+        tokio::run(fut);
+
+        m.assert();
     }
 }

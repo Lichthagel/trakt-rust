@@ -203,7 +203,7 @@ mod tests {
 
     #[test]
     fn episode() -> Result<(), Error> {
-        let _m = mock("GET", "/shows/fairy-tail/seasons/3/episodes/3")
+        let m = mock("GET", "/shows/fairy-tail/seasons/3/episodes/3")
             .with_status(200)
             .with_body_from_file("mock_data/episode.json")
             .create();
@@ -228,11 +228,15 @@ mod tests {
                     }
                 )
             })
+            .and_then(|_| {
+                m.assert();
+                Ok(())
+            })
     }
 
     #[test]
     fn episode_full() -> Result<(), Error> {
-        let _m = mock(
+        let m = mock(
             "GET",
             "/shows/fairy-tail/seasons/3/episodes/3?extended=full",
         )
@@ -286,14 +290,21 @@ mod tests {
                     }
                 )
             })
+            .and_then(|_| {
+                m.assert();
+                Ok(())
+            })
     }
 
     #[test]
     fn episode_translations() -> Result<(), Error> {
-        let _m = mock("GET", "/shows/fairy-tail/seasons/3/episodes/3/translations/de")
-            .with_status(200)
-            .with_body_from_file("mock_data/episode_translations.json")
-            .create();
+        let m = mock(
+            "GET",
+            "/shows/fairy-tail/seasons/3/episodes/3/translations/de",
+        )
+        .with_status(200)
+        .with_body_from_file("mock_data/episode_translations.json")
+        .create();
 
         TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_translations("fairy-tail", 3, 3, "de")
@@ -305,11 +316,15 @@ mod tests {
                     language: "de".to_owned(),
                 }])
             })
+            .and_then(|_| {
+                m.assert();
+                Ok(())
+            })
     }
 
     #[test]
     fn episode_comments() -> Result<(), Error> {
-        let _m = mock(
+        let m = mock(
             "GET",
             "/shows/fairy-tail/seasons/8/episodes/1/comments?page=1&limit=20",
         )
@@ -351,11 +366,15 @@ mod tests {
                     },
                 }))
             })
+            .and_then(|_| {
+                m.assert();
+                Ok(())
+            })
     }
 
     #[test]
     fn episode_lists() -> Result<(), Error> {
-        let _m = mock(
+        let m = mock(
             "GET",
             "/shows/fairy-tail/seasons/1/episodes/1/lists/all/added?page=1&limit=20",
         )
@@ -410,11 +429,15 @@ mod tests {
                     },
                 }))
             })
+            .and_then(|_| {
+                m.assert();
+                Ok(())
+            })
     }
 
     #[test]
     fn episode_ratings() -> Result<(), Error> {
-        let _m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/ratings")
+        let m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/ratings")
             .with_status(200)
             .with_body_from_file("mock_data/episode_ratings.json")
             .create();
@@ -422,11 +445,15 @@ mod tests {
         TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_ratings("fairy-tail", 1, 1)
             .map(|_res| ())
+            .and_then(|_| {
+                m.assert();
+                Ok(())
+            })
     }
 
     #[test]
     fn episode_stats() -> Result<(), Error> {
-        let _m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/stats")
+        let m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/stats")
             .with_status(200)
             .with_body_from_file("mock_data/episode_stats.json")
             .create();
@@ -434,11 +461,15 @@ mod tests {
         TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_stats("fairy-tail", 1, 1)
             .map(|_res| ())
+            .and_then(|_| {
+                m.assert();
+                Ok(())
+            })
     }
 
     #[test]
     fn episode_watching() -> Result<(), Error> {
-        let _m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/watching")
+        let m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/watching")
             .with_status(200)
             .with_body_from_file("mock_data/episode_watching.json")
             .create();
@@ -446,11 +477,15 @@ mod tests {
         TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_watching("fairy-tail", 1, 1)
             .map(|_res| ())
+            .and_then(|_| {
+                m.assert();
+                Ok(())
+            })
     }
 
     #[test]
     fn episode_watching_full() -> Result<(), Error> {
-        let _m = mock(
+        let m = mock(
             "GET",
             "/shows/fairy-tail/seasons/1/episodes/1/watching?extended=full",
         )
@@ -461,5 +496,9 @@ mod tests {
         TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_watching_full("fairy-tail", 1, 1)
             .map(|_res| ())
+            .and_then(|_| {
+                m.assert();
+                Ok(())
+            })
     }
 }
