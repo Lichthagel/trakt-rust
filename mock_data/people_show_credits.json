@@ -1,0 +1,34 @@
+{
+  "cast": [
+    {
+      "character": "Hawk",
+      "show": {
+        "title": "The Most Deadly Game",
+        "year": 1970,
+        "ids": {
+          "trakt": 98640,
+          "slug": "the-most-deadly-game",
+          "tvdb": null,
+          "imdb": "tt0065321",
+          "tmdb": 12123,
+          "tvrage": 16502
+        }
+      }
+    },
+    {
+      "character": "Dave Melkin",
+      "show": {
+        "title": "The Lloyd Bridges Show",
+        "year": 1962,
+        "ids": {
+          "trakt": 16129,
+          "slug": "the-lloyd-bridges-show",
+          "tvdb": 77359,
+          "imdb": null,
+          "tmdb": 16199,
+          "tvrage": 12820
+        }
+      }
+    }
+  ]
+}

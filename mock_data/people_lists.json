@@ -1,0 +1,422 @@
+[
+  {
+    "name": "Favourite Actors",
+    "description": "",
+    "privacy": "public",
+    "display_numbers": false,
+    "allow_comments": true,
+    "sort_by": "rank",
+    "sort_how": "asc",
+    "created_at": "2018-12-19T10:26:30.000Z",
+    "updated_at": "2019-01-20T20:08:45.000Z",
+    "item_count": 28,
+    "comment_count": 0,
+    "likes": 0,
+    "ids": {
+      "trakt": 6013542,
+      "slug": "favourite-actors"
+    },
+    "user": {
+      "username": "Kasady",
+      "private": false,
+      "name": "Kasady",
+      "vip": false,
+      "vip_ep": false,
+      "ids": {
+        "slug": "kasady"
+      }
+    }
+  },
+  {
+    "name": "Actors and actresses",
+    "description": "Personal list of favorite actors and actresses.",
+    "privacy": "public",
+    "display_numbers": false,
+    "allow_comments": true,
+    "sort_by": "added",
+    "sort_how": "desc",
+    "created_at": "2018-12-11T22:55:15.000Z",
+    "updated_at": "2019-02-17T21:59:31.000Z",
+    "item_count": 117,
+    "comment_count": 0,
+    "likes": 0,
+    "ids": {
+      "trakt": 5976833,
+      "slug": "actors-and-actresses"
+    },
+    "user": {
+      "username": "joachimdanielsen",
+      "private": false,
+      "name": "Joachim",
+      "vip": false,
+      "vip_ep": false,
+      "ids": {
+        "slug": "joachimdanielsen"
+      }
+    }
+  },
+  {
+    "name": "Favorite Actors",
+    "description": "",
+    "privacy": "public",
+    "display_numbers": false,
+    "allow_comments": true,
+    "sort_by": "rank",
+    "sort_how": "asc",
+    "created_at": "2018-10-14T13:50:37.000Z",
+    "updated_at": "2019-01-07T18:04:39.000Z",
+    "item_count": 9,
+    "comment_count": 0,
+    "likes": 0,
+    "ids": {
+      "trakt": 5619615,
+      "slug": "favorite-actors"
+    },
+    "user": {
+      "username": "nmahoney416",
+      "private": false,
+      "name": "Neal Mahoney",
+      "vip": true,
+      "vip_ep": false,
+      "ids": {
+        "slug": "nmahoney416"
+      }
+    }
+  },
+  {
+    "name": "actores",
+    "description": "",
+    "privacy": "public",
+    "display_numbers": false,
+    "allow_comments": false,
+    "sort_by": "rank",
+    "sort_how": "asc",
+    "created_at": "2018-03-30T07:34:09.000Z",
+    "updated_at": "2018-12-14T05:46:42.000Z",
+    "item_count": 133,
+    "comment_count": 0,
+    "likes": 0,
+    "ids": {
+      "trakt": 4685261,
+      "slug": "actores"
+    },
+    "user": {
+      "username": "matias.e.scapolla",
+      "private": false,
+      "name": "Matias Ezequiel Scapolla",
+      "vip": false,
+      "vip_ep": false,
+      "ids": {
+        "slug": "matias-e-scapolla"
+      }
+    }
+  },
+  {
+    "name": "Actors",
+    "description": "",
+    "privacy": "public",
+    "display_numbers": false,
+    "allow_comments": false,
+    "sort_by": "rank",
+    "sort_how": "asc",
+    "created_at": "2018-02-04T01:16:56.000Z",
+    "updated_at": "2019-02-18T23:41:11.000Z",
+    "item_count": 28,
+    "comment_count": 0,
+    "likes": 0,
+    "ids": {
+      "trakt": 4541200,
+      "slug": "actors"
+    },
+    "user": {
+      "username": "phvillamilh",
+      "private": false,
+      "name": "Paul  Villamil",
+      "vip": false,
+      "vip_ep": false,
+      "ids": {
+        "slug": "phvillamilh"
+      }
+    }
+  },
+  {
+    "name": "Actors Top 100ish",
+    "description": "... not ranked",
+    "privacy": "public",
+    "display_numbers": false,
+    "allow_comments": false,
+    "sort_by": "title",
+    "sort_how": "asc",
+    "created_at": "2017-09-17T16:37:45.000Z",
+    "updated_at": "2017-09-26T12:35:11.000Z",
+    "item_count": 101,
+    "comment_count": 0,
+    "likes": 0,
+    "ids": {
+      "trakt": 4134713,
+      "slug": "actors-top-100ish"
+    },
+    "user": {
+      "username": "thedavegower",
+      "private": false,
+      "name": "thedavegower",
+      "vip": false,
+      "vip_ep": false,
+      "ids": {
+        "slug": "thedavegower"
+      }
+    }
+  },
+  {
+    "name": "Favorite actors",
+    "description": "",
+    "privacy": "public",
+    "display_numbers": false,
+    "allow_comments": true,
+    "sort_by": "rank",
+    "sort_how": "asc",
+    "created_at": "2017-07-02T23:21:18.000Z",
+    "updated_at": "2018-06-10T20:28:46.000Z",
+    "item_count": 31,
+    "comment_count": 0,
+    "likes": 0,
+    "ids": {
+      "trakt": 3912274,
+      "slug": "favorite-actors"
+    },
+    "user": {
+      "username": "bmgunstead",
+      "private": false,
+      "name": "",
+      "vip": false,
+      "vip_ep": false,
+      "ids": {
+        "slug": "bmgunstead"
+      }
+    }
+  },
+  {
+    "name": "People to Follow",
+    "description": "Interesting people who played in great or upcoming movies & TV Shows.",
+    "privacy": "public",
+    "display_numbers": false,
+    "allow_comments": true,
+    "sort_by": "rank",
+    "sort_how": "asc",
+    "created_at": "2017-06-20T19:49:34.000Z",
+    "updated_at": "2018-12-01T08:47:23.000Z",
+    "item_count": 130,
+    "comment_count": 0,
+    "likes": 0,
+    "ids": {
+      "trakt": 3878341,
+      "slug": "people-to-follow"
+    },
+    "user": {
+      "username": "Erulezz",
+      "private": false,
+      "name": "Erulezz",
+      "vip": true,
+      "vip_ep": false,
+      "ids": {
+        "slug": "erulezz"
+      }
+    }
+  },
+  {
+    "name": "D---Very good  Actor's Male",
+    "description": "D---Very good Actor's male , all kind of movies, to be seen, ( most of them )",
+    "privacy": "public",
+    "display_numbers": true,
+    "allow_comments": true,
+    "sort_by": "rank",
+    "sort_how": "asc",
+    "created_at": "2017-05-21T00:42:24.000Z",
+    "updated_at": "2018-12-23T23:12:24.000Z",
+    "item_count": 238,
+    "comment_count": 0,
+    "likes": 2,
+    "ids": {
+      "trakt": 3774466,
+      "slug": "d-very-good-actor-s-male"
+    },
+    "user": {
+      "username": "jarvis-1783384",
+      "private": false,
+      "name": "Raphaël Donier",
+      "vip": true,
+      "vip_ep": false,
+      "ids": {
+        "slug": "jarvis-1783384"
+      }
+    }
+  },
+  {
+    "name": "Great actors",
+    "description": "",
+    "privacy": "public",
+    "display_numbers": false,
+    "allow_comments": true,
+    "sort_by": "rank",
+    "sort_how": "asc",
+    "created_at": "2016-10-20T21:16:03.000Z",
+    "updated_at": "2018-11-11T20:04:10.000Z",
+    "item_count": 40,
+    "comment_count": 0,
+    "likes": 0,
+    "ids": {
+      "trakt": 2811583,
+      "slug": "great-actors"
+    },
+    "user": {
+      "username": "AHuitema",
+      "private": false,
+      "name": "",
+      "vip": false,
+      "vip_ep": false,
+      "ids": {
+        "slug": "ahuitema"
+      }
+    }
+  },
+  {
+    "name": "Favorite actors",
+    "description": "",
+    "privacy": "public",
+    "display_numbers": false,
+    "allow_comments": true,
+    "sort_by": "title",
+    "sort_how": "asc",
+    "created_at": "2016-01-06T23:35:18.000Z",
+    "updated_at": "2019-01-13T20:12:31.000Z",
+    "item_count": 100,
+    "comment_count": 0,
+    "likes": 0,
+    "ids": {
+      "trakt": 1709141,
+      "slug": "favorite-actors"
+    },
+    "user": {
+      "username": "Krateng",
+      "private": false,
+      "name": "Krateng",
+      "vip": true,
+      "vip_ep": false,
+      "ids": {
+        "slug": "krateng"
+      }
+    }
+  },
+  {
+    "name": "Actors To Watch Out For",
+    "description": "Rising stars, favorite actors, and relatable characters in general",
+    "privacy": "public",
+    "display_numbers": true,
+    "allow_comments": true,
+    "sort_by": "rank",
+    "sort_how": "asc",
+    "created_at": "2015-06-02T20:24:29.000Z",
+    "updated_at": "2018-11-22T20:15:46.000Z",
+    "item_count": 124,
+    "comment_count": 0,
+    "likes": 1,
+    "ids": {
+      "trakt": 1157005,
+      "slug": "actors-to-watch-out-for"
+    },
+    "user": {
+      "username": "Tartarus116",
+      "private": false,
+      "name": "Fred",
+      "vip": true,
+      "vip_ep": false,
+      "ids": {
+        "slug": "tartarus116"
+      }
+    }
+  },
+  {
+    "name": "talent",
+    "description": "",
+    "privacy": "public",
+    "display_numbers": false,
+    "allow_comments": false,
+    "sort_by": "rank",
+    "sort_how": "asc",
+    "created_at": "2015-03-01T16:48:22.000Z",
+    "updated_at": "2017-12-25T18:14:15.000Z",
+    "item_count": 8,
+    "comment_count": 0,
+    "likes": 1,
+    "ids": {
+      "trakt": 996556,
+      "slug": "talent"
+    },
+    "user": {
+      "username": "Distrikt14",
+      "private": false,
+      "name": "Lena",
+      "vip": false,
+      "vip_ep": false,
+      "ids": {
+        "slug": "distrikt14"
+      }
+    }
+  },
+  {
+    "name": "Favorite Actors ",
+    "description": "",
+    "privacy": "public",
+    "display_numbers": true,
+    "allow_comments": true,
+    "sort_by": "rank",
+    "sort_how": "asc",
+    "created_at": "2015-02-15T17:02:56.000Z",
+    "updated_at": "2017-05-05T01:29:25.000Z",
+    "item_count": 108,
+    "comment_count": 0,
+    "likes": 0,
+    "ids": {
+      "trakt": 965983,
+      "slug": "favorite-actors"
+    },
+    "user": {
+      "username": "marilia.as",
+      "private": false,
+      "name": "Marília Silva",
+      "vip": false,
+      "vip_ep": false,
+      "ids": {
+        "slug": "marilia-as"
+      }
+    }
+  },
+  {
+    "name": "Favourite gentlemen",
+    "description": "",
+    "privacy": "public",
+    "display_numbers": true,
+    "allow_comments": false,
+    "sort_by": "rank",
+    "sort_how": "asc",
+    "created_at": "2015-02-11T20:41:34.000Z",
+    "updated_at": "2016-03-26T20:23:17.000Z",
+    "item_count": 55,
+    "comment_count": 0,
+    "likes": 0,
+    "ids": {
+      "trakt": 957949,
+      "slug": "favourite-gentlemen"
+    },
+    "user": {
+      "username": "wdw",
+      "private": false,
+      "name": "",
+      "vip": false,
+      "vip_ep": false,
+      "ids": {
+        "slug": "wdw"
+      }
+    }
+  }
+]

@@ -6,7 +6,7 @@ use crate::models::{Ids, Movie, Show};
 /// A [person]
 ///
 /// [person]: https://trakt.docs.apiary.io/#reference/people
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct Person {
     pub name: String,
     pub ids: Ids,
@@ -58,7 +58,7 @@ pub struct CrewMember {
 }
 
 /// A character played by someone
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct Character {
     pub character: String,
     pub show: Option<Show>,

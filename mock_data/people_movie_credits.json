@@ -1,0 +1,1425 @@
+{
+  "cast": [
+    {
+      "character": "Himself",
+      "movie": {
+        "title": "Hal",
+        "year": 2018,
+        "ids": {
+          "trakt": 203175,
+          "slug": "hal-2018",
+          "imdb": "tt5844196",
+          "tmdb": 322520
+        }
+      }
+    },
+    {
+      "character": "Father Daniel Flynn / Dock O'Kelly",
+      "movie": {
+        "title": "Bad Times at the El Royale",
+        "year": 2018,
+        "ids": {
+          "trakt": 292712,
+          "slug": "bad-times-at-the-el-royale-2018",
+          "imdb": "tt6628394",
+          "tmdb": 446021
+        }
+      }
+    },
+    {
+      "character": "Himself / Narrator (voice)",
+      "movie": {
+        "title": "Living in the Future's Past",
+        "year": 2018,
+        "ids": {
+          "trakt": 357376,
+          "slug": "living-in-the-future-s-past-2018",
+          "imdb": "tt7683148",
+          "tmdb": 509866
+        }
+      }
+    },
+    {
+      "character": "Padre",
+      "movie": {
+        "title": "Maus Momentos no Hotel Royale",
+        "year": 2018,
+        "ids": {
+          "trakt": 393780,
+          "slug": "maus-momentos-no-hotel-royale-2018",
+          "imdb": null,
+          "tmdb": 542929
+        }
+      }
+    },
+    {
+      "character": "W.F. Gerald",
+      "movie": {
+        "title": "The Only Living Boy in New York",
+        "year": 2017,
+        "ids": {
+          "trakt": 69853,
+          "slug": "the-only-living-boy-in-new-york-2017",
+          "imdb": "tt0460890",
+          "tmdb": 95608
+        }
+      }
+    },
+    {
+      "character": "Champagne \"Champ\"",
+      "movie": {
+        "title": "Kingsman: The Golden Circle",
+        "year": 2017,
+        "ids": {
+          "trakt": 223444,
+          "slug": "kingsman-the-golden-circle-2017",
+          "imdb": "tt4649466",
+          "tmdb": 343668
+        }
+      }
+    },
+    {
+      "character": "Duane Steinbrink",
+      "movie": {
+        "title": "Only the Brave",
+        "year": 2017,
+        "ids": {
+          "trakt": 238824,
+          "slug": "only-the-brave-2017",
+          "imdb": "tt3829920",
+          "tmdb": 395991
+        }
+      }
+    },
+    {
+      "character": "",
+      "movie": {
+        "title": "Granite Mountain",
+        "year": 2017,
+        "ids": {
+          "trakt": 257382,
+          "slug": "granite-mountain-2017",
+          "imdb": "tt3829920",
+          "tmdb": 407437
+        }
+      }
+    },
+    {
+      "character": "Narrator",
+      "movie": {
+        "title": "Dream Big: Engineering Our World",
+        "year": 2017,
+        "ids": {
+          "trakt": 287567,
+          "slug": "dream-big-engineering-our-world-2017",
+          "imdb": "tt6484086",
+          "tmdb": 442033
+        }
+      }
+    },
+    {
+      "character": "Marcus Hamilton",
+      "movie": {
+        "title": "Hell or High Water",
+        "year": 2016,
+        "ids": {
+          "trakt": 230569,
+          "slug": "hell-or-high-water-2016",
+          "imdb": "tt2582782",
+          "tmdb": 338766
+        }
+      }
+    },
+    {
+      "character": "The Aviator (voice)",
+      "movie": {
+        "title": "The Little Prince",
+        "year": 2015,
+        "ids": {
+          "trakt": 193850,
+          "slug": "the-little-prince-2015",
+          "imdb": "tt1754656",
+          "tmdb": 309809
+        }
+      }
+    },
+    {
+      "character": "Narrator (voice)",
+      "movie": {
+        "title": "Pilchuck: A Dance with Fire",
+        "year": 2015,
+        "ids": {
+          "trakt": 213487,
+          "slug": "pilchuck-a-dance-with-fire-2015",
+          "imdb": "tt4136198",
+          "tmdb": 332614
+        }
+      }
+    },
+    {
+      "character": "Master Gregory",
+      "movie": {
+        "title": "Seventh Son",
+        "year": 2014,
+        "ids": {
+          "trakt": 50147,
+          "slug": "seventh-son-2014",
+          "imdb": "tt1121096",
+          "tmdb": 68737
+        }
+      }
+    },
+    {
+      "character": "The Giver",
+      "movie": {
+        "title": "The Giver",
+        "year": 2014,
+        "ids": {
+          "trakt": 138918,
+          "slug": "the-giver-2014",
+          "imdb": "tt0435651",
+          "tmdb": 227156
+        }
+      }
+    },
+    {
+      "character": "",
+      "movie": {
+        "title": "The Beatles: The Night That Changed America - A Grammy Salute",
+        "year": 2014,
+        "ids": {
+          "trakt": 155375,
+          "slug": "the-beatles-the-night-that-changed-america-a-grammy-salute-2014",
+          "imdb": "tt3534542",
+          "tmdb": 255190
+        }
+      }
+    },
+    {
+      "character": "Himself",
+      "movie": {
+        "title": "The Girl Who Talked to Dolphins",
+        "year": 2014,
+        "ids": {
+          "trakt": 174354,
+          "slug": "the-girl-who-talked-to-dolphins-2014",
+          "imdb": "tt3822614",
+          "tmdb": 276621
+        }
+      }
+    },
+    {
+      "character": "Narrator",
+      "movie": {
+        "title": "From The Village to The Basement",
+        "year": 2014,
+        "ids": {
+          "trakt": 192692,
+          "slug": "from-the-village-to-the-basement-2014",
+          "imdb": null,
+          "tmdb": 313114
+        }
+      }
+    },
+    {
+      "character": "",
+      "movie": {
+        "title": "One Day Since Yesterday: Peter Bogdanovich & the Lost American Film",
+        "year": 2014,
+        "ids": {
+          "trakt": 266226,
+          "slug": "one-day-since-yesterday-peter-bogdanovich-the-lost-american-film-2014",
+          "imdb": "tt3920572",
+          "tmdb": 353746
+        }
+      }
+    },
+    {
+      "character": "Roy Pulsipher",
+      "movie": {
+        "title": "R.I.P.D.",
+        "year": 2013,
+        "ids": {
+          "trakt": 34510,
+          "slug": "r-i-p-d-2013",
+          "imdb": "tt0790736",
+          "tmdb": 49524
+        }
+      }
+    },
+    {
+      "character": "Himself",
+      "movie": {
+        "title": "A Place at the Table",
+        "year": 2012,
+        "ids": {
+          "trakt": 63095,
+          "slug": "a-place-at-the-table-2012",
+          "imdb": "tt1736049",
+          "tmdb": 84198
+        }
+      }
+    },
+    {
+      "character": "",
+      "movie": {
+        "title": "Casting By",
+        "year": 2012,
+        "ids": {
+          "trakt": 87540,
+          "slug": "casting-by-2012",
+          "imdb": "tt1293751",
+          "tmdb": 127878
+        }
+      }
+    },
+    {
+      "character": "Narrator / Professor",
+      "movie": {
+        "title": "Pablo",
+        "year": 2012,
+        "ids": {
+          "trakt": 100182,
+          "slug": "pablo-2012",
+          "imdb": "tt1049406",
+          "tmdb": 153153
+        }
+      }
+    },
+    {
+      "character": "Kevin Flynn",
+      "movie": {
+        "title": "TRON: The Next Day",
+        "year": 2011,
+        "ids": {
+          "trakt": 53924,
+          "slug": "tron-the-next-day-2011",
+          "imdb": "tt1865543",
+          "tmdb": 73362
+        }
+      }
+    },
+    {
+      "character": "Kevin Flynn / Clu",
+      "movie": {
+        "title": "TRON: Legacy",
+        "year": 2010,
+        "ids": {
+          "trakt": 12601,
+          "slug": "tron-legacy-2010",
+          "imdb": "tt1104001",
+          "tmdb": 20526
+        }
+      }
+    },
+    {
+      "character": "Reuben J. \"Rooster\" Cogburn",
+      "movie": {
+        "title": "True Grit",
+        "year": 2010,
+        "ids": {
+          "trakt": 29981,
+          "slug": "true-grit-2010",
+          "imdb": "tt1403865",
+          "tmdb": 44264
+        }
+      }
+    },
+    {
+      "character": "Bill Django",
+      "movie": {
+        "title": "The Men Who Stare at Goats",
+        "year": 2009,
+        "ids": {
+          "trakt": 5516,
+          "slug": "the-men-who-stare-at-goats-2009",
+          "imdb": "tt1234548",
+          "tmdb": 10313
+        }
+      }
+    },
+    {
+      "character": "Kyle",
+      "movie": {
+        "title": "The Open Road",
+        "year": 2009,
+        "ids": {
+          "trakt": 14863,
+          "slug": "the-open-road-2009",
+          "imdb": "tt1007018",
+          "tmdb": 24663
+        }
+      }
+    },
+    {
+      "character": "Bad Blake",
+      "movie": {
+        "title": "Crazy Heart",
+        "year": 2009,
+        "ids": {
+          "trakt": 15221,
+          "slug": "crazy-heart-2009",
+          "imdb": "tt1263670",
+          "tmdb": 25196
+        }
+      }
+    },
+    {
+      "character": "Jon Katz",
+      "movie": {
+        "title": "A Dog Year",
+        "year": 2009,
+        "ids": {
+          "trakt": 27464,
+          "slug": "a-dog-year-2009",
+          "imdb": "tt0808232",
+          "tmdb": 41496
+        }
+      }
+    },
+    {
+      "character": "Obadiah Stane",
+      "movie": {
+        "title": "Iron Man",
+        "year": 2008,
+        "ids": {
+          "trakt": 1157,
+          "slug": "iron-man-2008",
+          "imdb": "tt0371746",
+          "tmdb": 1726
+        }
+      }
+    },
+    {
+      "character": "Clayton Harding",
+      "movie": {
+        "title": "How to Lose Friends & Alienate People",
+        "year": 2008,
+        "ids": {
+          "trakt": 7647,
+          "slug": "how-to-lose-friends-alienate-people-2008",
+          "imdb": "tt0455538",
+          "tmdb": 13092
+        }
+      }
+    },
+    {
+      "character": "Narrator (voice)",
+      "movie": {
+        "title": "The Cool School",
+        "year": 2008,
+        "ids": {
+          "trakt": 36028,
+          "slug": "the-cool-school-2008",
+          "imdb": "tt1031225",
+          "tmdb": 51370
+        }
+      }
+    },
+    {
+      "character": "Himself",
+      "movie": {
+        "title": "Starz Inside - Comic Books Unbound",
+        "year": 2008,
+        "ids": {
+          "trakt": 140718,
+          "slug": "starz-inside-comic-books-unbound-2008",
+          "imdb": "tt1272046",
+          "tmdb": 230719
+        }
+      }
+    },
+    {
+      "character": "Himself",
+      "movie": {
+        "title": "I Am Iron Man",
+        "year": 2008,
+        "ids": {
+          "trakt": 294966,
+          "slug": "i-am-iron-man-2008",
+          "imdb": "tt5297742",
+          "tmdb": 448341
+        }
+      }
+    },
+    {
+      "character": "Big Z / Geek (voice)",
+      "movie": {
+        "title": "Surf's Up",
+        "year": 2007,
+        "ids": {
+          "trakt": 4697,
+          "slug": "surf-s-up-2007",
+          "imdb": "tt0423294",
+          "tmdb": 9408
+        }
+      }
+    },
+    {
+      "character": "Burt Vickerman",
+      "movie": {
+        "title": "Stick It",
+        "year": 2006,
+        "ids": {
+          "trakt": 5332,
+          "slug": "stick-it-2006",
+          "imdb": "tt0430634",
+          "tmdb": 10115
+        }
+      }
+    },
+    {
+      "character": "Himself - est Graduate (archive footage)",
+      "movie": {
+        "title": "Transformation: The Life and Legacy of Werner Erhard",
+        "year": 2006,
+        "ids": {
+          "trakt": 89887,
+          "slug": "transformation-the-life-and-legacy-of-werner-erhard-2006",
+          "imdb": "tt0849480",
+          "tmdb": 132352
+        }
+      }
+    },
+    {
+      "character": "Narrator",
+      "movie": {
+        "title": "Chasing the Lotus",
+        "year": 2006,
+        "ids": {
+          "trakt": 95061,
+          "slug": "chasing-the-lotus-2006",
+          "imdb": "tt0857308",
+          "tmdb": 142873
+        }
+      }
+    },
+    {
+      "character": "Noah",
+      "movie": {
+        "title": "Tideland",
+        "year": 2005,
+        "ids": {
+          "trakt": 6639,
+          "slug": "tideland-2005",
+          "imdb": "tt0410764",
+          "tmdb": 11559
+        }
+      }
+    },
+    {
+      "character": "Andy",
+      "movie": {
+        "title": "The Moguls",
+        "year": 2005,
+        "ids": {
+          "trakt": 10428,
+          "slug": "the-moguls-2005",
+          "imdb": "tt0405163",
+          "tmdb": 17035
+        }
+      }
+    },
+    {
+      "character": "Ted Cole",
+      "movie": {
+        "title": "The Door in the Floor",
+        "year": 2004,
+        "ids": {
+          "trakt": 1315,
+          "slug": "the-door-in-the-floor-2004",
+          "imdb": "tt0348593",
+          "tmdb": 1944
+        }
+      }
+    },
+    {
+      "character": "",
+      "movie": {
+        "title": "Beautiful Dreamer: Brian Wilson and the Story of Smile",
+        "year": 2004,
+        "ids": {
+          "trakt": 42330,
+          "slug": "beautiful-dreamer-brian-wilson-and-the-story-of-smile-2004",
+          "imdb": "tt0421696",
+          "tmdb": 59100
+        }
+      }
+    },
+    {
+      "character": "Charles Howard",
+      "movie": {
+        "title": "Seabiscuit",
+        "year": 2003,
+        "ids": {
+          "trakt": 2617,
+          "slug": "seabiscuit-2003",
+          "imdb": "tt0329575",
+          "tmdb": 4464
+        }
+      }
+    },
+    {
+      "character": "Tom Friend",
+      "movie": {
+        "title": "Masked and Anonymous",
+        "year": 2003,
+        "ids": {
+          "trakt": 14651,
+          "slug": "masked-and-anonymous-2003",
+          "imdb": "tt0319829",
+          "tmdb": 24356
+        }
+      }
+    },
+    {
+      "character": "Narrator",
+      "movie": {
+        "title": "Lost in La Mancha",
+        "year": 2002,
+        "ids": {
+          "trakt": 12991,
+          "slug": "lost-in-la-mancha-2002",
+          "imdb": "tt0308514",
+          "tmdb": 21189
+        }
+      }
+    },
+    {
+      "character": "Narrator",
+      "movie": {
+        "title": "Lewis and Clark: Great Journey West",
+        "year": 2002,
+        "ids": {
+          "trakt": 42425,
+          "slug": "lewis-and-clark-great-journey-west-2002",
+          "imdb": "tt0317874",
+          "tmdb": 59217
+        }
+      }
+    },
+    {
+      "character": "Himself",
+      "movie": {
+        "title": "The Making of TRON",
+        "year": 2002,
+        "ids": {
+          "trakt": 53365,
+          "slug": "the-making-of-tron-2002",
+          "imdb": "tt0340232",
+          "tmdb": 72645
+        }
+      }
+    },
+    {
+      "character": "Kevin Flynn  -  Clu",
+      "movie": {
+        "title": "Tron: Edición Coleccionistas",
+        "year": 2002,
+        "ids": {
+          "trakt": 235424,
+          "slug": "tron-edicion-coleccionistas-2002",
+          "imdb": null,
+          "tmdb": 392243
+        }
+      }
+    },
+    {
+      "character": "Dr. Mark Powell",
+      "movie": {
+        "title": "K-PAX",
+        "year": 2001,
+        "ids": {
+          "trakt": 132,
+          "slug": "k-pax-2001",
+          "imdb": "tt0272152",
+          "tmdb": 167
+        }
+      }
+    },
+    {
+      "character": "Jimmy Berg",
+      "movie": {
+        "title": "Scenes of the Crime",
+        "year": 2001,
+        "ids": {
+          "trakt": 19766,
+          "slug": "scenes-of-the-crime-2001",
+          "imdb": "tt0265709",
+          "tmdb": 31008
+        }
+      }
+    },
+    {
+      "character": "President Jackson Evans",
+      "movie": {
+        "title": "The Contender",
+        "year": 2000,
+        "ids": {
+          "trakt": 3664,
+          "slug": "the-contender-2000",
+          "imdb": "tt0208874",
+          "tmdb": 6521
+        }
+      }
+    },
+    {
+      "character": "",
+      "movie": {
+        "title": "Arista 25th Anniversary - 25 Years Of #1 Hits",
+        "year": 2000,
+        "ids": {
+          "trakt": 244160,
+          "slug": "arista-25th-anniversary-25-years-of-1-hits-2000",
+          "imdb": null,
+          "tmdb": 401221
+        }
+      }
+    },
+    {
+      "character": "Narrator (voice)",
+      "movie": {
+        "title": "Raising the Mammoth",
+        "year": 2000,
+        "ids": {
+          "trakt": 358841,
+          "slug": "raising-the-mammoth-2000",
+          "imdb": "tt0239867",
+          "tmdb": 360829
+        }
+      }
+    },
+    {
+      "character": "Michael Faraday",
+      "movie": {
+        "title": "Arlington Road",
+        "year": 1999,
+        "ids": {
+          "trakt": 838,
+          "slug": "arlington-road-1999",
+          "imdb": "tt0137363",
+          "tmdb": 1073
+        }
+      }
+    },
+    {
+      "character": "Jack Warrick",
+      "movie": {
+        "title": "The Muse",
+        "year": 1999,
+        "ids": {
+          "trakt": 24215,
+          "slug": "the-muse-1999",
+          "imdb": "tt0164108",
+          "tmdb": 37718
+        }
+      }
+    },
+    {
+      "character": "Lyle Carter",
+      "movie": {
+        "title": "Simpatico",
+        "year": 1999,
+        "ids": {
+          "trakt": 35016,
+          "slug": "simpatico-1999",
+          "imdb": "tt0174204",
+          "tmdb": 50116
+        }
+      }
+    },
+    {
+      "character": "Himself",
+      "movie": {
+        "title": "The Last Picture Show: A Look Back",
+        "year": 1999,
+        "ids": {
+          "trakt": 237149,
+          "slug": "the-last-picture-show-a-look-back-1999",
+          "imdb": "tt0301529",
+          "tmdb": 394475
+        }
+      }
+    },
+    {
+      "character": "Jeffrey \"The Dude\" Lebowski",
+      "movie": {
+        "title": "The Big Lebowski",
+        "year": 1998,
+        "ids": {
+          "trakt": 84,
+          "slug": "the-big-lebowski-1998",
+          "imdb": "tt0118715",
+          "tmdb": 115
+        }
+      }
+    },
+    {
+      "character": "Captain Christopher 'Skipper' Sheldon",
+      "movie": {
+        "title": "White Squall",
+        "year": 1996,
+        "ids": {
+          "trakt": 5712,
+          "slug": "white-squall-1996",
+          "imdb": "tt0118158",
+          "tmdb": 10534
+        }
+      }
+    },
+    {
+      "character": "Gregory Larkin",
+      "movie": {
+        "title": "The Mirror Has Two Faces",
+        "year": 1996,
+        "ids": {
+          "trakt": 15218,
+          "slug": "the-mirror-has-two-faces-1996",
+          "imdb": "tt0117057",
+          "tmdb": 25189
+        }
+      }
+    },
+    {
+      "character": "Vincent",
+      "movie": {
+        "title": "Hidden in America",
+        "year": 1996,
+        "ids": {
+          "trakt": 59701,
+          "slug": "hidden-in-america-1996",
+          "imdb": "tt0116527",
+          "tmdb": 80221
+        }
+      }
+    },
+    {
+      "character": "James Butler 'Wild Bill' Hickok",
+      "movie": {
+        "title": "Wild Bill",
+        "year": 1995,
+        "ids": {
+          "trakt": 47625,
+          "slug": "wild-bill-1995",
+          "imdb": "tt0114938",
+          "tmdb": 65796
+        }
+      }
+    },
+    {
+      "character": "James \"Jimmy\" Dove",
+      "movie": {
+        "title": "Blown Away",
+        "year": 1994,
+        "ids": {
+          "trakt": 143,
+          "slug": "blown-away-1994",
+          "imdb": "tt0109303",
+          "tmdb": 178
+        }
+      }
+    },
+    {
+      "character": "Barney Cousins",
+      "movie": {
+        "title": "The Vanishing",
+        "year": 1993,
+        "ids": {
+          "trakt": 1089,
+          "slug": "the-vanishing-1993",
+          "imdb": "tt0108473",
+          "tmdb": 1644
+        }
+      }
+    },
+    {
+      "character": "Max Klein",
+      "movie": {
+        "title": "Fearless",
+        "year": 1993,
+        "ids": {
+          "trakt": 5634,
+          "slug": "fearless-1993",
+          "imdb": "tt0106881",
+          "tmdb": 10443
+        }
+      }
+    },
+    {
+      "character": "Jack",
+      "movie": {
+        "title": "American Heart",
+        "year": 1992,
+        "ids": {
+          "trakt": 3814,
+          "slug": "american-heart-1992",
+          "imdb": "tt0103670",
+          "tmdb": 7015
+        }
+      }
+    },
+    {
+      "character": "Jack Lucas",
+      "movie": {
+        "title": "The Fisher King",
+        "year": 1991,
+        "ids": {
+          "trakt": 142,
+          "slug": "the-fisher-king-1991",
+          "imdb": "tt0101889",
+          "tmdb": 177
+        }
+      }
+    },
+    {
+      "character": "Himself",
+      "movie": {
+        "title": "Picture This: The Times of Peter Bogdanovich in Archer City, Texas",
+        "year": 1991,
+        "ids": {
+          "trakt": 106649,
+          "slug": "picture-this-the-times-of-peter-bogdanovich-in-archer-city-texas-1991",
+          "imdb": "tt0102664",
+          "tmdb": 166351
+        }
+      }
+    },
+    {
+      "character": "Duane Jackson",
+      "movie": {
+        "title": "Texasville",
+        "year": 1990,
+        "ids": {
+          "trakt": 61739,
+          "slug": "texasville-1990",
+          "imdb": "tt0103069",
+          "tmdb": 82545
+        }
+      }
+    },
+    {
+      "character": "Jack Baker",
+      "movie": {
+        "title": "The Fabulous Baker Boys",
+        "year": 1989,
+        "ids": {
+          "trakt": 6032,
+          "slug": "the-fabulous-baker-boys-1989",
+          "imdb": "tt0097322",
+          "tmdb": 10875
+        }
+      }
+    },
+    {
+      "character": "Bartender",
+      "movie": {
+        "title": "Cold Feet",
+        "year": 1989,
+        "ids": {
+          "trakt": 66366,
+          "slug": "cold-feet-1989",
+          "imdb": "tt0097076",
+          "tmdb": 88658
+        }
+      }
+    },
+    {
+      "character": "Larry Livingstone",
+      "movie": {
+        "title": "See You in the Morning",
+        "year": 1989,
+        "ids": {
+          "trakt": 83646,
+          "slug": "see-you-in-the-morning-1989",
+          "imdb": "tt0098283",
+          "tmdb": 120518
+        }
+      }
+    },
+    {
+      "character": "Preston Tucker",
+      "movie": {
+        "title": "Tucker: The Man and His Dream",
+        "year": 1988,
+        "ids": {
+          "trakt": 17509,
+          "slug": "tucker-the-man-and-his-dream-1988",
+          "imdb": "tt0096316",
+          "tmdb": 28176
+        }
+      }
+    },
+    {
+      "character": "Vernon Hightower",
+      "movie": {
+        "title": "Nadine",
+        "year": 1987,
+        "ids": {
+          "trakt": 43879,
+          "slug": "nadine-1987",
+          "imdb": "tt0093596",
+          "tmdb": 61178
+        }
+      }
+    },
+    {
+      "character": "Matthew 'Matt' Scudder",
+      "movie": {
+        "title": "8 Million Ways to Die",
+        "year": 1986,
+        "ids": {
+          "trakt": 12798,
+          "slug": "8-million-ways-to-die-1986",
+          "imdb": "tt0090568",
+          "tmdb": 20858
+        }
+      }
+    },
+    {
+      "character": "Turner Kendall",
+      "movie": {
+        "title": "The Morning After",
+        "year": 1986,
+        "ids": {
+          "trakt": 20480,
+          "slug": "the-morning-after-1986",
+          "imdb": "tt0091554",
+          "tmdb": 31924
+        }
+      }
+    },
+    {
+      "character": "Jack Prescott (archive footage) (uncredited)",
+      "movie": {
+        "title": "King Kong Lives",
+        "year": 1986,
+        "ids": {
+          "trakt": 20497,
+          "slug": "king-kong-lives-1986",
+          "imdb": "tt0091344",
+          "tmdb": 31947
+        }
+      }
+    },
+    {
+      "character": "Jack Forrester",
+      "movie": {
+        "title": "Jagged Edge",
+        "year": 1985,
+        "ids": {
+          "trakt": 7137,
+          "slug": "jagged-edge-1985",
+          "imdb": "tt0089360",
+          "tmdb": 12235
+        }
+      }
+    },
+    {
+      "character": "Starman / Scott Hayden",
+      "movie": {
+        "title": "Starman",
+        "year": 1984,
+        "ids": {
+          "trakt": 4937,
+          "slug": "starman-1984",
+          "imdb": "tt0088172",
+          "tmdb": 9663
+        }
+      }
+    },
+    {
+      "character": "Terry Brogan",
+      "movie": {
+        "title": "Against All Odds",
+        "year": 1984,
+        "ids": {
+          "trakt": 13520,
+          "slug": "against-all-odds-1984",
+          "imdb": "tt0086859",
+          "tmdb": 22160
+        }
+      }
+    },
+    {
+      "character": "Claude / Prince",
+      "movie": {
+        "title": "Rapunzel",
+        "year": 1983,
+        "ids": {
+          "trakt": 277723,
+          "slug": "rapunzel-1983",
+          "imdb": "tt0249906",
+          "tmdb": 424340
+        }
+      }
+    },
+    {
+      "character": "Kevin Flynn/Clu",
+      "movie": {
+        "title": "Tron",
+        "year": 1982,
+        "ids": {
+          "trakt": 66,
+          "slug": "tron-1982",
+          "imdb": "tt0084827",
+          "tmdb": 97
+        }
+      }
+    },
+    {
+      "character": "Prince Lir (voice)",
+      "movie": {
+        "title": "The Last Unicorn",
+        "year": 1982,
+        "ids": {
+          "trakt": 5366,
+          "slug": "the-last-unicorn-1982",
+          "imdb": "tt0084237",
+          "tmdb": 10150
+        }
+      }
+    },
+    {
+      "character": "Rupert",
+      "movie": {
+        "title": "Kiss Me Goodbye",
+        "year": 1982,
+        "ids": {
+          "trakt": 60404,
+          "slug": "kiss-me-goodbye-1982",
+          "imdb": "tt0084210",
+          "tmdb": 81001
+        }
+      }
+    },
+    {
+      "character": "Richard Bone",
+      "movie": {
+        "title": "Cutter's Way",
+        "year": 1981,
+        "ids": {
+          "trakt": 20241,
+          "slug": "cutter-s-way-1981",
+          "imdb": "tt0082220",
+          "tmdb": 31593
+        }
+      }
+    },
+    {
+      "character": "John L. Bridges",
+      "movie": {
+        "title": "Heaven's Gate",
+        "year": 1980,
+        "ids": {
+          "trakt": 6084,
+          "slug": "heaven-s-gate-1980",
+          "imdb": "tt0080855",
+          "tmdb": 10935
+        }
+      }
+    },
+    {
+      "character": "Harry",
+      "movie": {
+        "title": "The American Success Company",
+        "year": 1980,
+        "ids": {
+          "trakt": 19510,
+          "slug": "the-american-success-company-1980",
+          "imdb": "tt0078765",
+          "tmdb": 30710
+        }
+      }
+    },
+    {
+      "character": "Nick Kegan",
+      "movie": {
+        "title": "Winter Kills",
+        "year": 1979,
+        "ids": {
+          "trakt": 28081,
+          "slug": "winter-kills-1979",
+          "imdb": "tt0080139",
+          "tmdb": 42178
+        }
+      }
+    },
+    {
+      "character": "Jerry Green",
+      "movie": {
+        "title": "Somebody Killed Her Husband",
+        "year": 1978,
+        "ids": {
+          "trakt": 83648,
+          "slug": "somebody-killed-her-husband-1978",
+          "imdb": "tt0078294",
+          "tmdb": 120520
+        }
+      }
+    },
+    {
+      "character": "Craig Blake",
+      "movie": {
+        "title": "Stay Hungry",
+        "year": 1976,
+        "ids": {
+          "trakt": 3033,
+          "slug": "stay-hungry-1976",
+          "imdb": "tt0075268",
+          "tmdb": 5228
+        }
+      }
+    },
+    {
+      "character": "Jack Prescott",
+      "movie": {
+        "title": "King Kong",
+        "year": 1976,
+        "ids": {
+          "trakt": 5897,
+          "slug": "king-kong-1976",
+          "imdb": "tt0074751",
+          "tmdb": 10730
+        }
+      }
+    },
+    {
+      "character": "Jack McKee",
+      "movie": {
+        "title": "Rancho Deluxe",
+        "year": 1975,
+        "ids": {
+          "trakt": 28164,
+          "slug": "rancho-deluxe-1975",
+          "imdb": "tt0073605",
+          "tmdb": 42261
+        }
+      }
+    },
+    {
+      "character": "Lewis Tater",
+      "movie": {
+        "title": "Hearts of the West",
+        "year": 1975,
+        "ids": {
+          "trakt": 63146,
+          "slug": "hearts-of-the-west-1975",
+          "imdb": "tt0073096",
+          "tmdb": 84259
+        }
+      }
+    },
+    {
+      "character": "Lightfoot",
+      "movie": {
+        "title": "Thunderbolt and Lightfoot",
+        "year": 1974,
+        "ids": {
+          "trakt": 4141,
+          "slug": "thunderbolt-and-lightfoot-1974",
+          "imdb": "tt0072288",
+          "tmdb": 8348
+        }
+      }
+    },
+    {
+      "character": "Elroy Jackson junior",
+      "movie": {
+        "title": "The Last American Hero",
+        "year": 1973,
+        "ids": {
+          "trakt": 20253,
+          "slug": "the-last-american-hero-1973",
+          "imdb": "tt0070287",
+          "tmdb": 31605
+        }
+      }
+    },
+    {
+      "character": "Don Parritt",
+      "movie": {
+        "title": "The Iceman Cometh",
+        "year": 1973,
+        "ids": {
+          "trakt": 27432,
+          "slug": "the-iceman-cometh-1973",
+          "imdb": "tt0070212",
+          "tmdb": 41461
+        }
+      }
+    },
+    {
+      "character": "Zack Feather",
+      "movie": {
+        "title": "Lolly-Madonna XXX",
+        "year": 1973,
+        "ids": {
+          "trakt": 80365,
+          "slug": "lolly-madonna-xxx-1973",
+          "imdb": "tt0070332",
+          "tmdb": 114953
+        }
+      }
+    },
+    {
+      "character": "Ernie",
+      "movie": {
+        "title": "Fat City",
+        "year": 1972,
+        "ids": {
+          "trakt": 10394,
+          "slug": "fat-city-1972",
+          "imdb": "tt0068575",
+          "tmdb": 16993
+        }
+      }
+    },
+    {
+      "character": "Drew Dixon",
+      "movie": {
+        "title": "Bad Company",
+        "year": 1972,
+        "ids": {
+          "trakt": 20239,
+          "slug": "bad-company-1972",
+          "imdb": "tt0068245",
+          "tmdb": 31591
+        }
+      }
+    },
+    {
+      "character": "Duane Jackson",
+      "movie": {
+        "title": "The Last Picture Show",
+        "year": 1971,
+        "ids": {
+          "trakt": 15217,
+          "slug": "the-last-picture-show-1971",
+          "imdb": "tt0067328",
+          "tmdb": 25188
+        }
+      }
+    },
+    {
+      "character": "Mike Olson",
+      "movie": {
+        "title": "In Search Of America",
+        "year": 1971,
+        "ids": {
+          "trakt": 55860,
+          "slug": "in-search-of-america-1971",
+          "imdb": "tt0065885",
+          "tmdb": 75742
+        }
+      }
+    },
+    {
+      "character": "Nero Finnegan",
+      "movie": {
+        "title": "The Yin and the Yang of Mr. Go",
+        "year": 1970,
+        "ids": {
+          "trakt": 64785,
+          "slug": "the-yin-and-the-yang-of-mr-go-1970",
+          "imdb": "tt0066592",
+          "tmdb": 86196
+        }
+      }
+    },
+    {
+      "character": "Doug",
+      "movie": {
+        "title": "Halls of Anger",
+        "year": 1970,
+        "ids": {
+          "trakt": 67420,
+          "slug": "halls-of-anger-1970",
+          "imdb": "tt0065810",
+          "tmdb": 90722
+        }
+      }
+    },
+    {
+      "character": "Young John",
+      "movie": {
+        "title": "Silent Night, Lonely Night",
+        "year": 1969,
+        "ids": {
+          "trakt": 164760,
+          "slug": "silent-night-lonely-night-1969",
+          "imdb": "tt0064983",
+          "tmdb": 266183
+        }
+      }
+    },
+    {
+      "character": "Infant at Train Station (uncredited)",
+      "movie": {
+        "title": "The Company She Keeps",
+        "year": 1951,
+        "ids": {
+          "trakt": 16955,
+          "slug": "the-company-she-keeps-1951",
+          "imdb": "tt0042340",
+          "tmdb": 27544
+        }
+      }
+    },
+    {
+      "character": "Murray Thwaite",
+      "movie": {
+        "title": "The Emperor's Children",
+        "year": null,
+        "ids": {
+          "trakt": 205687,
+          "slug": "the-emperor-s-children",
+          "imdb": "tt0951324",
+          "tmdb": 325147
+        }
+      }
+    }
+  ],
+  "crew": {
+    "production": [
+      {
+        "job": "Producer",
+        "movie": {
+          "title": "Living in the Future's Past",
+          "year": 2018,
+          "ids": {
+            "trakt": 357376,
+            "slug": "living-in-the-future-s-past-2018",
+            "imdb": "tt7683148",
+            "tmdb": 509866
+          }
+        }
+      },
+      {
+        "job": "Producer",
+        "movie": {
+          "title": "The Giver",
+          "year": 2014,
+          "ids": {
+            "trakt": 138918,
+            "slug": "the-giver-2014",
+            "imdb": "tt0435651",
+            "tmdb": 227156
+          }
+        }
+      },
+      {
+        "job": "Producer",
+        "movie": {
+          "title": "American Heart",
+          "year": 1992,
+          "ids": {
+            "trakt": 3814,
+            "slug": "american-heart-1992",
+            "imdb": "tt0103670",
+            "tmdb": 7015
+          }
+        }
+      }
+    ]
+  }
+}
