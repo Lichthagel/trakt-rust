@@ -1,6 +1,11 @@
 //! All models related to [users]
 //!
 //! [users]: https://trakt.docs.apiary.io/#reference/users
+#[cfg(feature = "async")]
+mod asyn;
+#[cfg(feature = "sync")]
+mod sync;
+
 use crate::models::ids::Ids;
 use chrono::DateTime;
 use chrono::Utc;
