@@ -3,7 +3,8 @@ use crate::{
     error::Error,
     models::{AuthenticationDevices, AuthenticationTokenResponse},
 };
-use serde_json::json;
+use futures::future::Future;
+use serde_json::{json, Value};
 
 impl<'a> TraktApi<'a> {
     pub fn oauth_authorize(&self, redirect_uri: &str, state: Option<&str>) -> String {
@@ -79,14 +80,17 @@ impl<'a> TraktApi<'a> {
             return Box::new(futures::future::err(Error::ClientSecretNeeded));
         }
 
-        self.post(
-            api_url!(("oauth/revoke")),
-            json!({
-                "token": token,
-                "client_id": self.client_id,
-                "client_secret": self.client_secret,
-            })
-            .to_string(),
+        Box::new(
+            self.post(
+                api_url!(("oauth/revoke")),
+                json!({
+                    "token": token,
+                    "client_id": self.client_id,
+                    "client_secret": self.client_secret,
+                })
+                .to_string(),
+            )
+            .map(|_res: Value| ()),
         )
     }
 
@@ -116,11 +120,15 @@ impl<'a> TraktApi<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::models::AuthenticationDevices;
-    use crate::{asyn::TraktApi, models::AuthenticationTokenResponse};
+    use crate::{
+        asyn::TraktApi,
+        error::Error,
+        models::{AuthenticationDevices, AuthenticationTokenResponse},
+    };
     use futures::future::Future;
     use mockito::{mock, Matcher};
     use std::fs;
+    use tokio_core::reactor::Core;
 
     #[test]
     fn oauth_authorize() {
@@ -133,7 +141,7 @@ mod tests {
     }
 
     #[test]
-    fn oauth_get_token() {
+    fn oauth_get_token() -> Result<(), Error> {
         let m = mock("POST", "/oauth/token")
             .with_status(200)
             .match_body(Matcher::JsonString(
@@ -141,6 +149,8 @@ mod tests {
             ))
             .with_body_from_file("mock_data/oauth_get_token.json")
             .create();
+
+        let mut core = Core::new().unwrap();
 
         let fut = TraktApi::with_url(
             &mockito::server_url(),
@@ -165,14 +175,12 @@ mod tests {
                 }
             )
         })
-        .map_err(|e| {
-            println!("{}", e);
-            panic!(e)
+        .then(|res| {
+            m.assert();
+            res
         });
 
-        tokio::run(fut);
-
-        m.assert();
+        core.run(fut)
     }
 
     /*#[test]
@@ -201,7 +209,7 @@ mod tests {
     }*/
 
     #[test]
-    fn oauth_refresh_token() {
+    fn oauth_refresh_token() -> Result<(), Error> {
         let m = mock("POST", "/oauth/token")
             .with_status(200)
             .match_body(Matcher::JsonString(
@@ -209,6 +217,8 @@ mod tests {
             ))
             .with_body_from_file("mock_data/oauth_get_token.json")
             .create();
+
+        let mut core = Core::new().unwrap();
 
         let fut = TraktApi::with_url(
             &mockito::server_url(),
@@ -233,18 +243,16 @@ mod tests {
                 }
             )
         })
-        .map_err(|e| {
-            println!("{}", e);
-            panic!(e)
+        .then(|res| {
+            m.assert();
+            res
         });
 
-        tokio::run(fut);
-
-        m.assert();
+        core.run(fut)
     }
 
     #[test]
-    fn oauth_revoke_token() {
+    fn oauth_revoke_token() -> Result<(), Error> {
         let m = mock("POST", "/oauth/revoke")
             .with_status(200)
             .match_body(Matcher::JsonString(
@@ -253,24 +261,24 @@ mod tests {
             .with_body("{}")
             .create();
 
+        let mut core = Core::new().unwrap();
+
         let fut = TraktApi::with_url(
             &mockito::server_url(),
             "CLIENT_ID".to_owned(),
             Some("CLIENT_SECRET".to_owned()),
         )
         .oauth_revoke_token("TOKEN")
-        .map_err(|e| {
-            println!("{}", e);
-            panic!(e)
+        .then(|res| {
+            m.assert();
+            res
         });
 
-        tokio::run(fut);
-
-        m.assert();
+        core.run(fut)
     }
 
     #[test]
-    fn oauth_device_code() {
+    fn oauth_device_code() -> Result<(), Error> {
         let m = mock("POST", "/oauth/device/code")
             .with_status(200)
             .match_body(Matcher::JsonString(
@@ -278,6 +286,8 @@ mod tests {
             ))
             .with_body_from_file("mock_data/oauth_device_code.json")
             .create();
+
+        let mut core = Core::new().unwrap();
 
         let fut = TraktApi::with_url(
             &mockito::server_url(),
@@ -298,18 +308,16 @@ mod tests {
                 }
             )
         })
-        .map_err(|e| {
-            println!("{}", e);
-            panic!(e)
+        .then(|res| {
+            m.assert();
+            res
         });
 
-        tokio::run(fut);
-
-        m.assert();
+        core.run(fut)
     }
 
     #[test]
-    fn oauth_device_token() {
+    fn oauth_device_token() -> Result<(), Error> {
         let m = mock("POST", "/oauth/device/token")
             .with_status(200)
             .match_body(Matcher::JsonString(
@@ -317,6 +325,8 @@ mod tests {
             ))
             .with_body_from_file("mock_data/oauth_get_token.json")
             .create();
+
+        let mut core = Core::new().unwrap();
 
         let fut = TraktApi::with_url(
             &mockito::server_url(),
@@ -341,13 +351,11 @@ mod tests {
                 }
             )
         })
-        .map_err(|e| {
-            println!("{}", e);
-            panic!(e)
+        .then(|res| {
+            m.assert();
+            res
         });
 
-        tokio::run(fut);
-
-        m.assert();
+        core.run(fut)
     }
 }

@@ -190,6 +190,7 @@ impl<'a> TraktApi<'a> {
 mod tests {
     use crate::{
         asyn::TraktApi,
+        error::Error,
         models::{
             Comment, Episode, FullEpisode, Ids, List, ListFactory, ListFilter, ListSort,
             Translation, User,
@@ -199,13 +200,15 @@ mod tests {
     use chrono::{offset::TimeZone, Utc};
     use futures::future::Future;
     use mockito::mock;
+    use tokio_core::reactor::Core;
 
     #[test]
-    fn episode() {
+    fn episode() -> Result<(), Error> {
         let m = mock("GET", "/shows/fairy-tail/seasons/3/episodes/3")
             .with_status(200)
             .with_body_from_file("mock_data/episode.json")
             .create();
+        let mut core = Core::new().unwrap();
 
         let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode("fairy-tail", 3, 3)
@@ -227,22 +230,25 @@ mod tests {
                     }
                 )
             })
-            .map_err(|e| {
-                println!("{}", e);
-                panic!(e)
+            .then(|res| {
+                m.assert();
+                res
             });
 
-        tokio::run(fut);
-
-        m.assert();
+        core.run(fut)
     }
 
     #[test]
-    fn episode_full() {
-        let m = mock("GET", "/shows/fairy-tail/seasons/3/episodes/3?extended=full")
-            .with_status(200)
-            .with_body_from_file("mock_data/episode_full.json")
-            .create();
+    fn episode_full() -> Result<(), Error> {
+        let m = mock(
+            "GET",
+            "/shows/fairy-tail/seasons/3/episodes/3?extended=full",
+        )
+        .with_status(200)
+        .with_body_from_file("mock_data/episode_full.json")
+        .create();
+
+        let mut core = Core::new().unwrap();
 
         let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_full("fairy-tail", 3, 3)
@@ -290,22 +296,25 @@ mod tests {
                     }
                 )
             })
-            .map_err(|e| {
-                println!("{}", e);
-                panic!(e)
+            .then(|res| {
+                m.assert();
+                res
             });
 
-        tokio::run(fut);
-
-        m.assert();
+        core.run(fut)
     }
 
     #[test]
-    fn episode_translations() {
-        let m = mock("GET", "/shows/fairy-tail/seasons/3/episodes/3/translations/de")
-            .with_status(200)
-            .with_body_from_file("mock_data/episode_translations.json")
-            .create();
+    fn episode_translations() -> Result<(), Error> {
+        let m = mock(
+            "GET",
+            "/shows/fairy-tail/seasons/3/episodes/3/translations/de",
+        )
+        .with_status(200)
+        .with_body_from_file("mock_data/episode_translations.json")
+        .create();
+
+        let mut core = Core::new().unwrap();
 
         let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_translations("fairy-tail", 3, 3, "de")
@@ -317,22 +326,25 @@ mod tests {
                     language: "de".to_owned()
                 }])
             })
-            .map_err(|e| {
-                println!("{}", e);
-                panic!(e)
+            .then(|res| {
+                m.assert();
+                res
             });
 
-        tokio::run(fut);
-
-        m.assert();
+        core.run(fut)
     }
 
     #[test]
-    fn episode_comments() {
-        let m = mock("GET", "/shows/fairy-tail/seasons/8/episodes/1/comments?page=1&limit=20")
-            .with_status(200)
-            .with_body_from_file("mock_data/episode_comments.json")
-            .create();
+    fn episode_comments() -> Result<(), Error> {
+        let m = mock(
+            "GET",
+            "/shows/fairy-tail/seasons/8/episodes/1/comments?page=1&limit=20",
+        )
+        .with_status(200)
+        .with_body_from_file("mock_data/episode_comments.json")
+        .create();
+
+        let mut core = Core::new().unwrap();
 
         let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_comments("fairy-tail", 8, 1)
@@ -340,6 +352,7 @@ mod tests {
             .limit(20)
             .execute()
             .map(|res| {
+                println!("{:#?}", res);
                 assert!(res.contains(&Comment {
                     id: 194915,
                     parent_id: 0,
@@ -355,8 +368,8 @@ mod tests {
                         username: "devilzeyez".to_string(),
                         private: false,
                         name: Some("Zeid Al - Dahabi".to_owned()),
-                        vip: None,
-                        vip_ep: None,
+                        vip: Some(false),
+                        vip_ep: Some(false),
                         ids: Ids {
                             trakt: None,
                             slug: Some("devilzeyez".to_owned()),
@@ -368,22 +381,25 @@ mod tests {
                     }
                 }))
             })
-            .map_err(|e| {
-                println!("{}", e);
-                panic!(e)
+            .then(|res| {
+                m.assert();
+                res
             });
 
-        tokio::run(fut);
-
-        m.assert();
+        core.run(fut)
     }
 
     #[test]
-    fn episode_lists() {
-        let m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/lists/all/added?page=1&limit=20")
-            .with_status(200)
-            .with_body_from_file("mock_data/episode_lists.json")
-            .create();
+    fn episode_lists() -> Result<(), Error> {
+        let m = mock(
+            "GET",
+            "/shows/fairy-tail/seasons/1/episodes/1/lists/all/added?page=1&limit=20",
+        )
+        .with_status(200)
+        .with_body_from_file("mock_data/episode_lists.json")
+        .create();
+
+        let mut core = Core::new().unwrap();
 
         let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_lists("fairy-tail", 1, 1, |lf: ListFactory| {
@@ -432,93 +448,94 @@ mod tests {
                     }
                 }))
             })
-            .map_err(|e| {
-                println!("{}", e);
-                panic!(e)
+            .then(|res| {
+                m.assert();
+                res
             });
 
-        tokio::run(fut);
-
-        m.assert();
+        core.run(fut)
     }
 
     #[test]
-    fn episode_ratings() {
+    fn episode_ratings() -> Result<(), Error> {
         let m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/ratings")
             .with_status(200)
             .with_body_from_file("mock_data/episode_ratings.json")
             .create();
 
+        let mut core = Core::new().unwrap();
+
         let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_ratings("fairy-tail", 1, 1)
             .map(|_res| ())
-            .map_err(|e| {
-                println!("{}", e);
-                panic!(e)
+            .then(|res| {
+                m.assert();
+                res
             });
 
-        tokio::run(fut);
-
-        m.assert();
+        core.run(fut)
     }
 
     #[test]
-    fn episode_stats() {
+    fn episode_stats() -> Result<(), Error> {
         let m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/stats")
             .with_status(200)
             .with_body_from_file("mock_data/episode_stats.json")
             .create();
 
+        let mut core = Core::new().unwrap();
+
         let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_stats("fairy-tail", 1, 1)
             .map(|_res| ())
-            .map_err(|e| {
-                println!("{}", e);
-                panic!(e)
+            .then(|res| {
+                m.assert();
+                res
             });
 
-        tokio::run(fut);
-
-        m.assert();
+        core.run(fut)
     }
 
     #[test]
-    fn episode_watching() {
+    fn episode_watching() -> Result<(), Error> {
         let m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/watching")
             .with_status(200)
             .with_body_from_file("mock_data/episode_watching.json")
             .create();
 
+        let mut core = Core::new().unwrap();
+
         let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_watching("fairy-tail", 1, 1)
             .map(|_res| ())
-            .map_err(|e| {
-                println!("{}", e);
-                panic!(e)
+            .then(|res| {
+                m.assert();
+                res
             });
 
-        tokio::run(fut);
-
-        m.assert();
+        core.run(fut)
     }
 
     #[test]
-    fn episode_watching_full() {
-        let m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/watching?extended=full")
-            .with_status(200)
-            .with_body_from_file("mock_data/episode_watching_full.json")
-            .create();
+    fn episode_watching_full() -> Result<(), Error> {
+        let m = mock(
+            "GET",
+            "/shows/fairy-tail/seasons/1/episodes/1/watching?extended=full",
+        )
+        .with_status(200)
+        .with_body_from_file("mock_data/episode_watching_full.json")
+        .create();
+
+        let mut core = Core::new().unwrap();
 
         let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .episode_watching_full("fairy-tail", 1, 1)
             .map(|_res| ())
-            .map_err(|e| {
-                println!("{}", e);
-                panic!(e)
+            .then(|res| {
+                m.assert();
+                res
             });
 
-        tokio::run(fut);
-
-        m.assert();
+        core.run(fut)
     }
 }

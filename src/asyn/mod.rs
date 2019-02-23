@@ -549,9 +549,11 @@ impl<'a> PartialEq for TraktApi<'a> {
 
 #[cfg(test)]
 mod tests {
+    use crate::error::Error;
     use crate::{asyn::TraktApi, models::*};
     use futures::future::Future;
     use mockito::mock;
+    use tokio_core::reactor::Core;
 
     #[test]
     fn new_trakt_api() {
@@ -580,11 +582,12 @@ mod tests {
     }
 
     #[test]
-    fn certifications() {
+    fn certifications() -> Result<(), Error> {
         let m = mock("GET", "/certifications/movies")
             .with_status(200)
             .with_body_from_file("mock_data/certifications_movies.json")
             .create();
+        let mut core = Core::new().unwrap();
 
         let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .certifications(CertificationsType::Movies)
@@ -623,22 +626,21 @@ mod tests {
                     }
                 )
             })
-            .map_err(|e| {
-                println!("{}", e);
-                panic!(e)
+            .then(|res| {
+                m.assert();
+                res
             });
 
-        tokio::run(fut);
-
-        m.assert();
+        core.run(fut)
     }
 
     #[test]
-    fn countries() {
+    fn countries() -> Result<(), Error> {
         let m = mock("GET", "/countries/movies")
             .with_status(200)
             .with_body_from_file("mock_data/countries_movies.json")
             .create();
+        let mut core = Core::new().unwrap();
 
         let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .countries(MediaType::Movies)
@@ -652,22 +654,21 @@ mod tests {
                     code: "zm".to_owned()
                 }));
             })
-            .map_err(|e| {
-                println!("{}", e);
-                panic!(e)
+            .then(|res| {
+                m.assert();
+                res
             });
 
-        tokio::run(fut);
-
-        m.assert();
+        core.run(fut)
     }
 
     #[test]
-    fn genres() {
+    fn genres() -> Result<(), Error> {
         let m = mock("GET", "/genres/movies")
             .with_status(200)
             .with_body_from_file("mock_data/genres_movies.json")
             .create();
+        let mut core = Core::new().unwrap();
 
         let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .genres(MediaType::Movies)
@@ -681,22 +682,21 @@ mod tests {
                     slug: "superhero".to_owned()
                 }));
             })
-            .map_err(|e| {
-                println!("{}", e);
-                panic!(e)
+            .then(|res| {
+                m.assert();
+                res
             });
 
-        tokio::run(fut);
-
-        m.assert();
+        core.run(fut)
     }
 
     #[test]
-    fn languages() {
+    fn languages() -> Result<(), Error> {
         let m = mock("GET", "/languages/movies")
             .with_status(200)
             .with_body_from_file("mock_data/languages_movies.json")
             .create();
+        let mut core = Core::new().unwrap();
 
         let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .languages(MediaType::Movies)
@@ -710,22 +710,21 @@ mod tests {
                     code: "ff".to_owned()
                 }));
             })
-            .map_err(|e| {
-                println!("{}", e);
-                panic!(e)
+            .then(|res| {
+                m.assert();
+                res
             });
 
-        tokio::run(fut);
-
-        m.assert();
+        core.run(fut)
     }
 
     #[test]
-    fn networks() {
+    fn networks() -> Result<(), Error> {
         let m = mock("GET", "/networks")
             .with_status(200)
             .with_body_from_file("mock_data/networks.json")
             .create();
+        let mut core = Core::new().unwrap();
 
         let fut = TraktApi::with_url(&mockito::server_url(), "...".to_owned(), None)
             .networks()
@@ -737,13 +736,11 @@ mod tests {
                     name: "Apple Music".to_owned()
                 }));
             })
-            .map_err(|e| {
-                println!("{}", e);
-                panic!(e)
+            .then(|res| {
+                m.assert();
+                res
             });
 
-        tokio::run(fut);
-
-        m.assert();
+        core.run(fut)
     }
 }

@@ -264,9 +264,9 @@ mod tests {
                     }
                 )
             })
-            .then(|_| {
+            .then(|res| {
                 m.assert();
-                Ok(())
+                res
             });
 
         core.run(fut)
@@ -279,9 +279,9 @@ mod tests {
 
         let fut = TraktApi::with_url(&server_url(), "CLIENT_ID".to_owned(), None)
             .checkout("ACCESS_TOKEN")
-            .then(|_res| {
+            .then(|res| {
                 m.assert();
-                Ok(())
+                res
             });
 
         core.run(fut)
