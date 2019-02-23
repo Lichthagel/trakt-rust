@@ -21,7 +21,7 @@ pub struct Authentication {
 /// Look [here]
 ///
 /// [here]: https://trakt.docs.apiary.io/#reference/authentication-devices/device-code/generate-new-device-codes
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct AuthenticationDevices {
     pub device_code: String,
     pub user_code: String,
@@ -35,7 +35,7 @@ pub struct AuthenticationDevices {
 /// Look [here]
 ///
 /// [here]: https://trakt.docs.apiary.io/#reference/authentication-oauth/get-token/exchange-code-for-access_token
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct AuthenticationTokenResponse {
     pub access_token: String,
     pub token_type: String,
