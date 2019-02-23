@@ -1,3 +1,9 @@
+#[cfg(feature = "async")]
+use crate::asyn::{Result as AsyncResult, TraktApi as AsyncTraktApi};
+use crate::error::Error;
+use crate::models::{SearchItemType, SearchResult};
+#[cfg(feature = "sync")]
+use crate::{Result, TraktApi};
 use std::fmt;
 use std::fmt::Display;
 use std::ops::AddAssign;
@@ -23,6 +29,100 @@ pub struct Ids {
     pub tmdb: Option<u64>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub tvrage: Option<u64>,
+}
+
+#[cfg(feature = "sync")]
+impl Ids {
+    pub fn lookup_trakt(
+        &self,
+        client: &TraktApi,
+        item_type: Option<SearchItemType>,
+    ) -> Result<Vec<SearchResult>> {
+        match self.trakt {
+            Some(id) => client.id_lookup(IdType::Trakt, id, item_type),
+            None => Err(Error::NoneError),
+        }
+    }
+
+    pub fn lookup_imdb(
+        &self,
+        client: &TraktApi,
+        item_type: Option<SearchItemType>,
+    ) -> Result<Vec<SearchResult>> {
+        match &self.imdb {
+            Some(id) => client.id_lookup(IdType::IMDb, id, item_type),
+            None => Err(Error::NoneError),
+        }
+    }
+
+    pub fn lookup_tmdb(
+        &self,
+        client: &TraktApi,
+        item_type: Option<SearchItemType>,
+    ) -> Result<Vec<SearchResult>> {
+        match self.tmdb {
+            Some(id) => client.id_lookup(IdType::TMDb, id, item_type),
+            None => Err(Error::NoneError),
+        }
+    }
+
+    pub fn lookup_tvdb(
+        &self,
+        client: &TraktApi,
+        item_type: Option<SearchItemType>,
+    ) -> Result<Vec<SearchResult>> {
+        match self.tvdb {
+            Some(id) => client.id_lookup(IdType::TVDB, id, item_type),
+            None => Err(Error::NoneError),
+        }
+    }
+}
+
+#[cfg(feature = "async")]
+impl Ids {
+    pub fn lookup_trakt_async(
+        &self,
+        client: &AsyncTraktApi,
+        item_type: Option<SearchItemType>,
+    ) -> AsyncResult<Vec<SearchResult>> {
+        match self.trakt {
+            Some(id) => client.id_lookup(IdType::Trakt, id, item_type),
+            None => Box::new(futures::future::err(Error::NoneError)),
+        }
+    }
+
+    pub fn lookup_imdb_async(
+        &self,
+        client: &AsyncTraktApi,
+        item_type: Option<SearchItemType>,
+    ) -> AsyncResult<Vec<SearchResult>> {
+        match &self.imdb {
+            Some(id) => client.id_lookup(IdType::IMDb, id, item_type),
+            None => Box::new(futures::future::err(Error::NoneError)),
+        }
+    }
+
+    pub fn lookup_tmdb_async(
+        &self,
+        client: &AsyncTraktApi,
+        item_type: Option<SearchItemType>,
+    ) -> AsyncResult<Vec<SearchResult>> {
+        match self.tmdb {
+            Some(id) => client.id_lookup(IdType::TMDb, id, item_type),
+            None => Box::new(futures::future::err(Error::NoneError)),
+        }
+    }
+
+    pub fn lookup_tvdb_async(
+        &self,
+        client: &AsyncTraktApi,
+        item_type: Option<SearchItemType>,
+    ) -> AsyncResult<Vec<SearchResult>> {
+        match self.tvdb {
+            Some(id) => client.id_lookup(IdType::TVDB, id, item_type),
+            None => Box::new(futures::future::err(Error::NoneError)),
+        }
+    }
 }
 
 impl Default for Ids {
