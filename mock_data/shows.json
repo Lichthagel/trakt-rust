@@ -1,0 +1,122 @@
+[
+  {
+    "title": "Your lie in April",
+    "year": 2014,
+    "ids": {
+      "trakt": 76764,
+      "slug": "your-lie-in-april",
+      "tvdb": 279830,
+      "imdb": "tt3895150",
+      "tmdb": 61663,
+      "tvrage": 45262
+    }
+  },
+  {
+    "title": "My Hero Academia",
+    "year": 2016,
+    "ids": {
+      "trakt": 104311,
+      "slug": "my-hero-academia",
+      "tvdb": 305074,
+      "imdb": "tt5626028",
+      "tmdb": 65930,
+      "tvrage": null
+    }
+  },
+  {
+    "title": "Parasyte",
+    "year": 2014,
+    "ids": {
+      "trakt": 60936,
+      "slug": "parasyte",
+      "tvdb": 279831,
+      "imdb": "tt3358020",
+      "tmdb": 61459,
+      "tvrage": null
+    }
+  },
+  {
+    "title": "Mob Psycho 100",
+    "year": 2016,
+    "ids": {
+      "trakt": 105481,
+      "slug": "mob-psycho-100",
+      "tvdb": 307375,
+      "imdb": "tt5897304",
+      "tmdb": 67075,
+      "tvrage": null
+    }
+  },
+  {
+    "title": "Berserk",
+    "year": 2016,
+    "ids": {
+      "trakt": 105346,
+      "slug": "berserk-2016",
+      "tvdb": 307111,
+      "imdb": "tt5847454",
+      "tmdb": 66053,
+      "tvrage": null
+    }
+  },
+  {
+    "title": "Magi: The Labyrinth of Magic",
+    "year": 2012,
+    "ids": {
+      "trakt": 67797,
+      "slug": "magi-the-labyrinth-of-magic",
+      "tvdb": 262094,
+      "imdb": "tt2425098",
+      "tmdb": 60654,
+      "tvrage": 32960
+    }
+  },
+  {
+    "title": "Fullmetal Alchemist: Brotherhood",
+    "year": 2009,
+    "ids": {
+      "trakt": 31771,
+      "slug": "fullmetal-alchemist-brotherhood",
+      "tvdb": 85249,
+      "imdb": "tt1355642",
+      "tmdb": 31911,
+      "tvrage": null
+    }
+  },
+  {
+    "title": "Food Wars! Shokugeki no Soma",
+    "year": 2015,
+    "ids": {
+      "trakt": 94084,
+      "slug": "food-wars-shokugeki-no-soma",
+      "tvdb": 289909,
+      "imdb": "tt4731072",
+      "tmdb": 62273,
+      "tvrage": null
+    }
+  },
+  {
+    "title": "Haikyuu!!",
+    "year": 2014,
+    "ids": {
+      "trakt": 60417,
+      "slug": "haikyuu",
+      "tvdb": 278157,
+      "imdb": "tt3398540",
+      "tmdb": 60863,
+      "tvrage": null
+    }
+  },
+  {
+    "title": "Attack on Titan",
+    "year": 2013,
+    "ids": {
+      "trakt": 1420,
+      "slug": "attack-on-titan",
+      "tvdb": 267440,
+      "imdb": "tt2560140",
+      "tmdb": 1429,
+      "tvrage": null
+    }
+  }
+]

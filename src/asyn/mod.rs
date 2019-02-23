@@ -440,7 +440,7 @@ impl<'a> TraktApi<'a> {
                 .header("trakt-api-key", self.client_id.as_str())
                 .header("Authorization", format!("Bearer {}", access_token))
                 .send()
-                .and_then(|mut res| res.json())
+                .map(|_| ())
                 .map_err(Error::from),
         )
     }
