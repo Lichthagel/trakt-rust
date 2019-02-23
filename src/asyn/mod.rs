@@ -29,11 +29,12 @@ pub struct TraktApi<'a> {
 ///
 /// ```rust,no_run
 /// extern crate futures;
-/// extern crate tokio;
+/// extern crate tokio_core;
 /// extern crate trakt;
 ///
 /// use futures::Future;
 /// use trakt::{asyn::TraktApi, pagination::Pagination};
+/// use tokio_core::reactor::Core;
 ///
 /// fn fetch() -> impl Future<Item = (), Error = ()> {
 ///     let api = TraktApi::new(
@@ -53,7 +54,8 @@ pub struct TraktApi<'a> {
 /// }
 ///
 /// fn main() {
-///     tokio::run(fetch());
+///     let mut core = Core::new().unwrap();
+///     core.run(fetch());
 /// }
 /// ```
 impl<'a> TraktApi<'a> {
@@ -549,10 +551,8 @@ impl<'a> PartialEq for TraktApi<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::error::Error;
-    use crate::{asyn::TraktApi, models::*};
+    use crate::{asyn::TraktApi, error::Error, models::*, tests::mock};
     use futures::future::Future;
-    use mockito::mock;
     use tokio_core::reactor::Core;
 
     #[test]
@@ -583,7 +583,7 @@ mod tests {
 
     #[test]
     fn certifications() -> Result<(), Error> {
-        let m = mock("GET", "/certifications/movies")
+        let m = mock("GET", "/certifications/movies", "...")
             .with_status(200)
             .with_body_from_file("mock_data/certifications_movies.json")
             .create();
@@ -636,7 +636,7 @@ mod tests {
 
     #[test]
     fn countries() -> Result<(), Error> {
-        let m = mock("GET", "/countries/movies")
+        let m = mock("GET", "/countries/movies", "...")
             .with_status(200)
             .with_body_from_file("mock_data/countries_movies.json")
             .create();
@@ -664,7 +664,7 @@ mod tests {
 
     #[test]
     fn genres() -> Result<(), Error> {
-        let m = mock("GET", "/genres/movies")
+        let m = mock("GET", "/genres/movies", "...")
             .with_status(200)
             .with_body_from_file("mock_data/genres_movies.json")
             .create();
@@ -692,7 +692,7 @@ mod tests {
 
     #[test]
     fn languages() -> Result<(), Error> {
-        let m = mock("GET", "/languages/movies")
+        let m = mock("GET", "/languages/movies", "...")
             .with_status(200)
             .with_body_from_file("mock_data/languages_movies.json")
             .create();
@@ -720,7 +720,7 @@ mod tests {
 
     #[test]
     fn networks() -> Result<(), Error> {
-        let m = mock("GET", "/networks")
+        let m = mock("GET", "/networks", "...")
             .with_status(200)
             .with_body_from_file("mock_data/networks.json")
             .create();

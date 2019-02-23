@@ -192,18 +192,15 @@ impl<'a> TraktApi<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::models::Ids;
-    use crate::models::Movie;
-    use crate::sync::requests::checkin::CheckinResponse;
     use crate::{
+        models::{Ids, Movie},
         selectors::{SelectIds, SelectMovie},
-        sync::requests::checkin::{Checkin, CheckinSharing},
+        sync::requests::checkin::{Checkin, CheckinResponse, CheckinSharing},
+        tests::mock,
         TraktApi,
     };
     use chrono::Utc;
-    use mockito::mock;
-    use mockito::server_url;
-    use mockito::Matcher;
+    use mockito::{server_url, Matcher};
     use serde_json::{Map, Value};
     use std::fs;
 
@@ -250,7 +247,7 @@ mod tests {
 
     #[test]
     fn checkin() {
-        let m = mock("POST", "/checkin")
+        let m = mock("POST", "/checkin", "CLIENT_ID")
             .with_status(201)
             .with_body_from_file("mock_data/checkin.json")
             .match_body(Matcher::JsonString(
@@ -299,7 +296,9 @@ mod tests {
 
     #[test]
     fn checkout() {
-        let m = mock("DELETE", "/checkin").with_status(204).create();
+        let m = mock("DELETE", "/checkin", "CLIENT_ID")
+            .with_status(204)
+            .create();
 
         TraktApi::with_url(&server_url(), "CLIENT_ID".to_owned(), None)
             .checkout("ACCESS_TOKEN")

@@ -120,9 +120,10 @@ impl<'a> TraktApi<'a> {
 mod tests {
     use crate::{
         models::{AuthenticationDevices, AuthenticationTokenResponse},
+        tests::mock,
         TraktApi,
     };
-    use mockito::{mock, Matcher};
+    use mockito::Matcher;
     use std::fs;
 
     #[test]
@@ -137,7 +138,7 @@ mod tests {
 
     #[test]
     fn oauth_get_token() {
-        let m = mock("POST", "/oauth/token")
+        let m = mock("POST", "/oauth/token", "CLIENT_ID")
             .with_status(200)
             .match_body(Matcher::JsonString(
                 fs::read_to_string("mock_data/oauth_get_token_req.json").unwrap(),
@@ -197,7 +198,7 @@ mod tests {
 
     #[test]
     fn oauth_refresh_token() {
-        let m = mock("POST", "/oauth/token")
+        let m = mock("POST", "/oauth/token", "CLIENT_ID")
             .with_status(200)
             .match_body(Matcher::JsonString(
                 fs::read_to_string("mock_data/oauth_refresh_token_req.json").unwrap(),
@@ -232,7 +233,7 @@ mod tests {
 
     #[test]
     fn oauth_revoke_token() {
-        let m = mock("POST", "/oauth/revoke")
+        let m = mock("POST", "/oauth/revoke", "CLIENT_ID")
             .with_status(200)
             .match_body(Matcher::JsonString(
                 fs::read_to_string("mock_data/oauth_revoke_token_req.json").unwrap(),
@@ -253,7 +254,7 @@ mod tests {
 
     #[test]
     fn oauth_device_code() {
-        let m = mock("POST", "/oauth/device/code")
+        let m = mock("POST", "/oauth/device/code", "CLIENT_ID")
             .with_status(200)
             .match_body(Matcher::JsonString(
                 "{\"client_id\": \"CLIENT_ID\"}".to_owned(),
@@ -286,7 +287,7 @@ mod tests {
 
     #[test]
     fn oauth_device_token() {
-        let m = mock("POST", "/oauth/device/token")
+        let m = mock("POST", "/oauth/device/token", "CLIENT_ID")
             .with_status(200)
             .match_body(Matcher::JsonString(
                 fs::read_to_string("mock_data/oauth_device_token_req.json").unwrap(),

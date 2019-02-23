@@ -124,9 +124,10 @@ mod tests {
         asyn::TraktApi,
         error::Error,
         models::{AuthenticationDevices, AuthenticationTokenResponse},
+        tests::mock,
     };
     use futures::future::Future;
-    use mockito::{mock, Matcher};
+    use mockito::Matcher;
     use std::fs;
     use tokio_core::reactor::Core;
 
@@ -142,7 +143,7 @@ mod tests {
 
     #[test]
     fn oauth_get_token() -> Result<(), Error> {
-        let m = mock("POST", "/oauth/token")
+        let m = mock("POST", "/oauth/token", "CLIENT_ID")
             .with_status(200)
             .match_body(Matcher::JsonString(
                 fs::read_to_string("mock_data/oauth_get_token_req.json").unwrap(),
@@ -210,7 +211,7 @@ mod tests {
 
     #[test]
     fn oauth_refresh_token() -> Result<(), Error> {
-        let m = mock("POST", "/oauth/token")
+        let m = mock("POST", "/oauth/token", "CLIENT_ID")
             .with_status(200)
             .match_body(Matcher::JsonString(
                 fs::read_to_string("mock_data/oauth_refresh_token_req.json").unwrap(),
@@ -253,7 +254,7 @@ mod tests {
 
     #[test]
     fn oauth_revoke_token() -> Result<(), Error> {
-        let m = mock("POST", "/oauth/revoke")
+        let m = mock("POST", "/oauth/revoke", "CLIENT_ID")
             .with_status(200)
             .match_body(Matcher::JsonString(
                 fs::read_to_string("mock_data/oauth_revoke_token_req.json").unwrap(),
@@ -279,7 +280,7 @@ mod tests {
 
     #[test]
     fn oauth_device_code() -> Result<(), Error> {
-        let m = mock("POST", "/oauth/device/code")
+        let m = mock("POST", "/oauth/device/code", "CLIENT_ID")
             .with_status(200)
             .match_body(Matcher::JsonString(
                 "{\"client_id\": \"CLIENT_ID\"}".to_owned(),
@@ -318,7 +319,7 @@ mod tests {
 
     #[test]
     fn oauth_device_token() -> Result<(), Error> {
-        let m = mock("POST", "/oauth/device/token")
+        let m = mock("POST", "/oauth/device/token", "CLIENT_ID")
             .with_status(200)
             .match_body(Matcher::JsonString(
                 fs::read_to_string("mock_data/oauth_device_token_req.json").unwrap(),

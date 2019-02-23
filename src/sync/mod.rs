@@ -559,7 +559,7 @@ impl<'a> PartialEq for TraktApi<'a> {
 #[cfg(test)]
 mod tests {
     use crate::{error::Error, models::*, TraktApi};
-    use mockito::mock;
+    use crate::tests::mock;
 
     #[test]
     fn new_trakt_api() {
@@ -589,7 +589,7 @@ mod tests {
 
     #[test]
     fn certifications() -> Result<(), Error> {
-        let m = mock("GET", "/certifications/movies")
+        let m = mock("GET", "/certifications/movies", "...")
             .with_status(200)
             .with_body_from_file("mock_data/certifications_movies.json")
             .create();
@@ -639,7 +639,7 @@ mod tests {
 
     #[test]
     fn countries() -> Result<(), Error> {
-        let m = mock("GET", "/countries/movies")
+        let m = mock("GET", "/countries/movies", "...")
             .with_status(200)
             .with_body_from_file("mock_data/countries_movies.json")
             .create();
@@ -664,7 +664,7 @@ mod tests {
 
     #[test]
     fn genres() -> Result<(), Error> {
-        let m = mock("GET", "/genres/movies")
+        let m = mock("GET", "/genres/movies", "...")
             .with_status(200)
             .with_body_from_file("mock_data/genres_movies.json")
             .create();
@@ -689,7 +689,7 @@ mod tests {
 
     #[test]
     fn languages() -> Result<(), Error> {
-        let m = mock("GET", "/languages/movies")
+        let m = mock("GET", "/languages/movies", "...")
             .with_status(200)
             .with_body_from_file("mock_data/languages_movies.json")
             .create();
@@ -714,7 +714,7 @@ mod tests {
 
     #[test]
     fn networks() -> Result<(), Error> {
-        let m = mock("GET", "/networks")
+        let m = mock("GET", "/networks", "...")
             .with_status(200)
             .with_body_from_file("mock_data/networks.json")
             .create();

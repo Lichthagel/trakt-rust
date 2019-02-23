@@ -162,18 +162,19 @@ impl<'a> TraktApi<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::error::Error;
     use crate::{
         asyn::{
             requests::checkin::{Checkin, CheckinResponse, CheckinSharing},
             TraktApi,
         },
+        error::Error,
         models::{Ids, Movie},
         selectors::{SelectIds, SelectMovie},
+        tests::mock,
     };
     use chrono::Utc;
     use futures::future::Future;
-    use mockito::{mock, server_url, Matcher};
+    use mockito::{server_url, Matcher};
     use serde_json::{Map, Value};
     use std::fs;
     use tokio_core::reactor::Core;
@@ -221,7 +222,7 @@ mod tests {
 
     #[test]
     fn checkin() -> Result<(), Error> {
-        let m = mock("POST", "/checkin")
+        let m = mock("POST", "/checkin", "CLIENT_ID")
             .with_status(201)
             .with_body_from_file("mock_data/checkin.json")
             .match_body(Matcher::JsonString(
@@ -274,7 +275,9 @@ mod tests {
 
     #[test]
     fn checkout() -> Result<(), Error> {
-        let m = mock("DELETE", "/checkin").with_status(204).create();
+        let m = mock("DELETE", "/checkin", "CLIENT_ID")
+            .with_status(204)
+            .create();
         let mut core = Core::new().unwrap();
 
         let fut = TraktApi::with_url(&server_url(), "CLIENT_ID".to_owned(), None)
