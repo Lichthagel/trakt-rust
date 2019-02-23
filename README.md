@@ -39,4 +39,4 @@ fn main() {
 [cratesio]: https://crates.io/crates/trakt
 [cratesio_badge]: https://img.shields.io/crates/v/trakt.svg?style=flat-square
 [ci]: https://travis-ci.org/Lichthagel/trakt-rust
-[ci_badge]: https://img.shields.io/travis/lichthagel/trakt-rust.svg?style=flat-square
+[ci_badge]: https://img.shields.io/travis/Lichthagel/trakt-rust.svg?style=flat-square
