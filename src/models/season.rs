@@ -10,7 +10,7 @@ use chrono::{DateTime, Utc};
 /// A [season]
 ///
 /// [season]: https://trakt.docs.apiary.io/#reference/seasons
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct Season {
     pub number: u32,
     pub ids: Ids,

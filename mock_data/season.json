@@ -1,0 +1,158 @@
+[
+  {
+    "season": 3,
+    "number": 1,
+    "title": "Fight or Flight",
+    "ids": {
+      "trakt": 2758238,
+      "tvdb": 6539689,
+      "imdb": "tt6665296",
+      "tmdb": 1438886,
+      "tvrage": 0
+    }
+  },
+  {
+    "season": 3,
+    "number": 2,
+    "title": "IFF",
+    "ids": {
+      "trakt": 2924681,
+      "tvdb": 6596531,
+      "imdb": "tt6665300",
+      "tmdb": 1459987,
+      "tvrage": 0
+    }
+  },
+  {
+    "season": 3,
+    "number": 3,
+    "title": "Assured Destruction",
+    "ids": {
+      "trakt": 2924683,
+      "tvdb": 6596534,
+      "imdb": "tt6665304",
+      "tmdb": 1459988,
+      "tvrage": 0
+    }
+  },
+  {
+    "season": 3,
+    "number": 4,
+    "title": "Reload",
+    "ids": {
+      "trakt": 2924686,
+      "tvdb": 6596535,
+      "imdb": "tt6665310",
+      "tmdb": 1473911,
+      "tvrage": 0
+    }
+  },
+  {
+    "season": 3,
+    "number": 5,
+    "title": "Triple Point",
+    "ids": {
+      "trakt": 2924687,
+      "tvdb": 6596536,
+      "imdb": "tt6665312",
+      "tmdb": 1475002,
+      "tvrage": 0
+    }
+  },
+  {
+    "season": 3,
+    "number": 6,
+    "title": "Immolation",
+    "ids": {
+      "trakt": 2924688,
+      "tvdb": 6596537,
+      "imdb": "tt6665314",
+      "tmdb": 1475003,
+      "tvrage": 0
+    }
+  },
+  {
+    "season": 3,
+    "number": 7,
+    "title": "Delta-V",
+    "ids": {
+      "trakt": 2924689,
+      "tvdb": 6596539,
+      "imdb": "tt6665320",
+      "tmdb": 1480971,
+      "tvrage": 0
+    }
+  },
+  {
+    "season": 3,
+    "number": 8,
+    "title": "It Reaches Out",
+    "ids": {
+      "trakt": 2924690,
+      "tvdb": 6596541,
+      "imdb": "tt6665326",
+      "tmdb": 1480972,
+      "tvrage": 0
+    }
+  },
+  {
+    "season": 3,
+    "number": 9,
+    "title": "Intransigence",
+    "ids": {
+      "trakt": 2924691,
+      "tvdb": 6596543,
+      "imdb": "tt6665336",
+      "tmdb": 1492753,
+      "tvrage": 0
+    }
+  },
+  {
+    "season": 3,
+    "number": 10,
+    "title": "Dandelion Sky",
+    "ids": {
+      "trakt": 2924692,
+      "tvdb": 6596544,
+      "imdb": "tt6665350",
+      "tmdb": 1497112,
+      "tvrage": 0
+    }
+  },
+  {
+    "season": 3,
+    "number": 11,
+    "title": "Fallen World",
+    "ids": {
+      "trakt": 2924693,
+      "tvdb": 6596546,
+      "imdb": "tt6665354",
+      "tmdb": 1499420,
+      "tvrage": 0
+    }
+  },
+  {
+    "season": 3,
+    "number": 12,
+    "title": "Congregation",
+    "ids": {
+      "trakt": 2924695,
+      "tvdb": 6596547,
+      "imdb": "tt6665358",
+      "tmdb": 1503261,
+      "tvrage": 0
+    }
+  },
+  {
+    "season": 3,
+    "number": 13,
+    "title": "Abaddon's Gate",
+    "ids": {
+      "trakt": 2924697,
+      "tvdb": 6596548,
+      "imdb": "tt6665364",
+      "tmdb": 1503262,
+      "tvrage": 0
+    }
+  }
+]

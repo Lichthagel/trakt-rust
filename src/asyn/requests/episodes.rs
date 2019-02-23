@@ -344,7 +344,7 @@ mod tests {
             "...",
         )
         .with_status(200)
-        .with_body_from_file("mock_data/episode_comments.json")
+        .with_body_from_file("mock_data/media_comments.json")
         .create();
 
         let mut core = Core::new().unwrap();
@@ -400,7 +400,7 @@ mod tests {
             "...",
         )
         .with_status(200)
-        .with_body_from_file("mock_data/episode_lists.json")
+        .with_body_from_file("mock_data/media_lists.json")
         .create();
 
         let mut core = Core::new().unwrap();
@@ -468,7 +468,7 @@ mod tests {
             "...",
         )
         .with_status(200)
-        .with_body_from_file("mock_data/episode_ratings.json")
+        .with_body_from_file("mock_data/media_ratings.json")
         .create();
 
         let mut core = Core::new().unwrap();
@@ -488,7 +488,7 @@ mod tests {
     fn episode_stats() -> Result<(), Error> {
         let m = mock("GET", "/shows/fairy-tail/seasons/1/episodes/1/stats", "...")
             .with_status(200)
-            .with_body_from_file("mock_data/episode_stats.json")
+            .with_body_from_file("mock_data/media_stats.json")
             .create();
 
         let mut core = Core::new().unwrap();
@@ -512,7 +512,7 @@ mod tests {
             "...",
         )
         .with_status(200)
-        .with_body_from_file("mock_data/episode_watching.json")
+        .with_body_from_file("mock_data/media_watching.json")
         .create();
 
         let mut core = Core::new().unwrap();
