@@ -27,6 +27,43 @@ fn main() {
 }
 ```
 
+## Async
+
+trakt-rust also has an async implementation using futures. If you want to use it add this to your Cargo.toml
+
+```toml
+[dependencies.trakt]
+version = "0.0.2"
+default-features = false
+features = ["async"]
+```
+
+### Example
+
+```rust
+use tokio::prelude::Future;
+use trakt::asyn::TraktApi;
+
+fn fetch() -> impl Future<Item = (), Error = ()> {
+    let api = TraktApi::new(
+        "5fb6cb3a16007b60122d7af2b7763ed70987a33ebc5df10fbc2dcbfebfd635fa".to_owned(),
+        None,
+    );
+
+    api.show("fairy-tail")
+        .map(|data| {
+            dbg!(data);
+        })
+        .map_err(|e| {
+            panic!(e);
+        })
+}
+
+fn main() {
+    tokio::run(fetch())
+}
+```
+
 ## License
 
 [MIT][license]
