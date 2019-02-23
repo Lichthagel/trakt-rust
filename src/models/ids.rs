@@ -8,8 +8,11 @@ use std::fmt;
 use std::fmt::Display;
 use std::ops::AddAssign;
 
-pub trait ToId<T> {
-    fn id(&self) -> T;
+pub trait ToId<'a, T>
+where
+    T: 'a,
+{
+    fn id(&'a self) -> T;
 }
 
 /// [Ids] of almost every item

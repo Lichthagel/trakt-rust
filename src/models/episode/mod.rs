@@ -24,8 +24,8 @@ pub struct Episode {
     pub ids: Ids,
 }
 
-impl ToId<(u32, u32)> for Episode {
-    fn id(&self) -> (u32, u32) {
+impl<'a> ToId<'a, (u32, u32)> for Episode {
+    fn id(&'a self) -> (u32, u32) {
         (self.season, self.number)
     }
 }
@@ -51,8 +51,8 @@ pub struct FullEpisode {
     pub runtime: u32,
 }
 
-impl ToId<(u32, u32)> for FullEpisode {
-    fn id(&self) -> (u32, u32) {
+impl<'a> ToId<'a, (u32, u32)> for FullEpisode {
+    fn id(&'a self) -> (u32, u32) {
         (self.season, self.number)
     }
 }

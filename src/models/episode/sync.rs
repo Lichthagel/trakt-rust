@@ -8,9 +8,9 @@ use crate::{
 };
 use std::fmt::Display;
 
-pub trait EpisodeMethods: ToId<(u32, u32)> {
+pub trait EpisodeMethods<'b>: ToId<'b, (u32, u32)> {
     fn translations(
-        &self,
+        &'b self,
         client: &TraktApi,
         show: impl Display,
         language: impl Display,
@@ -19,7 +19,7 @@ pub trait EpisodeMethods: ToId<(u32, u32)> {
     }
 
     fn comments<'a>(
-        &self,
+        &'b self,
         client: &'a TraktApi,
         show: impl Display,
     ) -> PaginationRequest<'a, Comment> {
@@ -27,7 +27,7 @@ pub trait EpisodeMethods: ToId<(u32, u32)> {
     }
 
     fn lists<'a>(
-        &self,
+        &'b self,
         client: &'a TraktApi,
         show: impl Display,
         f: impl FnOnce(ListFactory) -> ListFactory,
@@ -35,30 +35,30 @@ pub trait EpisodeMethods: ToId<(u32, u32)> {
         client.episode_lists(show, self.id().0, self.id().1, f)
     }
 
-    fn ratings(&self, client: &TraktApi, show: impl Display) -> Result<Ratings> {
+    fn ratings(&'b self, client: &TraktApi, show: impl Display) -> Result<Ratings> {
         client.episode_ratings(show, self.id().0, self.id().1)
     }
 
-    fn stats(&self, client: &TraktApi, show: impl Display) -> Result<MediaStats> {
+    fn stats(&'b self, client: &TraktApi, show: impl Display) -> Result<MediaStats> {
         client.episode_stats(show, self.id().0, self.id().1)
     }
 
-    fn watching(&self, client: &TraktApi, show: impl Display) -> Result<Vec<User>> {
+    fn watching(&'b self, client: &TraktApi, show: impl Display) -> Result<Vec<User>> {
         client.episode_watching(show, self.id().0, self.id().1)
     }
 
-    fn watching_full(&self, client: &TraktApi, show: impl Display) -> Result<Vec<FullUser>> {
+    fn watching_full(&'b self, client: &TraktApi, show: impl Display) -> Result<Vec<FullUser>> {
         client.episode_watching_full(show, self.id().0, self.id().1)
     }
 
-    fn fetch(&self, client: &TraktApi, show: impl Display) -> Result<Episode> {
+    fn fetch(&'b self, client: &TraktApi, show: impl Display) -> Result<Episode> {
         client.episode(show, self.id().0, self.id().1)
     }
 
-    fn fetch_full(&self, client: &TraktApi, show: impl Display) -> Result<FullEpisode> {
+    fn fetch_full(&'b self, client: &TraktApi, show: impl Display) -> Result<FullEpisode> {
         client.episode_full(show, self.id().0, self.id().1)
     }
 }
 
-impl EpisodeMethods for Episode {}
-impl EpisodeMethods for FullEpisode {}
+impl<'a> EpisodeMethods<'a> for Episode {}
+impl<'a> EpisodeMethods<'a> for FullEpisode {}

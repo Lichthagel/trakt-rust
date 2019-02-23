@@ -35,7 +35,7 @@ pub struct Comment {
     pub user: User,
 }
 
-impl ToId<u32> for Comment {
+impl<'a> ToId<'a, u32> for Comment {
     fn id(&self) -> u32 {
         self.id as u32
     }
@@ -72,8 +72,8 @@ pub struct FullComment {
     pub user: FullUser,
 }
 
-impl ToId<u32> for FullComment {
-    fn id(&self) -> u32 {
+impl<'a> ToId<'a, u32> for FullComment {
+    fn id(&'a self) -> u32 {
         self.id as u32
     }
 }
@@ -125,8 +125,8 @@ pub struct CommentAndItem {
     pub comment: Comment,
 }
 
-impl ToId<u32> for CommentAndItem {
-    fn id(&self) -> u32 {
+impl<'a> ToId<'a, u32> for CommentAndItem {
+    fn id(&'a self) -> u32 {
         self.comment.id()
     }
 }
@@ -147,8 +147,8 @@ pub struct FullCommentAndItem {
     pub comment: FullComment,
 }
 
-impl ToId<u32> for FullCommentAndItem {
-    fn id(&self) -> u32 {
+impl<'a> ToId<'a, u32> for FullCommentAndItem {
+    fn id(&'a self) -> u32 {
         self.comment.id()
     }
 }

@@ -6,9 +6,8 @@ mod asyn;
 #[cfg(feature = "sync")]
 mod sync;
 
-use crate::models::ids::Ids;
-use chrono::DateTime;
-use chrono::Utc;
+use crate::models::{Ids, ToId};
+use chrono::{DateTime, Utc};
 
 /// An [user]
 ///
@@ -21,6 +20,12 @@ pub struct User {
     pub vip: Option<bool>,
     pub vip_ep: Option<bool>,
     pub ids: Ids,
+}
+
+impl<'a> ToId<'a, &'a str> for User {
+    fn id(&'a self) -> &'a str {
+        self.ids.slug.as_ref().unwrap()
+    }
 }
 
 /// Images of an [User]
@@ -109,6 +114,12 @@ pub struct FullUser {
     pub images: Option<UserImages>,
     pub vip_og: Option<bool>,
     pub vip_years: Option<u32>,
+}
+
+impl<'a> ToId<'a, &'a str> for FullUser {
+    fn id(&'a self) -> &'a str {
+        self.ids.slug.as_ref().unwrap()
+    }
 }
 
 impl PartialEq for FullUser {
