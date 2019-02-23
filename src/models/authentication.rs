@@ -2,20 +2,6 @@
 //!
 //! [authentication]: https://trakt.docs.apiary.io/#reference/authentication-oauth
 
-/// The body for getting an access_token.
-///
-/// Look [here]
-///
-/// [here]: https://trakt.docs.apiary.io/#reference/authentication-oauth/get-token/exchange-code-for-access_token
-#[derive(Debug, Serialize, Deserialize)]
-pub struct Authentication {
-    pub code: String,
-    pub client_id: String,
-    pub client_secret: String,
-    pub redirect_uri: Option<String>,
-    pub grant_type: Option<String>,
-}
-
 /// The device codes required for device authentication
 ///
 /// Look [here]

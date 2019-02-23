@@ -26,7 +26,7 @@ pub mod watched;
 pub mod watching;
 
 pub use crate::models::{
-    authentication::{Authentication, AuthenticationDevices, AuthenticationTokenResponse},
+    authentication::{AuthenticationDevices, AuthenticationTokenResponse},
     calendar::{CalendarMovie, CalendarShow, FullCalendarMovie, FullCalendarShow},
     certifications::{Certification, Certifications, CertificationsType},
     collection::{CollectionEpisode, CollectionMovie, CollectionSeason, CollectionShow},
