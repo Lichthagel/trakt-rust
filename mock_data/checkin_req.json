@@ -1,0 +1,13 @@
+{
+  "movie": {
+    "ids": {
+      "slug": "guardians-of-the-galaxy-2014"
+    }
+  },
+  "sharing": {
+    "twitter": true,
+    "tumblr": false,
+    "facebook": false
+  },
+  "app_version": "0.1.0"
+}

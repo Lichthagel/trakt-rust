@@ -13,7 +13,7 @@ use std::{fmt, ops::AddAssign, str::FromStr};
 /// A [show]
 ///
 /// [show]: https://trakt.docs.apiary.io/#reference/shows
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct Show {
     pub title: String,
     pub year: Option<u16>,

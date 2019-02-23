@@ -11,7 +11,7 @@ use std::ops::AddAssign;
 /// A [movie]
 ///
 /// [movie]: https://trakt.docs.apiary.io/#reference/movies
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct Movie {
     pub title: String,
     pub year: Option<u16>,

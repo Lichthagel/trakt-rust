@@ -130,7 +130,7 @@ impl CheckinSharing {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct CheckinResponse {
     pub id: u64,
     pub watched_at: DateTime<Utc>,
@@ -148,13 +148,13 @@ impl<'a> TraktApi<'a> {
     pub fn checkout(&self, access_token: &str) -> Result<()> {
         Box::new(
             self.client
-                .delete(&api_url!(("checkin")))
+                .delete(&format!("{}/checkin", self.base_url))
                 .header("Content-Type", "application/json")
                 .header("Authorization", format!("Bearer {}", access_token))
                 .header("trakt-api-version", 2)
                 .header("trakt-api-key", self.client_id.as_str())
                 .send()
-                .and_then(|mut res| res.json())
+                .and_then(|_| Ok(()))
                 .map_err(Error::from),
         )
     }
@@ -162,15 +162,21 @@ impl<'a> TraktApi<'a> {
 
 #[cfg(test)]
 mod tests {
+    use crate::error::Error;
     use crate::{
         asyn::{
-            requests::checkin::{Checkin, CheckinSharing},
+            requests::checkin::{Checkin, CheckinResponse, CheckinSharing},
             TraktApi,
         },
+        models::{Ids, Movie},
         selectors::{SelectIds, SelectMovie},
     };
     use chrono::Utc;
+    use futures::future::Future;
+    use mockito::{mock, server_url, Matcher};
     use serde_json::{Map, Value};
+    use std::fs;
+    use tokio_core::reactor::Core;
 
     #[test]
     fn checkin_struct() {
@@ -211,6 +217,74 @@ mod tests {
                 }
             }
         );
+    }
+
+    #[test]
+    fn checkin() -> Result<(), Error> {
+        let m = mock("POST", "/checkin")
+            .with_status(201)
+            .with_body_from_file("mock_data/checkin.json")
+            .match_body(Matcher::JsonString(
+                fs::read_to_string("mock_data/checkin_req.json").unwrap(),
+            ))
+            .create();
+        let mut core = Core::new().unwrap();
+
+        let fut = TraktApi::with_url(&server_url(), "CLIENT_ID".to_string(), None)
+            .checkin()
+            .movie(|movie| movie.slug("guardians-of-the-galaxy-2014"))
+            .twitter()
+            .app_version("0.1.0")
+            .execute("ACCESS_TOKEN")
+            .map(|res| {
+                assert_eq!(
+                    res,
+                    CheckinResponse {
+                        id: 3373536619,
+                        watched_at: "2014-08-06T01:11:37.000Z".parse().unwrap(),
+                        sharing: CheckinSharing {
+                            twitter: true,
+                            tumblr: false,
+                            facebook: false
+                        },
+                        movie: Some(Movie {
+                            title: "Guardians of the Galaxy".to_string(),
+                            year: Some(2014),
+                            ids: Ids {
+                                trakt: Some(28),
+                                slug: Some("guardians-of-the-galaxy-2014".to_owned()),
+                                tvdb: None,
+                                imdb: Some("tt2015381".to_owned()),
+                                tmdb: Some(118340),
+                                tvrage: None
+                            }
+                        }),
+                        episode: None,
+                        show: None
+                    }
+                )
+            })
+            .then(|_| {
+                m.assert();
+                Ok(())
+            });
+
+        core.run(fut)
+    }
+
+    #[test]
+    fn checkout() -> Result<(), Error> {
+        let m = mock("DELETE", "/checkin").with_status(204).create();
+        let mut core = Core::new().unwrap();
+
+        let fut = TraktApi::with_url(&server_url(), "CLIENT_ID".to_owned(), None)
+            .checkout("ACCESS_TOKEN")
+            .then(|_res| {
+                m.assert();
+                Ok(())
+            });
+
+        core.run(fut)
     }
 
 }

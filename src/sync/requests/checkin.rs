@@ -153,7 +153,7 @@ impl CheckinSharing {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct CheckinResponse {
     pub id: u64,
     pub watched_at: DateTime<Utc>,
@@ -171,7 +171,7 @@ impl<'a> TraktApi<'a> {
     pub fn checkout(&self, access_token: &str) -> Result<()> {
         match self
             .client
-            .delete(&api_url!(("checkin")))
+            .delete(&format!("{}/checkin", self.base_url))
             .header("Content-Type", "application/json")
             .header("Authorization", format!("Bearer {}", access_token))
             .header("trakt-api-version", 2)
@@ -192,13 +192,20 @@ impl<'a> TraktApi<'a> {
 
 #[cfg(test)]
 mod tests {
+    use crate::models::Ids;
+    use crate::models::Movie;
+    use crate::sync::requests::checkin::CheckinResponse;
     use crate::{
         selectors::{SelectIds, SelectMovie},
         sync::requests::checkin::{Checkin, CheckinSharing},
         TraktApi,
     };
     use chrono::Utc;
+    use mockito::mock;
+    use mockito::server_url;
+    use mockito::Matcher;
     use serde_json::{Map, Value};
+    use std::fs;
 
     #[test]
     fn checkin_struct() {
@@ -241,4 +248,67 @@ mod tests {
         );
     }
 
+    #[test]
+    fn checkin() {
+        let m = mock("POST", "/checkin")
+            .with_status(201)
+            .with_body_from_file("mock_data/checkin.json")
+            .match_body(Matcher::JsonString(
+                fs::read_to_string("mock_data/checkin_req.json").unwrap(),
+            ))
+            .create();
+
+        TraktApi::with_url(&server_url(), "CLIENT_ID".to_string(), None)
+            .checkin()
+            .movie(|movie| movie.slug("guardians-of-the-galaxy-2014"))
+            .twitter()
+            .app_version("0.1.0")
+            .execute("ACCESS_TOKEN")
+            .map(|res| {
+                assert_eq!(
+                    res,
+                    CheckinResponse {
+                        id: 3373536619,
+                        watched_at: "2014-08-06T01:11:37.000Z".parse().unwrap(),
+                        sharing: CheckinSharing {
+                            twitter: true,
+                            tumblr: false,
+                            facebook: false
+                        },
+                        movie: Some(Movie {
+                            title: "Guardians of the Galaxy".to_string(),
+                            year: Some(2014),
+                            ids: Ids {
+                                trakt: Some(28),
+                                slug: Some("guardians-of-the-galaxy-2014".to_owned()),
+                                tvdb: None,
+                                imdb: Some("tt2015381".to_owned()),
+                                tmdb: Some(118340),
+                                tvrage: None
+                            }
+                        }),
+                        episode: None,
+                        show: None
+                    }
+                )
+            })
+            .unwrap();
+
+        m.assert();
+    }
+
+    #[test]
+    fn checkout() {
+        let m = mock("DELETE", "/checkin").with_status(204).create();
+
+        TraktApi::with_url(&server_url(), "CLIENT_ID".to_owned(), None)
+            .checkout("ACCESS_TOKEN")
+            .map_err(|e| {
+                println!("{:#?}", e);
+                panic!(e);
+            })
+            .unwrap();
+
+        m.assert();
+    }
 }
