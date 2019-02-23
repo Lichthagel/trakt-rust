@@ -558,8 +558,8 @@ impl<'a> PartialEq for TraktApi<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::{error::Error, models::*, TraktApi};
     use crate::tests::mock;
+    use crate::{error::Error, models::*, TraktApi};
 
     #[test]
     fn new_trakt_api() {

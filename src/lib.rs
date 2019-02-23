@@ -43,6 +43,7 @@ mod tests {
         mockito::mock(method, path)
             .with_header("trakt-api-version", "2")
             .with_header("trakt-api-key", client_id)
+            .with_header("Content-Type", "application/json")
     }
 
     pub fn auth_mock(method: &str, path: &str, client_id: &str, access_token: &str) -> Mock {
