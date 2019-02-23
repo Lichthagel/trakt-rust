@@ -1,6 +1,12 @@
 //! All models related to [episodes]
 //!
 //! [episodes]: https://trakt.docs.apiary.io/#reference/episodes
+#[cfg(feature = "async")]
+mod asyn;
+#[cfg(feature = "sync")]
+mod sync;
+
+use crate::models::ToId;
 use crate::{
     extended_info::{WithFull, WithNone},
     models::ids::Ids,
@@ -16,6 +22,12 @@ pub struct Episode {
     pub number: u32,
     pub title: Option<String>,
     pub ids: Ids,
+}
+
+impl ToId<(u32, u32)> for Episode {
+    fn id(&self) -> (u32, u32) {
+        (self.season, self.number)
+    }
 }
 
 /// An [episode] with full [extended info]
@@ -37,6 +49,12 @@ pub struct FullEpisode {
     pub updated_at: Option<DateTime<Utc>>,
     pub available_translations: Vec<String>,
     pub runtime: u32,
+}
+
+impl ToId<(u32, u32)> for FullEpisode {
+    fn id(&self) -> (u32, u32) {
+        (self.season, self.number)
+    }
 }
 
 impl WithFull for Episode {
