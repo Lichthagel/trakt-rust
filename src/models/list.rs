@@ -183,7 +183,7 @@ impl Default for OptionList {
 /// Info for a [list]
 ///
 /// [list]: https://trakt.docs.apiary.io/#reference/lists
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct ListInfo {
     pub like_count: u32,
     pub comment_count: u32,
