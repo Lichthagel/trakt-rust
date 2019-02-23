@@ -1,12 +1,17 @@
 //! All models related to [comments]
 //!
 //! [comments]: https://trakt.docs.apiary.io/#reference/comments
+#[cfg(feature = "async")]
+mod asyn;
+#[cfg(feature = "sync")]
+mod sync;
+
 use crate::{
     extended_info::{WithFull, WithNone},
     filters::TypeFilter,
     models::{
         AllCommentableItemType, CommentableItemType, Episode, FullEpisode, FullList, FullMovie,
-        FullSeason, FullShow, FullUser, IncludeReplies, List, Movie, Season, Show, User,
+        FullSeason, FullShow, FullUser, IncludeReplies, List, Movie, Season, Show, ToId, User,
     },
 };
 use chrono::{DateTime, Utc};
@@ -28,6 +33,12 @@ pub struct Comment {
     pub likes: u64,
     pub user_rating: Option<u8>,
     pub user: User,
+}
+
+impl ToId<u32> for Comment {
+    fn id(&self) -> u32 {
+        self.id as u32
+    }
 }
 
 impl PartialEq for Comment {
@@ -59,6 +70,12 @@ pub struct FullComment {
     pub likes: u64,
     pub user_rating: Option<u8>,
     pub user: FullUser,
+}
+
+impl ToId<u32> for FullComment {
+    fn id(&self) -> u32 {
+        self.id as u32
+    }
 }
 
 impl PartialEq for FullComment {
@@ -108,6 +125,12 @@ pub struct CommentAndItem {
     pub comment: Comment,
 }
 
+impl ToId<u32> for CommentAndItem {
+    fn id(&self) -> u32 {
+        self.comment.id()
+    }
+}
+
 /// Wraps around an item that can be [comment]ed including the [comment] and full [extended info]
 ///
 /// [comment]: https://trakt.docs.apiary.io/#reference/comments
@@ -122,6 +145,12 @@ pub struct FullCommentAndItem {
     pub episode: Option<FullEpisode>,
     pub list: Option<FullList>,
     pub comment: FullComment,
+}
+
+impl ToId<u32> for FullCommentAndItem {
+    fn id(&self) -> u32 {
+        self.comment.id()
+    }
 }
 
 impl WithFull for CommentAndItem {

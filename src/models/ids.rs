@@ -2,6 +2,10 @@ use std::fmt;
 use std::fmt::Display;
 use std::ops::AddAssign;
 
+pub trait ToId<T> {
+    fn id(&self) -> T;
+}
+
 /// [Ids] of almost every item
 ///
 /// [Ids]: https://trakt.docs.apiary.io/#introduction/standard-media-objects

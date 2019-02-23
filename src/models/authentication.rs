@@ -2,6 +2,11 @@
 //!
 //! [authentication]: https://trakt.docs.apiary.io/#reference/authentication-oauth
 
+#[cfg(feature = "async")]
+use crate::asyn::{Result as AsyncResult, TraktApi as AsyncTraktApi};
+#[cfg(feature = "sync")]
+use crate::{Result, TraktApi};
+
 /// The device codes required for device authentication
 ///
 /// Look [here]
@@ -14,6 +19,18 @@ pub struct AuthenticationDevices {
     pub verification_url: String,
     pub expires_in: u64,
     pub interval: u64,
+}
+
+impl AuthenticationDevices {
+    #[cfg(feature = "sync")]
+    pub fn poll(&self, client: &TraktApi) -> Result<AuthenticationTokenResponse> {
+        client.oauth_device_token(&self.device_code)
+    }
+
+    #[cfg(feature = "async")]
+    pub fn poll_async(&self, client: &AsyncTraktApi) -> AsyncResult<AuthenticationTokenResponse> {
+        client.oauth_device_token(&self.device_code)
+    }
 }
 
 /// The response of getting an access_token

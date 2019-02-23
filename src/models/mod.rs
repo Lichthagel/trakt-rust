@@ -30,11 +30,14 @@ pub use crate::models::{
     calendar::{CalendarMovie, CalendarShow, FullCalendarMovie, FullCalendarShow},
     certifications::{Certification, Certifications, CertificationsType},
     collection::{CollectionEpisode, CollectionMovie, CollectionSeason, CollectionShow},
-    comment::{Comment, CommentAndItem, CommentItem, CommentSharing, CommentType},
+    comment::{
+        Comment, CommentAndItem, CommentItem, CommentSharing, CommentType, FullComment,
+        FullCommentAndItem,
+    },
     episode::{Episode, FullEpisode, OptionEpisode},
     genre::Genre,
     history::HistoryItem,
-    ids::{IdType, Ids},
+    ids::{IdType, Ids, ToId},
     item_types::{
         AllCommentableItemType, AllItemType, CommentableItemType, IncludeReplies, ItemType,
         ListItemType, MediaType, SearchItemType, TimePeriod, WatchableType,
