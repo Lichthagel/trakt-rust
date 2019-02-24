@@ -46,7 +46,7 @@ use trakt::asyn::TraktApi;
 
 fn fetch() -> impl Future<Item = (), Error = ()> {
     let api = TraktApi::new(
-        "5fb6cb3a16007b60122d7af2b7763ed70987a33ebc5df10fbc2dcbfebfd635fa".to_owned(),
+        "CLIENT_ID".to_owned(),
         None,
     );
 
