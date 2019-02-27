@@ -2,7 +2,7 @@
 
 [![ci_badge]][ci] [![discord_badge]][discord] [![docs_badge]][docs] [![cratesio_badge]][cratesio]
 
-A api wrapper in Rust for trakt.tv
+A api wrapper in Rust for trakt.tv.
 
 ## Installation
 
@@ -68,6 +68,10 @@ fn main() {
 
 [MIT][license]
 
+**Powered by**
+
+![trakt]
+
 [license]: https://github.com/Lichthagel/trakt-rust/blob/master/LICENSE
 [discord]: https://discordapp.com/invite/0pI32FvBW7M0f6A6
 [discord_badge]: https://img.shields.io/discord/148103700743847936.svg?label=Discord&style=flat-square
@@ -77,3 +81,4 @@ fn main() {
 [cratesio_badge]: https://img.shields.io/crates/v/trakt.svg?style=flat-square
 [ci]: https://travis-ci.org/Lichthagel/trakt-rust
 [ci_badge]: https://img.shields.io/travis/Lichthagel/trakt-rust.svg?style=flat-square
+[trakt]: https://raw.githubusercontent.com/Lichthagel/trakt-rust/master/docs/trakt-wide-red-black.svg
