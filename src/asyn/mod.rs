@@ -7,7 +7,7 @@ use crate::{
 };
 use futures::Future;
 use reqwest::{
-    r#async::{Client, RequestBuilder},
+    r#async::{Client, Request, RequestBuilder},
     Method,
 };
 use serde::de::DeserializeOwned;
@@ -94,14 +94,14 @@ impl<'a> TraktApi<'a> {
             .header("trakt-api-key", self.client_id.as_str())
     }
 
-    /// Executes a [reqwest::RequestBuilder] and parses the [reqwest::Response]
+    /// Executes a [reqwest::Request] and parses the [reqwest::Response]
     ///
-    /// [reqwest::RequestBuilder]: ../reqwest/struct.RequestBuilder.html
+    /// [reqwest::Request]: ../reqwest/struct.Request.html
     /// [reqwest::Response]: ../reqwest/struct.Response.html
-    fn execute<T: DeserializeOwned + Send + 'static>(&self, request: RequestBuilder) -> Result<T> {
+    fn execute<T: DeserializeOwned + Send + 'static>(&self, request: Request) -> Result<T> {
         Box::new(
-            request
-                .send()
+            self.client
+                .execute(request)
                 .and_then(|mut res| res.json())
                 .map_err(Error::from),
         )

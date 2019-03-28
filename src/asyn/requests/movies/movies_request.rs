@@ -1,3 +1,4 @@
+use crate::error::Error;
 use crate::{
     asyn::{Result, TraktApi},
     extended_info::{ExtendedInfoFull, ExtendedInfoNone, WithFull, WithNone},
@@ -32,7 +33,10 @@ impl<'a, T: DeserializeOwned + Send + 'static> MoviesRequest<'a, T> {
     }
 
     pub fn execute(self) -> Result<Vec<T>> {
-        self.client.execute(self.request)
+        match self.request.build() {
+            Ok(req) => self.client.execute(req),
+            Err(e) => Box::new(futures::future::err(Error::from(e))),
+        }
     }
 }
 

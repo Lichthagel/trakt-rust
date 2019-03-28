@@ -1,5 +1,6 @@
 use crate::{
     asyn::{Result, TraktApi},
+    error::Error,
     pagination::Pagination,
 };
 use reqwest::r#async::RequestBuilder;
@@ -33,7 +34,10 @@ impl<'a, T: DeserializeOwned + Send + 'static> PaginationRequest<'a, T> {
     }
 
     pub fn execute(self) -> Result<Vec<T>> {
-        self.client.execute(self.request)
+        match self.request.build() {
+            Ok(req) => self.client.execute(req),
+            Err(e) => Box::new(futures::future::err(Error::from(e))),
+        }
     }
 }
 

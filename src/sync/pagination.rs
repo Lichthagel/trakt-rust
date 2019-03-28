@@ -30,7 +30,7 @@ impl<'a, T: DeserializeOwned> PaginationRequest<'a, T> {
     }
 
     pub fn execute(self) -> Result<Vec<T>> {
-        self.client.execute(self.request)
+        self.client.execute(self.request.build()?)
     }
 }
 

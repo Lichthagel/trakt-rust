@@ -5,7 +5,7 @@ use crate::{
     error::Error,
     models::{Certifications, CertificationsType, Country, Genre, Language, MediaType, Network},
 };
-use reqwest::{Method, RequestBuilder};
+use reqwest::{Method, RequestBuilder, Request};
 use serde::de::DeserializeOwned;
 
 pub type Result<T> = std::result::Result<T, Error>;
@@ -56,12 +56,12 @@ impl<'a> TraktApi<'a> {
             .header("trakt-api-key", self.client_id.as_str())
     }
 
-    /// Executes a [reqwest::RequestBuilder] and parses the [reqwest::Response]
+    /// Executes a [reqwest::Request] and parses the [reqwest::Response]
     ///
-    /// [reqwest::RequestBuilder]: ../reqwest/struct.RequestBuilder.html
+    /// [reqwest::Request]: ../reqwest/struct.Request.html
     /// [reqwest::Response]: ../reqwest/struct.Response.html
-    fn execute<T: DeserializeOwned>(&self, request: RequestBuilder) -> Result<T> {
-        match self.client.execute(request.build()?) {
+    fn execute<T: DeserializeOwned>(&self, request: Request) -> Result<T> {
+        match self.client.execute(request) {
             Ok(res) => {
                 if res.status().is_success() {
                     Ok(serde_json::from_reader(res).unwrap())

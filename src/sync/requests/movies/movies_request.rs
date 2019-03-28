@@ -32,7 +32,7 @@ impl<'a, T: DeserializeOwned> MoviesRequest<'a, T> {
     }
 
     pub fn execute(self) -> Result<Vec<T>> {
-        self.client.execute(self.request)
+        self.client.execute(self.request.build()?)
     }
 }
 
