@@ -51,8 +51,9 @@ impl<'a, T: DeserializeOwned + Send + 'static> CalendarRequest<'a, T> {
     /// Build a [reqwest::Request]
     ///
     /// [reqwest::Request]: ../../../../../reqwest/struct.Request.html
-    pub fn build(&self) -> std::result::Result<Request, reqwest::Error> {
-        let mut url = self.url.to_owned();
+    pub fn build(&self) -> std::result::Result<Request, Error> {
+        let mut url = "/calendars/".to_owned();
+        url.push_str(self.url);
 
         if let Some(start_date) = &self.start_date {
             url = format!("{}/{}", url, start_date.format("%Y-%m-%d"));
@@ -64,14 +65,7 @@ impl<'a, T: DeserializeOwned + Send + 'static> CalendarRequest<'a, T> {
 
         if !self.query.is_empty() {
             url.push('?');
-
-            for (k, v) in &self.query {
-                url.push_str(&k);
-                url.push('=');
-                url.push_str(&v);
-            }
-
-            url.split_off(url.len() - 1);
+            url.push_str(&serde_urlencoded::to_string(&self.query)?);
         }
 
         let mut req = self.client.builder(Method::GET, url);
@@ -80,7 +74,7 @@ impl<'a, T: DeserializeOwned + Send + 'static> CalendarRequest<'a, T> {
             req = req.header("Authorization", format!("Bearer {}", access_token));
         }
 
-        req.build()
+        req.build().map_err(Error::from)
     }
 
     /// Execute this request
