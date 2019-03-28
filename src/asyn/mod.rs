@@ -537,7 +537,7 @@ impl<'a> TraktApi<'a> {
 
     #[cfg(feature = "sync")]
     pub fn into_sync(self) -> crate::TraktApi<'a> {
-        crate::TraktApi::new(self.client_id, self.client_secret)
+        crate::TraktApi::with_url(self.base_url, self.client_id, self.client_secret)
     }
 }
 

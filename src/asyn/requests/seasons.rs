@@ -155,14 +155,10 @@ mod tests {
     }
     #[test]
     fn season_comments() -> Result<(), Error> {
-        let m = mock(
-            "GET",
-            "/shows/fairy-tail/seasons/8/comments",
-            "...",
-        )
-        .with_status(200)
-        .with_body_from_file("mock_data/media_comments.json")
-        .create();
+        let m = mock("GET", "/shows/fairy-tail/seasons/8/comments", "...")
+            .with_status(200)
+            .with_body_from_file("mock_data/media_comments.json")
+            .create();
 
         let mut core = Core::new().unwrap();
 
@@ -208,14 +204,10 @@ mod tests {
 
     #[test]
     fn season_lists() -> Result<(), Error> {
-        let m = mock(
-            "GET",
-            "/shows/fairy-tail/seasons/1/lists/all/added",
-            "...",
-        )
-        .with_status(200)
-        .with_body_from_file("mock_data/media_lists.json")
-        .create();
+        let m = mock("GET", "/shows/fairy-tail/seasons/1/lists/all/added", "...")
+            .with_status(200)
+            .with_body_from_file("mock_data/media_lists.json")
+            .create();
 
         let mut core = Core::new().unwrap();
 
