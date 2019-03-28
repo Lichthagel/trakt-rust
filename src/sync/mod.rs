@@ -5,7 +5,7 @@ use crate::{
     error::Error,
     models::{Certifications, CertificationsType, Country, Genre, Language, MediaType, Network},
 };
-use reqwest::{Method, RequestBuilder, Request};
+use reqwest::{Method, Request, RequestBuilder};
 use serde::de::DeserializeOwned;
 
 pub type Result<T> = std::result::Result<T, Error>;

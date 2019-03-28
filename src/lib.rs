@@ -35,6 +35,8 @@ pub mod sync;
 #[cfg(feature = "sync")]
 pub use crate::sync::{Result, TraktApi};
 
+pub use crate::error::Error;
+
 #[cfg(test)]
 mod tests {
     use mockito::Mock;

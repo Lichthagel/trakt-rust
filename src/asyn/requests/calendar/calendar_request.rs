@@ -1,8 +1,11 @@
 use crate::{
     asyn::{Result, TraktApi},
     extended_info::{ExtendedInfoFull, ExtendedInfoNone, WithFull, WithNone},
+    Error,
 };
 use chrono::{Date, Utc};
+use hashbrown::HashMap;
+use reqwest::{r#async::Request, Method};
 use serde::de::DeserializeOwned;
 use std::marker::PhantomData;
 
@@ -14,7 +17,7 @@ pub struct CalendarRequest<'a, T: DeserializeOwned> {
     start_date: Option<Date<Utc>>,
     days: Option<u32>,
     access_token: Option<&'a str>,
-    full: bool,
+    query: HashMap<String, String>,
     response_type: PhantomData<T>,
 }
 
@@ -26,7 +29,7 @@ impl<'a, T: DeserializeOwned + Send + 'static> CalendarRequest<'a, T> {
             start_date: None,
             days: None,
             access_token,
-            full: false,
+            query: HashMap::new(),
             response_type: PhantomData,
         }
     }
@@ -45,11 +48,13 @@ impl<'a, T: DeserializeOwned + Send + 'static> CalendarRequest<'a, T> {
         self
     }
 
-    /// Execute this request
-    pub fn execute(self) -> Result<Vec<T>> {
+    /// Build a [reqwest::Request]
+    ///
+    /// [reqwest::Request]: ../../../../../reqwest/struct.Request.html
+    pub fn build(&self) -> std::result::Result<Request, reqwest::Error> {
         let mut url = self.url.to_owned();
 
-        if let Some(start_date) = self.start_date {
+        if let Some(start_date) = &self.start_date {
             url = format!("{}/{}", url, start_date.format("%Y-%m-%d"));
 
             if let Some(days) = self.days {
@@ -57,15 +62,32 @@ impl<'a, T: DeserializeOwned + Send + 'static> CalendarRequest<'a, T> {
             }
         }
 
-        if self.full {
-            url.push_str("?extended=full");
+        if !self.query.is_empty() {
+            url.push('?');
+
+            for (k, v) in &self.query {
+                url.push_str(&k);
+                url.push('=');
+                url.push_str(&v);
+            }
+
+            url.split_off(url.len() - 1);
         }
 
-        match self.access_token {
-            Some(access_token) => self
-                .client
-                .auth_get(api_url!(("calendars", url)), access_token),
-            None => self.client.get(api_url!(("calendars", url))),
+        let mut req = self.client.builder(Method::GET, url);
+
+        if let Some(access_token) = self.access_token {
+            req = req.header("Authorization", format!("Bearer {}", access_token));
+        }
+
+        req.build()
+    }
+
+    /// Execute this request
+    pub fn execute(self) -> Result<Vec<T>> {
+        match self.build() {
+            Ok(req) => self.client.execute(req),
+            Err(e) => Box::new(futures::future::err(Error::from(e))),
         }
     }
 }
@@ -92,14 +114,16 @@ where
     T::Full: DeserializeOwned,
 {
     /// Request full extended info
-    fn full(self) -> CalendarRequest<'a, T::Full> {
+    fn full(mut self) -> CalendarRequest<'a, T::Full> {
+        self.query.insert("extended".to_owned(), "full".to_owned());
+
         CalendarRequest {
             client: self.client,
             url: self.url,
             start_date: self.start_date,
             days: self.days,
             access_token: self.access_token,
-            full: true,
+            query: self.query,
             response_type: PhantomData,
         }
     }
@@ -111,14 +135,16 @@ where
     T::None: DeserializeOwned,
 {
     /// Request no extended info
-    fn none(self) -> CalendarRequest<'a, T::None> {
+    fn none(mut self) -> CalendarRequest<'a, T::None> {
+        self.query.remove("extended");
+
         CalendarRequest {
             client: self.client,
             url: self.url,
             start_date: self.start_date,
             days: self.days,
             access_token: self.access_token,
-            full: false,
+            query: self.query,
             response_type: PhantomData,
         }
     }
@@ -133,7 +159,7 @@ where
             && self.url == other.url
             && self.days == other.days
             && self.start_date == other.start_date
-            && self.full == other.full
+            && self.query == other.query
     }
 }
 
@@ -145,11 +171,15 @@ mod tests {
         models::{CalendarShow, FullCalendarShow},
     };
     use chrono::Utc;
+    use hashbrown::HashMap;
     use std::marker::PhantomData;
 
     #[test]
     fn calendar_request() {
         let api = TraktApi::staging("...".to_owned(), Some("...".to_owned()));
+
+        let mut query = HashMap::new();
+        query.insert("extended".to_owned(), "full".to_owned());
 
         assert_eq!(
             CalendarRequest::<CalendarShow>::new(&api.clone(), "some_url", None)
@@ -162,7 +192,7 @@ mod tests {
                 start_date: Some(Utc::today()),
                 days: Some(3),
                 access_token: None,
-                full: true,
+                query,
                 response_type: PhantomData
             }
         )
