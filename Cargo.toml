@@ -28,7 +28,7 @@ version = "0.1"
 optional = true
 
 [dev-dependencies]
-mockito = "0.16"
+mockito = "0.17"
 tokio-core = "0.1"
 
 [features]
