@@ -61,6 +61,24 @@ pub struct MovieInfo {
     pub movie: Movie,
 }
 
+/// Info about a [trending movie] with full [extended info]
+///
+/// [trending movie]: https://trakt.docs.apiary.io/#reference/movies/trending/get-trending-movies
+/// [extended info]: https://trakt.docs.apiary.io/#introduction/extended-info
+#[derive(Debug, Serialize, Deserialize)]
+pub struct FullMovieInfo {
+    pub watchers: u32,
+    pub movie: FullMovie,
+}
+
+impl WithFull for MovieInfo {
+    type Full = FullMovieInfo;
+}
+
+impl WithNone for FullMovieInfo {
+    type None = MovieInfo;
+}
+
 /// Stats of a [movie]
 ///
 /// [movie]: https://trakt.docs.apiary.io/#reference/movies/played/get-the-most-played-movies

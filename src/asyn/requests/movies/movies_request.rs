@@ -1,17 +1,19 @@
-use crate::error::Error;
 use crate::{
     asyn::{Result, TraktApi},
     extended_info::{ExtendedInfoFull, ExtendedInfoNone, WithFull, WithNone},
     filters::{CommonFilters, MovieFilters},
     pagination::Pagination,
+    Error,
 };
-use reqwest::{r#async::RequestBuilder, Method};
+use hashbrown::HashMap;
+use reqwest::{r#async::Request, Method};
 use serde::de::DeserializeOwned;
 use std::marker::PhantomData;
 
 pub struct MoviesRequest<'a, T> {
     client: &'a TraktApi<'a>,
-    request: RequestBuilder,
+    url: String,
+    query: HashMap<String, String>,
     response_type: PhantomData<T>,
 }
 
@@ -19,34 +21,37 @@ impl<'a, T: DeserializeOwned + Send + 'static> MoviesRequest<'a, T> {
     pub fn new(client: &'a TraktApi, url: String) -> Self {
         Self {
             client,
-            request: client.builder(Method::GET, api_url!(("movies", url))),
+            url,
+            query: HashMap::new(),
             response_type: PhantomData,
         }
     }
 
-    fn apply<U>(self, f: impl FnOnce(RequestBuilder) -> RequestBuilder) -> MoviesRequest<'a, U> {
-        MoviesRequest {
-            client: self.client,
-            request: f(self.request),
-            response_type: PhantomData,
-        }
+    pub fn build(&self) -> crate::Result<Request> {
+        self.client
+            .builder(Method::GET, format!("/movies/{}", self.url))
+            .query(&self.query)
+            .build()
+            .map_err(Error::from)
     }
 
     pub fn execute(self) -> Result<Vec<T>> {
-        match self.request.build() {
+        match self.build() {
             Ok(req) => self.client.execute(req),
-            Err(e) => Box::new(futures::future::err(Error::from(e))),
+            Err(e) => Box::new(futures::future::err(e)),
         }
     }
 }
 
 impl<'a, T: DeserializeOwned + Send + 'static> Pagination for MoviesRequest<'a, T> {
-    fn page(self, page: u32) -> Self {
-        self.apply(|b| b.query(&[("page", page)]))
+    fn page(mut self, page: u32) -> Self {
+        self.query.insert("page".to_owned(), format!("{}", page));
+        self
     }
 
-    fn limit(self, limit: u32) -> Self {
-        self.apply(|b| b.query(&[("limit", limit)]))
+    fn limit(mut self, limit: u32) -> Self {
+        self.query.insert("limit".to_owned(), format!("{}", limit));
+        self
     }
 }
 
@@ -61,51 +66,79 @@ impl<'a, T: WithNone> WithNone for MoviesRequest<'a, T> {
 impl<'a, T: WithFull + DeserializeOwned + Send + 'static> ExtendedInfoFull
     for MoviesRequest<'a, T>
 {
-    fn full(self) -> Self::Full {
-        self.apply(|b| b.query(&[("extended", "full")]))
+    fn full(mut self) -> Self::Full {
+        self.query.insert("extended".to_owned(), "full".to_owned());
+
+        Self::Full {
+            client: self.client,
+            url: self.url,
+            query: self.query,
+            response_type: PhantomData,
+        }
     }
 }
 
 impl<'a, T: WithNone + DeserializeOwned + Send + 'static> ExtendedInfoNone
     for MoviesRequest<'a, T>
 {
-    fn none(self) -> Self::None {
-        self.apply(|b| b.query(&[("extended", "none")]))
+    fn none(mut self) -> Self::None {
+        self.query.remove("extended");
+
+        Self::None {
+            client: self.client,
+            url: self.url,
+            query: self.query,
+            response_type: PhantomData,
+        }
     }
 }
 
 impl<'a, T: DeserializeOwned + Send + 'static> CommonFilters for MoviesRequest<'a, T> {
-    fn query(self, query: &str) -> Self {
-        self.apply(|b| b.query(&[("query", query)]))
+    fn query(mut self, query: &str) -> Self {
+        self.query.insert("query".to_owned(), query.to_owned());
+        self
     }
 
-    fn year(self, year: u32) -> Self {
-        self.apply(|b| b.query(&[("years", year)]))
+    fn year(mut self, year: u32) -> Self {
+        self.query.insert("years".to_owned(), format!("{}", year));
+        self
     }
 
-    fn genre(self, genre_slug: &str) -> Self {
-        self.apply(|b| b.query(&[("genres", genre_slug)]))
+    fn genre(mut self, genre_slug: &str) -> Self {
+        self.query
+            .insert("genres".to_owned(), genre_slug.to_owned());
+        self
     }
 
-    fn language(self, language_code: &str) -> Self {
-        self.apply(|b| b.query(&[("languages", language_code)]))
+    fn language(mut self, language_code: &str) -> Self {
+        self.query
+            .insert("languages".to_owned(), language_code.to_owned());
+        self
     }
 
-    fn country(self, country_code: &str) -> Self {
-        self.apply(|b| b.query(&[("countries", country_code)]))
+    fn country(mut self, country_code: &str) -> Self {
+        self.query
+            .insert("countries".to_owned(), country_code.to_owned());
+        self
     }
 
-    fn runtimes(self, from: u32, to: u32) -> Self {
-        self.apply(|b| b.query(&[("runtimes", format!("{}-{}", from, to))]))
+    fn runtimes(mut self, from: u32, to: u32) -> Self {
+        self.query
+            .insert("runtimes".to_owned(), format!("{}-{}", from, to));
+        self
     }
 
-    fn ratings(self, from: u32, to: u32) -> Self {
-        self.apply(|b| b.query(&[("ratings", format!("{}-{}", from, to))]))
+    fn ratings(mut self, from: u32, to: u32) -> Self {
+        self.query
+            .insert("ratings".to_owned(), format!("{}-{}", from, to));
+        self
     }
 }
 
 impl<'a, T: DeserializeOwned + Send + 'static> MovieFilters for MoviesRequest<'a, T> {
-    fn certification(self, cert_slug: &str) -> Self {
-        self.apply(|b| b.query(&[("certifications", cert_slug)]))
+    fn certification(mut self, cert_slug: &str) -> Self {
+        self.query
+            .insert("certifications".to_owned(), cert_slug.to_owned());
+        self
     }
 }
