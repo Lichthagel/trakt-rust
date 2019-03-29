@@ -3,7 +3,10 @@ use crate::{
     extended_info::{ExtendedInfoFull, ExtendedInfoNone, WithFull, WithNone},
     models::{AllCommentableItemType, CommentType},
     pagination::Pagination,
+    Error,
 };
+use hashbrown::HashMap;
+use reqwest::{r#async::Request, Method};
 use serde::de::DeserializeOwned;
 use std::marker::PhantomData;
 
@@ -12,10 +15,7 @@ pub struct CommentsRequest<'a, T> {
     url: &'a str,
     comment_type: CommentType,
     item_type: AllCommentableItemType,
-    include_replies: bool,
-    page: u32,
-    limit: u32,
-    full: bool,
+    query: HashMap<String, String>,
     response_type: PhantomData<T>,
 }
 
@@ -26,10 +26,7 @@ impl<'a, T: DeserializeOwned + Send + 'static> CommentsRequest<'a, T> {
             url,
             comment_type: CommentType::All,
             item_type: AllCommentableItemType::All,
-            include_replies: false,
-            page: 1,
-            limit: 10,
-            full: false,
+            query: HashMap::new(),
             response_type: PhantomData,
         }
     }
@@ -73,36 +70,44 @@ impl<'a, T: DeserializeOwned + Send + 'static> CommentsRequest<'a, T> {
     }
 
     pub fn include_replies(mut self) -> Self {
-        self.include_replies = true;
+        self.query
+            .insert("include_replies".to_owned(), "true".to_owned());
         self
     }
 
+    pub fn build(&self) -> std::result::Result<Request, Error> {
+        let mut url = format!(
+            "/comments/{}/{}/{}",
+            self.url, self.comment_type, self.item_type
+        );
+
+        if !self.query.is_empty() {
+            url.push('?');
+            url.push_str(&serde_urlencoded::to_string(&self.query)?)
+        }
+
+        self.client
+            .builder(Method::GET, url)
+            .build()
+            .map_err(Error::from)
+    }
+
     pub fn execute(self) -> Result<Vec<T>> {
-        self.client.get(if self.full {
-            api_url!(
-                ("comments", self.url, self.comment_type, self.item_type),
-                ("page", self.page),
-                ("limit", self.limit),
-                ("extended", "full")
-            )
-        } else {
-            api_url!(
-                ("comments", self.url, self.comment_type, self.item_type),
-                ("page", self.page),
-                ("limit", self.limit)
-            )
-        })
+        match self.build() {
+            Ok(req) => self.client.execute(req),
+            Err(e) => Box::new(futures::future::err(e)),
+        }
     }
 }
 
 impl<'a, T> Pagination for CommentsRequest<'a, T> {
     fn page(mut self, page: u32) -> Self {
-        self.page = page;
+        self.query.insert("page".to_owned(), format!("{}", page));
         self
     }
 
     fn limit(mut self, limit: u32) -> Self {
-        self.limit = limit;
+        self.query.insert("limit".to_owned(), format!("{}", limit));
         self
     }
 }
@@ -116,33 +121,39 @@ impl<'a, T: WithNone> WithNone for CommentsRequest<'a, T> {
 }
 
 impl<'a, T: WithFull> ExtendedInfoFull for CommentsRequest<'a, T> {
-    fn full(self) -> Self::Full {
+    fn full(mut self) -> Self::Full {
+        self.query.insert("extended".to_owned(), "full".to_owned());
+
         Self::Full {
             client: self.client,
             url: self.url,
             comment_type: self.comment_type,
             item_type: self.item_type,
-            include_replies: self.include_replies,
-            page: self.page,
-            limit: self.limit,
-            full: true,
+            query: self.query,
             response_type: PhantomData,
         }
     }
 }
 
 impl<'a, T: WithNone> ExtendedInfoNone for CommentsRequest<'a, T> {
-    fn none(self) -> Self::None {
+    fn none(mut self) -> Self::None {
+        self.query.remove("extended");
+
         Self::None {
             client: self.client,
             url: self.url,
             comment_type: self.comment_type,
             item_type: self.item_type,
-            include_replies: self.include_replies,
-            page: self.page,
-            limit: self.limit,
-            full: false,
+            query: self.query,
             response_type: PhantomData,
         }
     }
+}
+
+#[cfg(tests)]
+mod tests {
+
+    #[test]
+    fn comments_request() {}
+
 }
