@@ -32,9 +32,9 @@ impl<'a> CommentCreateRequest<'a> {
     pub fn sharing(mut self, network: String) -> Self {
         match self.body.get_mut("sharing") {
             Some(sharing) => {
-                sharing.as_object_mut().map(|sharing| {
+                if let Some(sharing) = sharing.as_object_mut() {
                     sharing.insert(network, Value::Bool(true));
-                });
+                }
             }
             None => {
                 let mut m = Map::new();
@@ -73,7 +73,7 @@ impl<'a> CommentCreateRequest<'a> {
     pub fn execute(mut self, access_token: &str) -> Result<Comment> {
         match self.build(access_token) {
             Ok(req) => self.client.execute(req),
-            Err(e) => Box::new(futures::future::err(Error::from(e))),
+            Err(e) => Box::new(futures::future::err(e)),
         }
     }
 }

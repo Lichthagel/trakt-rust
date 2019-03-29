@@ -31,9 +31,9 @@ impl<'a> CommentCreateRequest<'a> {
     pub fn sharing(mut self, network: String) -> Self {
         match self.body.get_mut("sharing") {
             Some(sharing) => {
-                sharing.as_object_mut().map(|sharing| {
+                if let Some(sharing) = sharing.as_object_mut() {
                     sharing.insert(network, Value::Bool(true));
-                });
+                }
             }
             None => {
                 let mut m = Map::new();
