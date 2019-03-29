@@ -346,61 +346,6 @@ impl<'a> TraktApi<'a> {
         )
     }
 
-    /// A generic function which makes an authorized PUT request to the given url and receives a deserialized object
-    ///
-    /// # Errors
-    ///
-    /// Returns [Error::Response] if the response contains an unsuccessful status code
-    ///
-    /// Returns [Error::Connection] if the connection failed
-    ///
-    /// Returns [Error::Serde] if the response could not be deserialized
-    ///
-    /// [Error::Response]: error/enum.Error.html#variant.Response
-    /// [Error::Connection]: error/enum.Error.html#variant.Connection
-    /// [Error::Serde]: error/enum.Error.html#variant.Serde
-    fn auth_put<T: DeserializeOwned + Send + 'static>(
-        &self,
-        url: String,
-        body: String,
-        access_token: &str,
-    ) -> Result<T> {
-        self._auth_put(&url, body, access_token)
-    }
-
-    /// A generic function which makes an authorized PUT request to the given url and receives a deserialized object
-    ///
-    /// # Errors
-    ///
-    /// Returns [Error::Response] if the response contains an unsuccessful status code
-    ///
-    /// Returns [Error::Connection] if the connection failed
-    ///
-    /// Returns [Error::Serde] if the response could not be deserialized
-    ///
-    /// [Error::Response]: error/enum.Error.html#variant.Response
-    /// [Error::Connection]: error/enum.Error.html#variant.Connection
-    /// [Error::Serde]: error/enum.Error.html#variant.Serde
-    fn _auth_put<T: DeserializeOwned + Send + 'static>(
-        &self,
-        url: &str,
-        body: String,
-        access_token: &str,
-    ) -> Result<T> {
-        Box::new(
-            self.client
-                .put(&format!("{}{}", self.base_url, url))
-                .header("Content-Type", "application/json")
-                .header("trakt-api-version", "2")
-                .header("trakt-api-key", self.client_id.as_str())
-                .header("Authorization", format!("Bearer {}", access_token))
-                .body(body)
-                .send()
-                .and_then(|mut res| res.json())
-                .map_err(Error::from),
-        )
-    }
-
     /// A generic function which makes an authorized DELETE request to the given url and receives nothing
     ///
     /// # Errors

@@ -1,5 +1,5 @@
-use crate::{asyn::TraktApi, error::Error, models::Comment};
-use futures::future::{Future, IntoFuture};
+use crate::{asyn::TraktApi, models::Comment, Error, asyn::Result};
+use reqwest::{r#async::Request, Method};
 use serde_json::{Map, Value};
 
 pub struct CommentPostRequest<'a> {
@@ -27,22 +27,34 @@ impl<'a> CommentPostRequest<'a> {
         self
     }
 
-    pub fn execute(self, access_token: &'a str) -> Box<Future<Item = Comment, Error = Error> + 'a> {
+    pub fn build(&self, access_token: &'a str) -> std::result::Result<Request, Error> {
         let mut m = Map::new();
         m.insert("comment".to_owned(), Value::String(self.comment.clone()));
         m.insert("spoiler".to_owned(), Value::Bool(self.spoiler));
 
-        Box::new(
-            serde_json::to_string(&m)
-                .into_future()
-                .map_err(Error::from)
-                .and_then(move |body| {
-                    if self.method {
-                        self.client.auth_put(self.url, body, access_token)
-                    } else {
-                        self.client.auth_post(self.url, body, access_token)
-                    }
-                }),
-        )
+        serde_json::to_string(&m)
+            .map_err(Error::from)
+            .and_then(|body| {
+                self.client
+                    .builder(
+                        if self.method {
+                            Method::PUT
+                        } else {
+                            Method::POST
+                        },
+                        self.url.to_owned(),
+                    )
+                    .body(body)
+                    .header("Authorization", format!("Bearer {}", access_token))
+                    .build()
+                    .map_err(Error::from)
+            })
+    }
+
+    pub fn execute(self, access_token: &'a str) -> Result<Comment> {
+        match self.build(access_token) {
+            Ok(req) => self.client.execute(req),
+            Err(e) => Box::new(futures::future::err(e)),
+        }
     }
 }

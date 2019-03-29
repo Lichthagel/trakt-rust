@@ -339,68 +339,6 @@ impl<'a> TraktApi<'a> {
         }
     }
 
-    /// A generic function which makes an authorized PUT request to the given url and receives a deserialized object
-    ///
-    /// # Errors
-    ///
-    /// Returns [Error::Response] if the response contains an unsuccessful status code
-    ///
-    /// Returns [Error::Connection] if the connection failed
-    ///
-    /// Returns [Error::Serde] if the response could not be deserialized
-    ///
-    /// [Error::Response]: error/enum.Error.html#variant.Response
-    /// [Error::Connection]: error/enum.Error.html#variant.Connection
-    /// [Error::Serde]: error/enum.Error.html#variant.Serde
-    fn auth_put<T: DeserializeOwned>(
-        &self,
-        url: String,
-        body: String,
-        access_token: &str,
-    ) -> Result<T> {
-        self._auth_put(&url, body, access_token)
-    }
-
-    /// A generic function which makes an authorized PUT request to the given url and receives a deserialized object
-    ///
-    /// # Errors
-    ///
-    /// Returns [Error::Response] if the response contains an unsuccessful status code
-    ///
-    /// Returns [Error::Connection] if the connection failed
-    ///
-    /// Returns [Error::Serde] if the response could not be deserialized
-    ///
-    /// [Error::Response]: error/enum.Error.html#variant.Response
-    /// [Error::Connection]: error/enum.Error.html#variant.Connection
-    /// [Error::Serde]: error/enum.Error.html#variant.Serde
-    fn _auth_put<T: DeserializeOwned>(
-        &self,
-        url: &str,
-        body: String,
-        access_token: &str,
-    ) -> Result<T> {
-        match self
-            .client
-            .put(&format!("{}{}", self.base_url, url))
-            .header("Content-Type", "application/json")
-            .header("trakt-api-version", "2")
-            .header("trakt-api-key", self.client_id.as_str())
-            .bearer_auth(access_token)
-            .body(body)
-            .send()
-        {
-            Ok(res) => {
-                if res.status().is_success() {
-                    Ok(serde_json::from_reader(res).unwrap())
-                } else {
-                    Err(Error::from(res))
-                }
-            }
-            Err(e) => Err(Error::from(e)),
-        }
-    }
-
     /// A generic function which makes an authorized DELETE request to the given url and receives nothing
     ///
     /// # Errors
