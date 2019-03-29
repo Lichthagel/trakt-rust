@@ -1,6 +1,7 @@
 use crate::{
     extended_info::{ExtendedInfoFull, ExtendedInfoNone, WithFull, WithNone},
-    filters::{CommonFilters, MovieFilters},
+    filters::Filters,
+    models::ShowStatus,
     pagination::Pagination,
     Error, Result, TraktApi,
 };
@@ -89,7 +90,7 @@ impl<'a, T: WithNone + DeserializeOwned> ExtendedInfoNone for MoviesRequest<'a, 
     }
 }
 
-impl<'a, T: DeserializeOwned> CommonFilters for MoviesRequest<'a, T> {
+impl<'a, T: DeserializeOwned> Filters for MoviesRequest<'a, T> {
     fn query(mut self, query: &str) -> Self {
         self.query.insert("query".to_owned(), query.to_owned());
         self
@@ -129,12 +130,18 @@ impl<'a, T: DeserializeOwned> CommonFilters for MoviesRequest<'a, T> {
             .insert("ratings".to_owned(), format!("{}-{}", from, to));
         self
     }
-}
 
-impl<'a, T: DeserializeOwned> MovieFilters for MoviesRequest<'a, T> {
     fn certification(mut self, cert_slug: &str) -> Self {
         self.query
             .insert("certifications".to_owned(), cert_slug.to_owned());
         self
+    }
+
+    fn network(self, _network_name: &str) -> Self {
+        unimplemented!()
+    }
+
+    fn status(self, _status: ShowStatus) -> Self {
+        unimplemented!()
     }
 }

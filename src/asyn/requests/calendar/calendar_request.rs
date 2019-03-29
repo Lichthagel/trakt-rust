@@ -1,6 +1,8 @@
 use crate::{
     asyn::{Result, TraktApi},
     extended_info::{ExtendedInfoFull, ExtendedInfoNone, WithFull, WithNone},
+    filters::Filters,
+    models::ShowStatus,
     Error,
 };
 use chrono::{Date, Utc};
@@ -140,6 +142,65 @@ where
             query: self.query,
             response_type: PhantomData,
         }
+    }
+}
+
+impl<'a, T: DeserializeOwned> Filters for CalendarRequest<'a, T> {
+    fn query(mut self, query: &str) -> Self {
+        self.query.insert("query".to_owned(), query.to_owned());
+        self
+    }
+
+    fn year(mut self, year: u32) -> Self {
+        self.query.insert("years".to_owned(), format!("{}", year));
+        self
+    }
+
+    fn genre(mut self, genre_slug: &str) -> Self {
+        self.query
+            .insert("genres".to_owned(), genre_slug.to_owned());
+        self
+    }
+
+    fn language(mut self, language_code: &str) -> Self {
+        self.query
+            .insert("languages".to_owned(), language_code.to_owned());
+        self
+    }
+
+    fn country(mut self, country_code: &str) -> Self {
+        self.query
+            .insert("countries".to_owned(), country_code.to_owned());
+        self
+    }
+
+    fn runtimes(mut self, from: u32, to: u32) -> Self {
+        self.query
+            .insert("runtimes".to_owned(), format!("{}-{}", from, to));
+        self
+    }
+
+    fn ratings(mut self, from: u32, to: u32) -> Self {
+        self.query
+            .insert("ratings".to_owned(), format!("{}-{}", from, to));
+        self
+    }
+
+    fn certification(mut self, cert_slug: &str) -> Self {
+        self.query
+            .insert("certifications".to_owned(), cert_slug.to_owned());
+        self
+    }
+
+    fn network(mut self, network_name: &str) -> Self {
+        self.query
+            .insert("networks".to_owned(), network_name.to_owned());
+        self
+    }
+
+    fn status(mut self, status: ShowStatus) -> Self {
+        self.query.insert("status".to_owned(), status.to_string());
+        self
     }
 }
 
