@@ -1,15 +1,15 @@
 use crate::{
-    models::{Comment, CommentSharing},
+    models::Comment,
     selectors::{SelectEpisode, SelectList, SelectMovie, SelectSeason, SelectShow},
-    Result, TraktApi,
+    Error, Result, TraktApi,
 };
+use reqwest::{Method, Request};
 use serde_json::{Map, Value};
 
 pub struct CommentCreateRequest<'a> {
     client: &'a TraktApi<'a>,
     url: String,
     body: Map<String, Value>,
-    sharing: CommentSharing,
 }
 
 impl<'a> CommentCreateRequest<'a> {
@@ -20,7 +20,6 @@ impl<'a> CommentCreateRequest<'a> {
             client,
             url,
             body: m,
-            sharing: CommentSharing::new(false, false, false, false),
         }
     }
 
@@ -29,36 +28,49 @@ impl<'a> CommentCreateRequest<'a> {
         self
     }
 
-    pub fn twitter(mut self) -> Self {
-        self.sharing.twitter = true;
+    pub fn sharing(mut self, network: String) -> Self {
+        match self.body.get_mut("sharing") {
+            Some(sharing) => {
+                sharing.as_object_mut().map(|sharing| {
+                    sharing.insert(network, Value::Bool(true));
+                });
+            }
+            None => {
+                let mut m = Map::new();
+                m.insert(network, Value::Bool(true));
+                self.body.insert("sharing".to_owned(), Value::Object(m));
+            }
+        }
         self
     }
 
-    pub fn facebook(mut self) -> Self {
-        self.sharing.facebook = true;
-        self
+    pub fn twitter(self) -> Self {
+        self.sharing("twitter".to_owned())
     }
 
-    pub fn tumblr(mut self) -> Self {
-        self.sharing.tumblr = true;
-        self
+    pub fn facebook(self) -> Self {
+        self.sharing("facebook".to_owned())
     }
 
-    pub fn medium(mut self) -> Self {
-        self.sharing.medium = true;
-        self
+    pub fn tumblr(self) -> Self {
+        self.sharing("tumblr".to_owned())
+    }
+
+    pub fn medium(self) -> Self {
+        self.sharing("medium".to_owned())
+    }
+
+    pub fn build(&mut self, access_token: &str) -> std::result::Result<Request, Error> {
+        self.client
+            .builder(Method::POST, self.url.to_owned())
+            .header("Authorization", format!("Bearer {}", access_token))
+            .body(serde_json::to_string(&self.body).unwrap())
+            .build()
+            .map_err(Error::from)
     }
 
     pub fn execute(mut self, access_token: &str) -> Result<Comment> {
-        self.body.insert(
-            "sharing".to_owned(),
-            serde_json::to_value(self.sharing).unwrap(),
-        );
-        self.client._auth_post(
-            &self.url,
-            dbg!(serde_json::to_string(&self.body).unwrap()),
-            access_token,
-        )
+        self.client.execute(self.build(access_token)?)
     }
 }
 
