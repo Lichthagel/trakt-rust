@@ -222,6 +222,7 @@ mod tests {
     use crate::{
         asyn::{requests::calendar::calendar_request::CalendarRequest, TraktApi},
         extended_info::ExtendedInfoFull,
+        filters::Filters,
         models::{CalendarShow, FullCalendarShow},
     };
     use chrono::Utc;
@@ -234,11 +235,17 @@ mod tests {
 
         let mut query = HashMap::new();
         query.insert("extended".to_owned(), "full".to_owned());
+        query.insert("languages".to_owned(), "de".to_owned());
+        query.insert("query".to_owned(), "tron".to_owned());
+        query.insert("countries".to_owned(), "us".to_owned());
 
         assert_eq!(
             CalendarRequest::<CalendarShow>::new(&api.clone(), "some_url", None)
                 .start_date(Utc::today())
                 .days(3)
+                .language("de")
+                .query("tron")
+                .country("us")
                 .full(),
             CalendarRequest::<FullCalendarShow> {
                 client: &api,
