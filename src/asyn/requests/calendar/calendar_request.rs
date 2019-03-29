@@ -63,15 +63,14 @@ impl<'a, T: DeserializeOwned + Send + 'static> CalendarRequest<'a, T> {
             }
         }
 
-        if !self.query.is_empty() {
-            url.push('?');
-            url.push_str(&serde_urlencoded::to_string(&self.query)?);
-        }
-
         let mut req = self.client.builder(Method::GET, url);
 
         if let Some(access_token) = self.access_token {
             req = req.header("Authorization", format!("Bearer {}", access_token));
+        }
+
+        if !self.query.is_empty() {
+            req = req.query(&self.query);
         }
 
         req.build().map_err(Error::from)

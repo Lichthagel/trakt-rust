@@ -75,20 +75,18 @@ impl<'a, T: DeserializeOwned> CommentsRequest<'a, T> {
     }
 
     pub fn build(&self) -> Result<Request> {
-        let mut url = format!(
+        let url = format!(
             "/comments/{}/{}/{}",
             self.url, self.comment_type, self.item_type
         );
 
+        let mut req = self.client.builder(Method::GET, url);
+
         if !self.query.is_empty() {
-            url.push('?');
-            url.push_str(&serde_urlencoded::to_string(&self.query)?)
+            req = req.query(&self.query);
         }
 
-        self.client
-            .builder(Method::GET, url)
-            .build()
-            .map_err(Error::from)
+        req.build().map_err(Error::from)
     }
 
     pub fn execute(self) -> Result<Vec<T>> {

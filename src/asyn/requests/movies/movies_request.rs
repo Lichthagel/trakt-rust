@@ -28,11 +28,15 @@ impl<'a, T: DeserializeOwned + Send + 'static> MoviesRequest<'a, T> {
     }
 
     pub fn build(&self) -> crate::Result<Request> {
-        self.client
-            .builder(Method::GET, format!("/movies/{}", self.url))
-            .query(&self.query)
-            .build()
-            .map_err(Error::from)
+        let mut req = self
+            .client
+            .builder(Method::GET, format!("/movies/{}", self.url));
+
+        if !self.query.is_empty() {
+            req = req.query(&self.query);
+        }
+
+        req.build().map_err(Error::from)
     }
 
     pub fn execute(self) -> Result<Vec<T>> {
