@@ -2,7 +2,7 @@ use std::fmt;
 use std::fmt::Display;
 
 /// All item types that can be put in a list
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum ListItemType {
     Movie,
@@ -13,7 +13,7 @@ pub enum ListItemType {
 }
 
 /// All item types that can be commented
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum CommentableItemType {
     Movie,
@@ -24,7 +24,7 @@ pub enum CommentableItemType {
 }
 
 /// All item types that can be commented and an All variant
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum AllCommentableItemType {
     Movie,
@@ -49,7 +49,7 @@ impl Display for AllCommentableItemType {
 }
 
 /// All media item types
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum ItemType {
     Movie,
@@ -70,7 +70,7 @@ impl Display for ItemType {
 }
 
 /// All media item types and an All variant
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum AllItemType {
     Movie,
@@ -93,7 +93,7 @@ impl Display for AllItemType {
 }
 
 /// All item types that can be watched
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub enum WatchableType {
     #[serde(rename = "movie")]
     Movie,
@@ -111,7 +111,7 @@ impl Display for WatchableType {
 }
 
 /// Movies or Shows enum
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub enum MediaType {
     #[serde(rename = "movies")]
     Movies,
@@ -129,7 +129,7 @@ impl Display for MediaType {
 }
 
 /// All time periods
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum TimePeriod {
     Weekly,
@@ -175,7 +175,7 @@ impl Display for SearchItemType {
 /// An enum for the [include_replies] query
 ///
 /// [include_replies]: https://trakt.docs.apiary.io/#reference/comments/trending/get-trending-comments
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub enum IncludeReplies {
     True,
     False,
