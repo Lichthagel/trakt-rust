@@ -30,7 +30,7 @@ pub struct FullSeason {
     pub aired_episodes: u32,
     pub title: String,
     pub overview: Option<String>,
-    pub first_aired: DateTime<Utc>,
+    pub first_aired: Option<DateTime<Utc>>,
     pub network: String,
 }
 
