@@ -29,21 +29,27 @@ pub use crate::models::{
     authentication::{AuthenticationDevices, AuthenticationTokenResponse},
     calendar::{CalendarMovie, CalendarShow, FullCalendarMovie, FullCalendarShow},
     certifications::{Certification, Certifications, CertificationsType},
-    collection::{CollectionEpisode, CollectionMovie, CollectionSeason, CollectionShow},
+    collection::{
+        CollectionEpisode, CollectionMovie, CollectionSeason, CollectionShow, FullCollectionMovie,
+        FullCollectionShow,
+    },
     comment::{
         Comment, CommentAndItem, CommentItem, CommentSharing, CommentType, FullComment,
         FullCommentAndItem,
     },
     episode::{Episode, FullEpisode, OptionEpisode},
     genre::Genre,
-    history::HistoryItem,
+    history::{FullHistoryItem, HistoryItem},
     ids::{IdType, Ids, ToId},
     item_types::{
         AllCommentableItemType, AllItemType, CommentableItemType, IncludeReplies, ItemType,
         ListItemType, MediaType, SearchItemType, TimePeriod, WatchableType,
     },
     like::Like,
-    list::{FullList, List, ListFactory, ListFilter, ListInfo, ListItem, ListSort, ListType},
+    list::{
+        FullList, FullListItem, List, ListFactory, ListFilter, ListInfo, ListItem, ListSort,
+        ListType,
+    },
     localization::{Alias, Country, Language, Translation},
     movie::{
         AnticipatedMovie, FullMovie, Movie, MovieInfo, OptionMovie, UpdatedMovie, WatchedMovie,
@@ -69,6 +75,6 @@ pub use crate::models::{
         SyncResponseNotFound, SyncResponseNumbers,
     },
     user::{FullUser, OptionUser, User},
-    watched::{WatchedEntry, WatchedEpisode, WatchedSeason},
+    watched::{FullWatchedEntry, WatchedEntry, WatchedEpisode, WatchedSeason},
     watching::Watching,
 };

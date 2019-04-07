@@ -1,4 +1,5 @@
-use crate::models::{Movie, Show};
+use crate::extended_info::{WithFull, WithNone};
+use crate::models::{FullMovie, FullShow, Movie, Show};
 use chrono::{DateTime, Utc};
 
 /// A [watched entry] of an user
@@ -12,6 +13,28 @@ pub struct WatchedEntry {
     pub movie: Option<Movie>,
     pub show: Option<Show>,
     pub seasons: Option<Vec<WatchedSeason>>,
+}
+
+impl WithFull for WatchedEntry {
+    type Full = FullWatchedEntry;
+}
+
+/// A [watched entry] of an user with full [extended info]
+///
+/// [watched entry]: https://trakt.docs.apiary.io/#reference/users/watched/get-watched
+/// [extended info]: https://trakt.docs.apiary.io/#introduction/extended-info
+#[derive(Debug, Serialize, Deserialize)]
+pub struct FullWatchedEntry {
+    pub plays: u32,
+    pub last_watched_at: DateTime<Utc>,
+    pub last_updated_at: Option<DateTime<Utc>>,
+    pub movie: Option<FullMovie>,
+    pub show: Option<FullShow>,
+    pub seasons: Option<Vec<WatchedSeason>>,
+}
+
+impl WithNone for FullWatchedEntry {
+    type None = WatchedEntry;
 }
 
 /// A watched season in [WatchedEntry]

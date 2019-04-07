@@ -1,6 +1,7 @@
 //! All models related to [lists]
 //!
 //! [lists]: https://trakt.docs.apiary.io/#reference/lists
+use crate::models::{FullEpisode, FullMovie, FullSeason, FullShow};
 use crate::{
     extended_info::{WithFull, WithNone},
     models::{Episode, FullUser, Ids, ListItemType, Movie, OptionUser, Person, Season, Show, User},
@@ -204,6 +205,31 @@ pub struct ListItem {
     pub season: Option<Season>,
     pub show: Option<Show>,
     pub person: Option<Person>,
+}
+
+impl WithFull for ListItem {
+    type Full = FullListItem;
+}
+
+/// An item in a [list] with full [extended info]
+///
+/// [list]: https://trakt.docs.apiary.io/#reference/lists
+/// [extended info]: https://trakt.docs.apiary.io/#introduction/extended-info
+#[derive(Debug, Serialize, Deserialize)]
+pub struct FullListItem {
+    pub rank: u32,
+    pub listed_at: DateTime<Utc>,
+    #[serde(rename = "type")]
+    pub item_type: ListItemType,
+    pub movie: Option<FullMovie>,
+    pub episode: Option<FullEpisode>,
+    pub season: Option<FullSeason>,
+    pub show: Option<FullShow>,
+    pub person: Option<Person>,
+}
+
+impl WithNone for FullListItem {
+    type None = ListItem;
 }
 
 /// The type of a [list]

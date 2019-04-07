@@ -5,7 +5,8 @@ use crate::{
         pagination::PaginationRequest, requests::sync::sync_request::SyncRequest, Result, TraktApi,
     },
     models::{
-        AllItemType, CollectionMovie, CollectionShow, HistoryItem, ItemType, LastActivities,
+        AllItemType, CollectionMovie, CollectionShow, FullCollectionMovie, FullCollectionShow,
+        FullHistoryItem, FullListItem, FullWatchedEntry, HistoryItem, ItemType, LastActivities,
         ListItem, MediaType, Playback, Rating, SyncAddResponse, SyncRemoveResponse, WatchableType,
         WatchedEntry,
     },
@@ -34,8 +35,25 @@ impl<'a> TraktApi<'a> {
         self.auth_get(api_url!(("sync", "collection", "movies")), access_token)
     }
 
+    pub fn sync_collection_movie_full(
+        &self,
+        access_token: &str,
+    ) -> Result<Vec<FullCollectionMovie>> {
+        self.auth_get(
+            api_url!(("sync", "collection", "movies"), ("extended", "full")),
+            access_token,
+        )
+    }
+
     pub fn sync_collection_show(&self, access_token: &str) -> Result<Vec<CollectionShow>> {
         self.auth_get(api_url!(("sync", "collection", "shows")), access_token)
+    }
+
+    pub fn sync_collection_show_full(&self, access_token: &str) -> Result<Vec<FullCollectionShow>> {
+        self.auth_get(
+            api_url!(("sync", "collection", "shows"), ("extended", "full")),
+            access_token,
+        )
     }
 
     pub fn sync_collection_add(&self) -> SyncRequest<SyncAddResponse> {
@@ -54,6 +72,17 @@ impl<'a> TraktApi<'a> {
         self.auth_get(api_url!(("sync", "watched", item_type)), access_token)
     }
 
+    pub fn sync_watched_full(
+        &self,
+        item_type: MediaType,
+        access_token: &str,
+    ) -> Result<Vec<FullWatchedEntry>> {
+        self.auth_get(
+            api_url!(("sync", "watched", item_type), ("extended", "full")),
+            access_token,
+        )
+    }
+
     pub fn sync_history(
         &self,
         item_type: ItemType,
@@ -66,6 +95,24 @@ impl<'a> TraktApi<'a> {
             self.builder(Method::GET, api_url!(("sync", "history", item_type)))
                 .header("Authorization", format!("Bearer {}", access_token))
                 .query(&[("start_at", start_at), ("end_at", end_at)]),
+        )
+    }
+
+    pub fn sync_history_full(
+        &self,
+        item_type: ItemType,
+        start_at: DateTime<Utc>,
+        end_at: DateTime<Utc>,
+        access_token: &str,
+    ) -> PaginationRequest<FullHistoryItem> {
+        PaginationRequest::new(
+            self,
+            self.builder(
+                Method::GET,
+                api_url!(("sync", "history", item_type), ("extended", "full")),
+            )
+            .header("Authorization", format!("Bearer {}", access_token))
+            .query(&[("start_at", start_at), ("end_at", end_at)]),
         )
     }
 
@@ -98,6 +145,20 @@ impl<'a> TraktApi<'a> {
             match item_type {
                 Some(t) => api_url!(("sync", "watchlist", t)),
                 None => api_url!(("sync", "watchlist")),
+            },
+            access_token,
+        )
+    }
+
+    pub fn sync_watchlist_full(
+        &self,
+        item_type: Option<ItemType>,
+        access_token: &str,
+    ) -> Result<Vec<FullListItem>> {
+        self.auth_get(
+            match item_type {
+                Some(t) => api_url!(("sync", "watchlist", t), ("extended", "full")),
+                None => api_url!(("sync", "watchlist"), ("extended", "full")),
             },
             access_token,
         )
