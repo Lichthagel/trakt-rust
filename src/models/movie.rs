@@ -30,7 +30,7 @@ pub struct FullMovie {
     pub tagline: String,
     pub overview: String,
     pub released: NaiveDate,
-    pub runtime: u32,
+    pub runtime: Option<u32>,
     pub country: Option<String>,
     pub trailer: Option<String>,
     pub homepage: Option<String>,
