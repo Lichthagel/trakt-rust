@@ -24,3 +24,9 @@ impl From<serde_json::Error> for Error {
         Error::Serde(e)
     }
 }
+
+impl ToString for Error {
+    fn to_string(&self) -> String {
+        format!("{:?}", self)
+    }
+}
