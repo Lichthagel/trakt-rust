@@ -115,7 +115,7 @@ pub struct FullShow {
     pub overview: Option<String>,
     pub first_aired: Option<DateTime<Utc>>,
     pub airs: Airing,
-    pub runtime: u32,
+    pub runtime: Option<u32>,
     pub certification: Option<String>,
     pub network: Option<String>,
     pub country: Option<String>,
