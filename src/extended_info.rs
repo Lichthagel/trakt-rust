@@ -38,3 +38,24 @@ pub trait WithFull {
 pub trait WithMetadata {
     type Metadata;
 }
+
+impl<T> WithFull for Vec<T>
+where
+    T: WithFull,
+{
+    type Full = Vec<T::Full>;
+}
+
+impl<T> WithNone for Vec<T>
+where
+    T: WithNone,
+{
+    type None = Vec<T::None>;
+}
+
+impl<T> WithMetadata for Vec<T>
+where
+    T: WithMetadata,
+{
+    type Metadata = Vec<T::Metadata>;
+}
