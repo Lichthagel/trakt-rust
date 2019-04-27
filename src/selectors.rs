@@ -222,7 +222,7 @@ pub trait SelectShow: Sized {
     ///
     /// # Example
     ///
-    /// ```rust,ignore
+    /// ```rust,compile_fail
     /// json!({
     ///     "ids": {
     ///         "slug": "fairy-tail"
