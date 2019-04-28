@@ -7,7 +7,7 @@ use crate::{
     models::ids::Ids,
 };
 use chrono::{DateTime, Utc};
-use serde::{de::Visitor, Deserializer};
+use serde::{de::Visitor, Deserializer, Serializer};
 use std::{fmt, ops::AddAssign, str::FromStr};
 
 /// A [show]
@@ -76,9 +76,16 @@ impl FromStr for ShowStatus {
     }
 }
 
+fn serialize_status<S>(status: &Option<ShowStatus>, serializer: S) -> Result<S::Ok, S::Error> where S: Serializer {
+    match status {
+        Some(status) => serializer.serialize_str(&*status.to_string()),
+        None => serializer.serialize_none()
+    }
+}
+
 fn deserialize_status<'de, D>(deserializer: D) -> Result<Option<ShowStatus>, D::Error>
-where
-    D: Deserializer<'de>,
+    where
+        D: Deserializer<'de>,
 {
     struct ShowStatusVisitor;
 
@@ -90,8 +97,8 @@ where
         }
 
         fn visit_str<E>(self, v: &str) -> Result<Option<ShowStatus>, E>
-        where
-            E: serde::de::Error,
+            where
+                E: serde::de::Error,
         {
             match ShowStatus::from_str(v) {
                 Ok(status) => Ok(Some(status)),
@@ -121,7 +128,7 @@ pub struct FullShow {
     pub country: Option<String>,
     pub trailer: Option<String>,
     pub homepage: Option<String>,
-    #[serde(deserialize_with = "deserialize_status")]
+    #[serde(deserialize_with = "deserialize_status", serialize_with = "serialize_status")]
     pub status: Option<ShowStatus>,
     pub rating: f64,
     pub votes: u32,
