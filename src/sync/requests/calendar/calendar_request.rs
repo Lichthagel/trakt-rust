@@ -5,10 +5,9 @@ use crate::{
     Error, Result, TraktApi,
 };
 use chrono::{Date, Utc};
-use hashbrown::HashMap;
 use reqwest::{Method, Request};
 use serde::de::DeserializeOwned;
-use std::marker::PhantomData;
+use std::{collections::HashMap, marker::PhantomData};
 
 /// A request to a calendar endpoint
 ///
@@ -244,8 +243,7 @@ mod tests {
         TraktApi,
     };
     use chrono::Utc;
-    use hashbrown::HashMap;
-    use std::marker::PhantomData;
+    use std::{collections::HashMap, marker::PhantomData};
 
     #[test]
     fn calendar_request() {
@@ -276,5 +274,4 @@ mod tests {
             }
         )
     }
-
 }

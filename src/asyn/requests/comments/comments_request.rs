@@ -5,10 +5,9 @@ use crate::{
     pagination::Pagination,
     Error,
 };
-use hashbrown::HashMap;
 use reqwest::{r#async::Request, Method};
 use serde::de::DeserializeOwned;
-use std::marker::PhantomData;
+use std::{collections::HashMap, marker::PhantomData};
 
 pub struct CommentsRequest<'a, T> {
     client: &'a TraktApi<'a>,
@@ -153,5 +152,4 @@ mod tests {
 
     #[test]
     fn comments_request() {}
-
 }

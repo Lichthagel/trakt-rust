@@ -6,10 +6,9 @@ use crate::{
     pagination::Pagination,
     Error,
 };
-use hashbrown::HashMap;
 use reqwest::{r#async::Request, Method};
 use serde::de::DeserializeOwned;
-use std::marker::PhantomData;
+use std::{collections::HashMap, marker::PhantomData};
 
 pub struct MoviesRequest<'a, T> {
     client: &'a TraktApi<'a>,

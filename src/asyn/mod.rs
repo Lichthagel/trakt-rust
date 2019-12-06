@@ -12,7 +12,7 @@ use reqwest::{
 };
 use serde::de::DeserializeOwned;
 
-pub type Result<T> = Box<Future<Item = T, Error = Error> + Send>;
+pub type Result<T> = Box<dyn Future<Item = T, Error = Error> + Send>;
 
 /// The main struct which contains all requests
 #[derive(Debug, Clone)]

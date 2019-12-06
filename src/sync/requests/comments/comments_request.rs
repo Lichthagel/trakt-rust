@@ -4,10 +4,9 @@ use crate::{
     pagination::Pagination,
     Error, Result, TraktApi,
 };
-use hashbrown::HashMap;
 use reqwest::{Method, Request};
 use serde::de::DeserializeOwned;
-use std::marker::PhantomData;
+use std::{collections::HashMap, marker::PhantomData};
 
 pub struct CommentsRequest<'a, T> {
     client: &'a TraktApi<'a>,
