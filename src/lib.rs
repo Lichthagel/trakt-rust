@@ -1,3 +1,17 @@
+//! # trakt-rust
+//!
+//! A api wrapper in Rust for trakt.tv.
+//! [README]
+//!
+//! ## License
+//!
+//! [MIT][license]
+//!
+//! [license]: https://github.com/Lichthagel/trakt-rust/blob/master/LICENSE
+//! [README]: https://github.com/Lichthagel/trakt-rust/blob/master/README.md
+
+#![deny(missing_docs)]
+
 extern crate reqwest;
 extern crate serde;
 #[cfg(test)]
@@ -9,6 +23,7 @@ use reqwest::RequestBuilder;
 use reqwest::{Client, Method};
 use serde::de::DeserializeOwned;
 
+/// A simple Result alias that uses reqwest::Error (for now)
 pub type Result<T> = std::result::Result<T, reqwest::Error>;
 
 /// Main struct
