@@ -9,22 +9,28 @@
 //!
 //! [license]: https://github.com/Lichthagel/trakt-rust/blob/master/LICENSE
 //! [README]: https://github.com/Lichthagel/trakt-rust/blob/master/README.md
-
-#![deny(missing_docs)]
-
+//!
 extern crate reqwest;
 extern crate serde;
 #[cfg(test)]
 #[macro_use]
 extern crate serde_json;
+#[macro_use]
+extern crate serde_derive;
+
+pub mod error;
+pub mod models;
+pub mod requests;
 
 use reqwest::Request;
 use reqwest::RequestBuilder;
 use reqwest::{Client, Method};
 use serde::de::DeserializeOwned;
 
+pub use crate::error::Error;
+
 /// A simple Result alias that uses reqwest::Error (for now)
-pub type Result<T> = std::result::Result<T, reqwest::Error>;
+pub type Result<T> = std::result::Result<T, Error>;
 
 /// Main struct
 #[derive(Debug, Clone)]
@@ -76,7 +82,12 @@ impl<'a> TraktApi<'a> {
     /// [reqwest::Request]: ../reqwest/struct.Request.html
     /// [reqwest::Response]: ../reqwest/struct.Response.html
     async fn execute<T: DeserializeOwned>(&self, request: Request) -> Result<T> {
-        self.client.execute(request).await?.json::<T>().await
+        self.client
+            .execute(request)
+            .await?
+            .json::<T>()
+            .await
+            .map_err(Error::from)
     }
 
     /// A generic function which makes a GET request to the given url and receives a deserialized Object
@@ -86,6 +97,7 @@ impl<'a> TraktApi<'a> {
             .await?
             .json::<T>()
             .await
+            .map_err(Error::from)
     }
 
     /// A generic function which makes an authorized GET request to the given url and receives a deserialized Object
@@ -96,16 +108,22 @@ impl<'a> TraktApi<'a> {
             .await?
             .json::<T>()
             .await
+            .map_err(Error::from)
     }
 
     /// A generic function which makes a POST request to the given url and receives a deserialized Object
-    async fn post<T: DeserializeOwned>(&self, url: &str, body: String) -> Result<T> {
+    async fn post<T: DeserializeOwned>(
+        &self,
+        url: &str,
+        body: impl Into<reqwest::Body>,
+    ) -> Result<T> {
         self.builder(Method::POST, url)
             .body(body)
             .send()
             .await?
             .json::<T>()
             .await
+            .map_err(Error::from)
     }
 
     /// A generic function which makes an authorized POST request to the given url and receives a deserialized Object
@@ -122,6 +140,7 @@ impl<'a> TraktApi<'a> {
             .await?
             .json::<T>()
             .await
+            .map_err(Error::from)
     }
 
     /// A generic function which makes an authorized DELETE request to the given url and receives nothing
@@ -131,6 +150,7 @@ impl<'a> TraktApi<'a> {
             .send()
             .await
             .map(|_| ())
+            .map_err(Error::from)
     }
 }
 
@@ -190,7 +210,7 @@ mod tests {
 
     #[tokio::test]
     async fn get() {
-        let _m = mock("GET", "/abc", "loremipsum")
+        let m = mock("GET", "/abc", "loremipsum")
             .with_status(200)
             .with_body("{\"dolor\":\"sitamet\"}")
             .create();
@@ -200,12 +220,14 @@ mod tests {
             .await
             .unwrap();
 
-        assert_eq!(s, json!({"dolor":"sitamet"}))
+        assert_eq!(s, json!({"dolor":"sitamet"}));
+
+        m.assert();
     }
 
     #[tokio::test]
     async fn get_auth() {
-        let _m = mock_auth("GET", "/abc", "loremipsum", "mario")
+        let m = mock_auth("GET", "/abc", "loremipsum", "mario")
             .with_status(200)
             .with_body("{\"dolor\":\"sitamet\"}")
             .create();
@@ -215,28 +237,32 @@ mod tests {
             .await
             .unwrap();
 
-        assert_eq!(s, json!({"dolor":"sitamet"}))
+        assert_eq!(s, json!({"dolor":"sitamet"}));
+
+        m.assert();
     }
 
     #[tokio::test]
     async fn post() {
-        let _m = mock("POST", "/abc", "loremipsum")
+        let m = mock("POST", "/abc", "loremipsum")
             .with_status(200)
             .with_body("{\"dolor\":\"sitamet\"}")
             .match_body("abc")
             .create();
 
-        let s = TraktApi::with_url(&mockito::server_url(), "loremipsum", None)
-            .post::<Value>("/abc", "abc".to_string())
+        let s: Value = TraktApi::with_url(&mockito::server_url(), "loremipsum", None)
+            .post("/abc", "abc".to_string())
             .await
             .unwrap();
 
-        assert_eq!(s, json!({"dolor":"sitamet"}))
+        assert_eq!(s, json!({"dolor":"sitamet"}));
+
+        m.assert();
     }
 
     #[tokio::test]
     async fn post_auth() {
-        let _m = mock_auth("POST", "/abc", "loremipsum", "mario")
+        let m = mock_auth("POST", "/abc", "loremipsum", "mario")
             .with_status(200)
             .with_body("{\"dolor\":\"sitamet\"}")
             .match_body("abc")
@@ -247,12 +273,14 @@ mod tests {
             .await
             .unwrap();
 
-        assert_eq!(s, json!({"dolor":"sitamet"}))
+        assert_eq!(s, json!({"dolor":"sitamet"}));
+
+        m.assert();
     }
 
     #[tokio::test]
     async fn delete_auth() {
-        let _m = mock_auth("DELETE", "/abc", "loremipsum", "mario")
+        let m = mock_auth("DELETE", "/abc", "loremipsum", "mario")
             .with_status(200)
             .create();
 
@@ -260,5 +288,7 @@ mod tests {
             .delete_auth("/abc", "mario")
             .await
             .unwrap();
+
+        m.assert();
     }
 }
